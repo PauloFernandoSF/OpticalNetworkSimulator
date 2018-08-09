@@ -11,6 +11,8 @@
  * Created on August 2, 2018, 3:50 PM
  */
 
+#include <deque>
+
 #include "../../include/SimulationType/SimulationType.h"
 
 #include "../../include/Data/Parameters.h"
@@ -38,7 +40,7 @@ void SimulationType::LoadFile() {
 }
 
 Parameters* SimulationType::GetParameters() const {
-    return parameters;
+    return parameters.get();
 }
 
 void SimulationType::SetParameters(std::shared_ptr<Parameters> parameters) {
@@ -46,7 +48,7 @@ void SimulationType::SetParameters(std::shared_ptr<Parameters> parameters) {
 }
 
 Options* SimulationType::GetOptions() const {
-    return options;
+    return options.get();
 }
 
 void SimulationType::SetOptions(std::shared_ptr<Options> options) {
@@ -54,15 +56,15 @@ void SimulationType::SetOptions(std::shared_ptr<Options> options) {
 }
 
 Data* SimulationType::GetData() const {
-    return data;
+    return data.get();
 }
 
 void SimulationType::SetData(std::unique_ptr<Data> data) {
-    this->data = data;
+    this->data = std::move(data);
 }
 
 Topology* SimulationType::GetTopology() const {
-    return topology;
+    return topology.get();
 }
 
 void SimulationType::SetTopology(std::shared_ptr<Topology> topology) {
@@ -70,9 +72,9 @@ void SimulationType::SetTopology(std::shared_ptr<Topology> topology) {
 }
 
 InputOutput* SimulationType::GetInputOutput() const {
-    return inputOutput;
+    return inputOutput.get();
 }
 
 void SimulationType::SetInputOutput(std::unique_ptr<InputOutput> inputOutput) {
-    this->inputOutput = inputOutput;
+    this->inputOutput = std::move(inputOutput);
 }
