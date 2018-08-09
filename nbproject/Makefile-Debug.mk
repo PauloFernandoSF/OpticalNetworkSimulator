@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/Data/Data.o \
+	${OBJECTDIR}/src/Data/InputOutput.o \
 	${OBJECTDIR}/src/Data/Options.o \
 	${OBJECTDIR}/src/Data/Parameters.o \
 	${OBJECTDIR}/src/Kernel.o \
@@ -65,11 +66,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/opticalnetworksimulator_backup
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulatoropticalnetwork
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/opticalnetworksimulator_backup: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulatoropticalnetwork: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/opticalnetworksimulator_backup ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulatoropticalnetwork ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -80,6 +81,11 @@ ${OBJECTDIR}/src/Data/Data.o: src/Data/Data.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Data
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Data/Data.o src/Data/Data.cpp
+
+${OBJECTDIR}/src/Data/InputOutput.o: src/Data/InputOutput.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Data
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Data/InputOutput.o src/Data/InputOutput.cpp
 
 ${OBJECTDIR}/src/Data/Options.o: src/Data/Options.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Data

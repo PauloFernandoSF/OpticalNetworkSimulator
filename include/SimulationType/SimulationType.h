@@ -21,13 +21,14 @@ class Parameters;
 class Options;
 class Data;
 class Topology;
+class InputOutput;
 
 /**
  * @brief Base class for simulation objects
  */
 class SimulationType {
 public:
-    SimulationType();
+    SimulationType(unsigned int simulIndex);
     SimulationType(const SimulationType& orig);
     virtual ~SimulationType();
     
@@ -54,11 +55,61 @@ public:
     /**
      * @brief Prints a description of the simulation
      */
-    virtual void help() = 0;    
+    virtual void help() = 0;
     
-    
+    /**
+     * @brief
+     * @return 
+     */
+    Parameters* GetParameters() const;
+    /**
+     * @brief
+     * @param parameters
+     */
+    void SetParameters(std::shared_ptr<Parameters> parameters);
+    /**
+     * @brief
+     * @return 
+     */
+    Options* GetOptions() const;
+    /**
+     * @brief 
+     * @param options
+     */
+    void SetOptions(std::shared_ptr<Options> options);
+    /**
+     * @brief
+     * @return 
+     */
+    Data* GetData() const;
+    /**
+     * @brief
+     * @param data
+     */
+    void SetData(std::unique_ptr<Data> data);
+    /**
+     * @brief
+     * @return 
+     */
+    Topology* GetTopology() const;
+    /**
+     * @brief
+     * @param topology
+     */
+    void SetTopology(std::shared_ptr<Topology> topology);
+    /**
+     * @brief
+     * @return 
+     */
+    InputOutput* GetInputOutput() const;
+    /**
+     * @brief
+     * @param inputOutput
+     */
+    void SetInputOutput(std::unique_ptr<InputOutput> inputOutput);
+
 private:
-    unsigned int simulationIndex;
+    const unsigned int simulationIndex;
     /**
      * @brief pointer to an Parameters object used in this simulation
      */
@@ -75,7 +126,10 @@ private:
      * @brief pointer to Topology object used in this simulation
      */
     std::shared_ptr<Topology> topology;
-    
+    /**
+     * @brief pointer to InputOutput object used in this simulation
+     */
+    std::unique_ptr<InputOutput> inputOutput;
 };
 
 #endif /* SIMULATIONTYPE_H */

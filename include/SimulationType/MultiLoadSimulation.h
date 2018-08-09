@@ -19,11 +19,11 @@
 
 class MultiLoadSimulation : public SimulationType {
 public:
-    MultiLoadSimulation();
+    MultiLoadSimulation(unsigned int simulIndex);
     MultiLoadSimulation(const MultiLoadSimulation& orig);
     virtual ~MultiLoadSimulation();
 private:
-    virtual void LoadFile();
+    void LoadFile();
 };
 
 #endif /* MULTILOADSIMULATION_H */

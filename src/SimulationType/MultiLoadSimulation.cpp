@@ -13,7 +13,8 @@
 
 #include "../../include/SimulationType/MultiLoadSimulation.h"
 
-MultiLoadSimulation::MultiLoadSimulation() {
+MultiLoadSimulation::MultiLoadSimulation(unsigned int simulIndex)
+:SimulationType(simulIndex){
     
 }
 
