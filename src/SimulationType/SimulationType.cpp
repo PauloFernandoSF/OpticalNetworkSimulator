@@ -32,11 +32,20 @@ inputOutput(boost::make_unique<InputOutput>(this)){
 }
 
 SimulationType::~SimulationType() {
-    
+    parameters.~__shared_ptr();
+    options.~__shared_ptr();
+    data.~unique_ptr();
+    topology.~__shared_ptr();
+    inputOutput.~unique_ptr();
 }
 
 void SimulationType::LoadFile() {
+    this->parameters->LoadFile();
     
+}
+
+const unsigned int SimulationType::GetSimulationIndex() const {
+    return simulationIndex;
 }
 
 Parameters* SimulationType::GetParameters() const {

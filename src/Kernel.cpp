@@ -14,9 +14,11 @@
 #include "../include/Kernel.h"
 
 #include "../include/SimulationType/SimulationType.h"
+#include "../include/SimulationType/MultiLoadSimulation.h"
 
 Kernel::Kernel(int numSimulations)
-:numberSimulations(numSimulations) {
+:numberSimulations(numSimulations),
+simulations(0) {
     
 }
 
@@ -37,14 +39,25 @@ void Kernel::Run() {
 void Kernel::Pre_Simulation() {
     
     //Create the simulations vector
+    for(int a = 1; a <= this->numberSimulations; ++a){
+        simulations.push_back(std::make_shared<MultiLoadSimulation> (a));
+    }
+    
+    for(auto it : simulations){
+        it->LoadFile();
+    }
     
 }
 
 void Kernel::Simulation() {
     
+    
 }
 
 void Kernel::Pos_Simulation() {
     
+    for(auto it : simulations){
+        simulations.~vector();
+    }
 }
 

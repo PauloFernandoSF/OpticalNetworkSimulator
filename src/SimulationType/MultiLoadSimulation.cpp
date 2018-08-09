@@ -22,6 +22,29 @@ MultiLoadSimulation::~MultiLoadSimulation() {
     
 }
 
+void MultiLoadSimulation::Run() {
+
+}
+
+void MultiLoadSimulation::Load() {
+
+}
+
 void MultiLoadSimulation::LoadFile() {
     SimulationType::LoadFile();
+    
+    //Additional load functions
+    //Singular to that simulation
+}
+
+void MultiLoadSimulation::Print() {
+
+}
+
+void MultiLoadSimulation::Save() {
+
+}
+
+void MultiLoadSimulation::Help() {
+
 }

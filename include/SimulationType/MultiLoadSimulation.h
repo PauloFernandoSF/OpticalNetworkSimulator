@@ -22,8 +22,16 @@ public:
     MultiLoadSimulation(unsigned int simulIndex);
     MultiLoadSimulation(const MultiLoadSimulation& orig);
     virtual ~MultiLoadSimulation();
+
+    void Run() override;
+    void Load() override;
+    void LoadFile() override;
+    void Print() override;
+    void Save() override;
+    void Help() override;
+    
 private:
-    void LoadFile();
+    
 };
 
 #endif /* MULTILOADSIMULATION_H */

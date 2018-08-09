@@ -35,11 +35,11 @@ public:
     /**
      * @brief Runs a simulation with specified parameters
      */
-    virtual void run() = 0;
+    virtual void Run() = 0;
     /**
      * @brief Load parameters to the simulation from the terminal
      */
-    virtual void load() = 0;    
+    virtual void Load() = 0;    
     /**
      * @brief Load parameters to the simulation from a file
      */
@@ -47,16 +47,18 @@ public:
     /**
      * @brief Print the results in the terminal
      */
-    virtual void print() = 0;    
+    virtual void Print() = 0;    
     /**
      * @brief Save the results in files
      */
-    virtual void save() = 0;    
+    virtual void Save() = 0;    
     /**
      * @brief Prints a description of the simulation
      */
-    virtual void help() = 0;
+    virtual void Help() = 0;
     
+    const unsigned int GetSimulationIndex() const;
+
     /**
      * @brief
      * @return 

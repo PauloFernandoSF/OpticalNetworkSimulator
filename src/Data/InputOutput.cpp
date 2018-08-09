@@ -11,7 +11,11 @@
  * Created on August 8, 2018, 8:14 PM
  */
 
+#include <iostream>
+
 #include "../../include/Data/InputOutput.h"
+
+#include "../../include/SimulationType/SimulationType.h"
 
 InputOutput::InputOutput(SimulationType* simulType)
 :simulType(simulType) {
@@ -20,6 +24,52 @@ InputOutput::InputOutput(SimulationType* simulType)
 InputOutput::~InputOutput() {
 }
 
-void InputOutput::LoadParameters() {
+void InputOutput::LoadParameters(std::ifstream& parameters) {
+    int auxInt = this->simulType->GetSimulationIndex();
     
+    do{
+        parameters.open("Files/Input/Parameters_" + 
+        std::to_string(auxInt) + ".txt");
+        
+        if(!parameters.is_open()) {       
+            std::cerr << "Wrong parameter file." << std::endl;
+            std::cerr << "The file required is: Parameters_" << 
+            auxInt << ".txt" << std::endl;
+            std::cerr << "Fix the file then press 'Enter'" << std::endl;
+            
+            std::cin.get();
+        }
+
+    }while(!parameters.is_open());
 }
+
+void InputOutput::LoadOptions(std::ifstream& options) {
+    int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        options.open("Files/Options" + std::to_string(auxInt) + ".txt");
+        
+        if(!options.is_open()) {       
+            std::cerr << "Wrong options file." << std::endl;
+            std::cerr << "The file required is: Paramters_" << auxInt << ".txt";
+            std::cerr << "Fix the file then press 'Enter'" << std::endl;
+        }
+
+    }while(!options.is_open());
+}
+
+void InputOutput::LoadTopology(std::ifstream& topology) {
+    int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        topology.open("Files/Options" + std::to_string(auxInt) + ".txt");
+        
+        if(!topology.is_open()) {       
+            std::cerr << "Wrong options file." << std::endl;
+            std::cerr << "The file required is: Paramters_" << auxInt << ".txt";
+            std::cerr << "Fix the file then press 'Enter'" << std::endl;
+        }
+
+    }while(!topology.is_open());
+}
+
