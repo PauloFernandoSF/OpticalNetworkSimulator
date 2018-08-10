@@ -28,14 +28,15 @@ void InputOutput::LoadParameters(std::ifstream& parameters) {
     int auxInt = this->simulType->GetSimulationIndex();
     
     do{
-        parameters.open("Files/Input/Parameters_" + 
+        parameters.open("Files/Inputs/Parameters_" + 
         std::to_string(auxInt) + ".txt");
         
         if(!parameters.is_open()) {       
             std::cerr << "Wrong parameter file." << std::endl;
             std::cerr << "The file required is: Parameters_" << 
             auxInt << ".txt" << std::endl;
-            std::cerr << "Fix the file then press 'Enter'" << std::endl;
+            std::cerr << "Fix the file then press 'Enter'" 
+            << std::endl;
             
             std::cin.get();
         }
@@ -47,29 +48,23 @@ void InputOutput::LoadOptions(std::ifstream& options) {
     int auxInt = this->simulType->GetSimulationIndex();
     
     do{
-        options.open("Files/Options" + std::to_string(auxInt) + ".txt");
+        options.open("Files/Inputs/Options_" + 
+        std::to_string(auxInt) + ".txt");
         
         if(!options.is_open()) {       
             std::cerr << "Wrong options file." << std::endl;
-            std::cerr << "The file required is: Paramters_" << auxInt << ".txt";
-            std::cerr << "Fix the file then press 'Enter'" << std::endl;
+            std::cerr << "The file required is: Options_" 
+            << auxInt << ".txt";
+            std::cerr << "Fix the file then press 'Enter'" 
+            << std::endl;
+            
+            std::cin.get();
         }
 
     }while(!options.is_open());
 }
 
 void InputOutput::LoadTopology(std::ifstream& topology) {
-    int auxInt = this->simulType->GetSimulationIndex();
     
-    do{
-        topology.open("Files/Options" + std::to_string(auxInt) + ".txt");
-        
-        if(!topology.is_open()) {       
-            std::cerr << "Wrong options file." << std::endl;
-            std::cerr << "The file required is: Paramters_" << auxInt << ".txt";
-            std::cerr << "Fix the file then press 'Enter'" << std::endl;
-        }
-
-    }while(!topology.is_open());
 }
 

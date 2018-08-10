@@ -34,7 +34,7 @@ void MultiLoadSimulation::LoadFile() {
     SimulationType::LoadFile();
     
     //Additional load functions
-    //Singular to that simulation
+    //singular to that simulation
 }
 
 void MultiLoadSimulation::Print() {

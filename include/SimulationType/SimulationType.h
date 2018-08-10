@@ -41,7 +41,7 @@ public:
      */
     virtual void Load() = 0;    
     /**
-     * @brief Load parameters to the simulation from a file
+     * @brief Load parameters to the simulation from a .txt file
      */
     virtual void LoadFile();    
     /**
@@ -60,57 +60,70 @@ public:
     const unsigned int GetSimulationIndex() const;
 
     /**
-     * @brief
-     * @return 
+     * @brief Returns a pointer to a Parameters object 
+     * in this simulation
+     * @return pointer to a Parameters object
      */
     Parameters* GetParameters() const;
     /**
-     * @brief
-     * @param parameters
+     * @brief Sets a pointer to the Parameters object 
+     * in this simulation with ownership 
+     * @param parameters smart point for Parameters object
      */
     void SetParameters(std::shared_ptr<Parameters> parameters);
     /**
-     * @brief
-     * @return 
+     * @brief Returns a pointer to a Options object 
+     * in this simulation
+     * @return pointer to a Options object
      */
     Options* GetOptions() const;
     /**
-     * @brief 
-     * @param options
+     * @brief Sets a pointer to the Options object 
+     * in this simulation with ownership
+     * @param options smart point for Options object
      */
     void SetOptions(std::shared_ptr<Options> options);
     /**
-     * @brief
-     * @return 
+     * @brief Returns a pointer to a Data object 
+     * in this simulation
+     * @return pointer to a Data object
      */
     Data* GetData() const;
     /**
-     * @brief
-     * @param data
+     * @brief Sets a pointer to the Options object 
+     * in this simulation (object ownership transfered)
+     * @param data pointer to a Data object
      */
     void SetData(std::unique_ptr<Data> data);
     /**
-     * @brief
-     * @return 
+     * @brief Returns a pointer to a Topology object 
+     * used in this simulation
+     * @return pointer to a Topology object
      */
     Topology* GetTopology() const;
     /**
-     * @brief
-     * @param topology
+     * @brief Sets a pointer to the Topology object 
+     * used in this simulation (with ownership)
+     * @param topology pointer to a Topology object
      */
     void SetTopology(std::shared_ptr<Topology> topology);
     /**
-     * @brief
-     * @return 
+     * @brief Returns a pointer to a InputOutput object 
+     * used in this simulation
+     * @return pointer to a InputOutput object
      */
     InputOutput* GetInputOutput() const;
     /**
-     * @brief
-     * @param inputOutput
+     * @brief Sets a pointer to the InputOutput object 
+     * in this simulation (object ownership transfered)
+     * @param inputOutput pointer to a InputOutput object
      */
     void SetInputOutput(std::unique_ptr<InputOutput> inputOutput);
 
 private:
+    /**
+     * @brief Index of the simulation
+     */
     const unsigned int simulationIndex;
     /**
      * @brief pointer to an Parameters object used in this simulation

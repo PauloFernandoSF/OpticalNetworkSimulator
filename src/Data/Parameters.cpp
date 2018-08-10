@@ -17,7 +17,9 @@
 #include "../../include/Data/InputOutput.h"
 
 Parameters::Parameters(SimulationType* simulType)
-:simulType(simulType) {
+:simulType(simulType), loadPoint(0), minLoadPoint(0.0),
+maxLoadPoint(0.0), loadPasso(0.0), numberLoadPoints(0),
+numberReqMax(0.0), mu(0.0){
     
 }
 

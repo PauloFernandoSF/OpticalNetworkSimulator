@@ -16,10 +16,24 @@
 
 class SimulationType;
 
+#include <fstream>
+
+/**
+ *@brief Numerate the topology options
+ */
+enum TopologyOption {
+    TopologyInvalid,
+    TopologyNSFNet,
+    TopologyRing,
+    TopologyToroidal,
+    TopologyGermany,
+    TopologyItaly
+};
+
 /**
 * @brief Numerate the options for routing algorithms
  */
-enum RoutingType {
+enum RoutingOption {
      RoutingInvalid,
      RoutingDJK,
      RoutingYEN,
@@ -29,7 +43,7 @@ enum RoutingType {
 /**
 * @brief Numerate the options for spectrum allocation algorithms
  */
-enum SpectrumAllocationType {
+enum SpectrumAllocationOption {
      SpecAssInvalid,
      SpecAssRandom,
      SpecAssFF,
@@ -45,27 +59,39 @@ public:
     Options(const Options& orig);
     virtual ~Options();
     
+    void LoadFile();
+    
     /**
      * @brief Returns the routing option
      * @return Routing option
      */
-    RoutingType getRoutingOption() const;    
+    RoutingOption GetRoutingOption() const;
     /**
      * @brief Sets the routing option
      * @param opt routing option
      */
-    void setRoutingOption(RoutingType opt);   
+    void SetRoutingOption(RoutingOption routingOption);
     /**
      * @brief Returns the spectral allocation option
      * @return Spectral allocation option
      */
-    SpectrumAllocationType getSpecAllOption() const;    
+    SpectrumAllocationOption GetSpecAllOption() const;
     /**
      * @brief Sets the spectral allocation option
      * @param opt spectral allocation option
      */
-    void setSpecAllOption(SpectrumAllocationType opt);
-    
+    void SetSpecAllOption(SpectrumAllocationOption specAllOption);
+    /**
+     * @brief Returns the topology choice
+     * @return Topology option
+     */
+    TopologyOption GetTopologyOption() const;
+    /**
+     * @brief Sets the topology choice
+     * @param topologyOption topology option
+     */
+    void SetTopologyOption(TopologyOption topologyOption);
+
 private:
     /**
      * @brief A pointer to the simulation this object belong
@@ -74,11 +100,15 @@ private:
     /**
      * @brief Routing option
      */
-    RoutingType routingOption;
+    RoutingOption routingOption;
     /**
      * @brief Spectral allocation option
      */
-    SpectrumAllocationType specAllOption;
+    SpectrumAllocationOption specAllOption;
+    /**
+     * @brief Topology option
+     */
+    TopologyOption topologyOption;
 };
 
 #endif /* OPTIONS_H */

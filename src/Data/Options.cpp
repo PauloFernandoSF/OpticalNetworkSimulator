@@ -13,26 +13,51 @@
 
 #include "../../include/Data/Options.h"
 
+#include "../../include/SimulationType/SimulationType.h"
+#include "../../include/Data/InputOutput.h"
+
 Options::Options(SimulationType* simulType)
-:routingOption(RoutingInvalid), specAllOption(SpecAssInvalid),
-simulType(simulType) {
+:simulType(simulType), topologyOption(TopologyInvalid),
+routingOption(RoutingInvalid), specAllOption(SpecAssInvalid) {
 }
 
 Options::~Options() {
+
 }
 
-RoutingType Options::getRoutingOption() const {
+void Options::LoadFile() {
+    std::ifstream auxIfstream;
+    int auxInt;
+    
+    this->simulType->GetInputOutput()->LoadOptions(auxIfstream);
+    auxIfstream >> auxInt;
+    this->SetTopologyOption((TopologyOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetRoutingOption((RoutingOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetSpecAllOption((SpectrumAllocationOption) auxInt);
+}
+
+RoutingOption Options::GetRoutingOption() const {
     return routingOption;
 }
 
-void Options::setRoutingOption(RoutingType opt) {
-    routingOption = opt;
+void Options::SetRoutingOption(RoutingOption routingOption) {
+    this->routingOption = routingOption;
 }
 
-SpectrumAllocationType Options::getSpecAllOption() const {
+SpectrumAllocationOption Options::GetSpecAllOption() const {
     return specAllOption;
 }
 
-void Options::setSpecAllOption(SpectrumAllocationType opt) {
-    specAllOption = opt;
+void Options::SetSpecAllOption(SpectrumAllocationOption specAllOption) {
+    this->specAllOption = specAllOption;
+}
+
+TopologyOption Options::GetTopologyOption() const {
+    return topologyOption;
+}
+
+void Options::SetTopologyOption(TopologyOption topologyOption) {
+    this->topologyOption = topologyOption;
 }
