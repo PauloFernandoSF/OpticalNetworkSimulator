@@ -66,26 +66,6 @@ public:
     void LoadFile();
     
     /**
-     * @brief Returns the routing option
-     * @return Routing option
-     */
-    RoutingOption GetRoutingOption() const;
-    /**
-     * @brief Sets the routing option
-     * @param opt routing option
-     */
-    void SetRoutingOption(RoutingOption routingOption);
-    /**
-     * @brief Returns the spectral allocation option
-     * @return Spectral allocation option
-     */
-    SpectrumAllocationOption GetSpecAllOption() const;
-    /**
-     * @brief Sets the spectral allocation option
-     * @param opt spectral allocation option
-     */
-    void SetSpecAllOption(SpectrumAllocationOption specAllOption);
-    /**
      * @brief Returns the topology choice
      * @return Topology option
      */
@@ -101,12 +81,40 @@ public:
      * @param topologyOption topology option
      */
     void SetTopologyOption(TopologyOption topologyOption);
-
+    /**
+     * @brief Returns the routing option
+     * @return Routing option
+     */
+    RoutingOption GetRoutingOption() const;
+    
+    std::string GetRoutingName() const;
+    /**
+     * @brief Sets the routing option
+     * @param opt routing option
+     */
+    void SetRoutingOption(RoutingOption routingOption);
+    /**
+     * @brief Returns the spectral allocation option
+     * @return Spectral allocation option
+     */
+    SpectrumAllocationOption GetSpecAllOption() const;
+    
+    SpectrumAllocationOption GetSpecAllName() const;
+    /**
+     * @brief Sets the spectral allocation option
+     * @param opt spectral allocation option
+     */
+    void SetSpecAllOption(SpectrumAllocationOption specAllOption);
+    
 private:
     /**
      * @brief A pointer to the simulation this object belong
      */
     SimulationType* simulType;
+    /**
+     * @brief Topology option
+     */
+    TopologyOption topologyOption;
     /**
      * @brief Routing option
      */
@@ -115,10 +123,12 @@ private:
      * @brief Spectral allocation option
      */
     SpectrumAllocationOption specAllOption;
-    /**
-     * @brief Topology option
-     */
-    TopologyOption topologyOption;
+        
+    static const boost::unordered_map<RoutingOption,
+    std::string> mapRoutingOptions;
+    
+    static const boost::unordered_map<SpectrumAllocationOption,
+    std::string> mapSpecAlgOptions;
     /**
      * @brief Mmap that keeps the topology option 
      * and the name of the selected topology

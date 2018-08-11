@@ -58,6 +58,13 @@ public:
     void SetNumSlots(int numSlots);
     
     void InsertLink(std::shared_ptr<Link> link);
+    
+    void InsertNode(std::shared_ptr<Node> node);
+    
+    double GetMaxLength() const;
+
+    void SetMaxLength();
+
 
     
 private:
@@ -89,6 +96,8 @@ private:
      * @brief Total number of slots in the topology
      */
     int numSlots;
+    
+    double maxLength;
 };
 
 #endif /* TOPOLOGY_H */

@@ -25,6 +25,19 @@ Options::mapTopologyOptions = boost::assign::map_list_of
     (TopologyGermany,  "Germany")
     (TopologyItaly, "Italy");
 
+const boost::unordered_map<RoutingOption, std::string>
+Options::mapRoutingOptions = boost::assign::map_list_of
+    (RoutingInvalid, "Invalid")
+    (RoutingDJK, "Dijkstra")
+    (RoutingYEN, "YEN")
+    (RoutingBSR, "BSR");
+
+const boost::unordered_map<SpectrumAllocationOption, std::string>
+Options::mapSpecAlgOptions = boost::assign::map_list_of
+    (SpecAssInvalid, "Invalid")
+    (SpecAssRandom, "Random")
+    (SpecAssFF, "First Fit")
+    (SpecAssMSCL, "MSCL");
 
 Options::Options(SimulationType* simulType)
 :simulType(simulType), topologyOption(TopologyInvalid),
@@ -48,8 +61,24 @@ void Options::LoadFile() {
     this->SetSpecAllOption((SpectrumAllocationOption) auxInt);
 }
 
+TopologyOption Options::GetTopologyOption() const {
+    return topologyOption;
+}
+
+std::string Options::GetTopologyName() const {
+    return mapTopologyOptions.at(this->topologyOption);
+}
+
+void Options::SetTopologyOption(TopologyOption topologyOption) {
+    this->topologyOption = topologyOption;
+}
+
 RoutingOption Options::GetRoutingOption() const {
     return routingOption;
+}
+
+std::string Options::GetRoutingName() const {
+    return mapRoutingOptions.at(this->routingOption);
 }
 
 void Options::SetRoutingOption(RoutingOption routingOption) {
@@ -63,16 +92,3 @@ SpectrumAllocationOption Options::GetSpecAllOption() const {
 void Options::SetSpecAllOption(SpectrumAllocationOption specAllOption) {
     this->specAllOption = specAllOption;
 }
-
-TopologyOption Options::GetTopologyOption() const {
-    return topologyOption;
-}
-
-std::string Options::GetTopologyName() const {
-    return mapTopologyOptions.at(this->topologyOption);
-}
-
-void Options::SetTopologyOption(TopologyOption topologyOption) {
-    this->topologyOption = topologyOption;
-}
-

@@ -14,15 +14,30 @@
 #ifndef NODE_H
 #define NODE_H
 
+typedef unsigned int NodeId;
+
 class Node {
 public:
-    Node();
+    Node(NodeId nodeId);
+
     Node(const Node& orig);
     virtual ~Node();
     
-    void initialise();
+    virtual void Initialise();
+    
+    /**
+     * @brief 
+     * @return 
+     */
+    NodeId GetNodeId() const;
+    /**
+     * @brief 
+     * @param nodeId
+     */
+    void SetNodeId(NodeId nodeId);
 
 private:
+    NodeId nodeId;
 };
 
 #endif /* NODE_H */

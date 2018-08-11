@@ -13,8 +13,11 @@
 
 #include "../../include/Structure/Node.h"
 
-Node::Node() {
+Node::Node(NodeId nodeId) :
+nodeId(nodeId) {
+    
 }
+
 
 Node::Node(const Node& orig) {
 }
@@ -22,6 +25,14 @@ Node::Node(const Node& orig) {
 Node::~Node() {
 }
 
-void Node::initialise() {
+void Node::Initialise() {
     
+}
+
+NodeId Node::GetNodeId() const {
+    return nodeId;
+}
+
+void Node::SetNodeId(NodeId nodeId) {
+    this->nodeId = nodeId;
 }

@@ -20,7 +20,7 @@
 Topology::Topology(SimulationType* simulType) 
 :simulType(simulType), nameTopology("Invalid"), 
 vecNodes(0), vecLinks(0), numNodes(0), numLinks(0), 
-numSlots(0){
+numSlots(0), maxLength(0.0){
 
 }
 
@@ -49,6 +49,10 @@ void Topology::LoadFile() {
     auxIfstream >> auxInt;
     this->SetNumSlots(auxInt);
     
+    for(auxInt = 0; auxInt < this->GetNumNodes(); ++auxInt){
+        std::shared_ptr<Node> node = std::make_shared<Node> (auxInt);
+    }
+    
     int orNode, deNode, nSec;
     double length;
     for(auxInt = 0; auxInt < this->GetNumNodes(); ++auxInt){
@@ -62,11 +66,10 @@ void Topology::LoadFile() {
     }
 }
 
-
 void Topology::Initialise() {
     
     for(auto it : vecNodes){
-        it->initialise();
+        it->Initialise();
     }
     
     for(auto it : vecLinks){
@@ -92,7 +95,7 @@ void Topology::SetNumNodes(int numNodes) {
     this->numNodes = numNodes;
     
     for(int a = 0; a < this->numNodes; ++a){
-        this->vecNodes.push_back(std::make_shared<Node>());
+        this->vecNodes.push_back(nullptr);
         
         for(int b = 0; a < this->numNodes; ++b){
             this->vecLinks.push_back(nullptr);
@@ -126,3 +129,22 @@ void Topology::InsertLink(std::shared_ptr<Link> link) {
     + link->GetDestinationNode()) = link;
 }
 
+void Topology::InsertNode(std::shared_ptr<Node> node) {
+    assert(node->GetNodeId() < this->vecNodes.size());
+    
+    this->vecNodes.at(node->GetNodeId()) = node;
+}
+
+double Topology::GetMaxLength() const {
+    return maxLength;
+}
+
+void Topology::SetMaxLength() {
+    
+    for(auto it : this->vecLinks){
+        if(it == nullptr)
+            continue;
+        if(this->maxLength < it->GetLength())
+            this->maxLength = it->GetLength();
+    }
+}
