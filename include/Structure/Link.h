@@ -17,12 +17,55 @@
 class Link {
 public:
     Link();
+    Link(unsigned int origimNode, unsigned int destinationNode, 
+    double length, unsigned int numberSections);
+
     Link(const Link& orig);
     virtual ~Link();
     
     void initialise();
+    
+    unsigned int GetOrigimNode() const;
+
+    void SetOrigimNode(unsigned int origimNode);
+    
+    unsigned int GetDestinationNode() const;
+
+    void SetDestinationNode(unsigned int destinationNode);
+
+    double GetLength() const;
+
+    void SetLength(double length);
+
+    unsigned int GetNumberSections() const;
+
+    void SetNumberSections(unsigned int numberSections);
 
 private:
+    /**
+     * @brief 
+     */
+    unsigned int origimNode;
+    /**
+     * @brief 
+     */
+    unsigned int destinationNode;
+    /**
+     * @brief 
+     */
+    double length;
+    /**
+     * @brief 
+     */
+    unsigned int numberSections;
+    /**
+     * @brief 
+     */
+    double cost;
+    /**
+     * @brief 
+     */
+    bool status;
 };
 
 #endif /* LINK_H */

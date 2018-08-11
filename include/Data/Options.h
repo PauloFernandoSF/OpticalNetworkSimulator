@@ -17,6 +17,10 @@
 class SimulationType;
 
 #include <fstream>
+#include <map>
+#include <boost/assign/list_of.hpp>
+#include <boost/unordered_map.hpp>
+#include <iostream>
 
 /**
  *@brief Numerate the topology options
@@ -54,11 +58,11 @@ enum SpectrumAllocationOption {
  * @brief Class that contain the data options
  */
 class Options {
-public:
+public:   
     Options(SimulationType* simulType);
     Options(const Options& orig);
     virtual ~Options();
-    
+        
     void LoadFile();
     
     /**
@@ -87,6 +91,12 @@ public:
      */
     TopologyOption GetTopologyOption() const;
     /**
+     * @brief Gets the name of topology based in option selected
+     * @param topologyOption topology option
+     * @return The name of the topology 
+     */
+    std::string GetTopologyName() const;
+    /**
      * @brief Sets the topology choice
      * @param topologyOption topology option
      */
@@ -109,6 +119,12 @@ private:
      * @brief Topology option
      */
     TopologyOption topologyOption;
+    /**
+     * @brief Mmap that keeps the topology option 
+     * and the name of the selected topology
+     */
+    static const boost::unordered_map<TopologyOption, 
+    std::string> mapTopologyOptions;
 };
 
 #endif /* OPTIONS_H */

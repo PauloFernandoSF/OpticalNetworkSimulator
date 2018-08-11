@@ -42,6 +42,7 @@ SimulationType::~SimulationType() {
 void SimulationType::LoadFile() {
     this->parameters->LoadFile();
     this->options->LoadFile();
+    this->topology->LoadFile();
 }
 
 const unsigned int SimulationType::GetSimulationIndex() const {

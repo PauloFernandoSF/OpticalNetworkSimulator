@@ -16,6 +16,7 @@
 #include "../../include/Data/InputOutput.h"
 
 #include "../../include/SimulationType/SimulationType.h"
+#include "../../include/Structure/Topology.h"
 
 InputOutput::InputOutput(SimulationType* simulType)
 :simulType(simulType) {
@@ -65,6 +66,20 @@ void InputOutput::LoadOptions(std::ifstream& options) {
 }
 
 void InputOutput::LoadTopology(std::ifstream& topology) {
+    std::string topologyName = 
+    this->simulType->GetTopology()->GetNameTopology();
     
+    do{
+        topology.open("Files/Inputs/Topologies/" + 
+        topologyName + ".txt");
+        
+        if(!topology.is_open()) {       
+            std::cerr << "Wrong options file." << std::endl;
+            std::cerr << "The file required is: " << topologyName << ".txt";
+            std::cerr << "Fix the file then press 'Enter'" << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!topology.is_open());
 }
 

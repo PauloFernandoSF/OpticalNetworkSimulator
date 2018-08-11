@@ -18,6 +18,8 @@
 #include "../Structure/Link.h"
 
 #include <vector>
+#include <memory>
+#include <assert.h>
 
 class SimulationType;
 
@@ -30,8 +32,33 @@ public:
     Topology(const Topology& orig);
     virtual ~Topology();
     
-    void create();
-    void initialise();
+    void LoadFile();
+    void Initialise();
+    /**
+     * @brief Returns the name of this topology
+     * @return String with topology name
+     */
+    std::string GetNameTopology() const;
+    /**
+     * @brief Sets  the topology name
+     * @param nameTopology name of topology
+     */
+    void SetNameTopology(std::string nameTopology);
+    
+    int GetNumNodes() const;
+
+    void SetNumNodes(int numNodes);
+    
+    int GetNumLinks() const;
+
+    void SetNumLinks(int numLinks);
+
+    int GetNumSlots() const;
+
+    void SetNumSlots(int numSlots);
+    
+    void InsertLink(std::shared_ptr<Link> link);
+
     
 private:
     /**
@@ -39,15 +66,28 @@ private:
      */
     SimulationType* simulType;
     /**
+     * @brief Name of the selected topology
+     */
+    std::string nameTopology;
+    /**
      * @brief Vector with all topology nodes 
      */
-    std::vector<Node*> vecNodes;
+    std::vector<std::shared_ptr<Node>> vecNodes;
     /**
      * @brief Vector with all topology links 
      */
-    std::vector<Link*> vecLinks;
+    std::vector<std::shared_ptr<Link>> vecLinks;
+    /**
+     * @brief Total number of nodes in the topology
+     */
     int numNodes;
+    /**
+     * @brief Total number of links in the topology
+     */
     int numLinks;
+    /**
+     * @brief Total number of slots in the topology
+     */
     int numSlots;
 };
 

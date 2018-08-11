@@ -16,6 +16,16 @@
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
 
+const boost::unordered_map<TopologyOption, std::string> 
+Options::mapTopologyOptions = boost::assign::map_list_of
+    (TopologyInvalid, "Invalid")
+    (TopologyNSFNet, "NSFNet")
+    (TopologyRing, "Ring")
+    (TopologyToroidal, "Toroidal")
+    (TopologyGermany,  "Germany")
+    (TopologyItaly, "Italy");
+
+
 Options::Options(SimulationType* simulType)
 :simulType(simulType), topologyOption(TopologyInvalid),
 routingOption(RoutingInvalid), specAllOption(SpecAssInvalid) {
@@ -58,6 +68,11 @@ TopologyOption Options::GetTopologyOption() const {
     return topologyOption;
 }
 
+std::string Options::GetTopologyName() const {
+    return mapTopologyOptions.at(this->topologyOption);
+}
+
 void Options::SetTopologyOption(TopologyOption topologyOption) {
     this->topologyOption = topologyOption;
 }
+
