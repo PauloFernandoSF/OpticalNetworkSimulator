@@ -11,7 +11,7 @@
  * Created on August 2, 2018, 3:50 PM
  */
 
-#include <deque>
+#include <boost/make_unique.hpp>
 
 #include "../../include/SimulationType/SimulationType.h"
 
@@ -20,6 +20,7 @@
 #include "../../include/Data/Data.h"
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Structure/Topology.h"
+#include "../../include/Calls/Traffic.h"
 
 SimulationType::SimulationType(unsigned int simulIndex)
 :simulationIndex(simulIndex),
@@ -27,7 +28,8 @@ parameters(std::make_shared<Parameters> (this)),
 options(std::make_shared<Options> (this)), 
 data(boost::make_unique<Data>(this)), 
 topology(std::make_shared<Topology> (this)),
-inputOutput(boost::make_unique<InputOutput>(this)){
+inputOutput(boost::make_unique<InputOutput>(this)),
+traffic(std::make_shared<Traffic>(this)) {
     
 }
 
@@ -37,13 +39,18 @@ SimulationType::~SimulationType() {
     data.~unique_ptr();
     topology.~__shared_ptr();
     inputOutput.~unique_ptr();
+    traffic.~__shared_ptr();
 }
 
 void SimulationType::LoadFile() {
     this->parameters->LoadFile();
     this->options->LoadFile();
     this->topology->LoadFile();
-    
+    this->traffic->LoadFile();
+}
+
+void SimulationType::AdditionalSettings() {
+    this->topology->SetAditionalSettings();
 }
 
 const unsigned int SimulationType::GetSimulationIndex() const {
@@ -88,4 +95,12 @@ InputOutput* SimulationType::GetInputOutput() const {
 
 void SimulationType::SetInputOutput(std::unique_ptr<InputOutput> inputOutput) {
     this->inputOutput = std::move(inputOutput);
+}
+
+Traffic* SimulationType::GetTraffic() const {
+    return traffic.get();
+}
+
+void SimulationType::SetTraffic(std::shared_ptr<Traffic> traffic) {
+    this->traffic = traffic;
 }

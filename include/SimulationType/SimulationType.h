@@ -15,50 +15,70 @@
 #define SIMULATIONTYPE_H
 
 #include <memory>
-#include <boost/make_unique.hpp>
 
 class Parameters;
 class Options;
 class Data;
 class Topology;
 class InputOutput;
+class Traffic;
 
 /**
- * @brief Base class for simulation objects
+ * @brief Base class for Simulations objects.
  */
 class SimulationType {
 public:
+    /**
+     * @brief Standard constructor for a SimulationType object.
+     * @param simulIndex index of this simulation.
+     */
     SimulationType(unsigned int simulIndex);
+    /**
+     * @brief Copy constructor for a SimulationType object.
+     * @param orig original SimulationType object.
+     */
     SimulationType(const SimulationType& orig);
+    /**
+     * @brief Virtual destructor of a SimulationType object.
+     */
     virtual ~SimulationType();
     
     /**
-     * @brief Runs a simulation with specified parameters
+     * @brief Runs a simulation with specified parameters.
      */
     virtual void Run() = 0;
     /**
-     * @brief Load parameters to the simulation from the terminal
+     * @brief Load parameters to the simulation from the terminal.
      */
-    virtual void Load() = 0;    
+    virtual void Load() = 0;
     /**
-     * @brief Load parameters to the simulation from a .txt file
+     * @brief Load parameters, options and such,
+     * to the simulation from a .txt file.
      */
-    virtual void LoadFile();    
+    virtual void LoadFile();
     /**
-     * @brief Print the results in the terminal
+     * @brief Sets SimulationType additional settings for this simulation,
+     * as maximum length and initial cost for the links in topology.
      */
-    virtual void Print() = 0;    
+    virtual void AdditionalSettings();
     /**
-     * @brief Save the results in files
+     * @brief Print the results of this simulation in terminal.
      */
-    virtual void Save() = 0;    
+    virtual void Print() = 0;
     /**
-     * @brief Prints a description of the simulation
+     * @brief Save the results in .txt files.
+     */
+    virtual void Save() = 0;
+    /**
+     * @brief Prints a description of the simulation.
      */
     virtual void Help() = 0;
     
+    /**
+     * @brief Returns the simulation index
+     * @return Simulation index
+     */
     const unsigned int GetSimulationIndex() const;
-
     /**
      * @brief Returns a pointer to a Parameters object 
      * in this simulation
@@ -109,16 +129,29 @@ public:
     void SetTopology(std::shared_ptr<Topology> topology);
     /**
      * @brief Returns a pointer to a InputOutput object 
-     * used in this simulation
-     * @return pointer to a InputOutput object
+     * used in this simulation.
+     * @return pointer to a InputOutput object.
      */
     InputOutput* GetInputOutput() const;
     /**
      * @brief Sets a pointer to the InputOutput object 
-     * in this simulation (object ownership transfered)
-     * @param inputOutput pointer to a InputOutput object
+     * in this simulation (object ownership transfered).
+     * @param inputOutput pointer to a InputOutput object.
      */
     void SetInputOutput(std::unique_ptr<InputOutput> inputOutput);
+    /**
+     * @brief Returns a pointer to a Traffic object
+     * used in this simulation.
+     * @return pointer to a Traffic object.
+     */
+    Traffic* GetTraffic() const;
+    /**
+     * @brief Sets a pointer to the Traffic object 
+     * in this simulation (share ownership).
+     * @param traffic pointer to a Traffic object.
+     */
+    void SetTraffic(std::shared_ptr<Traffic> traffic);
+
 
 private:
     /**
@@ -145,6 +178,10 @@ private:
      * @brief pointer to InputOutput object used in this simulation
      */
     std::unique_ptr<InputOutput> inputOutput;
+    /**
+     * @brief pointer to Traffic object used in this simulation
+     */
+    std::shared_ptr<Traffic> traffic;
 };
 
 #endif /* SIMULATIONTYPE_H */

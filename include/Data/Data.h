@@ -16,10 +16,26 @@
 
 class SimulationType;
 
+/**
+ * @brief The Data class is responsible for storage the simulation
+ * data.
+ */
 class Data {
 public:
+    /**
+     * @brief Standard constructor for a Data object.
+     * @param simulType SimulationType object that owns 
+     * this data.
+     */
     Data(SimulationType* simulType);
+    /**
+     * @brief Copy constructor for a Data object.
+     * @param orig original Data object.
+     */
     Data(const Data& orig);
+    /**
+     * @brief Virtual destructor of a Data object.
+     */
     virtual ~Data();
 private:
     /**

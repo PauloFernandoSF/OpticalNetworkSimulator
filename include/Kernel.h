@@ -19,18 +19,38 @@
 
 class SimulationType;
 
+/**
+ * @brief The Kernel class is responsible for creating the
+ * simulations, runs those simulations created and to
+ * output the results of those simulations.
+ */
 class Kernel {
 public:
+    /**
+     * @brief Standard constructor for a Kernel object.
+     * @param numSimulations total number of 
+     * simulations for this Kernel.
+     */
     Kernel(int numSimulations);
+    /**
+     * @brief Copy constructor for a Kernel object.
+     * @param orig original Kernel object.
+     */
     Kernel(const Kernel& orig);
+    /**
+     * @brief Default destructor of a Kernel object
+     */
     virtual ~Kernel();
     
     /**
-     * @brief Runs the kernel
+     * @brief Runs the Kernel object.
+     * Three steps are done, each one with all simulation.
      */
     void Run();    
     /**
-     * @brief 
+     * @brief First step called by the Kernel object.
+     * Consists in create the simulations as load
+     * the information needed.
      */
     void Pre_Simulation();    
     /**
@@ -44,11 +64,11 @@ public:
 
 private:
     /**
-     * @brief Total number of simulations in this kernel
+     * @brief Total number of simulations in this kernel.
      */
     unsigned int numberSimulations;
     /**
-     * @brief Vector with all pointers to SimulationType objects
+     * @brief Vector with all pointers to SimulationType objects.
      */
     std::vector<std::shared_ptr<SimulationType>> simulations;
 };

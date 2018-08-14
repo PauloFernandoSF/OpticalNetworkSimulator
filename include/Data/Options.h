@@ -35,7 +35,7 @@ enum TopologyOption {
 };
 
 /**
-* @brief Numerate the options for routing algorithms
+ * @brief Numerate the options for routing algorithms
  */
 enum RoutingOption {
      RoutingInvalid,
@@ -45,7 +45,7 @@ enum RoutingOption {
 };
 
 /**
-* @brief Numerate the options for spectrum allocation algorithms
+ * @brief Numerate the options for spectrum allocation algorithms
  */
 enum SpectrumAllocationOption {
      SpecAssInvalid,
@@ -55,86 +55,151 @@ enum SpectrumAllocationOption {
 };
 
 /**
- * @brief Class that contain the data options
+ * @brief Numerate the options for links cost
+ */
+enum LinkCostType {
+    Invalid,
+    MinHops,
+    MinLength,
+    MinLengthNormalized
+};
+
+/**
+ * @brief The Options class is responsible for storage the simulation
+ * options.
  */
 class Options {
-public:   
+public:
+    /**
+     * @brief Standard constructor for a Options object.
+     * @param simulType SimulationType object that owns 
+     * this Options.
+     */
     Options(SimulationType* simulType);
+    /**
+     * @brief Copy constructor for a Options object.
+     * @param orig original Options object.
+     */
     Options(const Options& orig);
+    /**
+     * @brief Virtual destructor of a Options object.
+     */
     virtual ~Options();
-        
+    
+    /**
+     * @brief Load the options from a .txt file.
+     */
     void LoadFile();
     
     /**
-     * @brief Returns the topology choice
-     * @return Topology option
+     * @brief Returns the topology choice.
+     * @return Topology option.
      */
     TopologyOption GetTopologyOption() const;
     /**
-     * @brief Gets the name of topology based in option selected
-     * @param topologyOption topology option
-     * @return The name of the topology 
+     * @brief Gets the name of topology based in option selected.
+     * @return The name of the topology.
      */
     std::string GetTopologyName() const;
     /**
-     * @brief Sets the topology choice
-     * @param topologyOption topology option
+     * @brief Sets the topology choice.
+     * @param topologyOption topology option.
      */
     void SetTopologyOption(TopologyOption topologyOption);
     /**
-     * @brief Returns the routing option
-     * @return Routing option
+     * @brief Returns the routing option.
+     * @return Routing option.
      */
     RoutingOption GetRoutingOption() const;
-    
+    /**
+     * @brief Gets the name of routing algorithm based in 
+     * option selected.
+     * @return The name of the routing algorithm.
+     */
     std::string GetRoutingName() const;
     /**
-     * @brief Sets the routing option
-     * @param opt routing option
+     * @brief Sets the routing option.
+     * @param routingOption routing option.
      */
     void SetRoutingOption(RoutingOption routingOption);
     /**
-     * @brief Returns the spectral allocation option
-     * @return Spectral allocation option
+     * @brief Returns the spectral allocation option.
+     * @return Spectral allocation option.
      */
     SpectrumAllocationOption GetSpecAllOption() const;
-    
-    SpectrumAllocationOption GetSpecAllName() const;
+    /**
+     * @brief Gets the name of spectral allocation algorithm 
+     * based in option selected.
+     * @return The name of the spectral allocation algorithm.
+     */
+    std::string GetSpecAllName() const;
     /**
      * @brief Sets the spectral allocation option
-     * @param opt spectral allocation option
+     * @param specAllOption spectral allocation option
      */
     void SetSpecAllOption(SpectrumAllocationOption specAllOption);
+    /**
+     * @brief Returns the type of links cost option.
+     * @return Link cost option.
+     */
+    LinkCostType GetLinkCostType() const;
+    /**
+     * @brief Gets the name of links cost based in 
+     * option selected.
+     * @return The name of the links cost.
+     */
+    std::string GetLinkCostTypeName() const;
+    /**
+     * @brief Sets the links cost option.
+     * @param linkCostType links cost option.
+     */
+    void SetLinkCostType(LinkCostType linkCostType);
+
     
 private:
     /**
-     * @brief A pointer to the simulation this object belong
+     * @brief A pointer to the simulation this object belong.
      */
     SimulationType* simulType;
     /**
-     * @brief Topology option
+     * @brief Topology option.
      */
     TopologyOption topologyOption;
     /**
-     * @brief Routing option
+     * @brief Routing option.
      */
     RoutingOption routingOption;
     /**
-     * @brief Spectral allocation option
+     * @brief Spectral allocation option.
      */
     SpectrumAllocationOption specAllOption;
-        
-    static const boost::unordered_map<RoutingOption,
-    std::string> mapRoutingOptions;
     
-    static const boost::unordered_map<SpectrumAllocationOption,
-    std::string> mapSpecAlgOptions;
+    LinkCostType linkCostType;
     /**
-     * @brief Mmap that keeps the topology option 
-     * and the name of the selected topology
+     * @brief Map that keeps the topology option 
+     * and the name of the selected topology.
      */
     static const boost::unordered_map<TopologyOption, 
     std::string> mapTopologyOptions;
+    /**
+     * @brief Map that keeps the routing algorithm option 
+     * and the name of the selected routing algorithm.
+     */
+    static const boost::unordered_map<RoutingOption,
+    std::string> mapRoutingOptions;
+    /**
+     * @brief Map that keeps the spectral allocation algorithm 
+     * option and the name of the selected spectral 
+     * allocation algorithm.
+     */
+    static const boost::unordered_map<SpectrumAllocationOption,
+    std::string> mapSpecAlgOptions;
+    /**
+     * @brief Map that keeps the links cost option 
+     * and the name of the selected links cost.
+     */
+    static const boost::unordered_map<LinkCostType, 
+    std::string> mapLinkCostType;
 };
 
 #endif /* OPTIONS_H */

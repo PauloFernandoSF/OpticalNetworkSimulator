@@ -21,134 +21,147 @@ class SimulationType;
 #include <assert.h>
 
 /**
- *  
+ * @brief The Parameters class is responsible for storage 
+ * the simulation parameters.
  */
 class Parameters {
 public:
+    /**
+     * @brief Standard constructor for a Parameters object.
+     * @param simulType SimulationType object that owns 
+     * this Parameters.
+     */
     Parameters(SimulationType* simulType);
+    /**
+     * @brief Copy constructor for a Parameters object.
+     * @param orig original Parameters object.
+     */
     Parameters(const Parameters& orig);
+    /**
+     * @brief Virtual destructor of a Parameters object.
+     */
     virtual ~Parameters();
     
     /**
-     * @brief Loads the parameters present in an .txt file
+     * @brief Loads the parameters present in an .txt file.
      */
     void LoadFile();
     
     /**
      * @brief Returns the vector with all
-     * load points of the simulation
-     * @return vector of double with all load points
+     * load points of the simulation.
+     * @return vector of double with all load points.
      */
     std::vector<double> GetLoadPoint() const;
     /**
-     * @brief Return a specified load point
-     * @param index vector position
-     * @return Load point
+     * @brief Return a specified load point.
+     * @param index vector position.
+     * @return Load point.
      */
     double GetLoadPoint(unsigned int index) const;
     /**
-     * @brief Sets the vector with all load points
-     * @param loadPoint vector with all load points
+     * @brief Sets the vector with all load points.
+     * @param loadPoint vector with all load points.
      */
     void SetLoadPoint(std::vector<double> loadPoint);
     /**
-     * @brief Sets a specified load point
-     * @param loadPoint load point value
-     * @param index index of the load points vector
+     * @brief Sets a specified load point.
+     * @param loadPoint load point value.
+     * @param index index of the load points vector.
      */
     void SetLoadPoint(double loadPoint, unsigned int index);
     /**
-     * @brief Returns the minimum load point
-     * @return Minimum load point
+     * @brief Returns the minimum load point.
+     * @return Minimum load point.
      */
     double GetMinLoadPoint() const;
     /**
-     * @brief Sets the minimum load point
-     * @param minLoadPoint minimum load point value
+     * @brief Sets the minimum load point.
+     * @param minLoadPoint minimum load point value.
      */
     void SetMinLoadPoint(double minLoadPoint);
     /**
-     * @brief Returns the maximum load point
-     * @return Maximum load point
+     * @brief Returns the maximum load point.
+     * @return Maximum load point.
      */
     double GetMaxLoadPoint() const;
     /**
-     * @brief Sets the maximum load point
-     * @param maxLoadPoint Maximum load point value
+     * @brief Sets the maximum load point.
+     * @param maxLoadPoint Maximum load point value.
      */
     void SetMaxLoadPoint(double maxLoadPoint);
     /**
-     * @brief Returns the number of load points
-     * @return number of load points
+     * @brief Returns the number of load points.
+     * @return number of load points.
      */
     int GetNumberLoadPoints() const;
     /**
-     * @brief Sets the number of load points
-     * @param numberLoadPoints number of load points
+     * @brief Sets the number of load points.
+     * @param numberLoadPoints number of load points.
      */
     void SetNumberLoadPoints(double numberLoadPoints);
     /**
-     * @brief Returns the maximum number of requisitions
-     * @return Maximum number of requisitions
+     * @brief Returns the maximum number of requisitions.
+     * @return Maximum number of requisitions.
      */
     double GetNumberReqMax() const;
     /**
-     * @brief Sets the maximum number of requisitions
-     * @param numberReqMax maximum number of requisitions
+     * @brief Sets the maximum number of requisitions.
+     * @param numberReqMax maximum number of requisitions.
      */
     void SetNumberReqMax(double numberReqMax);  
     /**
-     * @brief Returns the connection deactivation time
-     * @return Connection deactivation time
+     * @brief Returns the connection deactivation time.
+     * @return Connection deactivation time.
      */
     double GetMu() const;
     /**
-     * @brief Sets the connection deactivation time
-     * @param mu Connection deactivation time
+     * @brief Sets the connection deactivation time.
+     * @param mu Connection deactivation time.
      */
     void SetMu(double mu);
 
 private:
     /**
-     * @brief A pointer to the simulation this object belongs
+     * @brief A pointer to the simulation this object belongs.
      */
     SimulationType* simulType;
     /**
      * @brief Vector that contains the load points
-     * of the simulation
+     * of the simulation.
      */
     std::vector<double> loadPoint;
     /**
-     * @brief Minimum load point
+     * @brief Minimum load point.
      */
     double minLoadPoint;
     /**
-     * @brief Maximum load point
+     * @brief Maximum load point.
      */
     double maxLoadPoint;
     /**
-     * @brief Load passo
+     * @brief Load step.
      */
     double loadPasso;
     /**
-     * @brief Total number of load points
+     * @brief Total number of load points.
      */
     int numberLoadPoints;
     /**
-     * @brief Total number of requisitions
+     * @brief Total number of requisitions.
      */
     double numberReqMax;
     /**
-     * @brief Deactivation  time
+     * @brief Deactivation time.
      */
     double mu;
     
     /**
-     * @brief Calculate the load passo
+     * @brief Calculate the load step.
      */
     void SetLoadPasso();
     /**
-     * @brief Distribute the load points uniformed
+     * @brief Distribute the load points uniformed.
      */
     void SetLoadPointUniform();
 };

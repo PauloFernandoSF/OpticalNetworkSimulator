@@ -13,11 +13,10 @@
 
 #include "../../include/Structure/Node.h"
 
-Node::Node(NodeId nodeId) :
-nodeId(nodeId) {
+Node::Node(Topology* topPointer, NodeId nodeId) :
+topPointer(topPointer), nodeId(nodeId) {
     
 }
-
 
 Node::Node(const Node& orig) {
 }

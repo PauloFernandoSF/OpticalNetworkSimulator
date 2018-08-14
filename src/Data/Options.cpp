@@ -39,9 +39,19 @@ Options::mapSpecAlgOptions = boost::assign::map_list_of
     (SpecAssFF, "First Fit")
     (SpecAssMSCL, "MSCL");
 
+const boost::unordered_map<LinkCostType, std::string>
+Options::mapLinkCostType = boost::assign::map_list_of
+    (Invalid, "Invalid cost type")
+    (MinHops, "Minimum hops")
+    (MinLength, "Minimum length")
+    (MinLengthNormalized, "Minimum length normalized");
+
+
 Options::Options(SimulationType* simulType)
 :simulType(simulType), topologyOption(TopologyInvalid),
-routingOption(RoutingInvalid), specAllOption(SpecAssInvalid) {
+routingOption(RoutingInvalid), specAllOption(SpecAssInvalid),
+linkCostType(Invalid) {
+    
 }
 
 Options::~Options() {
@@ -59,6 +69,8 @@ void Options::LoadFile() {
     this->SetRoutingOption((RoutingOption) auxInt);
     auxIfstream >> auxInt;
     this->SetSpecAllOption((SpectrumAllocationOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetLinkCostType((LinkCostType) auxInt);
 }
 
 TopologyOption Options::GetTopologyOption() const {
@@ -89,6 +101,22 @@ SpectrumAllocationOption Options::GetSpecAllOption() const {
     return specAllOption;
 }
 
+std::string Options::GetSpecAllName() const {
+    return mapSpecAlgOptions.at(this->specAllOption);
+}
+
 void Options::SetSpecAllOption(SpectrumAllocationOption specAllOption) {
     this->specAllOption = specAllOption;
+}
+
+LinkCostType Options::GetLinkCostType() const {
+    return linkCostType;
+}
+
+std::string Options::GetLinkCostTypeName() const {
+    return mapLinkCostType.at(this->linkCostType);
+}
+
+void Options::SetLinkCostType(LinkCostType linkCostType) {
+    this->linkCostType = linkCostType;
 }

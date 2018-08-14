@@ -83,3 +83,21 @@ void InputOutput::LoadTopology(std::ifstream& topology) {
     }while(!topology.is_open());
 }
 
+void InputOutput::LoadTraffic(std::ifstream& traffic) {
+    int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        traffic.open("Files/Inputs/Traffics/Traffic_" + 
+        std::to_string(auxInt) + ".txt");
+        
+        if(!traffic.is_open()) {       
+            std::cerr << "Wrong options file." << std::endl;
+            std::cerr << "The file required is: Traffic_" 
+            << auxInt << ".txt";
+            std::cerr << "Fix the file then press 'Enter'" 
+            << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!traffic.is_open());
+}

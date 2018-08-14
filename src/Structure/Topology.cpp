@@ -16,11 +16,13 @@
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/Options.h"
 #include "../../include/Data/InputOutput.h"
+#include "../../include/Structure/Node.h"
+#include "../../include/Structure/Link.h"
 
 Topology::Topology(SimulationType* simulType) 
 :simulType(simulType), nameTopology("Invalid"), 
 vecNodes(0), vecLinks(0), numNodes(0), numLinks(0), 
-numSlots(0), maxLength(0.0){
+numSlots(0), maxLength(0.0) {
 
 }
 
@@ -50,18 +52,20 @@ void Topology::LoadFile() {
     this->SetNumSlots(auxInt);
     
     for(auxInt = 0; auxInt < this->GetNumNodes(); ++auxInt){
-        std::shared_ptr<Node> node = std::make_shared<Node> (auxInt);
+        std::shared_ptr<Node> node = 
+        std::make_shared<Node> (this, auxInt);
+        this->InsertNode(node);
     }
     
     int orNode, deNode, nSec;
     double length;
-    for(auxInt = 0; auxInt < this->GetNumNodes(); ++auxInt){
+    for(auxInt = 0; auxInt < this->GetNumLinks(); ++auxInt){
         auxIfstream >> orNode;
         auxIfstream >> deNode;
         auxIfstream >> length;
         auxIfstream >> nSec;
-        std::shared_ptr<Link> link = std::make_shared<Link>(orNode,
-        deNode, length, nSec);
+        std::shared_ptr<Link> link = std::make_shared<Link>(this, 
+        orNode, deNode, length, nSec);
         this->InsertLink(link);
     }
 }
@@ -74,7 +78,7 @@ void Topology::Initialise() {
     
     for(auto it : vecLinks){
         if(it != nullptr)
-            it->initialise();
+            it->Initialise();
     }
 }
 
@@ -97,7 +101,7 @@ void Topology::SetNumNodes(int numNodes) {
     for(int a = 0; a < this->numNodes; ++a){
         this->vecNodes.push_back(nullptr);
         
-        for(int b = 0; a < this->numNodes; ++b){
+        for(int b = 0; b < this->numNodes; ++b){
             this->vecLinks.push_back(nullptr);
         }
     }
@@ -142,9 +146,49 @@ double Topology::GetMaxLength() const {
 void Topology::SetMaxLength() {
     
     for(auto it : this->vecLinks){
+        
         if(it == nullptr)
             continue;
+        
         if(this->maxLength < it->GetLength())
             this->maxLength = it->GetLength();
+    }
+}
+
+void Topology::SetAditionalSettings() {
+    this->SetMaxLength();
+    this->SetLinksIniCost();
+}
+
+void Topology::SetLinksIniCost() {
+    
+    switch(this->simulType->GetOptions()->GetLinkCostType()){
+        case MinHops:
+            for(auto it : vecLinks){
+                if(it == nullptr)
+                    continue;
+                it->SetCost(1.0);
+            }
+            break;
+        case MinLength:
+            for(auto it : vecLinks){
+                if(it == nullptr)
+                    continue;
+                it->SetCost(it->GetLength());
+            }
+            break;
+        case MinLengthNormalized:
+            for(auto it : vecLinks){
+                if(it == nullptr)
+                    continue;
+                it->SetCost(it->GetLength()/this->GetMaxLength());
+            }
+            break;
+        default:
+            for(auto it : vecLinks){
+                if(it == nullptr)
+                    continue;
+                it->SetCost(std::numeric_limits<double>::max());
+            }
     }
 }

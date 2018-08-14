@@ -33,7 +33,7 @@ void Kernel::Run() {
     
     Pre_Simulation();
     Simulation();
-    Pos_Simulation();    
+    Pos_Simulation();
 }
 
 void Kernel::Pre_Simulation() {
@@ -45,19 +45,21 @@ void Kernel::Pre_Simulation() {
     
     for(auto it : simulations){
         it->LoadFile();
+        it->AdditionalSettings();
     }
     
 }
 
 void Kernel::Simulation() {
     
-    
 }
 
 void Kernel::Pos_Simulation() {
     
     for(auto it : simulations){
-        simulations.~vector();
+        it->~SimulationType();
     }
+    
+    simulations.~vector();
 }
 

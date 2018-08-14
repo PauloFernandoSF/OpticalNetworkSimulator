@@ -13,20 +13,20 @@
 
 #include "../../include/Structure/Link.h"
 
-Link::Link() {
-}
-
-Link::Link(unsigned int origimNode, unsigned int destinationNode, 
-double length, unsigned int numberSections) 
+Link::Link(Topology* topPointer, unsigned int origimNode, 
+unsigned int destinationNode, double length, 
+unsigned int numberSections) 
 :origimNode(origimNode), destinationNode(destinationNode), 
-length(length), numberSections(numberSections) {
+length(length), numberSections(numberSections), cost(0.0),
+slotsStatus(0) {
+    
 }
-
 
 Link::~Link() {
+    
 }
 
-void Link::initialise() {
+void Link::Initialise() {
     
 }
 
@@ -60,4 +60,12 @@ unsigned int Link::GetNumberSections() const {
 
 void Link::SetNumberSections(unsigned int numberSections) {
     this->numberSections = numberSections;
+}
+
+double Link::GetCost() const {
+    return cost;
+}
+
+void Link::SetCost(double cost) {
+    this->cost = cost;
 }

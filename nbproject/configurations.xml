@@ -10,6 +10,9 @@
           <itemPath>Files/Inputs/Topologies/Ring.txt</itemPath>
           <itemPath>Files/Inputs/Topologies/Toroidal.txt</itemPath>
         </logicalFolder>
+        <logicalFolder name="f2" displayName="Traffics" projectFiles="true">
+          <itemPath>Files/Inputs/Traffics/Traffic_1.txt</itemPath>
+        </logicalFolder>
         <itemPath>Files/Inputs/Options_1.txt</itemPath>
         <itemPath>Files/Inputs/Parameters_1.txt</itemPath>
       </logicalFolder>
@@ -19,11 +22,16 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="f4" displayName="Calls" projectFiles="true">
+        <itemPath>include/Calls/Traffic.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3" displayName="Data" projectFiles="true">
         <itemPath>include/Data/Data.h</itemPath>
         <itemPath>include/Data/InputOutput.h</itemPath>
         <itemPath>include/Data/Options.h</itemPath>
         <itemPath>include/Data/Parameters.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="GeneralClasses" projectFiles="true">
       </logicalFolder>
       <logicalFolder name="f1" displayName="SimulationType" projectFiles="true">
         <itemPath>include/SimulationType/MultiLoadSimulation.h</itemPath>
@@ -43,11 +51,16 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="f4" displayName="Calls" projectFiles="true">
+        <itemPath>src/Calls/Traffic.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3" displayName="Data" projectFiles="true">
         <itemPath>src/Data/Data.cpp</itemPath>
         <itemPath>src/Data/InputOutput.cpp</itemPath>
         <itemPath>src/Data/Options.cpp</itemPath>
         <itemPath>src/Data/Parameters.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="GeneralClasses" projectFiles="true">
       </logicalFolder>
       <logicalFolder name="f1" displayName="SimulationType" projectFiles="true">
         <itemPath>src/SimulationType/MultiLoadSimulation.cpp</itemPath>
@@ -106,6 +119,13 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="Files/Inputs/Traffics/Traffic_1.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Calls/Traffic.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Data/Data.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Data/InputOutput.h" ex="false" tool="3" flavor2="0">
@@ -133,6 +153,8 @@
       <item path="include/Structure/Topology.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Calls/Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Data/Data.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -202,6 +224,13 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="Files/Inputs/Traffics/Traffic_1.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Calls/Traffic.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Data/Data.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Data/InputOutput.h" ex="false" tool="3" flavor2="0">
@@ -229,6 +258,8 @@
       <item path="include/Structure/Topology.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Calls/Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Data/Data.cpp" ex="false" tool="1" flavor2="0">
       </item>
