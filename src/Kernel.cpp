@@ -48,6 +48,9 @@ void Kernel::Pre_Simulation() {
         it->AdditionalSettings();
     }
     
+    for(auto it : simulations){
+        it->Print();
+    }
 }
 
 void Kernel::Simulation() {

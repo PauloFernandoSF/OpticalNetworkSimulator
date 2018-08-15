@@ -21,6 +21,7 @@ class SimulationType;
 #include <boost/assign/list_of.hpp>
 #include <boost/unordered_map.hpp>
 #include <iostream>
+#include <assert.h>
 
 /**
  *@brief Numerate the topology options
@@ -31,7 +32,9 @@ enum TopologyOption {
     TopologyRing,
     TopologyToroidal,
     TopologyGermany,
-    TopologyItaly
+    TopologyItaly,
+    FirstTopology = TopologyNSFNet,
+    LastTopology = TopologyItaly
 };
 
 /**
@@ -41,17 +44,21 @@ enum RoutingOption {
      RoutingInvalid,
      RoutingDJK,
      RoutingYEN,
-     RoutingBSR
+     RoutingBSR,
+     FirstRoutingOption = RoutingDJK,
+     LastRoutingOption = RoutingBSR
 };
 
 /**
  * @brief Numerate the options for spectrum allocation algorithms
  */
 enum SpectrumAllocationOption {
-     SpecAssInvalid,
-     SpecAssRandom,
-     SpecAssFF,
-     SpecAssMSCL
+     SpecAllInvalid,
+     SpecAllRandom,
+     SpecAllFF,
+     SpecAllMSCL,
+     FirstSpecAllOption = SpecAllRandom,
+     LastSpecAllOption = SpecAllMSCL
 };
 
 /**
@@ -61,7 +68,20 @@ enum LinkCostType {
     Invalid,
     MinHops,
     MinLength,
-    MinLengthNormalized
+    MinLengthNormalized,
+    FirstLinkCostType = MinHops,
+    LastLinkCostType = MinLengthNormalized
+};
+
+/**
+ * @brief Numerate the options for traffic bit rate
+ */
+enum TrafficOption {
+    TrafficInvalid,
+    Traficc_100_200_400,
+    Traffic_10_40_100_200_400,
+    FirstTrafficOption = Traficc_100_200_400,
+    LastTrafficOption = Traffic_10_40_100_200_400
 };
 
 /**
@@ -69,6 +89,9 @@ enum LinkCostType {
  * options.
  */
 class Options {
+    friend std::ostream& operator<<(std::ostream& ostream,
+    const Options* options);
+    
 public:
     /**
      * @brief Standard constructor for a Options object.
@@ -154,7 +177,21 @@ public:
      * @param linkCostType links cost option.
      */
     void SetLinkCostType(LinkCostType linkCostType);
-
+    /**
+     * @brief Get the selected traffic option.
+     * @return Traffic option.
+     */
+    TrafficOption GetTrafficOption() const;
+    /**
+     * @brief Get the traffic option name.
+     * @return String with selected traffic option name.
+     */
+    std::string GetTrafficName() const;
+    /**
+     * @brief Set the traffic option.
+     * @param trafficOption traffic option.
+     */
+    void SetTrafficOption(TrafficOption trafficOption);
     
 private:
     /**
@@ -173,8 +210,14 @@ private:
      * @brief Spectral allocation option.
      */
     SpectrumAllocationOption specAllOption;
-    
+    /**
+     * @brief Link cost option selected.
+     */
     LinkCostType linkCostType;
+    /**
+     * @brief Traffic option selected.
+     */
+    TrafficOption trafficOption;
     /**
      * @brief Map that keeps the topology option 
      * and the name of the selected topology.
@@ -200,6 +243,12 @@ private:
      */
     static const boost::unordered_map<LinkCostType, 
     std::string> mapLinkCostType;
+    /**
+     * @brief Map that keeps the traffic options 
+     * and the name of each traffic.
+     */
+    static const boost::unordered_map<TrafficOption,
+    std::string> mapTrafficOptions;
 };
 
 #endif /* OPTIONS_H */

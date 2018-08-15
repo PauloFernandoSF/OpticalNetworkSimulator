@@ -68,9 +68,12 @@ public:
 
 private:
     /**
-     * @brief A pointer to the simulation this object belong
+     * @brief A pointer to the simulation this object belong.
      */
     SimulationType* simulType;
+    /**
+     * @brief Vector that storage all traffic values.
+     */
     std::vector<double> vecTraffic;
     static const double BER;
     static const int polarization;

@@ -34,10 +34,10 @@ Options::mapRoutingOptions = boost::assign::map_list_of
 
 const boost::unordered_map<SpectrumAllocationOption, std::string>
 Options::mapSpecAlgOptions = boost::assign::map_list_of
-    (SpecAssInvalid, "Invalid")
-    (SpecAssRandom, "Random")
-    (SpecAssFF, "First Fit")
-    (SpecAssMSCL, "MSCL");
+    (SpecAllInvalid, "Invalid")
+    (SpecAllRandom, "Random")
+    (SpecAllFF, "First Fit")
+    (SpecAllMSCL, "MSCL");
 
 const boost::unordered_map<LinkCostType, std::string>
 Options::mapLinkCostType = boost::assign::map_list_of
@@ -46,11 +46,33 @@ Options::mapLinkCostType = boost::assign::map_list_of
     (MinLength, "Minimum length")
     (MinLengthNormalized, "Minimum length normalized");
 
+const boost::unordered_map<TrafficOption, std::string>
+Options::mapTrafficOptions = boost::assign::map_list_of
+    (TrafficInvalid, "Invalid")
+    (Traficc_100_200_400, "100-200-400")
+    (Traffic_10_40_100_200_400, "10-40-100-200-400");
+
+std::ostream& operator<<(std::ostream& ostream,
+    const Options* options) {
+    ostream << "OPITIONS" << std::endl;
+    ostream << "Topology: " << options->GetTopologyName()
+            << std::endl;
+    ostream << "Routing algorithm: " << options->GetRoutingName()
+            << std::endl;
+    ostream << "Spectral allocation algorithm: " << 
+            options->GetSpecAllName() << std::endl;
+    ostream << "Links cost type: " << options->GetLinkCostTypeName()
+            << std::endl;
+    ostream << "Traffic requests(Gbps): " << options->GetTrafficName()
+            << std::endl;
+    
+    return ostream;
+}
 
 Options::Options(SimulationType* simulType)
 :simulType(simulType), topologyOption(TopologyInvalid),
-routingOption(RoutingInvalid), specAllOption(SpecAssInvalid),
-linkCostType(Invalid) {
+routingOption(RoutingInvalid), specAllOption(SpecAllInvalid),
+linkCostType(Invalid), trafficOption(TrafficInvalid) {
     
 }
 
@@ -71,6 +93,8 @@ void Options::LoadFile() {
     this->SetSpecAllOption((SpectrumAllocationOption) auxInt);
     auxIfstream >> auxInt;
     this->SetLinkCostType((LinkCostType) auxInt);
+    auxIfstream >> auxInt;
+    this->SetTrafficOption((TrafficOption) auxInt);
 }
 
 TopologyOption Options::GetTopologyOption() const {
@@ -82,6 +106,8 @@ std::string Options::GetTopologyName() const {
 }
 
 void Options::SetTopologyOption(TopologyOption topologyOption) {
+    assert(topologyOption >= FirstTopology && 
+           topologyOption <= LastTopology);
     this->topologyOption = topologyOption;
 }
 
@@ -94,6 +120,8 @@ std::string Options::GetRoutingName() const {
 }
 
 void Options::SetRoutingOption(RoutingOption routingOption) {
+    assert(routingOption >= FirstRoutingOption && 
+           routingOption <= LastRoutingOption);
     this->routingOption = routingOption;
 }
 
@@ -106,6 +134,8 @@ std::string Options::GetSpecAllName() const {
 }
 
 void Options::SetSpecAllOption(SpectrumAllocationOption specAllOption) {
+    assert(specAllOption >= FirstSpecAllOption &&
+           specAllOption <= LastSpecAllOption);
     this->specAllOption = specAllOption;
 }
 
@@ -118,5 +148,21 @@ std::string Options::GetLinkCostTypeName() const {
 }
 
 void Options::SetLinkCostType(LinkCostType linkCostType) {
+    assert(linkCostType >= FirstLinkCostType &&
+           linkCostType <= LastLinkCostType);
     this->linkCostType = linkCostType;
+}
+
+TrafficOption Options::GetTrafficOption() const {
+    return trafficOption;
+}
+
+std::string Options::GetTrafficName() const {
+    return mapTrafficOptions.at(this->trafficOption);
+}
+
+void Options::SetTrafficOption(TrafficOption trafficOption) {
+    assert(trafficOption >= FirstTrafficOption &&
+           trafficOption <= LastTrafficOption);
+    this->trafficOption = trafficOption;
 }

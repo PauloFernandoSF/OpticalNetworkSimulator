@@ -16,6 +16,8 @@
 
 #include "SimulationType.h"
 
+#include <iostream>
+
 /**
  * @brief Derived class from SimulationType.
  * This type of simulation runs for a specified number 
@@ -52,7 +54,7 @@ public:
      */
     void LoadFile() override;
     /**
-     * @brief Print the results of this simulation in terminal.
+     * @brief Print this simulation in terminal.
      */
     void Print() override;
     /**

@@ -16,7 +16,7 @@
 #include "../../include/Data/InputOutput.h"
 
 #include "../../include/SimulationType/SimulationType.h"
-#include "../../include/Structure/Topology.h"
+#include "../../include/Data/Options.h"
 
 InputOutput::InputOutput(SimulationType* simulType)
 :simulType(simulType) {
@@ -67,14 +67,14 @@ void InputOutput::LoadOptions(std::ifstream& options) {
 
 void InputOutput::LoadTopology(std::ifstream& topology) {
     std::string topologyName = 
-    this->simulType->GetTopology()->GetNameTopology();
+    this->simulType->GetOptions()->GetTopologyName();
     
     do{
         topology.open("Files/Inputs/Topologies/" + 
         topologyName + ".txt");
         
         if(!topology.is_open()) {       
-            std::cerr << "Wrong options file." << std::endl;
+            std::cerr << "Wrong topology file." << std::endl;
             std::cerr << "The file required is: " << topologyName << ".txt";
             std::cerr << "Fix the file then press 'Enter'" << std::endl;
             
@@ -84,16 +84,17 @@ void InputOutput::LoadTopology(std::ifstream& topology) {
 }
 
 void InputOutput::LoadTraffic(std::ifstream& traffic) {
-    int auxInt = this->simulType->GetSimulationIndex();
+    std::string trafficName = 
+    this->simulType->GetOptions()->GetTrafficName();
     
     do{
         traffic.open("Files/Inputs/Traffics/Traffic_" + 
-        std::to_string(auxInt) + ".txt");
+        trafficName + ".txt");
         
         if(!traffic.is_open()) {       
-            std::cerr << "Wrong options file." << std::endl;
+            std::cerr << "Wrong traffic file." << std::endl;
             std::cerr << "The file required is: Traffic_" 
-            << auxInt << ".txt";
+            << trafficName << ".txt";
             std::cerr << "Fix the file then press 'Enter'" 
             << std::endl;
             

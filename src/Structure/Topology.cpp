@@ -20,9 +20,8 @@
 #include "../../include/Structure/Link.h"
 
 Topology::Topology(SimulationType* simulType) 
-:simulType(simulType), nameTopology("Invalid"), 
-vecNodes(0), vecLinks(0), numNodes(0), numLinks(0), 
-numSlots(0), maxLength(0.0) {
+:simulType(simulType), vecNodes(0), vecLinks(0), 
+numNodes(0), numLinks(0), numSlots(0), maxLength(0.0) {
 
 }
 
@@ -33,12 +32,12 @@ Topology::~Topology() {
     }
     
     for(auto it : vecLinks){
-        it->~Link();
+        if(it != nullptr)
+            it->~Link();
     }
 }
 
 void Topology::LoadFile() {
-    this->SetNameTopology(this->simulType->GetOptions()->GetTopologyName());
     std::ifstream auxIfstream;
     int auxInt;
     
@@ -51,6 +50,7 @@ void Topology::LoadFile() {
     auxIfstream >> auxInt;
     this->SetNumSlots(auxInt);
     
+    //Create a function based in the simulation options
     for(auxInt = 0; auxInt < this->GetNumNodes(); ++auxInt){
         std::shared_ptr<Node> node = 
         std::make_shared<Node> (this, auxInt);
@@ -80,14 +80,6 @@ void Topology::Initialise() {
         if(it != nullptr)
             it->Initialise();
     }
-}
-
-std::string Topology::GetNameTopology() const {
-    return nameTopology;
-}
-
-void Topology::SetNameTopology(std::string nameTopology) {
-    this->nameTopology = nameTopology;
 }
 
 int Topology::GetNumNodes() const {

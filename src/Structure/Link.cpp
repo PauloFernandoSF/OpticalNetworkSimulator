@@ -23,7 +23,7 @@ slotsStatus(0) {
 }
 
 Link::~Link() {
-    
+    slotsStatus.~vector();
 }
 
 void Link::Initialise() {

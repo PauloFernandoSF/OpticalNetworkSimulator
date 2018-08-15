@@ -54,16 +54,6 @@ public:
     void Initialise();
     
     /**
-     * @brief Returns the name of this topology.
-     * @return String with topology name.
-     */
-    std::string GetNameTopology() const;
-    /**
-     * @brief Sets  the topology name.
-     * @param nameTopology name of topology.
-     */
-    void SetNameTopology(std::string nameTopology);
-    /**
      * @brief Returns the number of nodes in this topology
      * @return The total number of nodes
      */
@@ -120,10 +110,6 @@ private:
      * @brief A pointer to the simulation this object belong
      */
     SimulationType* simulType;
-    /**
-     * @brief Name of the selected topology
-     */
-    std::string nameTopology;
     /**
      * @brief Vector with all topology nodes 
      */

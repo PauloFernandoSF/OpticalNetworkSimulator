@@ -17,6 +17,7 @@
 class SimulationType;
 
 #include <fstream>
+#include <iostream>
 #include <vector>
 #include <assert.h>
 
@@ -25,6 +26,12 @@ class SimulationType;
  * the simulation parameters.
  */
 class Parameters {
+    /**
+     * @brief 
+    */
+    friend std::ostream& operator<<(std::ostream& ostream, 
+    const Parameters* parameters);
+    
 public:
     /**
      * @brief Standard constructor for a Parameters object.
@@ -120,6 +127,17 @@ public:
      * @param mu Connection deactivation time.
      */
     void SetMu(double mu);
+    /**
+     * @brief Get the number of maximum blocked requisitions.
+     * @return Number of maximum blocked requisitions.
+     */
+    int GetNumberBloqMax() const;
+    /**
+     * @brief Get the number of maximum blocked requisitions.
+     * @param numberBloqMax number of maximum blocked requisitions.
+     */
+    void SetNumberBloqMax(int numberBloqMax);
+
 
 private:
     /**
@@ -152,9 +170,13 @@ private:
      */
     double numberReqMax;
     /**
-     * @brief Deactivation time.
+     * @brief Deactivation connection time.
      */
     double mu;
+    /**
+     * @brief Number of maximum blocked requisitions.
+     */
+    int numberBloqMax;
     
     /**
      * @brief Calculate the load step.

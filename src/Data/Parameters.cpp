@@ -16,10 +16,29 @@
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
 
+std::ostream& operator<<(std::ostream& ostream, 
+const Parameters* parameters) {
+    
+    ostream << "PARAMETERS" << std::endl;
+    ostream << "Mu: " << parameters->GetMu() << std::endl;
+    ostream << "Minimum load point: " << parameters->GetMinLoadPoint() 
+            << std::endl;
+    ostream << "Maximum load point: " << parameters->GetMaxLoadPoint() 
+            << std::endl;
+    ostream << "Number of points: " << parameters->GetNumberLoadPoints() 
+            << std::endl;
+    ostream << "Total number of requisitions: " 
+            << parameters->GetNumberReqMax() << std::endl;
+    ostream << "Maximum blocked requests: "
+            << parameters->GetNumberBloqMax() << std::endl;
+    
+    return ostream;
+}
+
 Parameters::Parameters(SimulationType* simulType)
 :simulType(simulType), loadPoint(0), minLoadPoint(0.0),
 maxLoadPoint(0.0), loadPasso(0.0), numberLoadPoints(0),
-numberReqMax(0.0), mu(0.0){
+numberReqMax(0.0), mu(0.0), numberBloqMax(0) {
     
 }
 
@@ -43,6 +62,8 @@ void Parameters::LoadFile() {
     this->SetNumberLoadPoints(auxInt);
     auxIfstream >> auxDouble;
     this->SetNumberReqMax(auxDouble);
+    auxIfstream >> auxInt;
+    this->SetNumberBloqMax(auxInt);
     
     this->SetLoadPointUniform();
 }
@@ -126,4 +147,13 @@ void Parameters::SetLoadPointUniform() {
     for(int a = 0; a < this->numberLoadPoints; ++a){
         loadPoint.push_back(this->minLoadPoint + a*this->loadPasso);
     }
+}
+
+int Parameters::GetNumberBloqMax() const {
+    return numberBloqMax;
+}
+
+void Parameters::SetNumberBloqMax(int numberBloqMax) {
+    assert(numberBloqMax > 0);
+    this->numberBloqMax = numberBloqMax;
 }

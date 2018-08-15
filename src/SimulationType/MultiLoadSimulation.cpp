@@ -38,7 +38,9 @@ void MultiLoadSimulation::LoadFile() {
 }
 
 void MultiLoadSimulation::Print() {
-
+    this->Help();
+    std::cout << std::endl;
+    SimulationType::Print();
 }
 
 void MultiLoadSimulation::Save() {
@@ -46,5 +48,7 @@ void MultiLoadSimulation::Save() {
 }
 
 void MultiLoadSimulation::Help() {
-
+    std::cout << "MULTIPLE LOADS SIMULATION" << std::endl
+              << "This type of simulation varies the network load "
+              << "and analyzes the network performance. " << std::endl;
 }

@@ -62,9 +62,9 @@ public:
      */
     virtual void AdditionalSettings();
     /**
-     * @brief Print the results of this simulation in terminal.
+     * @brief Print this simulation in terminal.
      */
-    virtual void Print() = 0;
+    virtual void Print();
     /**
      * @brief Save the results in .txt files.
      */

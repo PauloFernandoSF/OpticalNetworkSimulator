@@ -16,6 +16,8 @@
 
 class SimulationType;
 
+#include <vector>
+
 /**
  * @brief The Data class is responsible for storage the simulation
  * data.
@@ -42,6 +44,8 @@ private:
      * @brief A pointer to the simulation this object belong
      */
     SimulationType* simulType;
+    
+    //std::vector<double> 
 };
 
 #endif /* DATA_H */
