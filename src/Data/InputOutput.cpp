@@ -34,10 +34,10 @@ void InputOutput::LoadParameters(std::ifstream& parameters) {
         
         if(!parameters.is_open()) {       
             std::cerr << "Wrong parameter file." << std::endl;
-            std::cerr << "The file required is: Parameters_" << 
-            auxInt << ".txt" << std::endl;
-            std::cerr << "Fix the file then press 'Enter'" 
-            << std::endl;
+            std::cerr << "The file required is: Parameters_" 
+                      << auxInt << ".txt" << std::endl;
+            std::cerr << "Add/Fix the file then press 'Enter'" 
+                      << std::endl;
             
             std::cin.get();
         }
@@ -55,9 +55,9 @@ void InputOutput::LoadOptions(std::ifstream& options) {
         if(!options.is_open()) {       
             std::cerr << "Wrong options file." << std::endl;
             std::cerr << "The file required is: Options_" 
-            << auxInt << ".txt";
-            std::cerr << "Fix the file then press 'Enter'" 
-            << std::endl;
+                      << auxInt << ".txt";
+            std::cerr << "Add/Fix the file then press 'Enter'" 
+                      << std::endl;
             
             std::cin.get();
         }
@@ -75,8 +75,10 @@ void InputOutput::LoadTopology(std::ifstream& topology) {
         
         if(!topology.is_open()) {       
             std::cerr << "Wrong topology file." << std::endl;
-            std::cerr << "The file required is: " << topologyName << ".txt";
-            std::cerr << "Fix the file then press 'Enter'" << std::endl;
+            std::cerr << "The file required is: " 
+                      << topologyName << ".txt";
+            std::cerr << "Add/Fix the file then press 'Enter'" 
+                      << std::endl;
             
             std::cin.get();
         }
@@ -94,9 +96,9 @@ void InputOutput::LoadTraffic(std::ifstream& traffic) {
         if(!traffic.is_open()) {       
             std::cerr << "Wrong traffic file." << std::endl;
             std::cerr << "The file required is: Traffic_" 
-            << trafficName << ".txt";
-            std::cerr << "Fix the file then press 'Enter'" 
-            << std::endl;
+                      << trafficName << ".txt";
+            std::cerr << "Add/Fix the file then press 'Enter'" 
+                      << std::endl;
             
             std::cin.get();
         }

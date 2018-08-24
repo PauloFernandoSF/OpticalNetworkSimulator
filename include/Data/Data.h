@@ -17,12 +17,16 @@
 class SimulationType;
 
 #include <vector>
+#include <ostream>
 
 /**
  * @brief The Data class is responsible for storage the simulation
  * data.
  */
 class Data {
+    friend std::ostream& operator<<(std::ostream& ostream, 
+    const Data* data);
+
 public:
     /**
      * @brief Standard constructor for a Data object.
@@ -39,13 +43,92 @@ public:
      * @brief Virtual destructor of a Data object.
      */
     virtual ~Data();
+    
+    
+    void Initialise();
+    
+    
+    std::vector<double> GetNumberReq() const;
+    
+    double GetNumberReqLoad(unsigned int index) const;
+
+    void SetNumberReq(std::vector<double> numberReq);
+    
+    std::vector<double> GetNumberBlocReq() const;
+    
+    double GetNumberBlocReqLoad(unsigned int index) const;
+
+    void SetNumberBlocReq(std::vector<double> numberBlocReq);
+    
+    std::vector<double> GetNumberAccReq() const;
+    
+    double GetNumberAccReqLoad(unsigned int index) const;
+
+    void SetNumberAccReq(std::vector<double> numberAccReq);
+    
+    std::vector<double> GetNumberBlocSlots() const;
+    
+    double GetNumberBlocSlotsLoad(unsigned int index) const;
+
+    void SetNumberBlocSlots(std::vector<double> numberBlocSlots);
+    
+    std::vector<double> GetNumberAccSlots() const;
+    
+    double GetNumberAccSlotsLoad(unsigned int index) const;
+
+    void SetNumberAccSlots(std::vector<double> numberAccSlots);
+    
+    std::vector<double> GetMeanHopsPerRoute() const;
+    
+    double GetMeanHopsPerRouteLoad(unsigned int index) const;
+
+    void SetMeanHopsPerRoute(std::vector<double> meanHopsPerRoute);
+
+    std::vector<double> GetNetOccupancy() const;
+    
+    double GetNetOccupancyLoad(unsigned int index) const;
+
+    void SetNetOccupancy(std::vector<double> netOccupancy);
+    
 private:
     /**
      * @brief A pointer to the simulation this object belong
      */
     SimulationType* simulType;
-    
-    //std::vector<double> 
+    /**
+     * @brief Actual number of requisitions simulated, per load.
+     */
+    std::vector<double> numberReq;
+    /**
+     * @brief Actual number of blocked requisitions simulated,
+     * per load.
+     */
+    std::vector<double> numberBlocReq;
+    /**
+     * @brief Actual number of accepted requisitions simulated,
+     * per load.
+     */
+    std::vector<double> numberAccReq;
+    /**
+     * @brief Actual number of blocked slots simulated,
+     * per load.
+     */
+    std::vector<double> numberBlocSlots;
+    /**
+     * @brief Actual number of accepted slots simulated,
+     * per load.
+     */
+    std::vector<double> numberAccSlots;
+    /**
+     * @brief Mean of hops per route, per load.
+     */
+    std::vector<double> meanHopsPerRoute;
+    /**
+     * @brief Network occupancy, per load.
+     * It is Calculated multiplying the number of slots
+     * occupied by the number of route hops.
+     */
+    std::vector<double> netOccupancy;
 };
 
 #endif /* DATA_H */

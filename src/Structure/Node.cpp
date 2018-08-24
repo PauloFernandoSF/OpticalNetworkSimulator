@@ -13,15 +13,20 @@
 
 #include "../../include/Structure/Node.h"
 
+std::ostream& operator<<(std::ostream& ostream,
+Node* node) {
+    ostream  << "Node Id: " << node->GetNodeId() << std::endl;
+    
+    return ostream;
+}
+
 Node::Node(Topology* topPointer, NodeId nodeId) :
 topPointer(topPointer), nodeId(nodeId) {
     
 }
 
-Node::Node(const Node& orig) {
-}
-
 Node::~Node() {
+
 }
 
 void Node::Initialise() {

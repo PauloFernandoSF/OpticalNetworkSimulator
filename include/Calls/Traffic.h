@@ -22,6 +22,9 @@ class SimulationType;
  * @brief Class Traffic represents the traffic of a simulation.
  */
 class Traffic {
+    friend std::ostream& operator<<(std::ostream& ostream, 
+    const Traffic* traffic);
+    
 public:
     /**
      * @brief Standard constructor for a Traffic object.
@@ -49,6 +52,12 @@ public:
      * @return traffic values.
      */
     std::vector<double> GetVecTraffic() const;
+    /**
+     * @brief Get a specified traffic.
+     * @param index index of traffic vector.
+     * @return Value of chosen traffic.
+     */
+    double GetTraffic(unsigned int index) const;
     /**
      * @brief Set the vector with all traffic values.
      * @param vecTraffic all traffic values.

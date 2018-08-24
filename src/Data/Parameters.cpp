@@ -21,16 +21,18 @@ const Parameters* parameters) {
     
     ostream << "PARAMETERS" << std::endl;
     ostream << "Mu: " << parameters->GetMu() << std::endl;
-    ostream << "Minimum load point: " << parameters->GetMinLoadPoint() 
-            << std::endl;
-    ostream << "Maximum load point: " << parameters->GetMaxLoadPoint() 
-            << std::endl;
+    ostream << "Minimum load point(erlang): " 
+            << parameters->GetMinLoadPoint() << std::endl;
+    ostream << "Maximum load point(erlang): " 
+            << parameters->GetMaxLoadPoint() << std::endl;
     ostream << "Number of points: " << parameters->GetNumberLoadPoints() 
             << std::endl;
     ostream << "Total number of requisitions: " 
             << parameters->GetNumberReqMax() << std::endl;
     ostream << "Maximum blocked requests: "
             << parameters->GetNumberBloqMax() << std::endl;
+    ostream << "Slot bandwidth(GHz): "
+            << parameters->GetSlotBandwidth() << std::endl;
     
     return ostream;
 }
@@ -38,7 +40,8 @@ const Parameters* parameters) {
 Parameters::Parameters(SimulationType* simulType)
 :simulType(simulType), loadPoint(0), minLoadPoint(0.0),
 maxLoadPoint(0.0), loadPasso(0.0), numberLoadPoints(0),
-numberReqMax(0.0), mu(0.0), numberBloqMax(0) {
+numberReqMax(0.0), mu(0.0), numberBloqMax(0),
+slotBandwidth(0.0) {
     
 }
 
@@ -64,6 +67,8 @@ void Parameters::LoadFile() {
     this->SetNumberReqMax(auxDouble);
     auxIfstream >> auxInt;
     this->SetNumberBloqMax(auxInt);
+    auxIfstream >> auxDouble;
+    this->SetSlotBandwidth(auxDouble);
     
     this->SetLoadPointUniform();
 }
@@ -92,7 +97,7 @@ double Parameters::GetMinLoadPoint() const {
 }
 
 void Parameters::SetMinLoadPoint(double minLoadPoint) {
-    assert(minLoadPoint > 0);
+    assert(minLoadPoint > 0.0);
     this->minLoadPoint = minLoadPoint;
 }
 
@@ -101,16 +106,15 @@ double Parameters::GetMaxLoadPoint() const {
 }
 
 void Parameters::SetMaxLoadPoint(double maxLoadPoint) {
-    assert(maxLoadPoint > 0);
+    assert(maxLoadPoint > 0.0);
     this->maxLoadPoint = maxLoadPoint;
 }
 
-int Parameters::GetNumberLoadPoints() const {
+unsigned int Parameters::GetNumberLoadPoints() const {
     return numberLoadPoints;
 }
 
-void Parameters::SetNumberLoadPoints(double numberLoadPoints) {
-    assert(numberLoadPoints > 0);
+void Parameters::SetNumberLoadPoints(unsigned int numberLoadPoints) {
     this->numberLoadPoints = numberLoadPoints;
 }
 
@@ -119,7 +123,7 @@ double Parameters::GetNumberReqMax() const {
 }
 
 void Parameters::SetNumberReqMax(double numberReqMax) {
-    assert(numberReqMax > 0);
+    assert(numberReqMax > 0.0);
     this->numberReqMax = numberReqMax;
 }
 
@@ -128,7 +132,7 @@ double Parameters::GetMu() const {
 }
 
 void Parameters::SetMu(double mu) {
-    assert(mu > 0);
+    assert(mu > 0.0);
     this->mu = mu;
 }
 
@@ -149,11 +153,20 @@ void Parameters::SetLoadPointUniform() {
     }
 }
 
-int Parameters::GetNumberBloqMax() const {
+double Parameters::GetNumberBloqMax() const {
     return numberBloqMax;
 }
 
-void Parameters::SetNumberBloqMax(int numberBloqMax) {
-    assert(numberBloqMax > 0);
+void Parameters::SetNumberBloqMax(double numberBloqMax) {
+    assert(numberBloqMax > 0.0);
     this->numberBloqMax = numberBloqMax;
+}
+
+double Parameters::GetSlotBandwidth() const {
+    return slotBandwidth/10E9;
+}
+
+void Parameters::SetSlotBandwidth(double slotBandwidth) {
+    assert(slotBandwidth > 0.0);
+    this->slotBandwidth = slotBandwidth*10E9;
 }

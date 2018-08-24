@@ -24,6 +24,7 @@
  * of load points, simulating for each one.
  */
 class MultiLoadSimulation : public SimulationType {
+
 public:
     /**
      * @brief Standard constructor for a MultiLoadSimulation object.

@@ -36,6 +36,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/src/Calls/Call.o \
+	${OBJECTDIR}/src/Calls/CallGenerator.o \
+	${OBJECTDIR}/src/Calls/Event.o \
 	${OBJECTDIR}/src/Calls/Traffic.o \
 	${OBJECTDIR}/src/Data/Data.o \
 	${OBJECTDIR}/src/Data/InputOutput.o \
@@ -77,6 +80,21 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/src/Calls/Call.o: src/Calls/Call.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Calls
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/Call.o src/Calls/Call.cpp
+
+${OBJECTDIR}/src/Calls/CallGenerator.o: src/Calls/CallGenerator.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Calls
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/CallGenerator.o src/Calls/CallGenerator.cpp
+
+${OBJECTDIR}/src/Calls/Event.o: src/Calls/Event.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Calls
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/Event.o src/Calls/Event.cpp
 
 ${OBJECTDIR}/src/Calls/Traffic.o: src/Calls/Traffic.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls

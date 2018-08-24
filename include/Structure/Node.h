@@ -14,6 +14,8 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include <iostream>
+
 typedef unsigned int NodeId;
 
 class Topology;
@@ -22,6 +24,9 @@ class Topology;
  * @brief Class Node represents a node inside a topology.
  */
 class Node {
+    friend std::ostream& operator<<(std::ostream& ostream,
+    Node* node);
+    
 public:
     /**
      * @brief Standard constructor for a Node object.

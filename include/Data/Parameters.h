@@ -101,12 +101,12 @@ public:
      * @brief Returns the number of load points.
      * @return number of load points.
      */
-    int GetNumberLoadPoints() const;
+    unsigned int GetNumberLoadPoints() const;
     /**
      * @brief Sets the number of load points.
      * @param numberLoadPoints number of load points.
      */
-    void SetNumberLoadPoints(double numberLoadPoints);
+    void SetNumberLoadPoints(unsigned int numberLoadPoints);
     /**
      * @brief Returns the maximum number of requisitions.
      * @return Maximum number of requisitions.
@@ -131,13 +131,22 @@ public:
      * @brief Get the number of maximum blocked requisitions.
      * @return Number of maximum blocked requisitions.
      */
-    int GetNumberBloqMax() const;
+    double GetNumberBloqMax() const;
     /**
      * @brief Get the number of maximum blocked requisitions.
      * @param numberBloqMax number of maximum blocked requisitions.
      */
-    void SetNumberBloqMax(int numberBloqMax);
-
+    void SetNumberBloqMax(double numberBloqMax);
+    /**
+     * @brief Get the bandwidth of each slot.
+     * @return Bandwidth of a slot.
+     */
+    double GetSlotBandwidth() const;
+    /**
+     * @brief Set the bandwidth, in GHz, of each slot.
+     * @param slotBandwidth bandwidth of a slot (GHz).
+     */
+    void SetSlotBandwidth(double slotBandwidth);    
 
 private:
     /**
@@ -164,7 +173,7 @@ private:
     /**
      * @brief Total number of load points.
      */
-    int numberLoadPoints;
+    unsigned int numberLoadPoints;
     /**
      * @brief Total number of requisitions.
      */
@@ -176,7 +185,11 @@ private:
     /**
      * @brief Number of maximum blocked requisitions.
      */
-    int numberBloqMax;
+    double numberBloqMax;
+    /**
+     * @brief Bandwidth of each slot.
+     */
+    double slotBandwidth; 
     
     /**
      * @brief Calculate the load step.

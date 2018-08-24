@@ -11,6 +11,7 @@
           <itemPath>Files/Inputs/Topologies/Toroidal.txt</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="Traffics" projectFiles="true">
+          <itemPath>Files/Inputs/Traffics/Traffic_10-40-100-200_400.txt</itemPath>
           <itemPath>Files/Inputs/Traffics/Traffic_100-200-400.txt</itemPath>
         </logicalFolder>
         <itemPath>Files/Inputs/Options_1.txt</itemPath>
@@ -23,6 +24,9 @@
                    displayName="Header Files"
                    projectFiles="true">
       <logicalFolder name="f4" displayName="Calls" projectFiles="true">
+        <itemPath>include/Calls/Call.h</itemPath>
+        <itemPath>include/Calls/CallGenerator.h</itemPath>
+        <itemPath>include/Calls/Event.h</itemPath>
         <itemPath>include/Calls/Traffic.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="Data" projectFiles="true">
@@ -52,6 +56,9 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f4" displayName="Calls" projectFiles="true">
+        <itemPath>src/Calls/Call.cpp</itemPath>
+        <itemPath>src/Calls/CallGenerator.cpp</itemPath>
+        <itemPath>src/Calls/Event.cpp</itemPath>
         <itemPath>src/Calls/Traffic.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="Data" projectFiles="true">
@@ -119,10 +126,21 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="Files/Inputs/Traffics/Traffic_10-40-100-200_400.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="Files/Inputs/Traffics/Traffic_100-200-400.txt"
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="include/Calls/Call.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Calls/CallGenerator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Calls/Event.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/Traffic.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -153,6 +171,12 @@
       <item path="include/Structure/Topology.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Calls/Call.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Calls/CallGenerator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Calls/Event.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -224,10 +248,21 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="Files/Inputs/Traffics/Traffic_10-40-100-200_400.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="Files/Inputs/Traffics/Traffic_100-200-400.txt"
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="include/Calls/Call.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Calls/CallGenerator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Calls/Event.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/Traffic.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -258,6 +293,12 @@
       <item path="include/Structure/Topology.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Calls/Call.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Calls/CallGenerator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Calls/Event.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>

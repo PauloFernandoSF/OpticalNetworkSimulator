@@ -17,7 +17,7 @@
 
 #include "include/Kernel.h"
 
-
+    
 /**
  * @brief main function
  * @param argc Number of arguments
@@ -32,8 +32,7 @@ int main(int argc, char** argv) {
 
     std::shared_ptr<Kernel> kernel = std::make_shared<Kernel>(auxInt);
     kernel->Run();
-    kernel.~__shared_ptr();
+    kernel.reset();
 
     return 0;
 }
-

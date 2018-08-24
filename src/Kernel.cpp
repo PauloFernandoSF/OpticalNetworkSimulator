@@ -25,7 +25,7 @@ simulations(0) {
 Kernel::~Kernel() {
     
     for(auto it : simulations) {
-        it->~SimulationType();
+        it.reset();
     }
 }
 
@@ -55,14 +55,11 @@ void Kernel::Pre_Simulation() {
 
 void Kernel::Simulation() {
     
+    for(auto it : this->simulations){
+        it->Run();
+    }
 }
 
 void Kernel::Pos_Simulation() {
     
-    for(auto it : simulations){
-        it->~SimulationType();
-    }
-    
-    simulations.~vector();
 }
-

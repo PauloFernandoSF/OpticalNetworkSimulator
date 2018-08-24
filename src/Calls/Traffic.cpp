@@ -21,6 +21,18 @@
 const double Traffic::BER = 0.001;
 const int Traffic::polarization = 1;
 
+std::ostream& operator<<(std::ostream& ostream, 
+const Traffic* traffic) {
+    unsigned int size = traffic->GetVecTraffic().size();
+    
+    ostream << "TRAFFIC" << std::endl;
+    
+    for(unsigned int a = 0; a < size; ++a){
+        ostream << "Traffic " << a+1 << "(Gbps): "
+                << (traffic->GetTraffic(a) / 1E9) << std::endl;
+    }
+}
+
 Traffic::Traffic(SimulationType* simulType)
 :simulType(simulType), vecTraffic(0) {
 }
@@ -47,6 +59,10 @@ void Traffic::LoadFile() {
 
 std::vector<double> Traffic::GetVecTraffic() const {
     return vecTraffic;
+}
+
+double Traffic::GetTraffic(unsigned int index) const {
+    return this->vecTraffic.at(index);
 }
 
 void Traffic::SetVecTraffic(std::vector<double> vecTraffic) {

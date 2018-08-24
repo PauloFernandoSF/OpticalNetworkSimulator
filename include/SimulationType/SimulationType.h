@@ -22,6 +22,7 @@ class Data;
 class Topology;
 class InputOutput;
 class Traffic;
+class CallGenerator;
 
 /**
  * @brief Base class for Simulations objects.
@@ -151,6 +152,11 @@ public:
      * @param traffic pointer to a Traffic object.
      */
     void SetTraffic(std::shared_ptr<Traffic> traffic);
+    
+    CallGenerator* GetCallGenerator() const;
+
+    void SetCallGenerator(std::shared_ptr<CallGenerator> callGenerator);
+
 
 
 private:
@@ -182,6 +188,10 @@ private:
      * @brief pointer to Traffic object used in this simulation
      */
     std::shared_ptr<Traffic> traffic;
+    /**
+     * @brief pointer to a CallGenerator object.
+     */
+    std::shared_ptr<CallGenerator> callGenerator;
 };
 
 #endif /* SIMULATIONTYPE_H */

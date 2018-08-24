@@ -13,6 +13,11 @@
 
 #include "../../include/SimulationType/MultiLoadSimulation.h"
 
+#include "../../include/Data/Parameters.h"
+#include "../../include/Calls/CallGenerator.h"
+#include "../../include/Calls/Traffic.h"
+#include "../../include/Structure/Topology.h"
+
 MultiLoadSimulation::MultiLoadSimulation(unsigned int simulIndex)
 :SimulationType(simulIndex){
     
@@ -23,7 +28,17 @@ MultiLoadSimulation::~MultiLoadSimulation() {
 }
 
 void MultiLoadSimulation::Run() {
-
+    unsigned int numLoadPoints = this->GetParameters()->
+    GetNumberLoadPoints();
+    
+    for(unsigned int a = 0; a < numLoadPoints; ++a){       
+        this->SetCallGenerator(std::make_shared<CallGenerator>(this));
+        this->GetCallGenerator()->SetNetworkLoad
+        (this->GetParameters()->GetLoadPoint(a));
+        this->GetTopology()->Initialise();
+        
+        //Continue calling functions from CallGenerator object.
+    }    
 }
 
 void MultiLoadSimulation::Load() {

@@ -13,20 +13,37 @@
 
 #include "../../include/Structure/Link.h"
 
+std::ostream& operator<<(std::ostream& ostream,
+Link* link) {
+    ostream << "Origim node: " << link->GetOrigimNode()
+            << std::endl;
+    ostream << "Destination node: " << link->GetDestinationNode()
+            << std::endl;
+    ostream  << "Length: " << link->GetLength()
+            << std::endl;
+    ostream << "Number of sections: " << link->GetNumberSections()
+            << std::endl;
+    ostream << "Cost: " << link->GetCost()
+            << std::endl;
+    
+    return ostream;
+}
+
 Link::Link(Topology* topPointer, unsigned int origimNode, 
 unsigned int destinationNode, double length, 
-unsigned int numberSections) 
+unsigned int numberSections, unsigned int numberSlots) 
 :origimNode(origimNode), destinationNode(destinationNode), 
 length(length), numberSections(numberSections), cost(0.0),
 slotsStatus(0) {
-    
+    slotsStatus.resize(numberSlots, SlotFree);
 }
 
 Link::~Link() {
-    slotsStatus.~vector();
+    
 }
 
 void Link::Initialise() {
+    this->slotsStatus.resize(this->slotsStatus.size(), SlotFree);
     
 }
 

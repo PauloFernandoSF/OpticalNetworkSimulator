@@ -14,11 +14,19 @@
 #ifndef LINK_H
 #define LINK_H
 
-#define slotFree 0;
-#define slotUsed 1;
+#include <iostream>
+
+/**
+ * @brief Numerate the possible slot status.
+ */
+enum SlotStatus{
+    SlotFree,
+    SlotUsed
+};
 
 #include <vector>
 #include <limits>
+#include <iostream>
 
 class Topology;
 
@@ -26,6 +34,9 @@ class Topology;
  * @brief Class Link represents a link inside a topology. 
  */
 class Link {
+    friend std::ostream& operator<<(std::ostream& ostream,
+    Link* link);
+    
 public:
     /**
      * @brief Standard constructor for a Link object.
@@ -39,7 +50,7 @@ public:
      */
     Link(Topology* topPointer, unsigned int origimNode, 
     unsigned int destinationNode, double length, 
-    unsigned int numberSections);
+    unsigned int numberSections, unsigned int numberSlots);
     /**
      * @brief Copy constructor for a Link object.
      * @param orig original Link object.
@@ -138,7 +149,7 @@ private:
      * @brief Vector with slots status, free or occupied,
      * in this link
      */
-    std::vector<bool> slotsStatus;
+    std::vector<SlotStatus> slotsStatus;
 };
 
 #endif /* LINK_H */

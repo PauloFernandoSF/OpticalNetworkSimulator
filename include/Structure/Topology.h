@@ -17,6 +17,7 @@
 #include <vector>
 #include <memory>
 #include <assert.h>
+#include <iostream>
 
 class SimulationType;
 class Node;
@@ -26,6 +27,9 @@ class Link;
  * @brief Class Topology represents the topology of a simulation.
  */
 class Topology {
+    friend std::ostream& operator<<(std::ostream& ostream, 
+    const Topology* topology);
+    
 public:
     /**
      * @brief Standard constructor for a Topology object.
@@ -104,6 +108,20 @@ public:
      * @brief Set additional settings of this topology
      */
     void SetAditionalSettings();
+    
+    /**
+     * @brief Get a specified node in the topology.
+     * @param index index of vector of nodes.
+     * @return Pointer to a Node object.
+     */
+    Node* GetNode(unsigned int index) const;
+    /**
+     * @brief Get a specified link in the topology.
+     * @param indexOrNode index of origin node.
+     * @param indexDeNode index of destination node.
+     * @return Pointer to a Link object.
+     */
+    Link* GetLink(unsigned int indexOrNode, unsigned int indexDeNode) const;
 
 private:
     /**

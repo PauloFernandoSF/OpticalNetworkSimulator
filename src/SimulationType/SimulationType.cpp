@@ -21,25 +21,28 @@
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Calls/Traffic.h"
+#include "../../include/Calls/CallGenerator.h"
 
 SimulationType::SimulationType(unsigned int simulIndex)
 :simulationIndex(simulIndex),
 parameters(std::make_shared<Parameters> (this)), 
 options(std::make_shared<Options> (this)), 
-data(boost::make_unique<Data>(this)), 
+data(boost::make_unique<Data>(this)),
 topology(std::make_shared<Topology> (this)),
 inputOutput(boost::make_unique<InputOutput>(this)),
-traffic(std::make_shared<Traffic>(this)) {
+traffic(std::make_shared<Traffic>(this)),
+callGenerator(nullptr) {
     
 }
 
 SimulationType::~SimulationType() {
-    parameters.~__shared_ptr();
-    options.~__shared_ptr();
-    data.~unique_ptr();
-    topology.~__shared_ptr();
-    inputOutput.~unique_ptr();
-    traffic.~__shared_ptr();
+    this->parameters.reset();
+    this->options.reset();
+    this->data.release();
+    this->topology.reset();
+    this->inputOutput.release();
+    this->traffic.reset();
+    this->callGenerator.reset();
 }
 
 void SimulationType::LoadFile() {
@@ -47,11 +50,15 @@ void SimulationType::LoadFile() {
     this->options->LoadFile();
     this->topology->LoadFile();
     this->traffic->LoadFile();
+    this->GetData()->Initialise();
 }
 
 void SimulationType::Print() {
-    std::cout << parameters << std::endl;
-    std::cout << options << std::endl;
+    std::cout << this->parameters << std::endl;
+    std::cout << this->options << std::endl;
+    std::cout << this->GetData() << std::endl;
+    std::cout << this->topology << std::endl;
+    std::cout << this->traffic << std::endl;
 }
 
 void SimulationType::AdditionalSettings() {
@@ -83,7 +90,7 @@ Data* SimulationType::GetData() const {
 }
 
 void SimulationType::SetData(std::unique_ptr<Data> data) {
-    this->data = std::move(data);
+    std::swap(this->data, data);
 }
 
 Topology* SimulationType::GetTopology() const {
@@ -108,4 +115,12 @@ Traffic* SimulationType::GetTraffic() const {
 
 void SimulationType::SetTraffic(std::shared_ptr<Traffic> traffic) {
     this->traffic = traffic;
+}
+
+CallGenerator* SimulationType::GetCallGenerator() const {
+    return callGenerator.get();
+}
+
+void SimulationType::SetCallGenerator(std::shared_ptr<CallGenerator> callGenerator) {
+    this->callGenerator = callGenerator;
 }

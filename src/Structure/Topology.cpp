@@ -15,9 +15,33 @@
 
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/Options.h"
+#include "../../include/Data/Parameters.h"
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Structure/Node.h"
 #include "../../include/Structure/Link.h"
+
+std::ostream& operator<<(std::ostream& ostream, 
+const Topology* topology) {
+    ostream << "TOPOLOGY" << std::endl << std::endl;
+    
+    ostream << "Number of nodes: " << topology->GetNumNodes() 
+            << std::endl;
+    ostream << "Number of links: " << topology->GetNumLinks()
+            << std::endl;
+    ostream << "Number of slots: " << topology->GetNumSlots()
+            << std::endl;
+    
+    for(auto it: topology->vecNodes){
+        ostream << it << std::endl;
+    }
+    
+    for(auto it : topology->vecLinks){
+        if(it != nullptr)
+            ostream << it << std::endl;
+    }
+    
+    return ostream;
+}
 
 Topology::Topology(SimulationType* simulType) 
 :simulType(simulType), vecNodes(0), vecLinks(0), 
@@ -27,13 +51,13 @@ numNodes(0), numLinks(0), numSlots(0), maxLength(0.0) {
 
 Topology::~Topology() {
     
-    for(auto it : vecNodes){
-        it->~Node();
+    for(auto it : this->vecNodes){
+        it.reset();
     }
     
-    for(auto it : vecLinks){
-        if(it != nullptr)
-            it->~Link();
+    
+    for(auto it : this->vecLinks){
+        it.reset();
     }
 }
 
@@ -50,33 +74,37 @@ void Topology::LoadFile() {
     auxIfstream >> auxInt;
     this->SetNumSlots(auxInt);
     
-    //Create a function based in the simulation options
-    for(auxInt = 0; auxInt < this->GetNumNodes(); ++auxInt){
-        std::shared_ptr<Node> node = 
-        std::make_shared<Node> (this, auxInt);
+    //Create all topology nodes
+    std::shared_ptr<Node> node;
+    for(unsigned int a = 0; a < this->GetNumNodes(); ++a){
+        node = std::make_shared<Node>(this, a);
         this->InsertNode(node);
+        node.reset();
     }
     
+    //Create all topology links
     int orNode, deNode, nSec;
     double length;
+    std::shared_ptr<Link> link;
     for(auxInt = 0; auxInt < this->GetNumLinks(); ++auxInt){
         auxIfstream >> orNode;
         auxIfstream >> deNode;
         auxIfstream >> length;
         auxIfstream >> nSec;
-        std::shared_ptr<Link> link = std::make_shared<Link>(this, 
-        orNode, deNode, length, nSec);
+        link = std::make_shared<Link>(this, orNode, deNode, 
+        length, nSec, this->GetNumSlots());
         this->InsertLink(link);
+        link.reset();
     }
 }
 
 void Topology::Initialise() {
     
-    for(auto it : vecNodes){
+    for(auto it : this->vecNodes){
         it->Initialise();
     }
     
-    for(auto it : vecLinks){
+    for(auto it : this->vecLinks){
         if(it != nullptr)
             it->Initialise();
     }
@@ -118,15 +146,15 @@ void Topology::SetNumSlots(int numSlots) {
 }
 
 void Topology::InsertLink(std::shared_ptr<Link> link) {
-    assert( this->vecLinks.at(link->GetOrigimNode()*this->GetNumNodes()
+    assert( this->vecLinks.at(link->GetOrigimNode() * this->GetNumNodes()
     + link->GetDestinationNode()) == nullptr );
     
-    this->vecLinks.at(link->GetOrigimNode()*this->GetNumNodes()
+    this->vecLinks.at(link->GetOrigimNode() * this->GetNumNodes()
     + link->GetDestinationNode()) = link;
 }
 
 void Topology::InsertNode(std::shared_ptr<Node> node) {
-    assert(node->GetNodeId() < this->vecNodes.size());
+    assert(node.get()->GetNodeId() < this->vecNodes.size());
     
     this->vecNodes.at(node->GetNodeId()) = node;
 }
@@ -183,4 +211,14 @@ void Topology::SetLinksIniCost() {
                 it->SetCost(std::numeric_limits<double>::max());
             }
     }
+}
+
+Node* Topology::GetNode(unsigned int index) const {
+    return this->vecNodes.at(index).get();
+}
+
+Link* Topology::GetLink(unsigned int indexOrNode, 
+unsigned int indexDeNode) const {
+    return this->vecLinks.at(indexOrNode * this->numNodes + 
+    indexDeNode).get();
 }
