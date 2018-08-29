@@ -121,7 +121,8 @@ public:
      * @param indexDeNode index of destination node.
      * @return Pointer to a Link object.
      */
-    Link* GetLink(unsigned int indexOrNode, unsigned int indexDeNode) const;
+    Link* GetLink(unsigned int indexOrNode, 
+    unsigned int indexDeNode) const;
 
 private:
     /**

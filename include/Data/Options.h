@@ -110,6 +110,10 @@ public:
     virtual ~Options();
     
     /**
+     * @brief Load the options from terminal inputs
+     */
+    void Load();
+    /**
      * @brief Load the options from a .txt file.
      */
     void LoadFile();
@@ -218,6 +222,7 @@ private:
      * @brief Traffic option selected.
      */
     TrafficOption trafficOption;
+    
     /**
      * @brief Map that keeps the topology option 
      * and the name of the selected topology.

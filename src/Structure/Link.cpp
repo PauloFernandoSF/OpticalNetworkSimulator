@@ -19,7 +19,7 @@ Link* link) {
             << std::endl;
     ostream << "Destination node: " << link->GetDestinationNode()
             << std::endl;
-    ostream  << "Length: " << link->GetLength()
+    ostream  << "Length (km): " << link->GetLength() / 1E3
             << std::endl;
     ostream << "Number of sections: " << link->GetNumberSections()
             << std::endl;
@@ -43,8 +43,7 @@ Link::~Link() {
 }
 
 void Link::Initialise() {
-    this->slotsStatus.resize(this->slotsStatus.size(), SlotFree);
-    
+    this->slotsStatus.resize(this->slotsStatus.size(), SlotFree);  
 }
 
 unsigned int Link::GetOrigimNode() const {

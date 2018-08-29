@@ -45,6 +45,14 @@ SimulationType::~SimulationType() {
     this->callGenerator.reset();
 }
 
+void SimulationType::Load() {
+    this->parameters->Load();
+    this->options->Load();
+    this->topology->LoadFile();
+    this->traffic->LoadFile();
+    this->GetData()->Initialise();
+}
+
 void SimulationType::LoadFile() {
     this->parameters->LoadFile();
     this->options->LoadFile();
@@ -56,9 +64,9 @@ void SimulationType::LoadFile() {
 void SimulationType::Print() {
     std::cout << this->parameters << std::endl;
     std::cout << this->options << std::endl;
-    std::cout << this->GetData() << std::endl;
-    std::cout << this->topology << std::endl;
+    //std::cout << this->topology << std::endl;
     std::cout << this->traffic << std::endl;
+    std::cout << this->GetData() << std::endl;
 }
 
 void SimulationType::AdditionalSettings() {
@@ -73,7 +81,8 @@ Parameters* SimulationType::GetParameters() const {
     return parameters.get();
 }
 
-void SimulationType::SetParameters(std::shared_ptr<Parameters> parameters) {
+void SimulationType::SetParameters(std::shared_ptr<Parameters> 
+parameters) {
     this->parameters = parameters;
 }
 
@@ -97,7 +106,8 @@ Topology* SimulationType::GetTopology() const {
     return topology.get();
 }
 
-void SimulationType::SetTopology(std::shared_ptr<Topology> topology) {
+void SimulationType::SetTopology(std::shared_ptr<Topology> 
+topology) {
     this->topology = topology;
 }
 
@@ -105,7 +115,8 @@ InputOutput* SimulationType::GetInputOutput() const {
     return inputOutput.get();
 }
 
-void SimulationType::SetInputOutput(std::unique_ptr<InputOutput> inputOutput) {
+void SimulationType::SetInputOutput(std::unique_ptr<InputOutput> 
+inputOutput) {
     this->inputOutput = std::move(inputOutput);
 }
 
@@ -113,7 +124,8 @@ Traffic* SimulationType::GetTraffic() const {
     return traffic.get();
 }
 
-void SimulationType::SetTraffic(std::shared_ptr<Traffic> traffic) {
+void SimulationType::SetTraffic(std::shared_ptr<Traffic> 
+traffic) {
     this->traffic = traffic;
 }
 
@@ -121,6 +133,7 @@ CallGenerator* SimulationType::GetCallGenerator() const {
     return callGenerator.get();
 }
 
-void SimulationType::SetCallGenerator(std::shared_ptr<CallGenerator> callGenerator) {
+void SimulationType::SetCallGenerator(std::shared_ptr<CallGenerator> 
+callGenerator) {
     this->callGenerator = callGenerator;
 }

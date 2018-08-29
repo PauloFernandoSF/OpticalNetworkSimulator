@@ -104,6 +104,7 @@
       <compileType>
         <ccTool>
           <standard>8</standard>
+          <warningLevel>2</warningLevel>
         </ccTool>
       </compileType>
       <item path="Files/Inputs/Options_1.txt" ex="false" tool="3" flavor2="0">

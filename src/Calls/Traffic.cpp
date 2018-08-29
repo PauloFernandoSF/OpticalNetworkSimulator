@@ -17,6 +17,7 @@
 
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
+#include "../../include/Data/Options.h"
 
 const double Traffic::BER = 0.001;
 const int Traffic::polarization = 1;
@@ -31,6 +32,8 @@ const Traffic* traffic) {
         ostream << "Traffic " << a+1 << "(Gbps): "
                 << (traffic->GetTraffic(a) / 1E9) << std::endl;
     }
+    
+    return ostream;
 }
 
 Traffic::Traffic(SimulationType* simulType)

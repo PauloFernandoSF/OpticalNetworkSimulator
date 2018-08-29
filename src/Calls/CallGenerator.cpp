@@ -38,21 +38,23 @@ CallGenerator::~CallGenerator() {
 }
 
 void CallGenerator::GenerateCall() {
-    unsigned int auxIndexOrNode = uniformNodeDistribution(random_generator);
+    unsigned int auxIndexOrNode = uniformNodeDistribution(
+    this->random_generator);
     unsigned int auxIndexDeNode;
     
     do{
-        auxIndexDeNode = uniformNodeDistribution(random_generator);
+        auxIndexDeNode = uniformNodeDistribution(
+        this->random_generator);
     }while(auxIndexOrNode == auxIndexDeNode);
     
-    unsigned int auxIndexTraffic = uniformTrafficDistribution(random_generator);
+    unsigned int auxIndexTraffic = uniformTrafficDistribution(
+    this->random_generator);
     
     //Create the call with the above parameters.
     //Change this current creation.
-    Call* call = new Call( this->simulType->GetTopology()->
-    GetNode(auxIndexOrNode), this->simulType->GetTopology()->
-    GetNode(auxIndexDeNode),  this->simulType->GetTraffic()->
-    GetTraffic(auxIndexTraffic));
+    Call* call = new Call( this->topology->GetNode(auxIndexOrNode), 
+    this->topology->GetNode(auxIndexDeNode),  
+    this->traffic->GetTraffic(auxIndexTraffic));
 }
 
 SimulationType* CallGenerator::GetSimulType() const {

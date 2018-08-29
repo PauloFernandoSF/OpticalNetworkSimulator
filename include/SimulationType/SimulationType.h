@@ -51,7 +51,7 @@ public:
     /**
      * @brief Load parameters to the simulation from the terminal.
      */
-    virtual void Load() = 0;
+    virtual void Load();
     /**
      * @brief Load parameters, options and such,
      * to the simulation from a .txt file.

@@ -38,11 +38,11 @@ void MultiLoadSimulation::Run() {
         this->GetTopology()->Initialise();
         
         //Continue calling functions from CallGenerator object.
-    }    
+    }
 }
 
 void MultiLoadSimulation::Load() {
-
+    SimulationType::Load();
 }
 
 void MultiLoadSimulation::LoadFile() {
@@ -54,7 +54,6 @@ void MultiLoadSimulation::LoadFile() {
 
 void MultiLoadSimulation::Print() {
     this->Help();
-    std::cout << std::endl;
     SimulationType::Print();
 }
 
@@ -65,5 +64,6 @@ void MultiLoadSimulation::Save() {
 void MultiLoadSimulation::Help() {
     std::cout << "MULTIPLE LOADS SIMULATION" << std::endl
               << "This type of simulation varies the network load "
-              << "and analyzes the network performance. " << std::endl;
+              << "and analyzes the network performance. "
+              << std::endl << std::endl;
 }

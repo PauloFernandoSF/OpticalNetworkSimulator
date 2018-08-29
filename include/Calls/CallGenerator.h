@@ -35,6 +35,7 @@ public:
      * this data.
      */
     CallGenerator(SimulationType* simulType);
+    
     virtual ~CallGenerator();
         
     void GenerateCall();
@@ -51,12 +52,12 @@ public:
     void SetSimulType(SimulationType* simulType);
     /**
      * @brief Get the network load.
-     * @return Network load.
+     * @return Network load (erlang).
      */
     double GetNetworkLoad() const;
     /**
      * @brief Set the network load.
-     * @param networkLoad network load.
+     * @param networkLoad network load (erlang).
      */
     void SetNetworkLoad(double networkLoad);
     

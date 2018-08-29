@@ -53,7 +53,6 @@ public:
      * @param orNode
      */
     void SetOrNode(Node* orNode);
-
     
 private:
     Node* orNode;

@@ -50,7 +50,11 @@ public:
     virtual ~Parameters();
     
     /**
-     * @brief Loads the parameters present in an .txt file.
+     * @brief Load the parameters from terminal inputs.
+     */
+    void Load();
+    /**
+     * @brief Loads the parameters from an .txt file.
      */
     void LoadFile();
     

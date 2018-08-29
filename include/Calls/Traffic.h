@@ -84,7 +84,13 @@ private:
      * @brief Vector that storage all traffic values.
      */
     std::vector<double> vecTraffic;
+    /**
+     * @brief Bit error rate constant.
+     */
     static const double BER;
+    /**
+     * @brief Number of polarization.
+     */
     static const int polarization;
 };
 

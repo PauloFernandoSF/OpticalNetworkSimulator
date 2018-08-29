@@ -53,7 +53,7 @@ Options::mapTrafficOptions = boost::assign::map_list_of
     (Traffic_10_40_100_200_400, "10-40-100-200-400");
 
 std::ostream& operator<<(std::ostream& ostream,
-    const Options* options) {
+const Options* options) {
     ostream << "OPITIONS" << std::endl;
     ostream << "Topology: " << options->GetTopologyName()
             << std::endl;
@@ -78,6 +78,62 @@ linkCostType(Invalid), trafficOption(TrafficInvalid) {
 
 Options::~Options() {
 
+}
+
+void Options::Load() {
+    int auxInt;
+    
+    std::cout << "Topology options" << std::endl;
+    for(TopologyOption a = FirstTopology; a <= LastTopology; 
+    a = TopologyOption(a+1)){
+        std::cout << a << "-" << this->mapTopologyOptions.at(a) 
+                  << std::endl;
+    }
+    std::cout << "Insert topology: ";
+    std::cin >> auxInt;
+    this->SetTopologyOption((TopologyOption) auxInt);
+    
+    std::cout << "Routing algorithm options" << std::endl;
+    for(RoutingOption a = FirstRoutingOption; a <= LastRoutingOption; 
+    a = RoutingOption(a+1)){
+        std::cout << a << "-" << this->mapRoutingOptions.at(a) 
+                  << std::endl;
+    }
+    std::cout << "Insert the routing algorithm: ";
+    std::cin >> auxInt;
+    this->SetRoutingOption((RoutingOption) auxInt);
+    
+    std::cout << "Spectral allocation options" << std::endl;
+    for(SpectrumAllocationOption a = FirstSpecAllOption; 
+    a <= LastSpecAllOption; a = SpectrumAllocationOption(a+1)){
+        std::cout << a << "-" << this->mapSpecAlgOptions.at(a) 
+                  << std::endl;
+    }
+    std::cout << "Insert the spectral allocation: ";
+    std::cin >> auxInt;
+    this->SetSpecAllOption((SpectrumAllocationOption) auxInt);
+    
+    std::cout << "Links cost type options" << std::endl;
+    for(LinkCostType a = FirstLinkCostType; a <= LastLinkCostType; 
+    a = LinkCostType(a+1)){
+        std::cout << a << "-" << this->mapLinkCostType.at(a) 
+                  << std::endl;
+    }
+    std::cout << "Insert the link cost type: ";
+    std::cin >> auxInt;
+    this->SetLinkCostType((LinkCostType) auxInt);
+    
+    std::cout << "Traffic options" << std::endl;
+    for(TrafficOption a = FirstTrafficOption; a <= LastTrafficOption; 
+    a = TrafficOption(a+1)){
+        std::cout << a << "-" << this->mapTrafficOptions.at(a) 
+                  << std::endl;
+    }
+    std::cout << "Insert the traffic option: ";
+    std::cin >> auxInt;
+    this->SetTrafficOption((TrafficOption) auxInt);
+    
+    std::cout << std::endl;
 }
 
 void Options::LoadFile() {

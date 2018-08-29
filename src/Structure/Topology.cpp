@@ -22,7 +22,7 @@
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Topology* topology) {
-    ostream << "TOPOLOGY" << std::endl << std::endl;
+    ostream << "TOPOLOGY" << std::endl;
     
     ostream << "Number of nodes: " << topology->GetNumNodes() 
             << std::endl;

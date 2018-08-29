@@ -31,7 +31,7 @@ const Parameters* parameters) {
             << parameters->GetNumberReqMax() << std::endl;
     ostream << "Maximum blocked requests: "
             << parameters->GetNumberBloqMax() << std::endl;
-    ostream << "Slot bandwidth(GHz): "
+    ostream << "Slot bandwidth (GHz): "
             << parameters->GetSlotBandwidth() << std::endl;
     
     return ostream;
@@ -47,6 +47,38 @@ slotBandwidth(0.0) {
 
 Parameters::~Parameters() {
     
+}
+
+void Parameters::Load() {
+    unsigned int auxUnsInt;
+    double auxDouble;
+    
+    std::cout << "PARAMETERS INPUTS" << std::endl;
+    std::cout << "Insert Connection Deactivation Rate: ";
+    std::cin >> auxDouble;
+    this->SetMu(auxDouble);
+    std::cout << "Insert minimum load point: ";
+    std::cin >> auxDouble;
+    this->SetMinLoadPoint(auxDouble);
+    std::cout << "Insert maximum load point: ";
+    std::cin >> auxDouble;
+    this->SetMaxLoadPoint(auxDouble);
+    std::cout << "Insert number of load points: ";
+    std::cin >> auxUnsInt;
+    this->SetNumberLoadPoints(auxUnsInt);
+    std::cout << "Insert total number of calls: ";
+    std::cin >> auxDouble;
+    this->SetNumberReqMax(auxDouble);
+    std::cout << "Insert maximum number of blocked calls: ";
+    std::cin >> auxDouble;
+    this->SetNumberBloqMax(auxDouble);
+    std::cout << "Insert slot bandwidth(GHz): ";
+    std::cin >> auxDouble;
+    this->SetSlotBandwidth(auxDouble);
+    
+    this->SetLoadPointUniform();
+    
+    std::cout << std::endl;
 }
 
 void Parameters::LoadFile() {
@@ -65,8 +97,8 @@ void Parameters::LoadFile() {
     this->SetNumberLoadPoints(auxInt);
     auxIfstream >> auxDouble;
     this->SetNumberReqMax(auxDouble);
-    auxIfstream >> auxInt;
-    this->SetNumberBloqMax(auxInt);
+    auxIfstream >> auxDouble;
+    this->SetNumberBloqMax(auxDouble);
     auxIfstream >> auxDouble;
     this->SetSlotBandwidth(auxDouble);
     
@@ -148,7 +180,7 @@ void Parameters::SetLoadPasso() {
 void Parameters::SetLoadPointUniform() {
     this->SetLoadPasso();
     
-    for(int a = 0; a < this->numberLoadPoints; ++a){
+    for(unsigned int a = 0; a < this->numberLoadPoints; ++a){
         loadPoint.push_back(this->minLoadPoint + a*this->loadPasso);
     }
 }

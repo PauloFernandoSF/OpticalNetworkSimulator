@@ -66,7 +66,7 @@ private:
     /**
      * @brief Total number of simulations in this kernel.
      */
-    unsigned int numberSimulations;
+    const unsigned int numberSimulations;
     /**
      * @brief Vector with all pointers to SimulationType objects.
      */
