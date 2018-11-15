@@ -45,7 +45,7 @@ public:
     virtual ~Data();
     
     
-    void Initialise();
+    void Initialize();
     
     
     std::vector<double> GetNumberReq() const;

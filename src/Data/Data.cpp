@@ -58,7 +58,7 @@ Data::~Data() {
     
 }
 
-void Data::Initialise() {
+void Data::Initialize() {
     int size = this->simulType->GetParameters()->GetNumberLoadPoints();
     this->numberReq.resize(size, 0.0);
     this->numberBlocReq.resize(size, 0.0);

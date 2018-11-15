@@ -32,12 +32,9 @@ void MultiLoadSimulation::Run() {
     GetNumberLoadPoints();
     
     for(unsigned int a = 0; a < numLoadPoints; ++a){       
-        this->SetCallGenerator(std::make_shared<CallGenerator>(this));
-        this->GetCallGenerator()->SetNetworkLoad
-        (this->GetParameters()->GetLoadPoint(a));
-        this->GetTopology()->Initialise();
-        
-        //Continue calling functions from CallGenerator object.
+        double loadPoint = this->GetParameters()->GetLoadPoint(a);    
+        this->GetCallGenerator()->SetNetworkLoad(loadPoint);
+        SimulationType::Run();
     }
 }
 

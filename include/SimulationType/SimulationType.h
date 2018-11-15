@@ -47,7 +47,7 @@ public:
     /**
      * @brief Runs a simulation with specified parameters.
      */
-    virtual void Run() = 0;
+    virtual void Run();
     /**
      * @brief Load parameters to the simulation from the terminal.
      */
@@ -157,7 +157,17 @@ public:
 
     void SetCallGenerator(std::shared_ptr<CallGenerator> callGenerator);
 
+private:
+    
+    void InitializeAll();
+    
+    void Simulate();
+    
+    void FinalizeAll();
 
+public:
+    
+    double numberRequests;
 
 private:
     /**

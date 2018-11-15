@@ -102,6 +102,10 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <standard>10</standard>
+          <warningLevel>2</warningLevel>
+        </cTool>
         <ccTool>
           <standard>8</standard>
           <warningLevel>2</warningLevel>

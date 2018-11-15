@@ -98,15 +98,15 @@ void Topology::LoadFile() {
     }
 }
 
-void Topology::Initialise() {
+void Topology::Initialize() {
     
     for(auto it : this->vecNodes){
-        it->Initialise();
+        it->Initialize();
     }
     
     for(auto it : this->vecLinks){
         if(it != nullptr)
-            it->Initialise();
+            it->Initialize();
     }
 }
 

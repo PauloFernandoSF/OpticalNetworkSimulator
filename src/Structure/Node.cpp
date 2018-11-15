@@ -29,7 +29,7 @@ Node::~Node() {
 
 }
 
-void Node::Initialise() {
+void Node::Initialize() {
     
 }
 

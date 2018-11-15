@@ -14,20 +14,32 @@
 #ifndef CALLGENERATOR_H
 #define CALLGENERATOR_H
 
-#include <random>
+typedef double TIME;
 
 class SimulationType;
 class Call;
 class Topology;
 class Data;
 class Traffic;
+class Event;
 
 #include <assert.h>
 #include <memory>
+#include <random>
+#include <queue>
 
-#include "Traffic.h"
+#include "Event.h"
 
+/**
+ * @brief 
+ */
 class CallGenerator {
+private:
+    struct EventCompare {
+        bool operator()(const std::shared_ptr<Event> eventA,
+                        const std::shared_ptr<Event> eventB) const;
+    };
+    
 public:
     /**
      * @brief Standard constructor for a CallGenerator object.
@@ -37,8 +49,15 @@ public:
     CallGenerator(SimulationType* simulType);
     
     virtual ~CallGenerator();
-        
+    
+    
+    void Initialize();
+    
+    void Finalize();
+    
     void GenerateCall();
+    
+    std::shared_ptr<Event> GetNextEvent();
     
     /**
      * @brief Get the simulation that owns this object.
@@ -49,7 +68,7 @@ public:
      * @brief Set the simulation that owns this object.
      * @param simulType Pointer to a SimulationType object.
      */
-    void SetSimulType(SimulationType* simulType);
+    void SetSimulType(SimulationType* const simulType);
     /**
      * @brief Get the network load.
      * @return Network load (erlang).
@@ -59,7 +78,23 @@ public:
      * @brief Set the network load.
      * @param networkLoad network load (erlang).
      */
-    void SetNetworkLoad(double networkLoad);
+    void SetNetworkLoad(const double networkLoad);
+    
+    TIME GetSimulationTime() const;
+
+    void SetSimulationTime(const TIME simulationTime);
+
+    void PopTopEvent();
+    
+    void PushEvent(std::shared_ptr<Event> evt);
+    
+    
+    /**
+     * @brief List with the Event objects ordered based on those times.
+     */
+    std::priority_queue<std::shared_ptr<Event>,
+                        std::vector<std::shared_ptr<Event>>,
+                        EventCompare> queueEvents;
     
 private:
     /**
@@ -67,12 +102,22 @@ private:
      * owns this object.
      */
     SimulationType* simulType;
-    
+    /**
+     * @brief Pointer to a Topology object owned
+     * by a SimulationType object.
+     */
     Topology* topology;
-    
+    /**
+     * @brief Pointer to a Data object owned by
+     * a SimulationType object.
+     */
     Data* data;
-    
+    /**
+     * @brief Pointer to a  Traffic object owned
+     * by a SimulationType object.
+     */
     Traffic* traffic;
+    
     /**
      * @brief Random engine responsible for the
      * random distributions.
@@ -92,17 +137,20 @@ private:
      * @brief Distribution responsible to generate
      * the deactivation connection time.
      */
-    std::exponential_distribution<double> exponencialMuDistribution;
+    std::exponential_distribution<TIME> exponencialMuDistribution;
     /**
      * @brief Distribution responsible to generate
      * the inter-arrival time.
      */
-    std::exponential_distribution<double> exponencialHDistribution;
-    
+    std::exponential_distribution<TIME> exponencialHDistribution;
+    /**
+     * @brief Network load (Erlangs).
+     */
     double networkLoad;
-
-    //Fazer container com as chamadas (Calls) criadas.
-    //Evento? Connection?
+    /**
+     * @brief Actual simulation time.
+     */
+    TIME simulationTime;
 };
 
 #endif /* CALLGENERATOR_H */

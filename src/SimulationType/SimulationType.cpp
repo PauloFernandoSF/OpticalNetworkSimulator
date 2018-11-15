@@ -25,13 +25,13 @@
 
 SimulationType::SimulationType(unsigned int simulIndex)
 :simulationIndex(simulIndex),
-parameters(std::make_shared<Parameters> (this)), 
+parameters(std::make_shared<Parameters> (this)),
 options(std::make_shared<Options> (this)), 
 data(boost::make_unique<Data>(this)),
 topology(std::make_shared<Topology> (this)),
 inputOutput(boost::make_unique<InputOutput>(this)),
 traffic(std::make_shared<Traffic>(this)),
-callGenerator(nullptr) {
+callGenerator(std::make_shared<CallGenerator>(this)) {
     
 }
 
@@ -45,12 +45,25 @@ SimulationType::~SimulationType() {
     this->callGenerator.reset();
 }
 
+void SimulationType::Run() {   
+    std::cout << "New Simulation" << std::endl;
+    std::cout << "Initialize  All" << std::endl;
+    this->InitializeAll();
+    
+    std::cout << "Simulating" << std::endl;
+    this->Simulate();
+    
+    std::cout << "Finalize All" << std::endl;
+    this->FinalizeAll();
+    std::cout << std::endl << std::endl;
+}
+
 void SimulationType::Load() {
     this->parameters->Load();
     this->options->Load();
     this->topology->LoadFile();
     this->traffic->LoadFile();
-    this->GetData()->Initialise();
+    this->GetData()->Initialize();
 }
 
 void SimulationType::LoadFile() {
@@ -58,7 +71,7 @@ void SimulationType::LoadFile() {
     this->options->LoadFile();
     this->topology->LoadFile();
     this->traffic->LoadFile();
-    this->GetData()->Initialise();
+    this->GetData()->Initialize();
 }
 
 void SimulationType::Print() {
@@ -136,4 +149,41 @@ CallGenerator* SimulationType::GetCallGenerator() const {
 void SimulationType::SetCallGenerator(std::shared_ptr<CallGenerator> 
 callGenerator) {
     this->callGenerator = callGenerator;
+}
+
+void SimulationType::InitializeAll() {
+    this->topology->Initialize();
+    this->callGenerator->Initialize();
+    this->numberRequests = 0.0;
+}
+
+void SimulationType::Simulate() {
+    double numReqMax = this->parameters->GetNumberReqMax();
+    this->callGenerator->GenerateCall();
+    
+    while(this->numberRequests < numReqMax){
+        std::shared_ptr<Event> evt = this->callGenerator->GetNextEvent();
+        
+        switch(evt->GetEventType()){
+            case CallRequest:
+                evt->ImplementCallRequest();
+                
+                //Ver um jeito de passar essa função para
+                //dentro de ImplementRequest()
+                if(evt->GetCall()->GetStatus() == Accepted)
+                    this->callGenerator->PushEvent(evt);
+                
+                this->callGenerator->GenerateCall();
+                break;
+            case CallEnd:
+                evt->ImplementCallEnd();
+                break;
+            default:
+                std::cerr << "Invalid event" << std::endl;
+        }
+    }
+}
+
+void SimulationType::FinalizeAll() {
+    this->callGenerator->Finalize();
 }

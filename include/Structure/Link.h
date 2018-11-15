@@ -62,10 +62,10 @@ public:
     virtual ~Link();
     
     /**
-     * @brief Initialise the link, setting the start values
-     * contained in it. 
+     * @brief Initialize the link, setting the start values
+     * contained in it to free. 
      */
-    void Initialise();
+    void Initialize();
     
     /**
      * @brief Get the origin node of the link.

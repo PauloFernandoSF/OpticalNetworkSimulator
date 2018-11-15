@@ -1,7 +1,16 @@
 1
-200
+100
 300
 6
-1000000
+100
 500
 12.5
+
+
+#Deactivation time
+#Minimum load
+#Maximum load
+#Number of points
+#Maximum number  of requisitions
+#Maximum  number of blocked requests
+#Size of the slot

@@ -46,10 +46,10 @@ public:
     virtual ~Node();
     
     /**
-     * @brief Initialise the node, setting the start values
+     * @brief Initialize the node, setting the start values
      * contained in it.
      */
-    virtual void Initialise();
+    virtual void Initialize();
     
     /**
      * @brief Get the node index.

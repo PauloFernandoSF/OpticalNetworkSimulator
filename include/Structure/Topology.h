@@ -52,10 +52,10 @@ public:
      */
     void LoadFile();
     /**
-     * @brief Initialise the topology, initializing all 
+     * @brief Initialize the topology, initializing all 
      * links and nodes.
      */
-    void Initialise();
+    void Initialize();
     
     /**
      * @brief Returns the number of nodes in this topology

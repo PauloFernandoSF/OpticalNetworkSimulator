@@ -43,13 +43,13 @@ public:
     virtual ~Kernel();
     
     /**
-     * @brief Runs the Kernel object.
-     * Three steps are done, each one with all simulation.
+     * @brief Runs the Kernel functions.
+     * Three steps are done, each one for all simulation.
      */
     void Run();    
     /**
      * @brief First step called by the Kernel object.
-     * Consists in create the simulations as load
+     * Consists in create the simulations and load
      * the information needed.
      */
     void Pre_Simulation();    

@@ -39,15 +39,19 @@ void Kernel::Run() {
 void Kernel::Pre_Simulation() {
     
     //Create the simulations vector
+    //Make all types of simulations
     for(unsigned int a = 1; a <= this->numberSimulations; ++a){
         simulations.push_back(std::make_shared<MultiLoadSimulation> (a));
     }
     
+    //Load all simulations
     for(auto it : simulations){
-        it->Load();
+        //it->Load();
+        it->LoadFile();
         it->AdditionalSettings();
     }
     
+    //Print all simulations
     for(auto it : simulations){
         it->Print();
     }

@@ -42,7 +42,8 @@ Link::~Link() {
     
 }
 
-void Link::Initialise() {
+void Link::Initialize() {
+    //Make all slots status for free
     this->slotsStatus.resize(this->slotsStatus.size(), SlotFree);  
 }
 
