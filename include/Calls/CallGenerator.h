@@ -85,7 +85,10 @@ public:
     void SetSimulationTime(const TIME simulationTime);
 
     void PopTopEvent();
-    
+    /**
+     * @brief Push an Event object to the ordered list of events.
+     * @param evt
+     */
     void PushEvent(std::shared_ptr<Event> evt);
     
     
