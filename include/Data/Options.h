@@ -17,7 +17,6 @@
 class SimulationType;
 
 #include <fstream>
-//#include <map>
 #include <boost/assign/list_of.hpp>
 #include <boost/unordered_map.hpp>
 #include <iostream>

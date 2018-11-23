@@ -23,7 +23,7 @@ class Data;
 class Traffic;
 class Event;
 
-#include <assert.h>
+#include <cassert>
 #include <memory>
 #include <random>
 #include <queue>
@@ -50,14 +50,21 @@ public:
     
     virtual ~CallGenerator();
     
-    
+    /**
+     * @brief Initialize this CallGenerator, defining the range of
+     * the distributions (Node, Traffic and Arriaval/Deactivation times).
+     * Also sets initial simulation time.
+     */
     void Initialize();
-    
+    /**
+     * @brief Erase the entire list of Events.
+     */
     void Finalize();
-    
+    /**
+     * @brief Generate the Call and the Event, based in the distributions.
+     * Push to the ordered list the new created event.
+     */
     void GenerateCall();
-    
-    std::shared_ptr<Event> GetNextEvent();
     
     /**
      * @brief Get the simulation that owns this object.
@@ -79,25 +86,29 @@ public:
      * @param networkLoad network load (erlang).
      */
     void SetNetworkLoad(const double networkLoad);
-    
+    /**
+     * @brief Return the simulation time of this CallGenerator.
+     * @return Simulation time.
+     */
     TIME GetSimulationTime() const;
-
+    /**
+     * @brief Sets the simulation time of this CallGenerator.
+     * @param simulationTime
+     */
     void SetSimulationTime(const TIME simulationTime);
 
-    void PopTopEvent();
+    /**
+     * @brief Return the first Event of the ordered list.
+     * Also remove the same element of this list.
+     * Update the simulation time.
+     * @return Top event object from the ordered list of events.
+     */
+    std::shared_ptr<Event> GetNextEvent();
     /**
      * @brief Push an Event object to the ordered list of events.
      * @param evt
      */
     void PushEvent(std::shared_ptr<Event> evt);
-    
-    
-    /**
-     * @brief List with the Event objects ordered based on those times.
-     */
-    std::priority_queue<std::shared_ptr<Event>,
-                        std::vector<std::shared_ptr<Event>>,
-                        EventCompare> queueEvents;
     
 private:
     /**
@@ -154,6 +165,12 @@ private:
      * @brief Actual simulation time.
      */
     TIME simulationTime;
+    /**
+     * @brief List with the Event objects ordered based on those times.
+     */
+    std::priority_queue<std::shared_ptr<Event>,
+                        std::vector<std::shared_ptr<Event>>,
+                        EventCompare> queueEvents;
 };
 
 #endif /* CALLGENERATOR_H */

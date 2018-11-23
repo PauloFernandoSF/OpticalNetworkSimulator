@@ -19,6 +19,7 @@
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Structure/Node.h"
 #include "../../include/Structure/Link.h"
+#include "../../include/GeneralClasses/Def.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Topology* topology) {
@@ -110,18 +111,18 @@ void Topology::Initialize() {
     }
 }
 
-int Topology::GetNumNodes() const {
+unsigned int Topology::GetNumNodes() const {
     return numNodes;
 }
 
-void Topology::SetNumNodes(int numNodes) {
+void Topology::SetNumNodes(unsigned int numNodes) {
     assert(numNodes > 0 && this->numNodes == 0);
     this->numNodes = numNodes;
     
-    for(int a = 0; a < this->numNodes; ++a){
+    for(unsigned int a = 0; a < this->numNodes; ++a){
         this->vecNodes.push_back(nullptr);
         
-        for(int b = 0; b < this->numNodes; ++b){
+        for(unsigned int b = 0; b < this->numNodes; ++b){
             this->vecLinks.push_back(nullptr);
         }
     }
@@ -208,7 +209,7 @@ void Topology::SetLinksIniCost() {
             for(auto it : vecLinks){
                 if(it == nullptr)
                     continue;
-                it->SetCost(std::numeric_limits<double>::max());
+                it->SetCost(Def::Max_Double);
             }
     }
 }

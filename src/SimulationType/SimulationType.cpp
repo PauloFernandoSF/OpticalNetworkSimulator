@@ -22,6 +22,7 @@
 #include "../../include/Structure/Topology.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Calls/CallGenerator.h"
+#include "../../include/RSA/RSA.h"
 
 SimulationType::SimulationType(unsigned int simulIndex)
 :simulationIndex(simulIndex),
@@ -31,7 +32,8 @@ data(boost::make_unique<Data>(this)),
 topology(std::make_shared<Topology> (this)),
 inputOutput(boost::make_unique<InputOutput>(this)),
 traffic(std::make_shared<Traffic>(this)),
-callGenerator(std::make_shared<CallGenerator>(this)) {
+callGenerator(std::make_shared<CallGenerator>(this)),
+rsaAlgorithm(std::make_shared<RSA>(this)){
     
 }
 
@@ -166,13 +168,7 @@ void SimulationType::Simulate() {
         
         switch(evt->GetEventType()){
             case CallRequest:
-                evt->ImplementCallRequest();
-                
-                //Ver um jeito de passar essa função para
-                //dentro de ImplementRequest()
-                if(evt->GetCall()->GetStatus() == Accepted)
-                    this->callGenerator->PushEvent(evt);
-                
+                evt->ImplementCallRequest();                
                 this->callGenerator->GenerateCall();
                 break;
             case CallEnd:

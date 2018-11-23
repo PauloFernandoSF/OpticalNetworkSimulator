@@ -41,6 +41,7 @@ CallGenerator::~CallGenerator() {
 }
 
 void CallGenerator::Initialize() {
+    this->simulationTime = 0.0;
     this->topology = this->GetSimulType()->GetTopology();
     this->data = this->GetSimulType()->GetData();
     this->traffic = this->GetSimulType()->GetTraffic();
@@ -56,7 +57,9 @@ void CallGenerator::Initialize() {
 }
 
 void CallGenerator::Finalize() {
-
+    while(!this->queueEvents.empty()){
+        this->queueEvents.pop();
+    }
 }
 
 void CallGenerator::GenerateCall() {
@@ -90,14 +93,6 @@ void CallGenerator::GenerateCall() {
     queueEvents.push(newEvent);
 }
 
-std::shared_ptr<Event> CallGenerator::GetNextEvent() {
-    std::shared_ptr<Event> nextEvent = this->queueEvents.top();
-    this->PopTopEvent();
-    this->SetSimulationTime(nextEvent->GetEventTime());
-    
-    return nextEvent;
-}
-
 SimulationType* CallGenerator::GetSimulType() const {
     return simulType;
 }
@@ -125,8 +120,12 @@ void CallGenerator::SetSimulationTime(const TIME simulationTime) {
     this->simulationTime = simulationTime;
 }
 
-void CallGenerator::PopTopEvent() {
+std::shared_ptr<Event> CallGenerator::GetNextEvent() {
+    std::shared_ptr<Event> nextEvent = this->queueEvents.top();
     this->queueEvents.pop();
+    this->SetSimulationTime(nextEvent->GetEventTime());
+    
+    return nextEvent;
 }
 
 void CallGenerator::PushEvent(std::shared_ptr<Event> evt) {

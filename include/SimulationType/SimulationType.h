@@ -23,6 +23,7 @@ class Topology;
 class InputOutput;
 class Traffic;
 class CallGenerator;
+class RSA;
 
 /**
  * @brief Base class for Simulations objects.
@@ -202,6 +203,8 @@ private:
      * @brief pointer to a CallGenerator object.
      */
     std::shared_ptr<CallGenerator> callGenerator;
+    
+    std::shared_ptr<RSA> rsaAlgorithm;
 };
 
 #endif /* SIMULATIONTYPE_H */

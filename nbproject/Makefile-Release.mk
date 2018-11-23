@@ -44,7 +44,11 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Data/InputOutput.o \
 	${OBJECTDIR}/src/Data/Options.o \
 	${OBJECTDIR}/src/Data/Parameters.o \
+	${OBJECTDIR}/src/GeneralClasses/Def.o \
 	${OBJECTDIR}/src/Kernel.o \
+	${OBJECTDIR}/src/RSA/RSA.o \
+	${OBJECTDIR}/src/RSA/Route.o \
+	${OBJECTDIR}/src/RSA/Routing.o \
 	${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o \
 	${OBJECTDIR}/src/SimulationType/SimulationType.o \
 	${OBJECTDIR}/src/Structure/Link.o \
@@ -121,10 +125,30 @@ ${OBJECTDIR}/src/Data/Parameters.o: src/Data/Parameters.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Data/Parameters.o src/Data/Parameters.cpp
 
+${OBJECTDIR}/src/GeneralClasses/Def.o: src/GeneralClasses/Def.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/GeneralClasses
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/GeneralClasses/Def.o src/GeneralClasses/Def.cpp
+
 ${OBJECTDIR}/src/Kernel.o: src/Kernel.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Kernel.o src/Kernel.cpp
+
+${OBJECTDIR}/src/RSA/RSA.o: src/RSA/RSA.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/RSA
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/RSA/RSA.o src/RSA/RSA.cpp
+
+${OBJECTDIR}/src/RSA/Route.o: src/RSA/Route.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/RSA
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/RSA/Route.o src/RSA/Route.cpp
+
+${OBJECTDIR}/src/RSA/Routing.o: src/RSA/Routing.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/RSA
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/RSA/Routing.o src/RSA/Routing.cpp
 
 ${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o: src/SimulationType/MultiLoadSimulation.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType

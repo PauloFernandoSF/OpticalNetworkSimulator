@@ -16,9 +16,11 @@
 
 #include <vector>
 #include <memory>
+#include <deque>
 
 class Node;
 class SimulationType;
+class Route;
 
 #include "../Structure/Link.h"
 #include "CallGenerator.h"
@@ -37,6 +39,7 @@ class Call {
     const Call* call);
     
 public:
+    Call();
     /**
      * @brief Standard constructor of a Call object.
      * @param orNode call origin node.
@@ -53,7 +56,10 @@ public:
      * @return Call status.
      */
     CallStatus GetStatus() const;
-    
+    /**
+     * @brief Returns the name of the call status.
+     * @return String with the name of the call status.
+     */
     std::string GetStatusName() const;
     /**
      * @brief Sets the status of this Call.
@@ -85,28 +91,71 @@ public:
      * @param deNode pointer to an Node object.
      */
     void SetDeNode(Node* deNode);
-    
+    /**
+     * @brief Return the number of slots of this Call.
+     * @return Total amount of slots.
+     */
     unsigned int GetNumberSlots() const;
-
+    /**
+     * @brief Inputs the number of slots of this Call.
+     * @param numberSlots Amount of slots to input.
+     */
     void SetNumberSlots(unsigned int numberSlots);
-    
+    /**
+     * @brief Returns the value of OSNR of this Call.
+     * @return OSNR value.
+     */
     double GetOsnrTh() const;
-
+    /**
+     * @brief Inputs the value of OSNR of this Call.
+     * @param osnrTh OSNR value.
+     */
     void SetOsnrTh(double osnrTh);
-    
+    /**
+     * @brief Returns the value of bandwidth of this Call.
+     * @return Bandwidth value.
+     */
     double GetBandwidth() const;
-
+    /**
+     * @brief Inputs the amount of bandwidth of this Call.
+     * @param bandwidth Bandwidth value.
+     */
     void SetBandwidth(double bandwidth);
-
+    /**
+     * @brief Return the bitrate value of this Call.
+     * @return Bitrate value.
+     */
     double GetBitRate() const;
-
+    /**
+     * @brief Inputs the bitrate value of this Call.
+     * @param bitRate Bitrate value.
+     */
     void SetBitRate(double bitRate); 
-    
+    /**
+     * @brief Returns the deactivation time of this Call.
+     * @return Value of deactivation time.
+     */
     TIME GetDeactivationTime() const;
-
+    /**
+     * @brief Inputs the deactivation time value.
+     * @param deactivationTime Value of deactivation time.
+     */
     void SetDeactivationTime(TIME deactivationTime);
-
     
+    Route* GetRoute() const;
+
+    void SetRoute(std::shared_ptr<Route> route);
+
+    void PushTrialRoute(std::shared_ptr<Route> route);
+    
+    void PushTrialRoutes(std::vector<std::shared_ptr<Route>> &routes);
+    
+    std::shared_ptr<Route> PopTrialRoute();
+    
+    bool IsThereTrialRoute() const;
+    
+    void ClearTrialRoutes();
+
 private:
     /**
      * @brief Status of this Call.
@@ -122,6 +171,10 @@ private:
      * representing the destination node of this call.
      */
     Node* deNode;
+    
+    int firstSlot;
+    
+    int lastSlot;
     /**
      * @brief Number of slots occupied by this call.
      * This value is calculate based in modulation used 
@@ -129,13 +182,6 @@ private:
      * the fibers.
      */
     unsigned int numberSlots;
-    /**
-     * @brief Vector representing the slots occupied 
-     * by this call.
-     * This vector has size equal to the number of 
-     * slots in fibers.
-     */
-    std::vector<SlotStatus> slots;
     /**
      * @brief OSNr of the call calculated based 
      * in the distance of origin and destination node,
@@ -157,7 +203,15 @@ private:
      */
     TIME deactivationTime;
     
-    static const boost::unordered_map<CallStatus, 
+    std::shared_ptr<Route> route;
+    
+    std::deque<std::shared_ptr<Route>> trialRoutes;
+    
+    /**
+     * @brief Map that keeps the Events options 
+     * and the name of each one.
+     */
+    static const boost::unordered_map<CallStatus,
     std::string> mapCallStatus;
 };
 

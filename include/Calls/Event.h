@@ -36,7 +36,7 @@ enum EventType{
 /**
  * @brief 
  */
-class Event {
+class Event : public std::enable_shared_from_this<Event> {
     friend std::ostream& operator<<(std::ostream& ostream, 
     const Event* event);
     
@@ -52,28 +52,51 @@ public:
      * @return the Type of event.
      */
     EventType GetEventType() const;
-    
+    /**
+     * @brief Returns the type of event name.
+     * @return String with the type of event name.
+     */
     std::string GetEventName() const;
     /**
      * @brief Set the type of this event.
      * @param eventType type of event.
      */
     void SetEventType(EventType eventType);
-
+    /**
+     * @brief Returns the time this event must occur.
+     * @return Time of this event.
+     */
     TIME GetEventTime() const;
-
+    /**
+     * @brief Sets the time of the event.
+     * @param eventTime Time of the event.
+     */
     void SetEventTime(TIME eventTime);
-    
+    /**
+     * @brief Returns a pointer to a Call object of this Event.
+     * Not owns the object.
+     * @return Pointer to a Call object.
+     */
     Call* GetCall() const;
-    
+    /**
+     * @brief Inputs the Call object in this Event.
+     * @param call Pointer to a Call object
+     */
     void SetCall(std::shared_ptr<Call> call);
-    
+    /**
+     * @brief Implements a Call request, resulting in a accepted or
+     * blocked call.
+     */
     void ImplementCallRequest();
-    
+    /**
+     * @brief Release a implemented call in the network.
+     */
     void ImplementCallEnd();
 
 private:
-    
+    /**
+     * @brief Pointer to a CallGenerator object that owns this object.
+     */
     CallGenerator* parGenerator;
     /**
      * @brief Type of event.
@@ -88,7 +111,10 @@ private:
      * @brief Pointer to an Call object belong to this Event.
      */
     std::shared_ptr<Call> call;
-    
+    /**
+     * @brief Map that keeps the Events options 
+     * and the name of each one.
+     */
     static const boost::unordered_map<EventType, 
     std::string> mapEventType;
 };

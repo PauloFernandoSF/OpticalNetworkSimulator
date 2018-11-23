@@ -61,12 +61,12 @@ public:
      * @brief Returns the number of nodes in this topology
      * @return The total number of nodes
      */
-    int GetNumNodes() const;
+    unsigned int GetNumNodes() const;
     /**
      * @brief Sets the number of nodes in this topology
      * @param numNodes total number of nodes
      */
-    void SetNumNodes(int numNodes);
+    void SetNumNodes(unsigned int numNodes);
     /**
      * @brief Returns the number of links in this topology
      * @return The total number of links
@@ -140,7 +140,7 @@ private:
     /**
      * @brief Total number of nodes in the topology
      */
-    int numNodes;
+    unsigned int numNodes;
     /**
      * @brief Total number of links in the topology
      */

@@ -36,6 +36,12 @@
         <itemPath>include/Data/Parameters.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="GeneralClasses" projectFiles="true">
+        <itemPath>include/GeneralClasses/Def.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6" displayName="RSA" projectFiles="true">
+        <itemPath>include/RSA/RSA.h</itemPath>
+        <itemPath>include/RSA/Route.h</itemPath>
+        <itemPath>include/RSA/Routing.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="SimulationType" projectFiles="true">
         <itemPath>include/SimulationType/MultiLoadSimulation.h</itemPath>
@@ -68,6 +74,12 @@
         <itemPath>src/Data/Parameters.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="GeneralClasses" projectFiles="true">
+        <itemPath>src/GeneralClasses/Def.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6" displayName="RSA" projectFiles="true">
+        <itemPath>src/RSA/RSA.cpp</itemPath>
+        <itemPath>src/RSA/Route.cpp</itemPath>
+        <itemPath>src/RSA/Routing.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="SimulationType" projectFiles="true">
         <itemPath>src/SimulationType/MultiLoadSimulation.cpp</itemPath>
@@ -157,7 +169,15 @@
       </item>
       <item path="include/Data/Parameters.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/GeneralClasses/Def.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Kernel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/RSA/RSA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/RSA/Route.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/RSA/Routing.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/SimulationType/MultiLoadSimulation.h"
             ex="false"
@@ -193,7 +213,15 @@
       </item>
       <item path="src/Data/Parameters.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/GeneralClasses/Def.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Kernel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/RSA/RSA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/RSA/Route.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/RSA/Routing.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SimulationType/MultiLoadSimulation.cpp"
             ex="false"
@@ -279,7 +307,15 @@
       </item>
       <item path="include/Data/Parameters.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/GeneralClasses/Def.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Kernel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/RSA/RSA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/RSA/Route.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/RSA/Routing.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/SimulationType/MultiLoadSimulation.h"
             ex="false"
@@ -315,7 +351,15 @@
       </item>
       <item path="src/Data/Parameters.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/GeneralClasses/Def.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Kernel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/RSA/RSA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/RSA/Route.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/RSA/Routing.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SimulationType/MultiLoadSimulation.cpp"
             ex="false"

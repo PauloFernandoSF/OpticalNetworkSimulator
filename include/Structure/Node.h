@@ -61,6 +61,11 @@ public:
      * @param nodeId node index.
      */
     void SetNodeId(NodeId nodeId);
+    
+    bool IsNodeWorking() const;
+
+    void SetNodeWorking(bool NodeWorking);
+
 
 private:
     /**
@@ -72,6 +77,8 @@ private:
      * @brief Node index.
      */
     NodeId nodeId;
+    
+    bool NodeWorking;
 };
 
 #endif /* NODE_H */

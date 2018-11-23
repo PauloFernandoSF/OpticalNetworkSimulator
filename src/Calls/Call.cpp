@@ -13,6 +13,7 @@
 
 #include "../../include/Calls/Call.h"
 #include "../../include/Structure/Node.h"
+#include "../../include/GeneralClasses/Def.h"
 
 const boost::unordered_map<CallStatus, std::string> 
 Call::mapCallStatus = boost::assign::map_list_of
@@ -34,10 +35,18 @@ std::ostream& operator<<(std::ostream& ostream, const Call* call) {
     return ostream;
 }
 
+Call::Call()
+:status(NotEvaluated), orNode(nullptr), deNode(nullptr), firstSlot(-1), 
+lastSlot(-1), numberSlots(0), osnrTh(0.0), bandwidth(0.0), bitRate(0.0), 
+deactivationTime(Def::Max_Double), route(nullptr), trialRoutes(0){
+
+}
+
+
 Call::Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime)
-:status(NotEvaluated), orNode(orNode), deNode(deNode), numberSlots(0), 
-slots(0), osnrTh(0.0), bandwidth(0.0), bitRate(bitRate),
-deactivationTime(deacTime) {
+:status(NotEvaluated), orNode(orNode), deNode(deNode), firstSlot(-1), 
+lastSlot(-1), numberSlots(0), osnrTh(0.0), bandwidth(0.0), bitRate(bitRate), 
+deactivationTime(deacTime), route(nullptr), trialRoutes(0) {
     
 }
 
@@ -45,7 +54,7 @@ Call::~Call() {
 }
 
 CallStatus Call::GetStatus() const {
-    return status;
+    return this->status;
 }
 
 std::string Call::GetStatusName() const {
@@ -110,4 +119,49 @@ TIME Call::GetDeactivationTime() const {
 
 void Call::SetDeactivationTime(TIME deactivationTime) {
     this->deactivationTime = deactivationTime;
+}
+
+Route* Call::GetRoute() const {
+    return this->route.get();
+}
+
+void Call::SetRoute(std::shared_ptr<Route> route) {
+    this->route = route;
+}
+
+void Call::PushTrialRoute(std::shared_ptr<Route> route) {
+    this->trialRoutes.push_back(route);
+}
+
+void Call::PushTrialRoutes(std::vector<std::shared_ptr<Route> >& routes) {
+    
+    for(unsigned int a = 0; a < routes.size(); a++)
+        this->trialRoutes.push_back(routes.at(a));
+    routes.clear();
+}
+
+std::shared_ptr<Route> Call::PopTrialRoute() {
+    std::shared_ptr<Route> route = nullptr;
+    
+    //Verify with and without reset function.
+    if(!this->trialRoutes.empty()){
+        route = this->trialRoutes.front();
+        this->trialRoutes.front().reset();
+        this->trialRoutes.pop_front();
+    }
+    
+    return route;
+}
+
+bool Call::IsThereTrialRoute() const {
+    
+    return !this->trialRoutes.empty();
+}
+
+void Call::ClearTrialRoutes() {
+    
+    while(!this->trialRoutes.empty()){
+        this->trialRoutes.front().reset();
+        this->trialRoutes.pop_front();
+    }
 }

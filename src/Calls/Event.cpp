@@ -41,7 +41,7 @@ call(call) {
 }
 
 Event::~Event() {
-    //this->call.release();
+    this->call.reset();
 }
 
 EventType Event::GetEventType() const {
@@ -62,6 +62,7 @@ TIME Event::GetEventTime() const {
 }
 
 void Event::SetEventTime(TIME eventTime) {
+    assert(this->eventTime <= eventTime);
     this->eventTime = eventTime;
 }
 
@@ -74,30 +75,29 @@ void Event::SetCall(std::shared_ptr<Call> call) {
 }
 
 void Event::ImplementCallRequest() {
-    //Funções de tentativa de alocação da requisição.
+    //Functions for call allocation.
     
+    //For tests.
     this->call->SetStatus(Accepted);
-    //Change the Event type for CallEnd
-    //and sets the Event time from the call deacTime.
+
     switch(this->call->GetStatus()){
         case Accepted:
             this->SetEventType(CallEnd);
             this->SetEventTime(this->parGenerator->GetSimulationTime() + 
                                this->call->GetDeactivationTime());
-            //Função para fazer
+            this->parGenerator->PushEvent(shared_from_this());
             break;
         case Blocked:    
             call.reset();
             break;
         default:
-            std::cout << "Invalid Call status" << std::endl;
+            std::cerr << "Invalid Call status" << std::endl;
     }
 }
 
 void Event::ImplementCallEnd() {
+    assert(this->call->GetStatus() == Accepted);
+    
     //Functions for release the connection.
     
-    
-    //Pop the event from the list.
-    //this->parGenerator->PopTopEvent();
 }
