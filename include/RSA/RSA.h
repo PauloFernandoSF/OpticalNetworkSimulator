@@ -21,6 +21,8 @@ class SimulationType;
 class Topology;
 class Route;
 class Routing;
+class SA;
+class Call;
 
 class RSA {
 
@@ -28,9 +30,11 @@ public:
     
     RSA(SimulationType *simulType);
     
-    RSA(const RSA& orig);
-    
     virtual ~RSA();
+    
+    void Load();
+    
+    void RSACall(Call* call);
     
     void SetRoute(unsigned int orN, unsigned int deN, 
                   std::shared_ptr<Route> route);
@@ -38,13 +42,17 @@ public:
     void SetRoutes(unsigned int orN, unsigned int deN, 
                    std::vector<std::shared_ptr<Route>> routes);
     
+    void AddRoute(unsigned int orN, unsigned int deN, 
+                  std::shared_ptr<Route> route);
+    
+    void AddRoutes(unsigned int orN, unsigned int deN,
+                   std::vector<std::shared_ptr<Route>> routes);
+    
     void ClearRoutes(unsigned int orN, unsigned int deN);
     
     std::vector<std::shared_ptr<Route>> GetRoutes(unsigned int orN,
                                                   unsigned int deN);
-    
-    //void AddRoute
-    
+        
     SimulationType* GetSimulType() const;
 
     void SetSimulType(SimulationType* simulType);
@@ -66,6 +74,8 @@ private:
     std::vector<std::vector<std::shared_ptr<Route>>> allRoutes;
     
     std::shared_ptr<Routing> routing;
+    
+    std::shared_ptr<SA> specAlloc;
 };
 
 #endif /* RSA_H */

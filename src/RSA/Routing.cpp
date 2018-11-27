@@ -14,7 +14,6 @@
 #include "../../include/RSA/Routing.h"
 #include "../../include/RSA/Route.h"
 #include "../../include/Structure/Topology.h"
-#include "../../include/Structure/Node.h"
 #include "../../include/Structure/Link.h"
 #include "../../include/RSA/RSA.h"
 #include "../../include/GeneralClasses/Def.h"
@@ -23,10 +22,29 @@
 Routing::Routing() {
 }
 
-Routing::Routing(const Routing& orig) {
+Routing::Routing(RSA* rsa, RoutingOption option, Topology* topology)
+:rsaAlgorithm(rsa), routingOption(option), topology(topology){
+
 }
 
 Routing::~Routing() {
+}
+
+void Routing::RoutingCall(Call* call) {
+    switch(this->routingOption){
+        case RoutingDJK:
+            this->Dijkstra(call);
+            break;
+        default:
+            std::cerr << "Invalid routing option" << std::endl;
+    }
+}
+
+void Routing::Dijkstra(Call* call) {
+    NodeId orNode = call->GetOrNode()->GetNodeId();
+    NodeId deNode = call->GetDeNode()->GetNodeId();
+    
+    call->PushTrialRoute(this->rsaAlgorithm->GetRoutes(orNode, deNode).front());
 }
 
 void Routing::Dijkstra() {
@@ -46,15 +64,7 @@ void Routing::Dijkstra() {
     }
 }
 
-void Routing::Dijkstra(Call* call) {
-    unsigned int orNode = call->GetOrNode()->GetNodeId();
-    unsigned int deNode = call->GetDeNode()->GetNodeId();
-    
-    call->PushTrialRoute(this->rsaAlgorithm->GetRoutes(orNode, deNode).front());
-}
-
-std::shared_ptr<Route> Routing::Dijkstra(unsigned int orNode, 
-unsigned int deNode) {
+std::shared_ptr<Route> Routing::Dijkstra(NodeId orNode, NodeId deNode) {
     int k=-1, h, hops;
     unsigned int i, j, VA;
     long double min;

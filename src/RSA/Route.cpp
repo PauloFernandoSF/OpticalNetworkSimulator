@@ -17,11 +17,11 @@
 #include "../../include/Structure/Link.h"
 
 Route::Route(RSA* rsaAlg, const std::vector<int>& path)
-:rsaAlgorithm(rsaAlg), topology(rsaAlg->GetTopology()) {
-    this->path.clear();
+:rsaAlgorithm(rsaAlg), topology(rsaAlg->GetTopology()), path(path) {
+    //this->path.clear();
     
-    for(unsigned int a = 0; a < path.size(); a++)
-        this->path.push_back(path.at(a));
+    ///for(unsigned int a = 0; a < path.size(); a++)
+        //this->path.push_back(path.at(a));
 }
 
 Route::Route(const Route& orig) {

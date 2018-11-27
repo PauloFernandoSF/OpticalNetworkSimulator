@@ -40,11 +40,11 @@ CallGenerator::~CallGenerator() {
     
 }
 
-void CallGenerator::Initialize() {
-    this->simulationTime = 0.0;
+void CallGenerator::Load() {
     this->topology = this->GetSimulType()->GetTopology();
     this->data = this->GetSimulType()->GetData();
     this->traffic = this->GetSimulType()->GetTraffic();
+    this->rsaAlgorithm = this->GetSimulType()->GetRsaAlgorithm();
     
     this->uniformNodeDistribution = std::uniform_int_distribution<int>
     (0, this->topology->GetNumNodes() - 1);
@@ -52,6 +52,10 @@ void CallGenerator::Initialize() {
     (0, this->traffic->GetVecTraffic().size() - 1);
     this->exponencialMuDistribution = std::exponential_distribution<TIME>
     (1.0L / this->simulType->GetParameters()->GetMu());
+}
+
+void CallGenerator::Initialize() {
+    this->simulationTime = 0.0;
     this->exponencialHDistribution = std::exponential_distribution<TIME>
     (networkLoad);
 }
@@ -130,4 +134,12 @@ std::shared_ptr<Event> CallGenerator::GetNextEvent() {
 
 void CallGenerator::PushEvent(std::shared_ptr<Event> evt) {
     this->queueEvents.push(evt);
+}
+
+RSA* CallGenerator::GetRsaAlgorithm() const {
+    return rsaAlgorithm;
+}
+
+void CallGenerator::SetRsaAlgorithm(RSA* rsaAlgorithm) {
+    this->rsaAlgorithm = rsaAlgorithm;
 }

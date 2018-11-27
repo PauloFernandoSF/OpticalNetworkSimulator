@@ -51,6 +51,12 @@ deactivationTime(deacTime), route(nullptr), trialRoutes(0) {
 }
 
 Call::~Call() {
+    this->route.reset();
+    
+    for(auto it : trialRoutes){
+       it.reset(); 
+    }
+    this->trialRoutes.clear();
 }
 
 CallStatus Call::GetStatus() const {
@@ -135,8 +141,8 @@ void Call::PushTrialRoute(std::shared_ptr<Route> route) {
 
 void Call::PushTrialRoutes(std::vector<std::shared_ptr<Route> >& routes) {
     
-    for(unsigned int a = 0; a < routes.size(); a++)
-        this->trialRoutes.push_back(routes.at(a));
+    for(auto it : routes)
+        this->trialRoutes.push_back(it);
     routes.clear();
 }
 

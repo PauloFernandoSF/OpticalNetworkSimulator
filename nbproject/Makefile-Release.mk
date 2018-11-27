@@ -49,6 +49,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/RSA/RSA.o \
 	${OBJECTDIR}/src/RSA/Route.o \
 	${OBJECTDIR}/src/RSA/Routing.o \
+	${OBJECTDIR}/src/RSA/SA.o \
 	${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o \
 	${OBJECTDIR}/src/SimulationType/SimulationType.o \
 	${OBJECTDIR}/src/Structure/Link.o \
@@ -149,6 +150,11 @@ ${OBJECTDIR}/src/RSA/Routing.o: src/RSA/Routing.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/RSA
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/RSA/Routing.o src/RSA/Routing.cpp
+
+${OBJECTDIR}/src/RSA/SA.o: src/RSA/SA.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/RSA
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/RSA/SA.o src/RSA/SA.cpp
 
 ${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o: src/SimulationType/MultiLoadSimulation.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType

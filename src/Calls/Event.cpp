@@ -12,9 +12,8 @@
  */
 
 #include "../../include/Calls/Event.h"
-
-//#include "../../include/Calls/Call.h"
 #include "../../include/Calls/CallGenerator.h"
+#include "../../include/RSA/RSA.h"
 
 const boost::unordered_map<EventType, std::string> 
 Event::mapEventType = boost::assign::map_list_of
@@ -75,10 +74,10 @@ void Event::SetCall(std::shared_ptr<Call> call) {
 }
 
 void Event::ImplementCallRequest() {
-    //Functions for call allocation.
+    //Functions for try call allocation.
+    this->parGenerator->GetRsaAlgorithm()->RSACall(this->call.get());
     
-    //For tests.
-    this->call->SetStatus(Accepted);
+    //Implement functions to update data values
 
     switch(this->call->GetStatus()){
         case Accepted:
@@ -87,7 +86,7 @@ void Event::ImplementCallRequest() {
                                this->call->GetDeactivationTime());
             this->parGenerator->PushEvent(shared_from_this());
             break;
-        case Blocked:    
+        case Blocked:
             call.reset();
             break;
         default:

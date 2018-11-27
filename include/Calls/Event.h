@@ -37,6 +37,7 @@ enum EventType{
  * @brief 
  */
 class Event : public std::enable_shared_from_this<Event> {
+    
     friend std::ostream& operator<<(std::ostream& ostream, 
     const Event* event);
     
@@ -44,7 +45,7 @@ public:
     
     Event(CallGenerator* generator, std::shared_ptr<Call> call, 
           TIME time);
-    Event(const Event& orig);
+
     virtual ~Event();
     
     /**

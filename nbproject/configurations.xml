@@ -42,6 +42,7 @@
         <itemPath>include/RSA/RSA.h</itemPath>
         <itemPath>include/RSA/Route.h</itemPath>
         <itemPath>include/RSA/Routing.h</itemPath>
+        <itemPath>include/RSA/SA.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="SimulationType" projectFiles="true">
         <itemPath>include/SimulationType/MultiLoadSimulation.h</itemPath>
@@ -80,6 +81,7 @@
         <itemPath>src/RSA/RSA.cpp</itemPath>
         <itemPath>src/RSA/Route.cpp</itemPath>
         <itemPath>src/RSA/Routing.cpp</itemPath>
+        <itemPath>src/RSA/SA.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="SimulationType" projectFiles="true">
         <itemPath>src/SimulationType/MultiLoadSimulation.cpp</itemPath>
@@ -179,6 +181,8 @@
       </item>
       <item path="include/RSA/Routing.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/RSA/SA.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/SimulationType/MultiLoadSimulation.h"
             ex="false"
             tool="3"
@@ -222,6 +226,8 @@
       <item path="src/RSA/Route.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/RSA/Routing.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/RSA/SA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SimulationType/MultiLoadSimulation.cpp"
             ex="false"
@@ -317,6 +323,8 @@
       </item>
       <item path="include/RSA/Routing.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/RSA/SA.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/SimulationType/MultiLoadSimulation.h"
             ex="false"
             tool="3"
@@ -360,6 +368,8 @@
       <item path="src/RSA/Route.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/RSA/Routing.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/RSA/SA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SimulationType/MultiLoadSimulation.cpp"
             ex="false"

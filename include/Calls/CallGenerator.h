@@ -22,6 +22,7 @@ class Topology;
 class Data;
 class Traffic;
 class Event;
+class RSA;
 
 #include <cassert>
 #include <memory>
@@ -50,6 +51,7 @@ public:
     
     virtual ~CallGenerator();
     
+    void Load();
     /**
      * @brief Initialize this CallGenerator, defining the range of
      * the distributions (Node, Traffic and Arriaval/Deactivation times).
@@ -110,6 +112,12 @@ public:
      */
     void PushEvent(std::shared_ptr<Event> evt);
     
+    
+    RSA* GetRsaAlgorithm() const;
+
+    void SetRsaAlgorithm(RSA* rsaAlgorithm);
+
+    
 private:
     /**
      * @breif Pointer to a SimulationType object that
@@ -131,6 +139,8 @@ private:
      * by a SimulationType object.
      */
     Traffic* traffic;
+    
+    RSA* rsaAlgorithm;
     
     /**
      * @brief Random engine responsible for the

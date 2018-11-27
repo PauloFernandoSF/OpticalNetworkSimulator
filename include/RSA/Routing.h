@@ -21,23 +21,26 @@ class Call;
 class Route;
 class Topology;
 
+#include "../Data/Options.h"
+#include "../../include/Structure/Node.h"
+
 class Routing {
 
 public:
     
     Routing();
     
-    Routing(const Routing& orig);
+    Routing(RSA* rsa, RoutingOption option, Topology* topology);
     
     virtual ~Routing();
     
-    
-    void Dijkstra();
+    void RoutingCall(Call* call);
     
     void Dijkstra(Call* call);
     
-    std::shared_ptr<Route> Dijkstra(unsigned int orNode, 
-                                    unsigned int deNode);
+    void Dijkstra();
+    
+    std::shared_ptr<Route> Dijkstra(NodeId orNode, NodeId deNode);
     
     
     RSA* GetRsaAlgorithm() const;
@@ -51,6 +54,8 @@ public:
 private:
     
     RSA* rsaAlgorithm;
+    
+    RoutingOption routingOption;
     
     Topology* topology;
 };

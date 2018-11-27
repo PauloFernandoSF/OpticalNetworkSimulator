@@ -35,10 +35,12 @@ enum CallStatus{
 };
 
 class Call {
+    
     friend std::ostream& operator<<(std::ostream& ostream, 
     const Call* call);
     
 public:
+    
     Call();
     /**
      * @brief Standard constructor of a Call object.

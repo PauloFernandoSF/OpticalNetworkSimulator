@@ -157,6 +157,11 @@ public:
     CallGenerator* GetCallGenerator() const;
 
     void SetCallGenerator(std::shared_ptr<CallGenerator> callGenerator);
+    
+    RSA* GetRsaAlgorithm() const;
+    
+    void SetRsaAlgorithm(std::shared_ptr<RSA> rsaAlgorithm);
+
 
 private:
     

@@ -33,7 +33,7 @@ topology(std::make_shared<Topology> (this)),
 inputOutput(boost::make_unique<InputOutput>(this)),
 traffic(std::make_shared<Traffic>(this)),
 callGenerator(std::make_shared<CallGenerator>(this)),
-rsaAlgorithm(std::make_shared<RSA>(this)){
+rsaAlgorithm(std::make_shared<RSA>(this)) {
     
 }
 
@@ -45,6 +45,7 @@ SimulationType::~SimulationType() {
     this->inputOutput.release();
     this->traffic.reset();
     this->callGenerator.reset();
+    this->rsaAlgorithm.reset();
 }
 
 void SimulationType::Run() {   
@@ -66,6 +67,8 @@ void SimulationType::Load() {
     this->topology->LoadFile();
     this->traffic->LoadFile();
     this->GetData()->Initialize();
+    this->callGenerator->Load();
+    this->rsaAlgorithm->Load();
 }
 
 void SimulationType::LoadFile() {
@@ -74,6 +77,8 @@ void SimulationType::LoadFile() {
     this->topology->LoadFile();
     this->traffic->LoadFile();
     this->GetData()->Initialize();
+    this->callGenerator->Load();
+    this->rsaAlgorithm->Load();
 }
 
 void SimulationType::Print() {
@@ -151,6 +156,14 @@ CallGenerator* SimulationType::GetCallGenerator() const {
 void SimulationType::SetCallGenerator(std::shared_ptr<CallGenerator> 
 callGenerator) {
     this->callGenerator = callGenerator;
+}
+
+RSA* SimulationType::GetRsaAlgorithm() const {
+    return this->rsaAlgorithm.get();
+}
+
+void SimulationType::SetRsaAlgorithm(std::shared_ptr<RSA> rsaAlgorithm) {
+    this->rsaAlgorithm = rsaAlgorithm;
 }
 
 void SimulationType::InitializeAll() {
