@@ -11,19 +11,19 @@
  * Created on November 19, 2018, 11:43 PM
  */
 
-#include "../../include/RSA/Routing.h"
-#include "../../include/RSA/Route.h"
+#include "../../include/ResourceAllocation/Routing.h"
+#include "../../include/ResourceAllocation/Route.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Structure/Link.h"
-#include "../../include/RSA/RSA.h"
+#include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/Calls/Call.h"
 
 Routing::Routing() {
 }
 
-Routing::Routing(RSA* rsa, RoutingOption option, Topology* topology)
-:rsaAlgorithm(rsa), routingOption(option), topology(topology){
+Routing::Routing(ResourceAlloc* rsa, RoutingOption option, Topology* topology)
+:resourceAlloc(rsa), routingOption(option), topology(topology){
 
 }
 
@@ -33,18 +33,21 @@ Routing::~Routing() {
 void Routing::RoutingCall(Call* call) {
     switch(this->routingOption){
         case RoutingDJK:
-            this->Dijkstra(call);
+        case RoutingYEN:
+        case RoutingBSR:
+            this->SetOfflineRouting(call);
             break;
         default:
             std::cerr << "Invalid routing option" << std::endl;
     }
 }
 
-void Routing::Dijkstra(Call* call) {
+void Routing::SetOfflineRouting(Call* call) {
     NodeId orNode = call->GetOrNode()->GetNodeId();
     NodeId deNode = call->GetDeNode()->GetNodeId();
     
-    call->PushTrialRoute(this->rsaAlgorithm->GetRoutes(orNode, deNode).front());
+    call->PushTrialRoute(this->resourceAlloc->
+                         GetRoutes(orNode, deNode).front());
 }
 
 void Routing::Dijkstra() {
@@ -59,7 +62,7 @@ void Routing::Dijkstra() {
             else{
                 route = nullptr;
             }
-            this->rsaAlgorithm->SetRoute(orN, deN, route);
+            this->resourceAlloc->SetRoute(orN, deN, route);
         }
     }
 }
@@ -79,6 +82,8 @@ std::shared_ptr<Route> Routing::Dijkstra(NodeId orNode, NodeId deNode) {
     bool *Status = new bool[numNodes];
     assert(orNode != deNode);
     bool networkDisconnected = false;
+    
+    double x = Def::Max_Double;
 
     //Initializes all vertices with infinite cost
     //and the source vertice with cost zero
@@ -149,7 +154,7 @@ std::shared_ptr<Route> Routing::Dijkstra(NodeId orNode, NodeId deNode) {
         for(h = 0; h <= hops; h++)
             r.push_back(PathRev[hops-h]);
         
-        routeDJK = std::make_shared<Route>(this->GetRsaAlgorithm(), r);
+        routeDJK = std::make_shared<Route>(this->GetResourceAlloc(), r);
     }
 
     delete []CustoVertice; delete []Precedente; 
@@ -158,12 +163,20 @@ std::shared_ptr<Route> Routing::Dijkstra(NodeId orNode, NodeId deNode) {
     return routeDJK;
 }
 
-RSA* Routing::GetRsaAlgorithm() const {
-    return rsaAlgorithm;
+ResourceAlloc* Routing::GetResourceAlloc() const {
+    return resourceAlloc;
 }
 
-void Routing::SetRsaAlgorithm(RSA* rsaAlgorithm) {
-    this->rsaAlgorithm = rsaAlgorithm;
+void Routing::SetResourceAlloc(ResourceAlloc* rsaAlgorithm) {
+    this->resourceAlloc = rsaAlgorithm;
+}
+
+RoutingOption Routing::GetRoutingOption() const {
+    return routingOption;
+}
+
+void Routing::SetRoutingOption(RoutingOption routingOption) {
+    this->routingOption = routingOption;
 }
 
 Topology* Routing::GetTopology() const {

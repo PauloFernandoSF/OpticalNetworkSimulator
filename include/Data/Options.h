@@ -83,6 +83,19 @@ enum TrafficOption {
     LastTrafficOption = Traffic_10_40_100_200_400
 };
 
+enum ResourceAllocOption {
+    ResourAllocInvalid,
+    ResourAllocRSA,
+    ResourAllocRMSA,
+    FirstResourAllocOption = ResourAllocRSA,
+    LastResourAllocOption = ResourAllocRMSA
+};
+
+enum PhysicalLayerOption {
+    PhyLayerDisabled,
+    PhyLayerEnabled
+};
+
 /**
  * @brief The Options class is responsible for storage the simulation
  * options.
@@ -196,6 +209,19 @@ public:
      */
     void SetTrafficOption(TrafficOption trafficOption);
     
+    ResourceAllocOption GetResourAllocOption() const;
+
+    std::string GetResourAllocName() const;
+    
+    void SetResourAllocOption(ResourceAllocOption resourAllocOption);
+
+    PhysicalLayerOption GetPhyLayerOption() const;
+
+    std::string GetPhyLayerName() const; 
+    
+    void SetPhyLayerOption(PhysicalLayerOption phyLayerOption);
+
+    
 private:
     /**
      * @brief A pointer to the simulation this object belong.
@@ -221,6 +247,10 @@ private:
      * @brief Traffic option selected.
      */
     TrafficOption trafficOption;
+    
+    ResourceAllocOption resourAllocOption;
+    
+    PhysicalLayerOption phyLayerOption;
     
     /**
      * @brief Map that keeps the topology option 
@@ -253,6 +283,12 @@ private:
      */
     static const boost::unordered_map<TrafficOption,
     std::string> mapTrafficOptions;
+    
+    static const boost::unordered_map<ResourceAllocOption,
+    std::string> mapResourAllocOption;
+    
+    static const boost::unordered_map<PhysicalLayerOption,
+    std::string> mapPhyLayerOption;
 };
 
 #endif /* OPTIONS_H */

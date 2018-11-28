@@ -215,11 +215,14 @@ void Topology::SetLinksIniCost() {
 }
 
 Node* Topology::GetNode(unsigned int index) const {
+    assert(index < this->GetNumNodes());
     return this->vecNodes.at(index).get();
 }
 
 Link* Topology::GetLink(unsigned int indexOrNode, 
 unsigned int indexDeNode) const {
+    assert(indexOrNode < this->GetNumNodes());
+    assert(indexDeNode < this->GetNumNodes());
     return this->vecLinks.at(indexOrNode * this->numNodes + 
     indexDeNode).get();
 }

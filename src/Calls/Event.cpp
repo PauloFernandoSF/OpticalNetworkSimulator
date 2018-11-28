@@ -13,7 +13,8 @@
 
 #include "../../include/Calls/Event.h"
 #include "../../include/Calls/CallGenerator.h"
-#include "../../include/RSA/RSA.h"
+#include "../../include/ResourceAllocation/ResourceAlloc.h"
+#include "../../include/Data/Data.h"
 
 const boost::unordered_map<EventType, std::string> 
 Event::mapEventType = boost::assign::map_list_of
@@ -75,9 +76,10 @@ void Event::SetCall(std::shared_ptr<Call> call) {
 
 void Event::ImplementCallRequest() {
     //Functions for try call allocation.
-    this->parGenerator->GetRsaAlgorithm()->RSACall(this->call.get());
+    this->parGenerator->GetResourceAlloc()->ResourAlloc(this->call.get());
     
-    //Implement functions to update data values
+    //Functions to update data values
+    this->parGenerator->GetData()->StorageCall(this->call.get());
 
     switch(this->call->GetStatus()){
         case Accepted:

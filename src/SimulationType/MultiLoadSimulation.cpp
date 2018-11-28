@@ -17,6 +17,7 @@
 #include "../../include/Calls/CallGenerator.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Structure/Topology.h"
+#include "../../include/Data/Data.h"
 
 MultiLoadSimulation::MultiLoadSimulation(unsigned int simulIndex)
 :SimulationType(simulIndex){
@@ -32,7 +33,8 @@ void MultiLoadSimulation::Run() {
     GetNumberLoadPoints();
     
     for(unsigned int a = 0; a < numLoadPoints; ++a){       
-        double loadPoint = this->GetParameters()->GetLoadPoint(a);    
+        double loadPoint = this->GetParameters()->GetLoadPoint(a);
+        this->GetData()->SetActualIndex(a);
         this->GetCallGenerator()->SetNetworkLoad(loadPoint);
         SimulationType::Run();
     }

@@ -16,7 +16,7 @@
 
 #include "../Data/Options.h"
 
-class RSA;
+class ResourceAlloc;
 class Topology;
 class Call;
 
@@ -26,7 +26,7 @@ public:
     
     SA();
     
-    SA(RSA* rsa, SpectrumAllocationOption option, Topology* topology);
+    SA(ResourceAlloc* rsa, SpectrumAllocationOption option, Topology* topology);
     
     virtual ~SA();
     
@@ -34,7 +34,7 @@ public:
 
 private:
     
-    RSA* rsaAlgorithm;
+    ResourceAlloc* resourceAlloc;
     
     SpectrumAllocationOption specAllOption;
     

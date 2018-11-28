@@ -5,14 +5,14 @@
  */
 
 /* 
- * File:   RSA.h
+ * File:   ResourceAlloc.h
  * Author: BrunoVinicius
  *
- * Created on November 19, 2018, 7:56 PM
+ * Created on November 27, 2018, 8:33 PM
  */
 
-#ifndef RSA_H
-#define RSA_H
+#ifndef RESOURCEALLOC_H
+#define RESOURCEALLOC_H
 
 #include <vector>
 #include <memory>
@@ -24,17 +24,25 @@ class Routing;
 class SA;
 class Call;
 
-class RSA {
+#include "../Data/Options.h"
 
+class ResourceAlloc {
+    
 public:
     
-    RSA(SimulationType *simulType);
+    ResourceAlloc(SimulationType *simulType);
     
-    virtual ~RSA();
+    virtual ~ResourceAlloc();
     
     void Load();
     
-    void RSACall(Call* call);
+    
+    void ResourAlloc(Call* call);
+    
+    void RSA(Call* call);
+    
+    void RMSA(Call* call);
+    
     
     void SetRoute(unsigned int orN, unsigned int deN, 
                   std::shared_ptr<Route> route);
@@ -52,6 +60,10 @@ public:
     
     std::vector<std::shared_ptr<Route>> GetRoutes(unsigned int orN,
                                                   unsigned int deN);
+    
+    bool IsOfflineRouting();
+    
+    void RoutingOffline();
         
     SimulationType* GetSimulType() const;
 
@@ -71,6 +83,8 @@ private:
     
     Topology* topology;
     
+    ResourceAllocOption resourAllocOption;
+    
     std::vector<std::vector<std::shared_ptr<Route>>> allRoutes;
     
     std::shared_ptr<Routing> routing;
@@ -78,5 +92,4 @@ private:
     std::shared_ptr<SA> specAlloc;
 };
 
-#endif /* RSA_H */
-
+#endif /* RESOURCEALLOC_H */

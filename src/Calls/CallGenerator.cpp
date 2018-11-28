@@ -44,7 +44,7 @@ void CallGenerator::Load() {
     this->topology = this->GetSimulType()->GetTopology();
     this->data = this->GetSimulType()->GetData();
     this->traffic = this->GetSimulType()->GetTraffic();
-    this->rsaAlgorithm = this->GetSimulType()->GetRsaAlgorithm();
+    this->resourceAlloc = this->GetSimulType()->GetResourceAlloc();
     
     this->uniformNodeDistribution = std::uniform_int_distribution<int>
     (0, this->topology->GetNumNodes() - 1);
@@ -106,6 +106,14 @@ void CallGenerator::SetSimulType(SimulationType* const simulType) {
     this->simulType = simulType;
 }
 
+Data* CallGenerator::GetData() const {
+    return data;
+}
+
+void CallGenerator::SetData(Data* data) {
+    this->data = data;
+}
+
 double CallGenerator::GetNetworkLoad() const {
     return networkLoad;
 }
@@ -136,10 +144,10 @@ void CallGenerator::PushEvent(std::shared_ptr<Event> evt) {
     this->queueEvents.push(evt);
 }
 
-RSA* CallGenerator::GetRsaAlgorithm() const {
-    return rsaAlgorithm;
+ResourceAlloc* CallGenerator::GetResourceAlloc() const {
+    return resourceAlloc;
 }
 
-void CallGenerator::SetRsaAlgorithm(RSA* rsaAlgorithm) {
-    this->rsaAlgorithm = rsaAlgorithm;
+void CallGenerator::SetResourceAlloc(ResourceAlloc* rsaAlgorithm) {
+    this->resourceAlloc = rsaAlgorithm;
 }

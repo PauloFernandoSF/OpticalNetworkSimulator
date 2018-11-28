@@ -11,13 +11,13 @@
  * Created on November 15, 2018, 10:40 PM
  */
 
-#include "../../include/RSA/Route.h"
-#include "../../include/RSA/RSA.h"
+#include "../../include/ResourceAllocation/Route.h"
+#include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Structure/Link.h"
 
-Route::Route(RSA* rsaAlg, const std::vector<int>& path)
-:rsaAlgorithm(rsaAlg), topology(rsaAlg->GetTopology()), path(path) {
+Route::Route(ResourceAlloc* rsaAlg, const std::vector<int>& path)
+:resourceAlloc(rsaAlg), topology(rsaAlg->GetTopology()), path(path) {
     //this->path.clear();
     
     ///for(unsigned int a = 0; a < path.size(); a++)
@@ -87,5 +87,5 @@ unsigned int ind2) {
         newPath.push_back(this->GetNode(a));
     }
     
-    return std::make_shared<Route>(this->rsaAlgorithm, newPath);
+    return std::make_shared<Route>(this->resourceAlloc, newPath);
 }

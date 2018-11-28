@@ -5,27 +5,27 @@
  */
 
 /* 
- * File:   RSA.cpp
+ * File:   ResourceAlloc.cpp
  * Author: BrunoVinicius
  * 
- * Created on November 19, 2018, 7:56 PM
+ * Created on November 27, 2018, 8:33 PM
  */
 
-#include "../../include/RSA/RSA.h"
+#include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Structure/Topology.h"
-#include "../../include/RSA/Routing.h"
-#include "../../include/RSA/SA.h"
+#include "../../include/ResourceAllocation/Routing.h"
+#include "../../include/ResourceAllocation/SA.h"
 #include "../../include/Data/Options.h"
 #include "../../include/Calls/Call.h"
 
-RSA::RSA(SimulationType *simulType)
+ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :simulType(simulType), topology(nullptr), allRoutes(0), routing(nullptr),
 specAlloc(nullptr) {
     
 }
 
-RSA::~RSA() {
+ResourceAlloc::~ResourceAlloc() {
     
     for(auto it1 : this->allRoutes){
         for(auto it2 : it1){
@@ -38,7 +38,7 @@ RSA::~RSA() {
     this->specAlloc.reset();
 }
 
-void RSA::Load() {
+void ResourceAlloc::Load() {
     this->topology = this->simulType->GetTopology();
     
     unsigned int numNodes = this->topology->GetNumNodes();
@@ -49,9 +49,26 @@ void RSA::Load() {
     
     this->specAlloc = std::make_shared<SA>(this, 
         this->simulType->GetOptions()->GetSpecAllOption(), this->topology);
+    
+    this->resourAllocOption = this->simulType->GetOptions()->
+                                               GetResourAllocOption();
 }
 
-void RSA::RSACall(Call* call) {
+void ResourceAlloc::ResourAlloc(Call* call) {
+    
+    switch(this->resourAllocOption){
+        case ResourAllocRSA:
+            this->RSA(call);
+            break;
+        case ResourAllocRMSA:
+            this->RMSA(call);
+            break;
+        default:
+            std::cerr << "Invalid resource allocation option" << std::endl;
+    }
+}
+
+void ResourceAlloc::RSA(Call* call) {
     this->routing->RoutingCall(call);
     
     if(call->IsThereTrialRoute()){
@@ -66,13 +83,17 @@ void RSA::RSACall(Call* call) {
     }
 }
 
-void RSA::SetRoute(unsigned int orN, unsigned int deN, 
+void ResourceAlloc::RMSA(Call* call) {
+
+}
+
+void ResourceAlloc::SetRoute(unsigned int orN, unsigned int deN, 
 std::shared_ptr<Route> route) {
     this->ClearRoutes(orN, deN);
     this->AddRoute(orN, deN, route);
 }
 
-void RSA::SetRoutes(unsigned int orN, unsigned int deN, 
+void ResourceAlloc::SetRoutes(unsigned int orN, unsigned int deN, 
 std::vector<std::shared_ptr<Route>> routes) {
     this->ClearRoutes(orN, deN);
     
@@ -80,20 +101,20 @@ std::vector<std::shared_ptr<Route>> routes) {
         this->AddRoute(orN, deN, it);
 }
 
-void RSA::AddRoute(unsigned int orN, unsigned int deN, 
+void ResourceAlloc::AddRoute(unsigned int orN, unsigned int deN, 
 std::shared_ptr<Route> route) {
     this->allRoutes.at(orN*this->topology->GetNumNodes() + deN)
                    .push_back(route);
 }
 
-void RSA::AddRoutes(unsigned int orN, unsigned int deN, 
+void ResourceAlloc::AddRoutes(unsigned int orN, unsigned int deN, 
 std::vector<std::shared_ptr<Route>> routes) {
     
     for(auto it : routes)
         this->AddRoute(orN, deN, it);
 }
 
-void RSA::ClearRoutes(unsigned int orN, unsigned int deN) {
+void ResourceAlloc::ClearRoutes(unsigned int orN, unsigned int deN) {
     
     for(auto it : this->allRoutes.at(orN*this->topology->GetNumNodes() + deN))
         it.reset();
@@ -101,25 +122,48 @@ void RSA::ClearRoutes(unsigned int orN, unsigned int deN) {
     this->allRoutes.at(orN*this->topology->GetNumNodes() + deN).clear();
 }
 
-std::vector<std::shared_ptr<Route>> RSA::GetRoutes(unsigned int orN, 
+std::vector<std::shared_ptr<Route>> ResourceAlloc::GetRoutes(unsigned int orN, 
 unsigned int deN) {
     unsigned int numNodes = this->topology->GetNumNodes();
     
     return this->allRoutes.at(orN*numNodes + deN);
 }
 
-SimulationType* RSA::GetSimulType() const {
+bool ResourceAlloc::IsOfflineRouting() {
+    switch(this->routing->GetRoutingOption()){
+        case RoutingDJK:
+        case RoutingYEN:
+        case RoutingBSR:
+            return true;
+        default:
+            return false;
+    }
+}
+
+void ResourceAlloc::RoutingOffline() {
+    switch(this->routing->GetRoutingOption()){
+        case RoutingDJK:
+        case RoutingYEN:
+        case RoutingBSR:
+            this->routing->Dijkstra();
+            break;
+        default:
+            std::cerr << "Invalid offline routing option" << std::endl;
+    }
+}
+
+SimulationType* ResourceAlloc::GetSimulType() const {
     return simulType;
 }
 
-void RSA::SetSimulType(SimulationType* simulType) {
+void ResourceAlloc::SetSimulType(SimulationType* simulType) {
     this->simulType = simulType;
 }
 
-Topology* RSA::GetTopology() const {
+Topology* ResourceAlloc::GetTopology() const {
     return topology;
 }
 
-void RSA::SetTopology(Topology* topology) {
+void ResourceAlloc::SetTopology(Topology* topology) {
     this->topology = topology;
 }

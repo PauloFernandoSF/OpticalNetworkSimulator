@@ -15,6 +15,7 @@
 #define DATA_H
 
 class SimulationType;
+class Call;
 
 #include <vector>
 #include <ostream>
@@ -24,6 +25,7 @@ class SimulationType;
  * data.
  */
 class Data {
+    
     friend std::ostream& operator<<(std::ostream& ostream, 
     const Data* data);
 
@@ -44,9 +46,9 @@ public:
      */
     virtual ~Data();
     
-    
     void Initialize();
     
+    void StorageCall(Call* call);
     
     std::vector<double> GetNumberReq() const;
     
@@ -78,17 +80,22 @@ public:
 
     void SetNumberAccSlots(std::vector<double> numberAccSlots);
     
-    std::vector<double> GetMeanHopsPerRoute() const;
+    std::vector<double> GetNumHopsPerRoute() const;
     
-    double GetMeanHopsPerRouteLoad(unsigned int index) const;
+    double GetNumHopsPerRouteLoad(unsigned int index) const;
 
-    void SetMeanHopsPerRoute(std::vector<double> meanHopsPerRoute);
+    void SetNumHopsPerRoute(std::vector<double> meanHopsPerRoute);
 
     std::vector<double> GetNetOccupancy() const;
     
     double GetNetOccupancyLoad(unsigned int index) const;
 
     void SetNetOccupancy(std::vector<double> netOccupancy);
+    
+    unsigned int GetActualIndex() const;
+
+    void SetActualIndex(unsigned int actualIndex);
+
     
 private:
     /**
@@ -122,13 +129,15 @@ private:
     /**
      * @brief Mean of hops per route, per load.
      */
-    std::vector<double> meanHopsPerRoute;
+    std::vector<double> numHopsPerRoute;
     /**
      * @brief Network occupancy, per load.
      * It is Calculated multiplying the number of slots
      * occupied by the number of route hops.
      */
     std::vector<double> netOccupancy;
+    
+    unsigned int actualIndex;
 };
 
 #endif /* DATA_H */

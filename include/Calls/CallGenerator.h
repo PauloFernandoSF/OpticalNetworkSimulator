@@ -22,7 +22,7 @@ class Topology;
 class Data;
 class Traffic;
 class Event;
-class RSA;
+class ResourceAlloc;
 
 #include <cassert>
 #include <memory>
@@ -78,6 +78,12 @@ public:
      * @param simulType Pointer to a SimulationType object.
      */
     void SetSimulType(SimulationType* const simulType);
+    
+    Data* GetData() const;
+
+    void SetData(Data* data);
+
+    
     /**
      * @brief Get the network load.
      * @return Network load (erlang).
@@ -113,9 +119,9 @@ public:
     void PushEvent(std::shared_ptr<Event> evt);
     
     
-    RSA* GetRsaAlgorithm() const;
+    ResourceAlloc* GetResourceAlloc() const;
 
-    void SetRsaAlgorithm(RSA* rsaAlgorithm);
+    void SetResourceAlloc(ResourceAlloc* rsaAlgorithm);
 
     
 private:
@@ -140,7 +146,7 @@ private:
      */
     Traffic* traffic;
     
-    RSA* rsaAlgorithm;
+    ResourceAlloc* resourceAlloc;
     
     /**
      * @brief Random engine responsible for the

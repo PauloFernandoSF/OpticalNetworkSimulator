@@ -3,8 +3,8 @@
 2
 1
 1
-
-
+1
+0
 
 
 #Topology
@@ -33,3 +33,6 @@
     0 - Invalid
     1 - 100-200-400
     2 - 10-40-100-200-400
+#Resource Allocation Option
+
+#Physical Layer Option

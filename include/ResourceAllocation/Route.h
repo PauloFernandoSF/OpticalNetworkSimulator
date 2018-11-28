@@ -20,7 +20,7 @@
 #include <memory>
 
 class Link;
-class RSA;
+class ResourceAlloc;
 class Topology;
 
 class Route {
@@ -30,7 +30,7 @@ class Route {
     
 public:
     
-    Route(RSA* rsaAlg, const std::vector<int>& path);
+    Route(ResourceAlloc* rsaAlg, const std::vector<int>& path);
     
     Route(const Route& orig);
     
@@ -59,7 +59,7 @@ public:
 
 private:
     
-    RSA* rsaAlgorithm;
+    ResourceAlloc* resourceAlloc;
     
     Topology* topology;
     

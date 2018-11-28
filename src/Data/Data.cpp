@@ -15,6 +15,8 @@
 
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/Parameters.h"
+#include "../../include/Calls/Call.h"
+#include "../../include/ResourceAllocation/Route.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Data* data) {
@@ -38,7 +40,7 @@ const Data* data) {
         ostream << "Number of accepted slots: "
                 << data->GetNumberAccSlotsLoad(a) << std::endl;
         ostream << "Mean hops per route: "
-                << data->GetMeanHopsPerRouteLoad(a) << std::endl;
+                << data->GetNumHopsPerRouteLoad(a) << std::endl;
         ostream << "Network occupancy: "
                 << data->GetNetOccupancyLoad(a) << std::endl;
         ostream << std::endl;
@@ -50,7 +52,7 @@ const Data* data) {
 Data::Data(SimulationType* simulType) 
 :simulType(simulType), numberReq(0), numberBlocReq(0),
 numberAccReq(0), numberBlocSlots(0), numberAccSlots(0),
-meanHopsPerRoute(0), netOccupancy(0) {
+numHopsPerRoute(0), netOccupancy(0), actualIndex(0) {
     
 }
 
@@ -65,8 +67,27 @@ void Data::Initialize() {
     this->numberAccReq.resize(size, 0.0);
     this->numberBlocSlots.resize(size, 0.0);
     this->numberAccSlots.resize(size, 0.0);
-    this->meanHopsPerRoute.resize(size, 0.0);
+    this->numHopsPerRoute.resize(size, 0.0);
     this->netOccupancy.resize(size, 0.0);
+}
+
+void Data::StorageCall(Call* call) {
+    unsigned int numHops = call->GetRoute()->GetNumHops();
+    unsigned int numSlots = call->GetNumberSlots();
+    
+    switch(call->GetStatus()){
+        case Accepted:
+            this->numberAccReq.at(actualIndex)++;
+            break;
+        case Blocked:
+            this->numberBlocReq.at(actualIndex)++;
+            break;
+        case NotEvaluated:
+            std::cerr << "Not evaluated call" <<  std::endl;  
+    }
+    
+    this->numHopsPerRoute.at(actualIndex) += (double) numHops;
+    this->netOccupancy.at(actualIndex) += (double) numSlots * numHops;
 }
 
 std::vector<double> Data::GetNumberReq() const {
@@ -129,16 +150,16 @@ void Data::SetNumberAccSlots(std::vector<double> numberAccSlots) {
     this->numberAccSlots = numberAccSlots;
 }
 
-std::vector<double> Data::GetMeanHopsPerRoute() const {
-    return meanHopsPerRoute;
+std::vector<double> Data::GetNumHopsPerRoute() const {
+    return numHopsPerRoute;
 }
 
-double Data::GetMeanHopsPerRouteLoad(unsigned int index) const {
-    return this->meanHopsPerRoute.at(index);
+double Data::GetNumHopsPerRouteLoad(unsigned int index) const {
+    return this->numHopsPerRoute.at(index);
 }
 
-void Data::SetMeanHopsPerRoute(std::vector<double> meanHopsPerRoute) {
-    this->meanHopsPerRoute = meanHopsPerRoute;
+void Data::SetNumHopsPerRoute(std::vector<double> meanHopsPerRoute) {
+    this->numHopsPerRoute = meanHopsPerRoute;
 }
 
 std::vector<double> Data::GetNetOccupancy() const {
@@ -151,4 +172,12 @@ double Data::GetNetOccupancyLoad(unsigned int index) const {
 
 void Data::SetNetOccupancy(std::vector<double> netOccupancy) {
     this->netOccupancy = netOccupancy;
+}
+
+unsigned int Data::GetActualIndex() const {
+    return actualIndex;
+}
+
+void Data::SetActualIndex(unsigned int actualIndex) {
+    this->actualIndex = actualIndex;
 }

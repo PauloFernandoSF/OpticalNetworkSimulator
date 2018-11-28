@@ -22,7 +22,7 @@
 #include "../../include/Structure/Topology.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Calls/CallGenerator.h"
-#include "../../include/RSA/RSA.h"
+#include "../../include/ResourceAllocation/ResourceAlloc.h"
 
 SimulationType::SimulationType(unsigned int simulIndex)
 :simulationIndex(simulIndex),
@@ -33,7 +33,7 @@ topology(std::make_shared<Topology> (this)),
 inputOutput(boost::make_unique<InputOutput>(this)),
 traffic(std::make_shared<Traffic>(this)),
 callGenerator(std::make_shared<CallGenerator>(this)),
-rsaAlgorithm(std::make_shared<RSA>(this)) {
+resourceAlloc(std::make_shared<ResourceAlloc>(this)) {
     
 }
 
@@ -45,7 +45,7 @@ SimulationType::~SimulationType() {
     this->inputOutput.release();
     this->traffic.reset();
     this->callGenerator.reset();
-    this->rsaAlgorithm.reset();
+    this->resourceAlloc.reset();
 }
 
 void SimulationType::Run() {   
@@ -68,7 +68,7 @@ void SimulationType::Load() {
     this->traffic->LoadFile();
     this->GetData()->Initialize();
     this->callGenerator->Load();
-    this->rsaAlgorithm->Load();
+    this->resourceAlloc->Load();
 }
 
 void SimulationType::LoadFile() {
@@ -78,7 +78,7 @@ void SimulationType::LoadFile() {
     this->traffic->LoadFile();
     this->GetData()->Initialize();
     this->callGenerator->Load();
-    this->rsaAlgorithm->Load();
+    this->resourceAlloc->Load();
 }
 
 void SimulationType::Print() {
@@ -91,6 +91,10 @@ void SimulationType::Print() {
 
 void SimulationType::AdditionalSettings() {
     this->topology->SetAditionalSettings();
+    
+    if(this->resourceAlloc->IsOfflineRouting())
+        this->resourceAlloc->RoutingOffline();
+        
 }
 
 const unsigned int SimulationType::GetSimulationIndex() const {
@@ -158,12 +162,12 @@ callGenerator) {
     this->callGenerator = callGenerator;
 }
 
-RSA* SimulationType::GetRsaAlgorithm() const {
-    return this->rsaAlgorithm.get();
+ResourceAlloc* SimulationType::GetResourceAlloc() const {
+    return this->resourceAlloc.get();
 }
 
-void SimulationType::SetRsaAlgorithm(std::shared_ptr<RSA> rsaAlgorithm) {
-    this->rsaAlgorithm = rsaAlgorithm;
+void SimulationType::SetResourceAlloc(std::shared_ptr<ResourceAlloc> rsaAlgorithm) {
+    this->resourceAlloc = rsaAlgorithm;
 }
 
 void SimulationType::InitializeAll() {

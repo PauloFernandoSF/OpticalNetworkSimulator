@@ -11,14 +11,14 @@
  * Created on November 22, 2018, 11:36 PM
  */
 
-#include "../../include/RSA/SA.h"
+#include "../../include/ResourceAllocation/SA.h"
 #include "../../include/Calls/Call.h"
 
 SA::SA() {
 }
 
-SA::SA(RSA* rsa, SpectrumAllocationOption option, Topology* topology) 
-:rsaAlgorithm(rsa), specAllOption(option), topology(topology) {
+SA::SA(ResourceAlloc* rsa, SpectrumAllocationOption option, Topology* topology) 
+:resourceAlloc(rsa), specAllOption(option), topology(topology) {
     
 }
 

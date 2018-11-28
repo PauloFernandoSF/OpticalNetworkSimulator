@@ -38,11 +38,12 @@
       <logicalFolder name="f5" displayName="GeneralClasses" projectFiles="true">
         <itemPath>include/GeneralClasses/Def.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f6" displayName="RSA" projectFiles="true">
-        <itemPath>include/RSA/RSA.h</itemPath>
-        <itemPath>include/RSA/Route.h</itemPath>
-        <itemPath>include/RSA/Routing.h</itemPath>
-        <itemPath>include/RSA/SA.h</itemPath>
+      <logicalFolder name="f7" displayName="ResourceAllocation" projectFiles="true">
+        <itemPath>include/ResourceAllocation/Modulation.h</itemPath>
+        <itemPath>include/ResourceAllocation/ResourceAlloc.h</itemPath>
+        <itemPath>include/ResourceAllocation/Route.h</itemPath>
+        <itemPath>include/ResourceAllocation/Routing.h</itemPath>
+        <itemPath>include/ResourceAllocation/SA.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="SimulationType" projectFiles="true">
         <itemPath>include/SimulationType/MultiLoadSimulation.h</itemPath>
@@ -77,11 +78,12 @@
       <logicalFolder name="f5" displayName="GeneralClasses" projectFiles="true">
         <itemPath>src/GeneralClasses/Def.cpp</itemPath>
       </logicalFolder>
-      <logicalFolder name="f6" displayName="RSA" projectFiles="true">
-        <itemPath>src/RSA/RSA.cpp</itemPath>
-        <itemPath>src/RSA/Route.cpp</itemPath>
-        <itemPath>src/RSA/Routing.cpp</itemPath>
-        <itemPath>src/RSA/SA.cpp</itemPath>
+      <logicalFolder name="f7" displayName="ResourceAllocation" projectFiles="true">
+        <itemPath>src/ResourceAllocation/Modulation.cpp</itemPath>
+        <itemPath>src/ResourceAllocation/ResourceAlloc.cpp</itemPath>
+        <itemPath>src/ResourceAllocation/Route.cpp</itemPath>
+        <itemPath>src/ResourceAllocation/Routing.cpp</itemPath>
+        <itemPath>src/ResourceAllocation/SA.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="SimulationType" projectFiles="true">
         <itemPath>src/SimulationType/MultiLoadSimulation.cpp</itemPath>
@@ -175,13 +177,24 @@
       </item>
       <item path="include/Kernel.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/RSA/RSA.h" ex="false" tool="3" flavor2="0">
+      <item path="include/ResourceAllocation/Modulation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
-      <item path="include/RSA/Route.h" ex="false" tool="3" flavor2="0">
+      <item path="include/ResourceAllocation/ResourceAlloc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
-      <item path="include/RSA/Routing.h" ex="false" tool="3" flavor2="0">
+      <item path="include/ResourceAllocation/Route.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/RSA/SA.h" ex="false" tool="3" flavor2="0">
+      <item path="include/ResourceAllocation/Routing.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/SA.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/SimulationType/MultiLoadSimulation.h"
             ex="false"
@@ -221,13 +234,21 @@
       </item>
       <item path="src/Kernel.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/RSA/RSA.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/ResourceAllocation/Modulation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="src/RSA/Route.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/ResourceAllocation/ResourceAlloc.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="src/RSA/Routing.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/ResourceAllocation/Route.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/RSA/SA.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/ResourceAllocation/Routing.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/SA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SimulationType/MultiLoadSimulation.cpp"
             ex="false"
@@ -317,13 +338,24 @@
       </item>
       <item path="include/Kernel.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/RSA/RSA.h" ex="false" tool="3" flavor2="0">
+      <item path="include/ResourceAllocation/Modulation.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
-      <item path="include/RSA/Route.h" ex="false" tool="3" flavor2="0">
+      <item path="include/ResourceAllocation/ResourceAlloc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
-      <item path="include/RSA/Routing.h" ex="false" tool="3" flavor2="0">
+      <item path="include/ResourceAllocation/Route.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/RSA/SA.h" ex="false" tool="3" flavor2="0">
+      <item path="include/ResourceAllocation/Routing.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/SA.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/SimulationType/MultiLoadSimulation.h"
             ex="false"
@@ -363,13 +395,21 @@
       </item>
       <item path="src/Kernel.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/RSA/RSA.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/ResourceAllocation/Modulation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="src/RSA/Route.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/ResourceAllocation/ResourceAlloc.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
-      <item path="src/RSA/Routing.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/ResourceAllocation/Route.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/RSA/SA.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/ResourceAllocation/Routing.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/SA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SimulationType/MultiLoadSimulation.cpp"
             ex="false"

@@ -16,7 +16,7 @@
 
 #include <memory>
 
-class RSA;
+class ResourceAlloc;
 class Call;
 class Route;
 class Topology;
@@ -30,22 +30,27 @@ public:
     
     Routing();
     
-    Routing(RSA* rsa, RoutingOption option, Topology* topology);
+    Routing(ResourceAlloc* rsa, RoutingOption option, Topology* topology);
     
     virtual ~Routing();
     
     void RoutingCall(Call* call);
     
-    void Dijkstra(Call* call);
+    void SetOfflineRouting(Call* call);
+    
     
     void Dijkstra();
     
     std::shared_ptr<Route> Dijkstra(NodeId orNode, NodeId deNode);
     
     
-    RSA* GetRsaAlgorithm() const;
+    ResourceAlloc* GetResourceAlloc() const;
 
-    void SetRsaAlgorithm(RSA* rsaAlgorithm);
+    void SetResourceAlloc(ResourceAlloc* rsaAlgorithm);
+    
+    RoutingOption GetRoutingOption() const;
+
+    void SetRoutingOption(RoutingOption routingOption);
 
     Topology* GetTopology() const;
 
@@ -53,7 +58,7 @@ public:
 
 private:
     
-    RSA* rsaAlgorithm;
+    ResourceAlloc* resourceAlloc;
     
     RoutingOption routingOption;
     

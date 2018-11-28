@@ -23,7 +23,7 @@ class Topology;
 class InputOutput;
 class Traffic;
 class CallGenerator;
-class RSA;
+class ResourceAlloc;
 
 /**
  * @brief Base class for Simulations objects.
@@ -158,9 +158,9 @@ public:
 
     void SetCallGenerator(std::shared_ptr<CallGenerator> callGenerator);
     
-    RSA* GetRsaAlgorithm() const;
+    ResourceAlloc* GetResourceAlloc() const;
     
-    void SetRsaAlgorithm(std::shared_ptr<RSA> rsaAlgorithm);
+    void SetResourceAlloc(std::shared_ptr<ResourceAlloc> rsaAlgorithm);
 
 
 private:
@@ -209,7 +209,7 @@ private:
      */
     std::shared_ptr<CallGenerator> callGenerator;
     
-    std::shared_ptr<RSA> rsaAlgorithm;
+    std::shared_ptr<ResourceAlloc> resourceAlloc;
 };
 
 #endif /* SIMULATIONTYPE_H */

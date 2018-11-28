@@ -52,6 +52,17 @@ Options::mapTrafficOptions = boost::assign::map_list_of
     (Traficc_100_200_400, "100-200-400")
     (Traffic_10_40_100_200_400, "10-40-100-200-400");
 
+const boost::unordered_map<ResourceAllocOption, std::string>
+Options::mapResourAllocOption = boost::assign::map_list_of
+    (ResourAllocInvalid, "Invalid")
+    (ResourAllocRSA, "RSA")
+    (ResourAllocRMSA, "RMSA");
+
+const boost::unordered_map<PhysicalLayerOption, std::string>
+Options::mapPhyLayerOption = boost::assign::map_list_of
+    (PhyLayerDisabled, "Disabled")
+    (PhyLayerEnabled,  "Enabled");
+
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
     ostream << "OPITIONS" << std::endl;
@@ -65,6 +76,10 @@ const Options* options) {
             << std::endl;
     ostream << "Traffic requests(Gbps): " << options->GetTrafficName()
             << std::endl;
+    ostream << "Resource Allocation: " << options->GetResourAllocName()
+            << std::endl;
+    ostream << "Physical Layer: " << options->GetPhyLayerName()
+            << std::endl;
     
     return ostream;
 }
@@ -72,7 +87,8 @@ const Options* options) {
 Options::Options(SimulationType* simulType)
 :simulType(simulType), topologyOption(TopologyInvalid),
 routingOption(RoutingInvalid), specAllOption(SpecAllInvalid),
-linkCostType(Invalid), trafficOption(TrafficInvalid) {
+linkCostType(Invalid), trafficOption(TrafficInvalid), 
+resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled) {
     
 }
 
@@ -86,8 +102,7 @@ void Options::Load() {
     std::cout << "Topology options" << std::endl;
     for(TopologyOption a = FirstTopology; a <= LastTopology; 
     a = TopologyOption(a+1)){
-        std::cout << a << "-" << this->mapTopologyOptions.at(a) 
-                  << std::endl;
+        std::cout << a << "-" << this->mapTopologyOptions.at(a) << std::endl;
     }
     std::cout << "Insert topology: ";
     std::cin >> auxInt;
@@ -96,8 +111,7 @@ void Options::Load() {
     std::cout << "Routing algorithm options" << std::endl;
     for(RoutingOption a = FirstRoutingOption; a <= LastRoutingOption; 
     a = RoutingOption(a+1)){
-        std::cout << a << "-" << this->mapRoutingOptions.at(a) 
-                  << std::endl;
+        std::cout << a << "-" << this->mapRoutingOptions.at(a) << std::endl;
     }
     std::cout << "Insert the routing algorithm: ";
     std::cin >> auxInt;
@@ -106,8 +120,7 @@ void Options::Load() {
     std::cout << "Spectral allocation options" << std::endl;
     for(SpectrumAllocationOption a = FirstSpecAllOption; 
     a <= LastSpecAllOption; a = SpectrumAllocationOption(a+1)){
-        std::cout << a << "-" << this->mapSpecAlgOptions.at(a) 
-                  << std::endl;
+        std::cout << a << "-" << this->mapSpecAlgOptions.at(a) << std::endl;
     }
     std::cout << "Insert the spectral allocation: ";
     std::cin >> auxInt;
@@ -116,8 +129,7 @@ void Options::Load() {
     std::cout << "Links cost type options" << std::endl;
     for(LinkCostType a = FirstLinkCostType; a <= LastLinkCostType; 
     a = LinkCostType(a+1)){
-        std::cout << a << "-" << this->mapLinkCostType.at(a) 
-                  << std::endl;
+        std::cout << a << "-" << this->mapLinkCostType.at(a) << std::endl;
     }
     std::cout << "Insert the link cost type: ";
     std::cin >> auxInt;
@@ -126,12 +138,29 @@ void Options::Load() {
     std::cout << "Traffic options" << std::endl;
     for(TrafficOption a = FirstTrafficOption; a <= LastTrafficOption; 
     a = TrafficOption(a+1)){
-        std::cout << a << "-" << this->mapTrafficOptions.at(a) 
-                  << std::endl;
+        std::cout << a << "-" << this->mapTrafficOptions.at(a) << std::endl;
     }
     std::cout << "Insert the traffic option: ";
     std::cin >> auxInt;
     this->SetTrafficOption((TrafficOption) auxInt);
+    
+    std::cout << "Resource allocation options" << std::endl;
+    for(ResourceAllocOption a = FirstResourAllocOption; 
+    a <= LastResourAllocOption; a = ResourceAllocOption(a+1)){
+        std::cout << a << "-" << this->mapResourAllocOption.at(a) << std::endl;
+    }
+    std::cout << "Insert the resource allocation option: ";
+    std::cin >> auxInt;
+    this->SetResourAllocOption((ResourceAllocOption) auxInt);
+    
+    std::cout << "Physical layer options" << std::endl;
+    for(PhysicalLayerOption a = PhyLayerDisabled; a <= PhyLayerEnabled;
+    a = PhysicalLayerOption(a+1)){
+        std::cout << a << "-" << this->mapPhyLayerOption.at(a) << std::endl;
+    }
+    std::cout << "Insert the physical layer option: ";
+    std::cin >> auxInt;
+    this->SetPhyLayerOption((PhysicalLayerOption) auxInt);
     
     std::cout << std::endl;
 }
@@ -151,6 +180,10 @@ void Options::LoadFile() {
     this->SetLinkCostType((LinkCostType) auxInt);
     auxIfstream >> auxInt;
     this->SetTrafficOption((TrafficOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetResourAllocOption((ResourceAllocOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetPhyLayerOption((PhysicalLayerOption) auxInt);
 }
 
 TopologyOption Options::GetTopologyOption() const {
@@ -221,4 +254,30 @@ void Options::SetTrafficOption(TrafficOption trafficOption) {
     assert(trafficOption >= FirstTrafficOption &&
            trafficOption <= LastTrafficOption);
     this->trafficOption = trafficOption;
+}
+
+ResourceAllocOption Options::GetResourAllocOption() const {
+    return resourAllocOption;
+}
+
+std::string Options::GetResourAllocName() const {
+    return this->mapResourAllocOption.at(this->resourAllocOption);
+}
+
+void Options::SetResourAllocOption(ResourceAllocOption resourAllocOption) {
+    assert(resourAllocOption >= FirstResourAllocOption &&
+           resourAllocOption <= LastResourAllocOption);
+    this->resourAllocOption = resourAllocOption;
+}
+
+PhysicalLayerOption Options::GetPhyLayerOption() const {
+    return phyLayerOption;
+}
+
+std::string Options::GetPhyLayerName() const {
+    return this->mapPhyLayerOption.at(this->phyLayerOption);
+}
+
+void Options::SetPhyLayerOption(PhysicalLayerOption phyLayerOption) {
+    this->phyLayerOption = phyLayerOption;
 }
