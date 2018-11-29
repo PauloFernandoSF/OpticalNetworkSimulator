@@ -87,6 +87,22 @@ void Call::SetDeNode(Node* deNode) {
     this->deNode = deNode;
 }
 
+int Call::GetFirstSlot() const {
+    return firstSlot;
+}
+
+void Call::SetFirstSlot(int firstSlot) {
+    this->firstSlot = firstSlot;
+}
+
+int Call::GetLastSlot() const {
+    return lastSlot;
+}
+
+void Call::SetLastSlot(int lastSlot) {
+    this->lastSlot = lastSlot;
+}
+
 unsigned int Call::GetNumberSlots() const {
     return this->numberSlots;
 }

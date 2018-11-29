@@ -84,9 +84,7 @@ void SimulationType::LoadFile() {
 void SimulationType::Print() {
     std::cout << this->parameters << std::endl;
     std::cout << this->options << std::endl;
-    //std::cout << this->topology << std::endl;
     std::cout << this->traffic << std::endl;
-    std::cout << this->GetData() << std::endl;
 }
 
 void SimulationType::AdditionalSettings() {

@@ -16,12 +16,13 @@
 
 #include <vector>
 #include <memory>
-#include <assert.h>
+#include <cassert>
 #include <iostream>
 
 class SimulationType;
 class Node;
 class Link;
+class Route;
 
 /**
  * @brief Class Topology represents the topology of a simulation.
@@ -71,22 +72,22 @@ public:
      * @brief Returns the number of links in this topology
      * @return The total number of links
      */
-    int GetNumLinks() const;
+    unsigned int GetNumLinks() const;
     /**
      * @brief Sets the number of links in this topology
      * @param numLinks total number of links
      */
-    void SetNumLinks(int numLinks);
+    void SetNumLinks(unsigned int numLinks);
     /**
      * @brief Returns the number of slots in this topology
      * @return The total number of slots
      */
-    int GetNumSlots() const;
+    unsigned int GetNumSlots() const;
     /**
      * @brief Sets the number of slots in this topology
      * @param numSlots total number of slots
      */
-    void SetNumSlots(int numSlots);
+    void SetNumSlots(unsigned int numSlots);
     /**
      * @brief Insert a created link in the topology
      * The ownership belongs to the vector
@@ -124,6 +125,11 @@ public:
     Link* GetLink(unsigned int indexOrNode, 
     unsigned int indexDeNode) const;
 
+    bool CheckSlotDisp(const Route* route, unsigned int slot) const;
+    
+    bool CheckSlotsDisp(const Route* route, unsigned int iniSlot,
+                                            unsigned int finSlot) const;
+    
 private:
     /**
      * @brief A pointer to the simulation this object belong
@@ -144,11 +150,11 @@ private:
     /**
      * @brief Total number of links in the topology
      */
-    int numLinks;
+    unsigned int numLinks;
     /**
      * @brief Total number of slots in the topology
      */
-    int numSlots;
+    unsigned int numSlots;
     /**
      * @brief Length of the longest link
      */

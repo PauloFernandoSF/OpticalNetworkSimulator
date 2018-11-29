@@ -93,6 +93,15 @@ public:
      * @param deNode pointer to an Node object.
      */
     void SetDeNode(Node* deNode);
+    
+    int GetFirstSlot() const;
+
+    void SetFirstSlot(int firstSlot);
+
+    int GetLastSlot() const;
+
+    void SetLastSlot(int lastSlot);
+
     /**
      * @brief Return the number of slots of this Call.
      * @return Total amount of slots.

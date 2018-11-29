@@ -72,7 +72,7 @@ double Route::GetCost() {
     return cost;
 }
 
-Link* Route::GetLink(unsigned int index) {
+Link* Route::GetLink(unsigned int index) const {
     assert(index < this->path.size());
     
     return this->topology->GetLink(this->GetNode(index), 

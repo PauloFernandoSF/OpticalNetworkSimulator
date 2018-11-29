@@ -86,3 +86,18 @@ double Link::GetCost() const {
 void Link::SetCost(double cost) {
     this->cost = cost;
 }
+
+bool Link::IsSlotOccupied(unsigned int index) const {
+    
+    if(this->slotsStatus.at(index) == SlotUsed)
+        return true;
+    return false;
+}
+
+bool Link::IsSlotFree(unsigned int index) const {
+    
+    if(this->slotsStatus.at(index) == SlotFree)
+        return true;
+    return false;
+}
+

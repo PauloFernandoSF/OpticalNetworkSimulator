@@ -14,11 +14,14 @@
 #ifndef SA_H
 #define SA_H
 
-#include "../Data/Options.h"
+#include <random>
+#include <cstdlib>
 
 class ResourceAlloc;
 class Topology;
 class Call;
+
+#include "../Data/Options.h"
 
 class SA {
 
@@ -30,7 +33,22 @@ public:
     
     virtual ~SA();
     
+    
     void SpecAllocation(Call* call);
+    
+    void Random(Call* call);
+    
+    void FirstFit(Call* call);
+    
+    void MostUsed(Call* call);
+    
+    void LeastUsed(Call* call);
+    
+    void MaxSum(Call* call);
+    
+    void RCL(Call* call);
+    
+    void MSCL(Call* call);
 
 private:
     

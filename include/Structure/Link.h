@@ -52,11 +52,6 @@ public:
     unsigned int destinationNode, double length, 
     unsigned int numberSections, unsigned int numberSlots);
     /**
-     * @brief Copy constructor for a Link object.
-     * @param orig original Link object.
-     */
-    Link(const Link& orig);
-    /**
      * @brief Virtual destructor of a Link object.
      */
     virtual ~Link();
@@ -117,6 +112,11 @@ public:
      * @param cost cost of the link.
      */
     void SetCost(double cost);
+    
+    
+    bool IsSlotOccupied(unsigned int index) const;
+    
+    bool IsSlotFree(unsigned int index) const;
     
 private:
     /**

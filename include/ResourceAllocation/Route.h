@@ -51,7 +51,7 @@ public:
     
     double GetCost();
     
-    Link* GetLink(unsigned int index);
+    Link* GetLink(unsigned int index) const;
     
     
     std::shared_ptr<Route> CreatePartialRoute(unsigned int ind1, 

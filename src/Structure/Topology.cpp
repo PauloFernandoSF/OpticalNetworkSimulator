@@ -20,6 +20,7 @@
 #include "../../include/Structure/Node.h"
 #include "../../include/Structure/Link.h"
 #include "../../include/GeneralClasses/Def.h"
+#include "../../include/ResourceAllocation/Route.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Topology* topology) {
@@ -87,7 +88,7 @@ void Topology::LoadFile() {
     int orNode, deNode, nSec;
     double length;
     std::shared_ptr<Link> link;
-    for(auxInt = 0; auxInt < this->GetNumLinks(); ++auxInt){
+    for(auxInt = 0; auxInt < (int) this->GetNumLinks(); ++auxInt){
         auxIfstream >> orNode;
         auxIfstream >> deNode;
         auxIfstream >> length;
@@ -116,7 +117,7 @@ unsigned int Topology::GetNumNodes() const {
 }
 
 void Topology::SetNumNodes(unsigned int numNodes) {
-    assert(numNodes > 0 && this->numNodes == 0);
+    assert(this->numNodes == 0);
     this->numNodes = numNodes;
     
     for(unsigned int a = 0; a < this->numNodes; ++a){
@@ -128,21 +129,21 @@ void Topology::SetNumNodes(unsigned int numNodes) {
     }
 }
 
-int Topology::GetNumLinks() const {
+unsigned int Topology::GetNumLinks() const {
     return numLinks;
 }
 
-void Topology::SetNumLinks(int numLinks) {
-    assert(numLinks > 0 && this->numLinks == 0);
+void Topology::SetNumLinks(unsigned int numLinks) {
+    assert(this->numLinks == 0);
     this->numLinks = numLinks;
 }
 
-int Topology::GetNumSlots() const {
+unsigned int Topology::GetNumSlots() const {
     return numSlots;
 }
 
-void Topology::SetNumSlots(int numSlots) {
-    assert(numSlots > 0 && this->numSlots == 0);
+void Topology::SetNumSlots(unsigned int numSlots) {
+    assert(this->numSlots == 0);
     this->numSlots = numSlots;
 }
 
@@ -223,6 +224,36 @@ Link* Topology::GetLink(unsigned int indexOrNode,
 unsigned int indexDeNode) const {
     assert(indexOrNode < this->GetNumNodes());
     assert(indexDeNode < this->GetNumNodes());
+    
     return this->vecLinks.at(indexOrNode * this->numNodes + 
     indexDeNode).get();
 }
+
+bool Topology::CheckSlotDisp(const Route* route, unsigned int slot) const {
+    Link* link;
+    unsigned int numHops = route->GetNumHops();
+    
+    for(unsigned int a = 0; a < numHops; a++){
+        link = route->GetLink(a);
+        
+        if(link->IsSlotOccupied(slot))
+            return false;
+    }
+    return true;
+}
+
+bool Topology::CheckSlotsDisp(const Route* route, unsigned int iniSlot, 
+unsigned int finSlot) const {
+    Link* link;
+    unsigned int numHops = route->GetNumHops();
+    
+    for(unsigned int a = 0; a < numHops; a++){
+        link = route->GetLink(a);
+        
+        for(unsigned int b = iniSlot; b <= finSlot; b++)
+            if(link->IsSlotOccupied(b))
+                return false;
+    }
+    return true;
+}
+

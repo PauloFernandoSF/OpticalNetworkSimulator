@@ -82,8 +82,6 @@ std::shared_ptr<Route> Routing::Dijkstra(NodeId orNode, NodeId deNode) {
     bool *Status = new bool[numNodes];
     assert(orNode != deNode);
     bool networkDisconnected = false;
-    
-    double x = Def::Max_Double;
 
     //Initializes all vertices with infinite cost
     //and the source vertice with cost zero
