@@ -78,7 +78,7 @@ void Event::ImplementCallRequest() {
     //Functions for try call allocation.
     this->parGenerator->GetResourceAlloc()->ResourAlloc(this->call.get());
     
-    //Functions to update data values
+    //Function to update data values
     this->parGenerator->GetData()->StorageCall(this->call.get());
 
     switch(this->call->GetStatus()){

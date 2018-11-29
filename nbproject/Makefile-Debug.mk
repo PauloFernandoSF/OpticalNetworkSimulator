@@ -45,6 +45,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Data/Options.o \
 	${OBJECTDIR}/src/Data/Parameters.o \
 	${OBJECTDIR}/src/GeneralClasses/Def.o \
+	${OBJECTDIR}/src/GeneralClasses/General.o \
 	${OBJECTDIR}/src/Kernel.o \
 	${OBJECTDIR}/src/ResourceAllocation/Modulation.o \
 	${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o \
@@ -131,6 +132,11 @@ ${OBJECTDIR}/src/GeneralClasses/Def.o: src/GeneralClasses/Def.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/GeneralClasses
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/GeneralClasses/Def.o src/GeneralClasses/Def.cpp
+
+${OBJECTDIR}/src/GeneralClasses/General.o: src/GeneralClasses/General.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/GeneralClasses
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/GeneralClasses/General.o src/GeneralClasses/General.cpp
 
 ${OBJECTDIR}/src/Kernel.o: src/Kernel.cpp
 	${MKDIR} -p ${OBJECTDIR}/src

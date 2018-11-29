@@ -37,6 +37,8 @@
       </logicalFolder>
       <logicalFolder name="f5" displayName="GeneralClasses" projectFiles="true">
         <itemPath>include/GeneralClasses/Def.h</itemPath>
+        <itemPath>src/GeneralClasses/General.cpp</itemPath>
+        <itemPath>include/GeneralClasses/General.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="ResourceAllocation" projectFiles="true">
         <itemPath>include/ResourceAllocation/Modulation.h</itemPath>
@@ -175,6 +177,8 @@
       </item>
       <item path="include/GeneralClasses/Def.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/GeneralClasses/General.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Kernel.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/ResourceAllocation/Modulation.h"
@@ -231,6 +235,8 @@
       <item path="src/Data/Parameters.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/GeneralClasses/Def.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/GeneralClasses/General.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Kernel.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -336,6 +342,8 @@
       </item>
       <item path="include/GeneralClasses/Def.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/GeneralClasses/General.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Kernel.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/ResourceAllocation/Modulation.h"
@@ -392,6 +400,8 @@
       <item path="src/Data/Parameters.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/GeneralClasses/Def.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/GeneralClasses/General.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Kernel.cpp" ex="false" tool="1" flavor2="0">
       </item>

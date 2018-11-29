@@ -38,7 +38,8 @@ std::ostream& operator<<(std::ostream& ostream, const Call* call) {
 Call::Call()
 :status(NotEvaluated), orNode(nullptr), deNode(nullptr), firstSlot(-1), 
 lastSlot(-1), numberSlots(0), osnrTh(0.0), bandwidth(0.0), bitRate(0.0), 
-deactivationTime(Def::Max_Double), route(nullptr), trialRoutes(0){
+modulation(InvalidModulation), deactivationTime(Def::Max_Double), 
+route(nullptr), trialRoutes(0){
 
 }
 
@@ -46,7 +47,8 @@ deactivationTime(Def::Max_Double), route(nullptr), trialRoutes(0){
 Call::Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime)
 :status(NotEvaluated), orNode(orNode), deNode(deNode), firstSlot(-1), 
 lastSlot(-1), numberSlots(0), osnrTh(0.0), bandwidth(0.0), bitRate(bitRate), 
-deactivationTime(deacTime), route(nullptr), trialRoutes(0) {
+modulation(InvalidModulation), deactivationTime(deacTime), route(nullptr), 
+trialRoutes(0) {
     
 }
 
@@ -133,6 +135,17 @@ double Call::GetBitRate() const {
 
 void Call::SetBitRate(double bitRate) {
     this->bitRate = bitRate;
+}
+
+void Call::SetModulation(TypeModulation modulation) {
+    assert(modulation >= FirstModulation && 
+           modulation <= LastModulation);
+    
+    this->modulation = modulation;
+}
+
+TypeModulation Call::GetModulation() const {
+    return modulation;
 }
 
 TIME Call::GetDeactivationTime() const {

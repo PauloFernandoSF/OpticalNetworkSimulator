@@ -23,6 +23,7 @@ class Route;
 class Routing;
 class SA;
 class Call;
+class Modulation;
 
 #include "../Data/Options.h"
 
@@ -64,7 +65,8 @@ public:
     bool IsOfflineRouting();
     
     void RoutingOffline();
-        
+    
+    
     SimulationType* GetSimulType() const;
 
     void SetSimulType(SimulationType* simulType);
@@ -85,11 +87,15 @@ private:
     
     ResourceAllocOption resourAllocOption;
     
+    PhysicalLayerOption phyLayerOption;
+    
     std::vector<std::vector<std::shared_ptr<Route>>> allRoutes;
     
     std::shared_ptr<Routing> routing;
     
     std::shared_ptr<SA> specAlloc;
+    
+    std::shared_ptr<Modulation> modulation;
 };
 
 #endif /* RESOURCEALLOC_H */

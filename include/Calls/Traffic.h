@@ -63,17 +63,6 @@ public:
      * @param vecTraffic all traffic values.
      */
     void SetVecTraffic(std::vector<double> vecTraffic);
-    /**
-     * @brief Gets the bit error rate. 
-     * This is the minimum bit error rate value accepted.
-     * @return 
-     */
-    static const double GetBER();
-    /**
-     * @brief Gets the number of polarizations.
-     * @return Total number of polarizations.
-     */
-    static const int GetPolarization();
 
 private:
     /**
@@ -84,14 +73,6 @@ private:
      * @brief Vector that storage all traffic values.
      */
     std::vector<double> vecTraffic;
-    /**
-     * @brief Bit error rate constant.
-     */
-    static const double BER;
-    /**
-     * @brief Number of polarization.
-     */
-    static const int polarization;
 };
 
 #endif /* TRAFFIC_H */

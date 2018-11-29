@@ -24,6 +24,7 @@ public:
     static double Min_Double;
     
     static double Max_Double;
+
 private:
 
 };

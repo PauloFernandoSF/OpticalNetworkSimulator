@@ -14,13 +14,56 @@
 #ifndef MODULATION_H
 #define MODULATION_H
 
-class Modulation {
-public:
-    Modulation();
-    Modulation(const Modulation& orig);
-    virtual ~Modulation();
-private:
+class ResourceAlloc;
+class Call;
 
+#include <boost/assign/list_of.hpp>
+#include <boost/unordered_map.hpp>
+
+enum TypeModulation{
+    InvalidModulation,
+    QAM_4,
+    QAM_8,
+    QAM_16,
+    QAM_32,
+    QAM_64,
+    FirstModulation = QAM_4,
+    LastModulation = QAM_64
+};
+
+class Modulation {
+
+public:
+    
+    Modulation(ResourceAlloc* resourAlloc, double slotBand);
+    
+    virtual ~Modulation();
+    
+    
+    void SetModulationParam(Call* call);
+    
+    double BandwidthQAM(unsigned int M, double Rbps);
+    
+    double GetOSNRQAM(unsigned int M, double Rbps);
+    
+    double GetSNRbQAM(unsigned int M);
+    
+    double GetsnrbQAM(unsigned int M);
+    
+private:
+    
+    ResourceAlloc* resourAlloc;
+    
+    double slotBandwidth;
+    
+    const double BER;
+    
+    const unsigned int polarization;
+    
+    const double rollOff;
+    
+    static const boost::unordered_map<TypeModulation, 
+                                      unsigned int> mapModulation;
 };
 
 #endif /* MODULATION_H */

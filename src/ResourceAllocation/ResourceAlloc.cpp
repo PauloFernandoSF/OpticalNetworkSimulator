@@ -17,7 +17,9 @@
 #include "../../include/ResourceAllocation/Routing.h"
 #include "../../include/ResourceAllocation/SA.h"
 #include "../../include/Data/Options.h"
+#include "../../include/Data/Parameters.h"
 #include "../../include/Calls/Call.h"
+#include "../../include/ResourceAllocation/Modulation.h"
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :simulType(simulType), topology(nullptr), allRoutes(0), routing(nullptr),
@@ -50,8 +52,13 @@ void ResourceAlloc::Load() {
     this->specAlloc = std::make_shared<SA>(this, 
         this->simulType->GetOptions()->GetSpecAllOption(), this->topology);
     
+    this->modulation = std::make_shared<Modulation>(this, 
+        this->simulType->GetParameters()->GetSlotBandwidth());
+    
     this->resourAllocOption = this->simulType->GetOptions()->
                                                GetResourAllocOption();
+    
+    this->phyLayerOption = this->simulType->GetOptions()->GetPhyLayerOption();
 }
 
 void ResourceAlloc::ResourAlloc(Call* call) {
@@ -70,6 +77,12 @@ void ResourceAlloc::ResourAlloc(Call* call) {
 
 void ResourceAlloc::RSA(Call* call) {
     this->routing->RoutingCall(call);
+    
+    //Put function for set the modulation
+    call->SetModulation(QAM_8);
+    
+    //Put functions for bandwidth, numSlots and OSNR.
+    this->modulation->SetModulationParam(call);
     
     if(call->IsThereTrialRoute()){
         do{

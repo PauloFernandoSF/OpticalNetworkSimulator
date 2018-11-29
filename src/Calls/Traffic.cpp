@@ -19,9 +19,6 @@
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Data/Options.h"
 
-const double Traffic::BER = 0.001;
-const int Traffic::polarization = 1;
-
 std::ostream& operator<<(std::ostream& ostream, 
 const Traffic* traffic) {
     unsigned int size = traffic->GetVecTraffic().size();
@@ -70,12 +67,4 @@ double Traffic::GetTraffic(unsigned int index) const {
 
 void Traffic::SetVecTraffic(std::vector<double> vecTraffic) {
     this->vecTraffic = vecTraffic;
-}
-
-const double Traffic::GetBER() {
-    return BER;
-}
-
-const int Traffic::GetPolarization() {
-    return polarization;
 }

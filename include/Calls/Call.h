@@ -24,6 +24,7 @@ class Route;
 
 #include "../Structure/Link.h"
 #include "CallGenerator.h"
+#include "../ResourceAllocation/Modulation.h"
 
 /**
  * @brief Lists the possible status of a Call.
@@ -101,7 +102,6 @@ public:
     int GetLastSlot() const;
 
     void SetLastSlot(int lastSlot);
-
     /**
      * @brief Return the number of slots of this Call.
      * @return Total amount of slots.
@@ -142,6 +142,11 @@ public:
      * @param bitRate Bitrate value.
      */
     void SetBitRate(double bitRate); 
+    
+    TypeModulation GetModulation() const;
+
+    void SetModulation(TypeModulation modulation);
+
     /**
      * @brief Returns the deactivation time of this Call.
      * @return Value of deactivation time.
@@ -208,6 +213,8 @@ private:
      * @brief Bitrate of this call.
      */
     double bitRate;
+    
+    TypeModulation modulation;
     /**
      * @brief Deactivation time of this Call.
      * Not used if the call is blocked.

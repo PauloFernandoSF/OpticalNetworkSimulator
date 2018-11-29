@@ -257,3 +257,17 @@ unsigned int finSlot) const {
     return true;
 }
 
+bool Topology::CheckBlockSlotsDisp(const Route* route, unsigned int numSlots) 
+const {
+    unsigned int numContiguousSlots = 0;
+
+    for(unsigned int s = 0; s < this->numSlots; s++){
+        if(this->CheckSlotDisp(route, s))
+            numContiguousSlots++;
+        else
+            numContiguousSlots = 0;
+        if(numContiguousSlots == numSlots)
+            return true;
+    }
+    return false;
+}

@@ -17,6 +17,7 @@
 #include "../../include/Structure/Topology.h"
 
 SA::SA() {
+    
 }
 
 SA::SA(ResourceAlloc* rsa, SpectrumAllocationOption option, Topology* topology) 
@@ -36,7 +37,7 @@ void SA::SpecAllocation(Call* call) {
             this->FirstFit(call);
             break;
         default:
-            std::cerr << "Innvalid spectrum allocation option" << std::endl;
+            std::cerr << "Invalid spectrum allocation option" << std::endl;
     }
     //For tests.
     call->SetStatus(Accepted);

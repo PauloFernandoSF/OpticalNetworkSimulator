@@ -100,4 +100,3 @@ bool Link::IsSlotFree(unsigned int index) const {
         return true;
     return false;
 }
-

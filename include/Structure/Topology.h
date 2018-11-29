@@ -130,6 +130,8 @@ public:
     bool CheckSlotsDisp(const Route* route, unsigned int iniSlot,
                                             unsigned int finSlot) const;
     
+    bool CheckBlockSlotsDisp(const Route* route, unsigned int numSlots) const;
+    
 private:
     /**
      * @brief A pointer to the simulation this object belong
