@@ -44,11 +44,12 @@ route(nullptr), trialRoutes(0){
 }
 
 
-Call::Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime)
+Call::Call(Node* orNode, Node* deNode, double bitRate, 
+TIME deacTime)
 :status(NotEvaluated), orNode(orNode), deNode(deNode), firstSlot(-1), 
 lastSlot(-1), numberSlots(0), osnrTh(0.0), bandwidth(0.0), bitRate(bitRate), 
-modulation(InvalidModulation), deactivationTime(deacTime), route(nullptr), 
-trialRoutes(0) {
+modulation(InvalidModulation), deactivationTime(deacTime), 
+route(nullptr), trialRoutes(0) {
     
 }
 
@@ -200,3 +201,4 @@ void Call::ClearTrialRoutes() {
         this->trialRoutes.pop_front();
     }
 }
+

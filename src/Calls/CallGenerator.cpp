@@ -84,9 +84,9 @@ void CallGenerator::GenerateCall() {
     
     //Call creation
     std::shared_ptr<Call> newCall =
-    std::make_shared<Call>(topology->GetNode(auxIndexOrNode),
-                           topology->GetNode(auxIndexDeNode),
-                           traffic->GetTraffic(auxIndexTraffic),
+    std::make_shared<Call>(this->topology->GetNode(auxIndexOrNode),
+                           this->topology->GetNode(auxIndexDeNode),
+                           this->traffic->GetTraffic(auxIndexTraffic),
                            deactvationTime);
     
     //Event creation from the call created before
@@ -142,6 +142,14 @@ std::shared_ptr<Event> CallGenerator::GetNextEvent() {
 
 void CallGenerator::PushEvent(std::shared_ptr<Event> evt) {
     this->queueEvents.push(evt);
+}
+
+Topology* CallGenerator::GetTopology() const {
+    return topology;
+}
+
+void CallGenerator::SetTopology(Topology* topology) {
+    this->topology = topology;
 }
 
 ResourceAlloc* CallGenerator::GetResourceAlloc() const {

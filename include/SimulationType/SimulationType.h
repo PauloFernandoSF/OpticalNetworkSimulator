@@ -153,26 +153,58 @@ public:
      * @param traffic pointer to a Traffic object.
      */
     void SetTraffic(std::shared_ptr<Traffic> traffic);
-    
+    /**
+     * @brief Returns a pointer to a CallGenerator object
+     * used in this simulation.
+     * @return pointer to a CallGenerator object.
+     */
     CallGenerator* GetCallGenerator() const;
-
+    /**
+     * @brief Sets a pointer to the CallGenerator object 
+     * in this simulation (share ownership).
+     * @param traffic pointer to a CallGenerator object.
+     */
     void SetCallGenerator(std::shared_ptr<CallGenerator> callGenerator);
-    
+    /**
+     * @brief Returns a pointer to a ResourceAlloc object
+     * used in this simulation.
+     * @return pointer to a ResourceAlloc object.
+     */
     ResourceAlloc* GetResourceAlloc() const;
-    
+    /**
+     * @brief Sets a pointer to the ResourceAlloc object 
+     * in this simulation (share ownership).
+     * @param traffic pointer to a ResourceAlloc object.
+     */
     void SetResourceAlloc(std::shared_ptr<ResourceAlloc> rsaAlgorithm);
 
 
 private:
-    
+    /**
+     * @brief Initialize all the simulation parameters, such as
+     * Topology and CallGenerator. Also set to 0 the actual number 
+     * of requests.
+     */
     void InitializeAll();
-    
+    /**
+     * @brief Function to do the actual simulation, generating the
+     * new calls/events and implementing the first event in container.
+     * This function can be limited by the total number of requests
+     * or by the total number of blocked requests.
+     */
     void Simulate();
-    
+    /**
+     * @brief Finalize all the simulation parameters, such as
+     * Topology and CallGenerator.
+     */
     void FinalizeAll();
 
 public:
-    
+    /**
+     * @brief Actual number of request created.
+     * This variable is updated when a new call/event is create,
+     * in function GenerateCall of CallGenerator class.
+     */
     double numberRequests;
 
 private:
@@ -208,7 +240,9 @@ private:
      * @brief pointer to a CallGenerator object.
      */
     std::shared_ptr<CallGenerator> callGenerator;
-    
+    /**
+     * @brief Pointer to the ResourceAlloc object of this simulation.
+     */
     std::shared_ptr<ResourceAlloc> resourceAlloc;
 };
 

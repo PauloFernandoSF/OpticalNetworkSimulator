@@ -28,7 +28,8 @@ enum TypeModulation{
     QAM_32,
     QAM_64,
     FirstModulation = QAM_4,
-    LastModulation = QAM_64
+    LastModulation = QAM_64,
+    FixedModulation = QAM_8
 };
 
 class Modulation {

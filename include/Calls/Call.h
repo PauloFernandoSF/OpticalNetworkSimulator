@@ -21,6 +21,7 @@
 class Node;
 class SimulationType;
 class Route;
+class Topology;
 
 #include "../Structure/Link.h"
 #include "CallGenerator.h"
@@ -49,7 +50,8 @@ public:
      * @param deNode call destination node.
      * @param bitRate call bit rate.
      */
-    Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime);
+    Call(Node* orNode, Node* deNode, double bitRate, 
+         TIME deacTime);
     
     Call(const Call& orig);
     virtual ~Call();

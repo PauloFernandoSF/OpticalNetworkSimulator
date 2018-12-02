@@ -21,6 +21,8 @@
 #include "../../include/Structure/Link.h"
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/ResourceAllocation/Route.h"
+#include "../../include/ResourceAllocation/Signal.h"
+#include "../../include/Calls/Call.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Topology* topology) {
@@ -270,4 +272,99 @@ const {
             return true;
     }
     return false;
+}
+
+bool Topology::CheckOSNR(const Route* route, double OSNRth) {
+    Link* link;
+    unsigned int numHops = route->GetNumHops();
+    std::shared_ptr<Signal> signal = std::make_shared<Signal>();
+    
+    for(unsigned int a = 0; a < numHops; a++){
+        link = route->GetLink(a);
+        link->CalcSignal(signal.get());
+    }
+    
+    if(signal->GetOSNR() > OSNRth)
+        return true;
+    return false;
+}
+
+bool Topology::IsValidLink(const Link* link) {
+    Node* sourceNode = this->GetNode(link->GetOrigimNode());
+    Node* destNode = this->GetNode(link->GetDestinationNode());
+    
+    if(link != nullptr && this->IsValidNode(sourceNode) && 
+       this->IsValidNode(destNode))
+        return true;
+    return false;
+}
+
+bool Topology::IsValidNode(const Node* node) {
+    if(node != nullptr && node->GetNodeId() < this->numNodes)
+        return true;
+    return false;
+}
+
+bool Topology::IsValidRoute(const Route* route) {
+    
+    if(route != nullptr){
+        Link* link;
+        for(unsigned int a = 0; a < route->GetNumHops(); a++){
+            link = route->GetLink(a);
+            if(link == nullptr)
+                return false;   
+        }
+        return true;
+    }
+    return false;
+}
+
+bool Topology::IsValidSlot(int index) {
+    if(index >= 0 && index < (int) this->numSlots)
+        return true;
+    return false;
+}
+
+bool Topology::IsValidLigthPath(Call* call) {
+    if( (this->IsValidRoute(call->GetRoute())) && 
+        (call->GetFirstSlot() <= call->GetLastSlot()) && 
+        (this->IsValidSlot(call->GetFirstSlot())) && 
+        (this->IsValidSlot(call->GetLastSlot())) ){
+        return true;
+    }
+        
+    return false;
+}
+
+void Topology::Connect(Call* call) {
+    Link* link;
+    const Route* route = call->GetRoute();
+    unsigned int numHops = route->GetNumHops();
+    
+    for(unsigned int a = 0; a < numHops; a++){
+        link = route->GetLink(a);
+        
+        if(this->IsValidLink(link)){
+            for(int s = call->GetFirstSlot(); s <= call->GetLastSlot(); s++){
+                link->OccupySlot(s);
+            }
+        }
+    }
+    
+}
+
+void Topology::Release(Call* call) {
+    Link* link;
+    const Route* route = call->GetRoute();
+    unsigned int numHops = route->GetNumHops();
+    
+    for(unsigned int a = 0; a < numHops; a++){
+        link = route->GetLink(a);
+        
+        if(this->IsValidLink(link)){
+            for(int s = call->GetFirstSlot(); s <= call->GetLastSlot(); s++){
+                link->ReleaseSlot(s);
+            }
+        }
+    }
 }

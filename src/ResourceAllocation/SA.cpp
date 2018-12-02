@@ -39,8 +39,6 @@ void SA::SpecAllocation(Call* call) {
         default:
             std::cerr << "Invalid spectrum allocation option" << std::endl;
     }
-    //For tests.
-    call->SetStatus(Accepted);
 }
 
 void SA::Random(Call* call) {
@@ -91,6 +89,3 @@ void SA::FirstFit(Call* call) {
             sumslots = 0;
     }
 }
-
-
-

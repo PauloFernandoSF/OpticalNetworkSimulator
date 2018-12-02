@@ -65,6 +65,7 @@ void ResourceAlloc::ResourAlloc(Call* call) {
     
     switch(this->resourAllocOption){
         case ResourAllocRSA:
+            call->SetModulation(FixedModulation);
             this->RSA(call);
             break;
         case ResourAllocRMSA:
@@ -76,28 +77,41 @@ void ResourceAlloc::ResourAlloc(Call* call) {
 }
 
 void ResourceAlloc::RSA(Call* call) {
-    this->routing->RoutingCall(call);
-    
-    //Put function for set the modulation
-    call->SetModulation(QAM_8);
-    
-    //Put functions for bandwidth, numSlots and OSNR.
     this->modulation->SetModulationParam(call);
+    this->routing->RoutingCall(call);
     
     if(call->IsThereTrialRoute()){
         do{
             call->SetRoute(call->PopTrialRoute());
+            
+            if(!this->CheckOSNR(call))
+                continue;
+            
             this->specAlloc->SpecAllocation(call);
             
-            if(call->GetStatus() == Accepted)
+            if(this->topology->IsValidLigthPath(call)){
+                call->ClearTrialRoutes();
+                call->SetStatus(Accepted);
                 break;
-                        
+            }
         }while(call->IsThereTrialRoute());
     }
+    
+    if(!this->topology->IsValidLigthPath(call))
+        call->SetStatus(Blocked);
 }
 
 void ResourceAlloc::RMSA(Call* call) {
-
+    TypeModulation mod;
+    
+    for(mod = LastModulation; mod >= FirstModulation; 
+                              mod = TypeModulation(mod-1)){
+        call->SetModulation(mod);
+        this->RSA(call);
+        
+        if(call->GetStatus() == Accepted)
+            break;
+    }
 }
 
 void ResourceAlloc::SetRoute(unsigned int orN, unsigned int deN, 
@@ -163,6 +177,15 @@ void ResourceAlloc::RoutingOffline() {
         default:
             std::cerr << "Invalid offline routing option" << std::endl;
     }
+}
+
+bool ResourceAlloc::CheckOSNR(Call* call) {
+    
+    if(this->phyLayerOption == PhyLayerEnabled)
+        if(!this->topology->CheckOSNR(call->GetRoute(), call->GetOsnrTh()))
+            return false;
+    
+    return true;
 }
 
 SimulationType* ResourceAlloc::GetSimulType() const {

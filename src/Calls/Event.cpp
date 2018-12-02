@@ -15,6 +15,7 @@
 #include "../../include/Calls/CallGenerator.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/Data/Data.h"
+#include "../../include/Structure/Topology.h"
 
 const boost::unordered_map<EventType, std::string> 
 Event::mapEventType = boost::assign::map_list_of
@@ -83,6 +84,7 @@ void Event::ImplementCallRequest() {
 
     switch(this->call->GetStatus()){
         case Accepted:
+            this->parGenerator->GetTopology()->Connect(this->call.get());
             this->SetEventType(CallEnd);
             this->SetEventTime(this->parGenerator->GetSimulationTime() + 
                                this->call->GetDeactivationTime());
@@ -99,6 +101,6 @@ void Event::ImplementCallRequest() {
 void Event::ImplementCallEnd() {
     assert(this->call->GetStatus() == Accepted);
     
-    //Functions for release the connection.
+    this->parGenerator->GetTopology()->Release(this->call.get());
     
 }

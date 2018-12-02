@@ -37,6 +37,8 @@ void MultiLoadSimulation::Run() {
         this->GetData()->SetActualIndex(a);
         this->GetCallGenerator()->SetNetworkLoad(loadPoint);
         SimulationType::Run();
+        
+        std::cout << this->GetData() << std::endl;
     }
 }
 

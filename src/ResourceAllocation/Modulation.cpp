@@ -17,7 +17,7 @@
 
 const boost::unordered_map<TypeModulation, unsigned int> 
 Modulation::mapModulation = boost::assign::map_list_of
-    (InvalidModulation, 1)
+    (InvalidModulation, 0)
     (QAM_4, 2)
     (QAM_8, 3)
     (QAM_16, 4)
@@ -31,6 +31,7 @@ rollOff(0.0) {
 }
 
 Modulation::~Modulation() {
+    
 }
 
 void Modulation::SetModulationParam(Call* call) {
@@ -48,6 +49,7 @@ void Modulation::SetModulationParam(Call* call) {
 }
 
 double Modulation::BandwidthQAM(unsigned int M, double Rbps) {
+    assert(M >= 2  && M <= 6);
     
     return ((1.0+this->rollOff)*Rbps)/(this->polarization*M);
 }

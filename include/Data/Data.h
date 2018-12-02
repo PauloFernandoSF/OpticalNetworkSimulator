@@ -20,6 +20,8 @@ class Call;
 #include <vector>
 #include <ostream>
 
+#include "../Calls/CallGenerator.h"
+
 /**
  * @brief The Data class is responsible for storage the simulation
  * data.
@@ -46,51 +48,55 @@ public:
      */
     virtual ~Data();
     
+    /**
+     * @brief Initialize the data. The vectors are resized based in the 
+     * number of load points. And sets all values to 0.
+     */
     void Initialize();
-    
+    /**
+     * @brief Update the data based on the call.
+     * If call is Accepted, increment the number of accepted requests.
+     * If call is Blocked, increment the number of blocked requests.
+     * @param call Call to analyze.
+     */
     void StorageCall(Call* call);
     
-    std::vector<double> GetNumberReq() const;
     
-    double GetNumberReqLoad(unsigned int index) const;
+    void SetNumberReq(double numReq);
+    
+    double GetNumberReq(unsigned int index) const;
+    
+    double GetNumberReq() const;
+    
+    double GetNumberBlocReq(unsigned int index) const;
+    
+    double GetNumberBlocReq() const;
+    
+    double GetNumberAccReq(unsigned int index) const;
 
-    void SetNumberReq(std::vector<double> numberReq);
+    double GetNumberAccReq() const;
     
-    std::vector<double> GetNumberBlocReq() const;
+    double GetNumberSlotsReq() const;
     
-    double GetNumberBlocReqLoad(unsigned int index) const;
+    double GetNumberBlocSlots(unsigned int index) const;
+    
+    double GetNumberBlocSlots() const;
+    
+    double GetNumberAccSlots(unsigned int index) const;
+    
+    double GetNumberAccSlots() const;
 
-    void SetNumberBlocReq(std::vector<double> numberBlocReq);
+    double GetNumHopsPerRoute(unsigned int index) const;
     
-    std::vector<double> GetNumberAccReq() const;
+    double GetNumHopsPerRoute() const;
     
-    double GetNumberAccReqLoad(unsigned int index) const;
-
-    void SetNumberAccReq(std::vector<double> numberAccReq);
+    double GetNetOccupancy(unsigned int index) const;
     
-    std::vector<double> GetNumberBlocSlots() const;
+    double GetNetOccupancy() const;
     
-    double GetNumberBlocSlotsLoad(unsigned int index) const;
-
-    void SetNumberBlocSlots(std::vector<double> numberBlocSlots);
+    TIME GetSimulTime() const;
     
-    std::vector<double> GetNumberAccSlots() const;
-    
-    double GetNumberAccSlotsLoad(unsigned int index) const;
-
-    void SetNumberAccSlots(std::vector<double> numberAccSlots);
-    
-    std::vector<double> GetNumHopsPerRoute() const;
-    
-    double GetNumHopsPerRouteLoad(unsigned int index) const;
-
-    void SetNumHopsPerRoute(std::vector<double> meanHopsPerRoute);
-
-    std::vector<double> GetNetOccupancy() const;
-    
-    double GetNetOccupancyLoad(unsigned int index) const;
-
-    void SetNetOccupancy(std::vector<double> netOccupancy);
+    void SetSimulTime(const TIME simulTime);
     
     unsigned int GetActualIndex() const;
 
@@ -116,6 +122,8 @@ private:
      * per load.
      */
     std::vector<double> numberAccReq;
+    
+    std::vector<double> numberSlotsReq;
     /**
      * @brief Actual number of blocked slots simulated,
      * per load.
@@ -137,6 +145,11 @@ private:
      */
     std::vector<double> netOccupancy;
     
+    std::vector<TIME> simulTime;
+    /**
+     * @brief Index of the actual simulation. This is referred to multiload
+     * simulation, to indicate the position of the vector to update the data.
+     */
     unsigned int actualIndex;
 };
 

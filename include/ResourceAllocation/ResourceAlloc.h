@@ -66,6 +66,8 @@ public:
     
     void RoutingOffline();
     
+    bool CheckOSNR(Call* call);
+    
     
     SimulationType* GetSimulType() const;
 

@@ -24,6 +24,7 @@ class Topology;
  * @brief Class Node represents a node inside a topology.
  */
 class Node {
+    
     friend std::ostream& operator<<(std::ostream& ostream,
     Node* node);
     
@@ -61,9 +62,15 @@ public:
      * @param nodeId node index.
      */
     void SetNodeId(NodeId nodeId);
-    
+    /**
+     * @brief Checks if the node is functional.
+     * @return True if the node is working.
+     */
     bool IsNodeWorking() const;
-
+    /**
+     * @brief Set the node state (working or not).
+     * @param NodeWorking Node state.
+     */
     void SetNodeWorking(bool NodeWorking);
 
 
@@ -77,8 +84,10 @@ private:
      * @brief Node index.
      */
     NodeId nodeId;
-    
-    bool NodeWorking;
+    /**
+     * @brief Boolean variable to indicate the node state.
+     */
+    bool nodeWorking;
 };
 
 #endif /* NODE_H */

@@ -20,7 +20,7 @@
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Data* data) {
-    unsigned int sizeLoad = data->simulType->
+    /*unsigned int sizeLoad = data->simulType->
     GetParameters()->GetNumberLoadPoints();
         
     ostream << "DATA" << std::endl;
@@ -30,29 +30,43 @@ const Data* data) {
         GetParameters()->GetLoadPoint(a) << std::endl;
         
         ostream << "Number of requisitions: "
-                << data->GetNumberReqLoad(a) << std::endl;
+                << data-> GetNumberReq() << std::endl;
         ostream << "Number of blocked requisitions: "
-                << data->GetNumberBlocReqLoad(a) << std::endl;
+                << data->GetNumberBlocReq() << std::endl;
         ostream << "Number of accepted requisitions: "
-                << data->GetNumberAccReqLoad(a) << std::endl;
+                << data->GetNumberAccReq() << std::endl;
         ostream << "Number of blocked slots: "
-                << data->GetNumberBlocSlotsLoad(a) << std::endl;
+                << data->GetNumberBlocSlots() << std::endl;
         ostream << "Number of accepted slots: "
-                << data->GetNumberAccSlotsLoad(a) << std::endl;
+                << data->GetNumberAccSlots() << std::endl;
         ostream << "Mean hops per route: "
-                << data->GetNumHopsPerRouteLoad(a) << std::endl;
+                << data->GetNumHopsPerRoute() << std::endl;
         ostream << "Network occupancy: "
-                << data->GetNetOccupancyLoad(a) << std::endl;
+                << data->GetNetOccupancy() << std::endl;
+        ostream << "Simulation time: "
+                << data->GetSimulTime() << std::endl;
         ostream << std::endl;
-    }
+    }*/
+    
+    ostream << "Simulation time:" << data->GetSimulTime() 
+            << "  Number of requests:" << data->GetNumberReq() << std::endl;
+    ostream << "Load point:" << data->simulType->GetParameters()->
+            GetLoadPoint(data->GetActualIndex()) << "  PbReq:" << 
+            data->GetNumberBlocReq()/data->GetNumberReq() 
+            << "  PbSlots:" << data->GetNumberBlocSlots()/
+            data->GetNumberSlotsReq() << "  HopsMed:" 
+            << data->GetNumHopsPerRoute()/data->GetNumberAccReq() 
+            << "  NetOcc:" << data->GetNetOccupancy() << std::endl;
+    
+    ostream << std::endl;
     
     return ostream;
 }
 
 Data::Data(SimulationType* simulType) 
-:simulType(simulType), numberReq(0), numberBlocReq(0),
-numberAccReq(0), numberBlocSlots(0), numberAccSlots(0),
-numHopsPerRoute(0), netOccupancy(0), actualIndex(0) {
+:simulType(simulType), numberReq(0), numberBlocReq(0), numberAccReq(0), 
+numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0),
+numHopsPerRoute(0), netOccupancy(0), simulTime(0), actualIndex(0) {
     
 }
 
@@ -65,10 +79,12 @@ void Data::Initialize() {
     this->numberReq.resize(size, 0.0);
     this->numberBlocReq.resize(size, 0.0);
     this->numberAccReq.resize(size, 0.0);
+    this->numberSlotsReq.resize(size, 0.0);
     this->numberBlocSlots.resize(size, 0.0);
     this->numberAccSlots.resize(size, 0.0);
     this->numHopsPerRoute.resize(size, 0.0);
     this->netOccupancy.resize(size, 0.0);
+    this->simulTime.resize(size, 0.0);
 }
 
 void Data::StorageCall(Call* call) {
@@ -78,100 +94,89 @@ void Data::StorageCall(Call* call) {
     switch(call->GetStatus()){
         case Accepted:
             this->numberAccReq.at(actualIndex)++;
+            this->numHopsPerRoute.at(actualIndex) += (double) numHops;
+            this->netOccupancy.at(actualIndex) += (double) numSlots * numHops;
             break;
         case Blocked:
             this->numberBlocReq.at(actualIndex)++;
             break;
         case NotEvaluated:
-            std::cerr << "Not evaluated call" <<  std::endl;  
-    }
-    
-    this->numHopsPerRoute.at(actualIndex) += (double) numHops;
-    this->netOccupancy.at(actualIndex) += (double) numSlots * numHops;
+            std::cerr << "Not evaluated call" <<  std::endl;
+    }   
 }
 
-std::vector<double> Data::GetNumberReq() const {
-    return numberReq;
+void Data::SetNumberReq(double numReq) {
+    assert(numReq >= 0);
+    this->numberReq.at(this->actualIndex) = numReq;
 }
 
-double Data::GetNumberReqLoad(unsigned int index) const {
+double Data::GetNumberReq(unsigned int index) const {
     return this->numberReq.at(index);
 }
 
-void Data::SetNumberReq(std::vector<double> numberReq) {
-    this->numberReq = numberReq;
+double Data::GetNumberReq() const {
+    return this->numberReq.at(this->actualIndex);
 }
 
-std::vector<double> Data::GetNumberBlocReq() const {
-    return numberBlocReq;
-}
-
-double Data::GetNumberBlocReqLoad(unsigned int index) const {
+double Data::GetNumberBlocReq(unsigned int index) const {
     return this->numberBlocReq.at(index);
 }
 
-void Data::SetNumberBlocReq(std::vector<double> numberBlocReq) {
-    this->numberBlocReq = numberBlocReq;
+double Data::GetNumberBlocReq() const {
+    return this->numberBlocReq.at(this->actualIndex);
 }
 
-std::vector<double> Data::GetNumberAccReq() const {
-    return numberAccReq;
-}
-
-double Data::GetNumberAccReqLoad(unsigned int index) const {
+double Data::GetNumberAccReq(unsigned int index) const {
     return this->numberAccReq.at(index);
 }
 
-void Data::SetNumberAccReq(std::vector<double> numberAccReq) {
-    this->numberAccReq = numberAccReq;
+double Data::GetNumberAccReq() const {
+    return this->numberAccReq.at(this->actualIndex);
 }
 
-std::vector<double> Data::GetNumberBlocSlots() const {
-    return numberBlocSlots;
+double Data::GetNumberSlotsReq() const {
+    return this->numberSlotsReq.at(this->actualIndex);
 }
 
-double Data::GetNumberBlocSlotsLoad(unsigned int index) const {
+double Data::GetNumberBlocSlots(unsigned int index) const {
     return this->numberBlocSlots.at(index);
 }
 
-void Data::SetNumberBlocSlots(std::vector<double> numberBlocSlots) {
-    this->numberBlocSlots = numberBlocSlots;
+double Data::GetNumberBlocSlots() const {
+    return this->numberBlocSlots.at(this->actualIndex);
 }
 
-std::vector<double> Data::GetNumberAccSlots() const {
-    return numberAccSlots;
-}
-
-double Data::GetNumberAccSlotsLoad(unsigned int index) const {
+double Data::GetNumberAccSlots(unsigned int index) const {
     return this->numberAccSlots.at(index);
 }
 
-void Data::SetNumberAccSlots(std::vector<double> numberAccSlots) {
-    this->numberAccSlots = numberAccSlots;
+double Data::GetNumberAccSlots() const {
+    return this->numberAccSlots.at(this->actualIndex);
 }
 
-std::vector<double> Data::GetNumHopsPerRoute() const {
-    return numHopsPerRoute;
-}
-
-double Data::GetNumHopsPerRouteLoad(unsigned int index) const {
+double Data::GetNumHopsPerRoute(unsigned int index) const {
     return this->numHopsPerRoute.at(index);
 }
 
-void Data::SetNumHopsPerRoute(std::vector<double> meanHopsPerRoute) {
-    this->numHopsPerRoute = meanHopsPerRoute;
+double Data::GetNumHopsPerRoute() const {
+    return this->numHopsPerRoute.at(this->actualIndex);
 }
 
-std::vector<double> Data::GetNetOccupancy() const {
-    return netOccupancy;
-}
-
-double Data::GetNetOccupancyLoad(unsigned int index) const {
+double Data::GetNetOccupancy(unsigned int index) const {
     return this->netOccupancy.at(index);
 }
 
-void Data::SetNetOccupancy(std::vector<double> netOccupancy) {
-    this->netOccupancy = netOccupancy;
+double Data::GetNetOccupancy() const {
+    return this->netOccupancy.at(this->actualIndex);
+}
+
+TIME Data::GetSimulTime() const {
+    return this->simulTime.at(this->actualIndex);
+}
+
+void Data::SetSimulTime(const TIME simulTime) {
+    assert(simulTime > 0);
+    this->simulTime.at(this->actualIndex) = simulTime;
 }
 
 unsigned int Data::GetActualIndex() const {

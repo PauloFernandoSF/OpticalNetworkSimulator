@@ -23,11 +23,13 @@ class SimulationType;
 class Node;
 class Link;
 class Route;
+class Call;
 
 /**
  * @brief Class Topology represents the topology of a simulation.
  */
 class Topology {
+    
     friend std::ostream& operator<<(std::ostream& ostream, 
     const Topology* topology);
     
@@ -38,11 +40,6 @@ public:
      * this topology.
      */
     Topology(SimulationType* simulType);
-    /**
-     * @brief Copy constructor for a Topology object.
-     * @param orig original Topology object.
-     */
-    Topology(const Topology& orig);
     /**
      * @brief Virtual destructor of a Topology object.
      */
@@ -124,13 +121,66 @@ public:
      */
     Link* GetLink(unsigned int indexOrNode, 
     unsigned int indexDeNode) const;
-
+    /**
+     * @brief Checks if an specified slot is free in an specified route.
+     * @param route Route to be analyzed.
+     * @param slot Slot index.
+     * @return True if the slot is available.
+     */
     bool CheckSlotDisp(const Route* route, unsigned int slot) const;
-    
+    /**
+     * @brief Checks if a block of slots is free in an specified route.
+     * @param route Route to be analyzed.
+     * @param iniSlot First slot index.
+     * @param finSlot Last slot index.
+     * @return True if the block of slots is available.
+     */
     bool CheckSlotsDisp(const Route* route, unsigned int iniSlot,
                                             unsigned int finSlot) const;
-    
+    /**
+     * @brief Checks if there is a contiguous block of free slots in
+     * an specified route.
+     * @param route Route to be analyzed.
+     * @param numSlots Number of slots.
+     * @return True if there is a block of avaliable slots.
+     */
     bool CheckBlockSlotsDisp(const Route* route, unsigned int numSlots) const;
+    /**
+     * @brief Check if the specified OSNR is larger than the signal OSNR for
+     * the specified route.
+     * @param route Route to be analyzed.
+     * @param OSNRth OSNR value for comparison.
+     * @return True if the OSNR is larger.
+     */
+    bool CheckOSNR(const Route* route, double OSNRth);
+    
+    bool IsValidLink(const Link* link);
+    
+    bool IsValidNode(const Node* node);
+    /**
+     * @brief Check if this is a valid route.
+     * @param route Route to analyze.
+     * @return True if the route is valid.
+     */
+    bool IsValidRoute(const Route* route);
+    /**
+     * @brief Check if the slot is valid.
+     * @param index Index of the slot.
+     * @return True if the slot is valid.
+     */
+    bool IsValidSlot(int index);
+    /**
+     * @brief Check if the lightpath is valid. This function checks the route, 
+     * the first and the last slot of the call.
+     * @param call Call to analyze.
+     * @return True if the lightpath is valid.
+     */
+    bool IsValidLigthPath(Call* call);
+    
+    
+    void Connect(Call* call);
+    
+    void Release(Call* call);
     
 private:
     /**

@@ -58,7 +58,7 @@ void SimulationType::Run() {
     
     std::cout << "Finalize All" << std::endl;
     this->FinalizeAll();
-    std::cout << std::endl << std::endl;
+    //std::cout << std::endl;
 }
 
 void SimulationType::Load() {
@@ -82,9 +82,8 @@ void SimulationType::LoadFile() {
 }
 
 void SimulationType::Print() {
-    std::cout << this->parameters << std::endl;
     std::cout << this->options << std::endl;
-    std::cout << this->traffic << std::endl;
+    std::cout << this->parameters << std::endl;
 }
 
 void SimulationType::AdditionalSettings() {
@@ -178,12 +177,12 @@ void SimulationType::Simulate() {
     double numReqMax = this->parameters->GetNumberReqMax();
     this->callGenerator->GenerateCall();
     
-    while(this->numberRequests < numReqMax){
+    while(this->numberRequests <= numReqMax){
         std::shared_ptr<Event> evt = this->callGenerator->GetNextEvent();
         
         switch(evt->GetEventType()){
             case CallRequest:
-                evt->ImplementCallRequest();                
+                evt->ImplementCallRequest();
                 this->callGenerator->GenerateCall();
                 break;
             case CallEnd:
@@ -193,6 +192,9 @@ void SimulationType::Simulate() {
                 std::cerr << "Invalid event" << std::endl;
         }
     }
+    
+    this->GetData()->SetNumberReq(this->numberRequests-1);
+    this->GetData()->SetSimulTime(this->callGenerator->GetSimulationTime());
 }
 
 void SimulationType::FinalizeAll() {

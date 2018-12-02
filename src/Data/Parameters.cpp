@@ -32,7 +32,7 @@ const Parameters* parameters) {
     ostream << "Maximum blocked requests: "
             << parameters->GetNumberBloqMax() << std::endl;
     ostream << "Slot bandwidth (GHz): "
-            << parameters->GetSlotBandwidth() << std::endl;
+            << parameters->GetSlotBandwidth()/1E9 << std::endl;
     
     return ostream;
 }
@@ -74,7 +74,7 @@ void Parameters::Load() {
     this->SetNumberBloqMax(auxDouble);
     std::cout << "Insert slot bandwidth(GHz): ";
     std::cin >> auxDouble;
-    this->SetSlotBandwidth(auxDouble);
+    this->SetSlotBandwidth(auxDouble*1E9);
     
     this->SetLoadPointUniform();
     
@@ -100,7 +100,7 @@ void Parameters::LoadFile() {
     auxIfstream >> auxDouble;
     this->SetNumberBloqMax(auxDouble);
     auxIfstream >> auxDouble;
-    this->SetSlotBandwidth(auxDouble);
+    this->SetSlotBandwidth(auxDouble*1E9);
     
     this->SetLoadPointUniform();
 }
@@ -195,10 +195,10 @@ void Parameters::SetNumberBloqMax(double numberBloqMax) {
 }
 
 double Parameters::GetSlotBandwidth() const {
-    return slotBandwidth/10E9;
+    return slotBandwidth;
 }
 
 void Parameters::SetSlotBandwidth(double slotBandwidth) {
     assert(slotBandwidth > 0.0);
-    this->slotBandwidth = slotBandwidth*10E9;
+    this->slotBandwidth = slotBandwidth;
 }

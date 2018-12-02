@@ -29,11 +29,13 @@ enum SlotStatus{
 #include <iostream>
 
 class Topology;
+class Signal;
 
 /**
  * @brief Class Link represents a link inside a topology. 
  */
 class Link {
+    
     friend std::ostream& operator<<(std::ostream& ostream,
     Link* link);
     
@@ -112,11 +114,58 @@ public:
      * @param cost cost of the link.
      */
     void SetCost(double cost);
+    /**
+     * @brief Checks if the link is functional.
+     * @return True if the link is working.
+     */
+    bool IsLinkWorking() const;
+    /**
+     * @brief Set the link state (working or not).
+     * @param NodeWorking Link state.
+     */
+    void SetLinkWorking(bool linkWorking);
+
     
-    
+    /**
+     * @brief Update the signal power, ASE power and
+     * nonlinear power crossing this link.
+     * @param signal Signal pointer that will be updated.
+     */
+    void CalcSignal(Signal* signal) const;
+    /**
+     * @brief Occupy an specified slot in this link.
+     * @param index Slot index.
+     */
+    void OccupySlot(const unsigned int index);
+    /**
+     * @brief Release an specified slot in this link.
+     * @param index Slot index.
+     */
+    void ReleaseSlot(const unsigned int index);
+    /**
+     * @brief Check if an specified slot is occupied in
+     * the link.
+     * @param index Slot index.
+     * @return True if the slot is occupied.
+     */
     bool IsSlotOccupied(unsigned int index) const;
-    
+    /**
+     * @brief Check if an specified slot is free in
+     * the link.
+     * @param index Slot index.
+     * @return True if the slot is free.
+     */
     bool IsSlotFree(unsigned int index) const;
+    /**
+     * @brief Return the number of free slots in the link.
+     * @return Number of free slots.
+     */
+    unsigned int GetNumberFreeSlots() const;
+    /**
+     * @brief Return the number of occupied slots in the link.
+     * @return Number of occupied slots.
+     */
+    unsigned int GetNumberOccupiedSlots() const;
     
 private:
     /**
@@ -150,6 +199,10 @@ private:
      * in this link
      */
     std::vector<SlotStatus> slotsStatus;
+    /**
+     * @brief Boolean variable to indicate the  link state.
+     */
+    bool linkWorking;
 };
 
 #endif /* LINK_H */

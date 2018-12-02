@@ -118,7 +118,10 @@ public:
      */
     void PushEvent(std::shared_ptr<Event> evt);
     
-    
+    Topology* GetTopology() const;
+
+    void SetTopology(Topology* topology);
+
     ResourceAlloc* GetResourceAlloc() const;
 
     void SetResourceAlloc(ResourceAlloc* rsaAlgorithm);
