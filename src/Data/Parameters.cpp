@@ -20,6 +20,8 @@ std::ostream& operator<<(std::ostream& ostream,
 const Parameters* parameters) {
     
     ostream << "PARAMETERS" << std::endl;
+    ostream << "Number of slots per fiber: " 
+            << parameters->GetNumberSlots() << std::endl;
     ostream << "Mu: " << parameters->GetMu() << std::endl;
     ostream << "Minimum load point(erlang): " 
             << parameters->GetMinLoadPoint() << std::endl;
@@ -41,7 +43,7 @@ Parameters::Parameters(SimulationType* simulType)
 :simulType(simulType), loadPoint(0), minLoadPoint(0.0),
 maxLoadPoint(0.0), loadPasso(0.0), numberLoadPoints(0),
 numberReqMax(0.0), mu(0.0), numberBloqMax(0),
-slotBandwidth(0.0) {
+slotBandwidth(0.0), numberSlots(0) {
     
 }
 
@@ -54,6 +56,8 @@ void Parameters::Load() {
     double auxDouble;
     
     std::cout << "PARAMETERS INPUTS" << std::endl;
+    std::cout << "Insert the number  of slots per fiber: ";
+    std::cin >> auxUnsInt;
     std::cout << "Insert Connection Deactivation Rate: ";
     std::cin >> auxDouble;
     this->SetMu(auxDouble);
@@ -83,10 +87,12 @@ void Parameters::Load() {
 
 void Parameters::LoadFile() {
     std::ifstream auxIfstream;
-    int auxInt;
+    unsigned int auxInt;
     double auxDouble;
     
     this->simulType->GetInputOutput()->LoadParameters(auxIfstream);
+    auxIfstream >> auxInt;
+    this->SetNumberSlots(auxInt);
     auxIfstream >> auxDouble;
     this->SetMu(auxDouble);
     auxIfstream >> auxDouble;
@@ -103,6 +109,13 @@ void Parameters::LoadFile() {
     this->SetSlotBandwidth(auxDouble*1E9);
     
     this->SetLoadPointUniform();
+}
+
+void Parameters::Save() {
+    std::ofstream& auxOfstream = this->simulType->GetInputOutput()
+                                     ->GetLogFile();
+    
+    auxOfstream << this << std::endl;
 }
 
 std::vector<double> Parameters::GetLoadPoint() const {
@@ -201,4 +214,12 @@ double Parameters::GetSlotBandwidth() const {
 void Parameters::SetSlotBandwidth(double slotBandwidth) {
     assert(slotBandwidth > 0.0);
     this->slotBandwidth = slotBandwidth;
+}
+
+unsigned int Parameters::GetNumberSlots() const {
+    return numberSlots;
+}
+
+void Parameters::SetNumberSlots(unsigned int numberSlots) {
+    this->numberSlots = numberSlots;
 }

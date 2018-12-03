@@ -67,7 +67,7 @@ Topology::~Topology() {
 
 void Topology::LoadFile() {
     std::ifstream auxIfstream;
-    int auxInt;
+    unsigned int auxInt;
     
     this->simulType->GetInputOutput()->LoadTopology(auxIfstream);
     
@@ -75,8 +75,7 @@ void Topology::LoadFile() {
     this->SetNumNodes(auxInt);
     auxIfstream >> auxInt;
     this->SetNumLinks(auxInt);
-    auxIfstream >> auxInt;
-    this->SetNumSlots(auxInt);
+    this->SetNumSlots(this->simulType->GetParameters()->GetNumberSlots());
     
     //Create all topology nodes
     std::shared_ptr<Node> node;
@@ -87,10 +86,10 @@ void Topology::LoadFile() {
     }
     
     //Create all topology links
-    int orNode, deNode, nSec;
+    unsigned  int orNode, deNode, nSec;
     double length;
     std::shared_ptr<Link> link;
-    for(auxInt = 0; auxInt < (int) this->GetNumLinks(); ++auxInt){
+    for(auxInt = 0; auxInt < this->GetNumLinks(); ++auxInt){
         auxIfstream >> orNode;
         auxIfstream >> deNode;
         auxIfstream >> length;

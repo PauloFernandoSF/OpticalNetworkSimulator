@@ -101,6 +101,7 @@ enum PhysicalLayerOption {
  * options.
  */
 class Options {
+    
     friend std::ostream& operator<<(std::ostream& ostream,
     const Options* options);
     
@@ -129,6 +130,8 @@ public:
      * @brief Load the options from a .txt file.
      */
     void LoadFile();
+    
+    void Save();
     
     /**
      * @brief Returns the topology choice.

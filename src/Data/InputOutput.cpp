@@ -20,6 +20,8 @@
 
 InputOutput::InputOutput(SimulationType* simulType)
 :simulType(simulType) {
+    this->LoadLog(this->logFile);
+    this->LoadResults(this->resultFile);
 }
 
 InputOutput::~InputOutput() {
@@ -104,3 +106,50 @@ void InputOutput::LoadTraffic(std::ifstream& traffic) {
         }
     }while(!traffic.is_open());
 }
+
+void InputOutput::LoadResults(std::ofstream& results) {
+    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        results.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/Results.txt");
+        
+        if(!results.is_open()){
+            std::cerr << "Wrong result file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!results.is_open());
+}
+
+void InputOutput::LoadLog(std::ofstream& log) {
+    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        log.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/Log.txt");
+        
+        if(!log.is_open()){
+            std::cerr << "Wrong log file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!log.is_open());
+}
+
+std::ofstream& InputOutput::GetLogFile() {
+    return this->logFile;
+}
+
+std::ofstream& InputOutput::GetResultFile() {
+    return this->resultFile;
+}
+

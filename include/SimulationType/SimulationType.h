@@ -70,7 +70,7 @@ public:
     /**
      * @brief Save the results in .txt files.
      */
-    virtual void Save() = 0;
+    virtual void Save();
     /**
      * @brief Prints a description of the simulation.
      */

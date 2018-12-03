@@ -1,12 +1,14 @@
+128
 1
-50
-80
+30
+40
 6
-1000000
+100000
 500
 12.5
 
 
+#Number of slots per fiber
 #Deactivation time
 #Minimum load
 #Maximum load

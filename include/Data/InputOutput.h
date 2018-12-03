@@ -61,11 +61,23 @@ public:
      */
     void LoadTraffic(std::ifstream& traffic);
     
+    void LoadResults(std::ofstream& results);
+    
+    void LoadLog(std::ofstream& log);
+    
+    std::ofstream& GetLogFile();
+
+    std::ofstream& GetResultFile();
+
 private:
     /**
      * @brief Pointer to a SimulationType object that owns this object
      */
     SimulationType* simulType;
+    
+    std::ofstream logFile;
+    
+    std::ofstream resultFile;
     
 };
 

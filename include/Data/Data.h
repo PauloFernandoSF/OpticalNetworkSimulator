@@ -62,6 +62,11 @@ public:
     void StorageCall(Call* call);
     
     
+    void Save();
+    
+    void PrintResults(std::ostream& ostream);
+    
+    
     void SetNumberReq(double numReq);
     
     double GetNumberReq(unsigned int index) const;

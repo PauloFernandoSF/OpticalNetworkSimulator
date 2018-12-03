@@ -58,6 +58,8 @@ public:
      */
     void LoadFile();
     
+    void Save();
+    
     /**
      * @brief Returns the vector with all
      * load points of the simulation.
@@ -150,7 +152,11 @@ public:
      * @brief Set the bandwidth, in GHz, of each slot.
      * @param slotBandwidth bandwidth of a slot (GHz).
      */
-    void SetSlotBandwidth(double slotBandwidth);    
+    void SetSlotBandwidth(double slotBandwidth);
+    
+    unsigned int GetNumberSlots() const;
+
+    void SetNumberSlots(unsigned int numberSlots);
 
 private:
     /**
@@ -194,6 +200,8 @@ private:
      * @brief Bandwidth of each slot.
      */
     double slotBandwidth; 
+    
+    unsigned int numberSlots;
     
     /**
      * @brief Calculate the load step.

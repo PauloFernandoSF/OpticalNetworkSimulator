@@ -50,20 +50,19 @@ void Kernel::Pre_Simulation() {
         it->LoadFile();
         it->AdditionalSettings();
     }
-    
-    //Print all simulations
-    for(auto it : simulations){
-        it->Print();
-    }
 }
 
 void Kernel::Simulation() {
     
     for(auto it : this->simulations){
+        it->Print();
         it->Run();
     }
 }
 
 void Kernel::Pos_Simulation() {
     
+    for(auto it : this->simulations){
+        it->Save();
+    }
 }

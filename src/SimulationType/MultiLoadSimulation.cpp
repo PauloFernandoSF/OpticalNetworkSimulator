@@ -59,7 +59,7 @@ void MultiLoadSimulation::Print() {
 }
 
 void MultiLoadSimulation::Save() {
-
+    SimulationType::Save();
 }
 
 void MultiLoadSimulation::Help() {

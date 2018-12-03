@@ -50,15 +50,14 @@ SimulationType::~SimulationType() {
 
 void SimulationType::Run() {   
     std::cout << "New Simulation" << std::endl;
-    std::cout << "Initialize  All" << std::endl;
+    std::cout << "Initializing" << std::endl;
     this->InitializeAll();
     
     std::cout << "Simulating" << std::endl;
     this->Simulate();
     
-    std::cout << "Finalize All" << std::endl;
+    std::cout << "Finalizing" << std::endl;
     this->FinalizeAll();
-    //std::cout << std::endl;
 }
 
 void SimulationType::Load() {
@@ -84,6 +83,12 @@ void SimulationType::LoadFile() {
 void SimulationType::Print() {
     std::cout << this->options << std::endl;
     std::cout << this->parameters << std::endl;
+}
+
+void SimulationType::Save() {
+    this->options->Save();
+    this->parameters->Save();
+    this->GetData()->Save();
 }
 
 void SimulationType::AdditionalSettings() {

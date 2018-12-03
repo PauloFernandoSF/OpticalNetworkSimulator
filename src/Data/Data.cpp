@@ -14,40 +14,13 @@
 #include "../../include/Data/Data.h"
 
 #include "../../include/SimulationType/SimulationType.h"
+#include "../../include/Data/InputOutput.h"
 #include "../../include/Data/Parameters.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
-const Data* data) {
-    /*unsigned int sizeLoad = data->simulType->
-    GetParameters()->GetNumberLoadPoints();
-        
-    ostream << "DATA" << std::endl;
-    
-    for(unsigned int a = 0; a < sizeLoad; ++a){
-        ostream << "Load " << data->simulType->
-        GetParameters()->GetLoadPoint(a) << std::endl;
-        
-        ostream << "Number of requisitions: "
-                << data-> GetNumberReq() << std::endl;
-        ostream << "Number of blocked requisitions: "
-                << data->GetNumberBlocReq() << std::endl;
-        ostream << "Number of accepted requisitions: "
-                << data->GetNumberAccReq() << std::endl;
-        ostream << "Number of blocked slots: "
-                << data->GetNumberBlocSlots() << std::endl;
-        ostream << "Number of accepted slots: "
-                << data->GetNumberAccSlots() << std::endl;
-        ostream << "Mean hops per route: "
-                << data->GetNumHopsPerRoute() << std::endl;
-        ostream << "Network occupancy: "
-                << data->GetNetOccupancy() << std::endl;
-        ostream << "Simulation time: "
-                << data->GetSimulTime() << std::endl;
-        ostream << std::endl;
-    }*/
-    
+const Data* data) {    
     ostream << "Simulation time:" << data->GetSimulTime() 
             << "  Number of requests:" << data->GetNumberReq() << std::endl;
     ostream << "Load point:" << data->simulType->GetParameters()->
@@ -103,6 +76,28 @@ void Data::StorageCall(Call* call) {
         case NotEvaluated:
             std::cerr << "Not evaluated call" <<  std::endl;
     }   
+}
+
+void Data::Save() {
+    std::ofstream &logOfstream = this->simulType->GetInputOutput()
+                                     ->GetLogFile();
+    std::ofstream &resultOfstream = this->simulType->GetInputOutput()
+                                        ->GetResultFile();
+    unsigned int numLoadPoints = this->simulType->GetParameters()
+                                     ->GetNumberLoadPoints();
+    
+    logOfstream << "DATA" << std::endl;
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+        logOfstream << this << std::endl;
+        this->PrintResults(resultOfstream);
+    }
+}
+
+void Data::PrintResults(std::ostream& ostream) {   
+    ostream << this->simulType->GetParameters()->GetLoadPoint(this
+                   ->GetActualIndex()) << "\t" << this->GetNumberBlocReq()/
+                   this->GetNumberReq() << std::endl;
 }
 
 void Data::SetNumberReq(double numReq) {

@@ -186,6 +186,12 @@ void Options::LoadFile() {
     this->SetPhyLayerOption((PhysicalLayerOption) auxInt);
 }
 
+void Options::Save() {
+    std::ofstream& auxOfstream = this->simulType->GetInputOutput()
+                                     ->GetLogFile();
+    auxOfstream << this << std::endl;
+}
+
 TopologyOption Options::GetTopologyOption() const {
     return topologyOption;
 }
