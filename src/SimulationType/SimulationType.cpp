@@ -48,15 +48,9 @@ SimulationType::~SimulationType() {
     this->resourceAlloc.reset();
 }
 
-void SimulationType::Run() {   
-    std::cout << "New Simulation" << std::endl;
-    std::cout << "Initializing" << std::endl;
+void SimulationType::Run() {
     this->InitializeAll();
-    
-    std::cout << "Simulating" << std::endl;
     this->Simulate();
-    
-    std::cout << "Finalizing" << std::endl;
     this->FinalizeAll();
 }
 
@@ -88,7 +82,7 @@ void SimulationType::Print() {
 void SimulationType::Save() {
     this->options->Save();
     this->parameters->Save();
-    this->GetData()->Save();
+    this->GetData()->SaveLog();
 }
 
 void SimulationType::AdditionalSettings() {

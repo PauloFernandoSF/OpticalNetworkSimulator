@@ -60,19 +60,36 @@ public:
      * @param call Call to analyze.
      */
     void StorageCall(Call* call);
+    /**
+     * @brief Saves the data values in the Log.txt file.
+     */
+    void SaveLog();
+    /**
+     * @brief Saves the data values in the PBvLoad.txt file.
+     */
+    void SavePBvLoad();
     
-    
-    void Save();
-    
-    void PrintResults(std::ostream& ostream);
-    
-    
+    /**
+     * @brief Set the number of request of the actual load point.
+     * @param numReq Number of requests.
+     */
     void SetNumberReq(double numReq);
-    
+    /**
+     * @brief Gets the number of requests for a specified load point.
+     * @param index Index of the load point.
+     * @return Number of requests.
+     */
     double GetNumberReq(unsigned int index) const;
-    
+    /**
+     * @brief Gets the number of requests for the actual load point.
+     * @return Number of requests.
+     */
     double GetNumberReq() const;
-    
+    /**
+     * @brief Gets the number of blocked requests for a specified load point.
+     * @param index Index of the load point.
+     * @return Number of requests.
+     */
     double GetNumberBlocReq(unsigned int index) const;
     
     double GetNumberBlocReq() const;
@@ -107,6 +124,12 @@ public:
 
     void SetActualIndex(unsigned int actualIndex);
 
+private:
+    /**
+     * @brief Saves the data in PBvLoad.txt.
+     * @param ostream Stream that contain the PBvLoad file.
+     */
+    void SavePBvLoad(std::ostream& ostream);
     
 private:
     /**
@@ -127,7 +150,9 @@ private:
      * per load.
      */
     std::vector<double> numberAccReq;
-    
+    /**
+     * @brief Total number of slots of each request, for eaach load point.
+     */
     std::vector<double> numberSlotsReq;
     /**
      * @brief Actual number of blocked slots simulated,
@@ -149,7 +174,9 @@ private:
      * occupied by the number of route hops.
      */
     std::vector<double> netOccupancy;
-    
+    /**
+     * @brief Vector that contain the simulation time of each load point.
+     */
     std::vector<TIME> simulTime;
     /**
      * @brief Index of the actual simulation. This is referred to multiload

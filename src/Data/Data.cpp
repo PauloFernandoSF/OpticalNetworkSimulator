@@ -23,6 +23,7 @@ std::ostream& operator<<(std::ostream& ostream,
 const Data* data) {    
     ostream << "Simulation time:" << data->GetSimulTime() 
             << "  Number of requests:" << data->GetNumberReq() << std::endl;
+    
     ostream << "Load point:" << data->simulType->GetParameters()->
             GetLoadPoint(data->GetActualIndex()) << "  PbReq:" << 
             data->GetNumberBlocReq()/data->GetNumberReq() 
@@ -78,26 +79,30 @@ void Data::StorageCall(Call* call) {
     }   
 }
 
-void Data::Save() {
+void Data::SaveLog() {
     std::ofstream &logOfstream = this->simulType->GetInputOutput()
                                      ->GetLogFile();
+    unsigned int numLoadPoints = this->simulType->GetParameters()
+                                     ->GetNumberLoadPoints();
+    logOfstream << "DATA" << std::endl;
+    
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+        logOfstream << this << std::endl;
+    }
+}
+
+void Data::SavePBvLoad() {
     std::ofstream &resultOfstream = this->simulType->GetInputOutput()
                                         ->GetResultFile();
     unsigned int numLoadPoints = this->simulType->GetParameters()
                                      ->GetNumberLoadPoints();
     
-    logOfstream << "DATA" << std::endl;
     for(unsigned int a = 0; a < numLoadPoints; a++){
         this->SetActualIndex(a);
-        logOfstream << this << std::endl;
-        this->PrintResults(resultOfstream);
-    }
-}
 
-void Data::PrintResults(std::ostream& ostream) {   
-    ostream << this->simulType->GetParameters()->GetLoadPoint(this
-                   ->GetActualIndex()) << "\t" << this->GetNumberBlocReq()/
-                   this->GetNumberReq() << std::endl;
+        this->SavePBvLoad(resultOfstream);
+    }
 }
 
 void Data::SetNumberReq(double numReq) {
@@ -180,4 +185,10 @@ unsigned int Data::GetActualIndex() const {
 
 void Data::SetActualIndex(unsigned int actualIndex) {
     this->actualIndex = actualIndex;
+}
+
+void Data::SavePBvLoad(std::ostream& ostream) {   
+    ostream << this->simulType->GetParameters()->GetLoadPoint(this
+                   ->GetActualIndex()) << "\t" << this->GetNumberBlocReq()/
+                   this->GetNumberReq() << std::endl;
 }

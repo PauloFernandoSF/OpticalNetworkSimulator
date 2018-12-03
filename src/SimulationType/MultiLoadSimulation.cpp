@@ -18,6 +18,7 @@
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Data/Data.h"
+#include "../../include/Data/InputOutput.h"
 
 MultiLoadSimulation::MultiLoadSimulation(unsigned int simulIndex)
 :SimulationType(simulIndex){
@@ -32,14 +33,18 @@ void MultiLoadSimulation::Run() {
     unsigned int numLoadPoints = this->GetParameters()->
     GetNumberLoadPoints();
     
-    for(unsigned int a = 0; a < numLoadPoints; ++a){       
+    for(unsigned int a = 0; a < numLoadPoints; ++a){
         double loadPoint = this->GetParameters()->GetLoadPoint(a);
         this->GetData()->SetActualIndex(a);
         this->GetCallGenerator()->SetNetworkLoad(loadPoint);
+        this->GetInputOutput()->PrintProgressBar(a, numLoadPoints);
+        
         SimulationType::Run();
         
         std::cout << this->GetData() << std::endl;
     }
+    
+    this->GetInputOutput()->PrintProgressBar(numLoadPoints, numLoadPoints);
 }
 
 void MultiLoadSimulation::Load() {
@@ -48,9 +53,6 @@ void MultiLoadSimulation::Load() {
 
 void MultiLoadSimulation::LoadFile() {
     SimulationType::LoadFile();
-    
-    //Additional load functions
-    //singular to that simulation
 }
 
 void MultiLoadSimulation::Print() {
@@ -60,6 +62,7 @@ void MultiLoadSimulation::Print() {
 
 void MultiLoadSimulation::Save() {
     SimulationType::Save();
+    this->GetData()->SavePBvLoad();
 }
 
 void MultiLoadSimulation::Help() {

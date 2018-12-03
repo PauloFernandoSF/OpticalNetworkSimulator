@@ -26,9 +26,7 @@ class SimulationType;
  * the simulation parameters.
  */
 class Parameters {
-    /**
-     * @brief 
-    */
+    
     friend std::ostream& operator<<(std::ostream& ostream, 
     const Parameters* parameters);
     
@@ -57,7 +55,9 @@ public:
      * @brief Loads the parameters from an .txt file.
      */
     void LoadFile();
-    
+    /**
+     * @brief Save the options slected in a .txt file.
+     */
     void Save();
     
     /**
@@ -153,9 +153,15 @@ public:
      * @param slotBandwidth bandwidth of a slot (GHz).
      */
     void SetSlotBandwidth(double slotBandwidth);
-    
+    /**
+     * @brief Gets the number of slots per fiber/core.
+     * @return Number of slots per fiber/core.
+     */
     unsigned int GetNumberSlots() const;
-
+    /**
+     * @brief Sets the number of slots per fiber/core.
+     * @param numberSlots Number of slots per fiber/core.
+     */
     void SetNumberSlots(unsigned int numberSlots);
 
 private:
@@ -200,7 +206,9 @@ private:
      * @brief Bandwidth of each slot.
      */
     double slotBandwidth; 
-    
+    /**
+     * @brief Number of slots per fiber/core.
+     */
     unsigned int numberSlots;
     
     /**

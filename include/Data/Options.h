@@ -130,7 +130,9 @@ public:
      * @brief Load the options from a .txt file.
      */
     void LoadFile();
-    
+    /**
+     * @brief Saves the options selected in a .txt file.
+     */
     void Save();
     
     /**
@@ -211,19 +213,36 @@ public:
      * @param trafficOption traffic option.
      */
     void SetTrafficOption(TrafficOption trafficOption);
-    
+    /**
+     * @brief Gets the resource allocation option selected.
+     * @return Resource allocation option.
+     */
     ResourceAllocOption GetResourAllocOption() const;
-
+    /**
+     * @brief Gets the name of the resource allocation option selected.
+     * @return String with the name of the resource allocation option.
+     */
     std::string GetResourAllocName() const;
-    
+    /**
+     * @brief Set the resource allocation option.
+     * @param resourAllocOption Resource allocation option.
+     */
     void SetResourAllocOption(ResourceAllocOption resourAllocOption);
-
+    /**
+     * @brief Gets the physical layer option selected.
+     * @return Physical layer option.
+     */
     PhysicalLayerOption GetPhyLayerOption() const;
-
+    /**
+     * @brief Gets the name of the physical layer option selected.
+     * @return String with the name of the physical layer option.
+     */
     std::string GetPhyLayerName() const; 
-    
+    /**
+     * @brief Set the physical layer option.
+     * @param phyLayerOption Physical layer option.
+     */
     void SetPhyLayerOption(PhysicalLayerOption phyLayerOption);
-
     
 private:
     /**
@@ -250,9 +269,13 @@ private:
      * @brief Traffic option selected.
      */
     TrafficOption trafficOption;
-    
+    /**
+     * @brief Resource allocation options selected.
+     */
     ResourceAllocOption resourAllocOption;
-    
+    /**
+     * @brief Physical layer option selected.
+     */
     PhysicalLayerOption phyLayerOption;
     
     /**
@@ -286,10 +309,16 @@ private:
      */
     static const boost::unordered_map<TrafficOption,
     std::string> mapTrafficOptions;
-    
+    /**
+     * @brief Map that keeps the resource allocation options 
+     * and the name of each one.
+     */
     static const boost::unordered_map<ResourceAllocOption,
     std::string> mapResourAllocOption;
-    
+    /**
+     * @brief Map that keeps the physical layer options 
+     * and the name of each one (Enabled and Disabled).
+     */
     static const boost::unordered_map<PhysicalLayerOption,
     std::string> mapPhyLayerOption;
 };

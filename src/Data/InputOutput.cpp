@@ -18,6 +18,8 @@
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/Options.h"
 
+const int InputOutput::barWidth = 30;
+
 InputOutput::InputOutput(SimulationType* simulType)
 :simulType(simulType) {
     this->LoadLog(this->logFile);
@@ -25,6 +27,7 @@ InputOutput::InputOutput(SimulationType* simulType)
 }
 
 InputOutput::~InputOutput() {
+    
 }
 
 void InputOutput::LoadParameters(std::ifstream& parameters) {
@@ -107,14 +110,14 @@ void InputOutput::LoadTraffic(std::ifstream& traffic) {
     }while(!traffic.is_open());
 }
 
-void InputOutput::LoadResults(std::ofstream& results) {
+void InputOutput::LoadResults(std::ofstream& pBvLoad) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
     
     do{
-        results.open("Files/Outputs/" + std::to_string(auxInt) 
-                     + "/Results.txt");
+        pBvLoad.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/PBvLoad.txt");
         
-        if(!results.is_open()){
+        if(!pBvLoad.is_open()){
             std::cerr << "Wrong result file." << std::endl;
             std::cerr << "The folder required is: " << auxInt 
                       << "/" << std::endl;
@@ -123,7 +126,7 @@ void InputOutput::LoadResults(std::ofstream& results) {
             
             std::cin.get();
         }
-    }while(!results.is_open());
+    }while(!pBvLoad.is_open());
 }
 
 void InputOutput::LoadLog(std::ofstream& log) {
@@ -153,3 +156,21 @@ std::ofstream& InputOutput::GetResultFile() {
     return this->resultFile;
 }
 
+void InputOutput::PrintProgressBar(unsigned int actual, unsigned int max) {
+    double division = (double) actual / max;
+    int pos = barWidth * division;
+    
+    std::cout << "[";
+    
+    for(int a = 0; a < barWidth; a++){
+        if(a < pos)
+            std::cout << "=";
+        else if(a == pos)
+            std::cout << ">";
+        else
+            std::cout << " ";
+    }
+    
+    std::cout << "]" << int(division * 100.0) << std::endl;
+    std::cout.flush();
+}
