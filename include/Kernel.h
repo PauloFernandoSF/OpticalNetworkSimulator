@@ -46,7 +46,9 @@ public:
      * @brief Runs the Kernel functions.
      * Three steps are done, each one for all simulation.
      */
-    void Run();    
+    void Run();
+    
+    void CreateSimulations();
     /**
      * @brief First step called by the Kernel object.
      * Consists in create the simulations and load

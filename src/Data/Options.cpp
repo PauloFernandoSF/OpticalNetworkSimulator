@@ -63,9 +63,14 @@ Options::mapPhyLayerOption = boost::assign::map_list_of
     (PhyLayerDisabled, "Disabled")
     (PhyLayerEnabled,  "Enabled");
 
+const boost::unordered_map<TransponderOption, std::string>
+Options::mapTransponderOption = boost::assign::map_list_of
+    (TransOptionDisabled, "Disabled")
+    (TransOptionEnabled, "Enabled");
+
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
-    ostream << "OPITIONS" << std::endl;
+    ostream << "OPTIONS" << std::endl;
     ostream << "Topology: " << options->GetTopologyName()
             << std::endl;
     ostream << "Routing algorithm: " << options->GetRoutingName()
@@ -88,7 +93,8 @@ Options::Options(SimulationType* simulType)
 :simulType(simulType), topologyOption(TopologyInvalid),
 routingOption(RoutingInvalid), specAllOption(SpecAllInvalid),
 linkCostType(Invalid), trafficOption(TrafficInvalid), 
-resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled) {
+resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled), 
+transponderOption(TransOptionDisabled) {
     
 }
 
@@ -286,4 +292,16 @@ std::string Options::GetPhyLayerName() const {
 
 void Options::SetPhyLayerOption(PhysicalLayerOption phyLayerOption) {
     this->phyLayerOption = phyLayerOption;
+}
+
+TransponderOption Options::GetTransponderOption() const {
+    return transponderOption;
+}
+
+std::string Options::GetTranspponderOptionName() const {
+    return this->mapTransponderOption.at(this->transponderOption);
+}
+
+void Options::SetTransponderOption(TransponderOption transponderOption) {
+    this->transponderOption = transponderOption;
 }

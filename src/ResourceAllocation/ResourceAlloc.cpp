@@ -22,8 +22,8 @@
 #include "../../include/ResourceAllocation/Modulation.h"
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
-:simulType(simulType), topology(nullptr), allRoutes(0), routing(nullptr),
-specAlloc(nullptr) {
+:simulType(simulType), topology(nullptr), routing(nullptr), specAlloc(nullptr),
+allRoutes(0){
     
 }
 
@@ -42,8 +42,8 @@ ResourceAlloc::~ResourceAlloc() {
 
 void ResourceAlloc::Load() {
     this->topology = this->simulType->GetTopology();
-    
     unsigned int numNodes = this->topology->GetNumNodes();
+    
     this->allRoutes.resize(numNodes*numNodes);
     
     this->routing = std::make_shared<Routing>(this, 
@@ -170,10 +170,10 @@ bool ResourceAlloc::IsOfflineRouting() {
 void ResourceAlloc::RoutingOffline() {
     switch(this->routing->GetRoutingOption()){
         case RoutingDJK:
-        case RoutingYEN:
-        case RoutingBSR:
             this->routing->Dijkstra();
             break;
+        case RoutingYEN:
+        case RoutingBSR:
         default:
             std::cerr << "Invalid offline routing option" << std::endl;
     }

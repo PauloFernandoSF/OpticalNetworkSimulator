@@ -166,7 +166,7 @@ public:
 
     void PushTrialRoute(std::shared_ptr<Route> route);
     
-    void PushTrialRoutes(std::vector<std::shared_ptr<Route>> &routes);
+    void PushTrialRoutes(std::vector<std::shared_ptr<Route>> routes);
     
     std::shared_ptr<Route> PopTrialRoute();
     

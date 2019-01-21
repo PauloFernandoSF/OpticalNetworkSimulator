@@ -31,22 +31,22 @@ Kernel::~Kernel() {
 
 void Kernel::Run() {
     
+    CreateSimulations();
     Pre_Simulation();
     Simulation();
     Pos_Simulation();
 }
 
-void Kernel::Pre_Simulation() {
+void Kernel::CreateSimulations() {
     
-    //Create the simulations vector
-    //Make all types of simulations
     for(unsigned int a = 1; a <= this->numberSimulations; ++a){
         simulations.push_back(std::make_shared<MultiLoadSimulation> (a));
     }
+}
+
+void Kernel::Pre_Simulation() {
     
-    //Load all simulations
     for(auto it : simulations){
-        //it->Load();
         it->LoadFile();
         it->AdditionalSettings();
     }

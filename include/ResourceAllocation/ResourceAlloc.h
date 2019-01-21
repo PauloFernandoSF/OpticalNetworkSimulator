@@ -91,13 +91,13 @@ private:
     
     PhysicalLayerOption phyLayerOption;
     
-    std::vector<std::vector<std::shared_ptr<Route>>> allRoutes;
-    
     std::shared_ptr<Routing> routing;
     
     std::shared_ptr<SA> specAlloc;
     
     std::shared_ptr<Modulation> modulation;
+    
+    std::vector<std::vector<std::shared_ptr<Route>>> allRoutes;
 };
 
 #endif /* RESOURCEALLOC_H */

@@ -28,8 +28,6 @@ class Routing {
 
 public:
     
-    Routing();
-    
     Routing(ResourceAlloc* rsa, RoutingOption option, Topology* topology);
     
     virtual ~Routing();

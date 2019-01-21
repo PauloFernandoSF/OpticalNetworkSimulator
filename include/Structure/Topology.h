@@ -55,6 +55,10 @@ public:
      */
     void Initialize();
     
+    void CreateNodes(std::ifstream& ifstream);
+    
+    void CreateLinks(std::ifstream& ifstream);
+    
     /**
      * @brief Returns the number of nodes in this topology
      * @return The total number of nodes
