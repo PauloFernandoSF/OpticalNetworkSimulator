@@ -19,9 +19,6 @@
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/Calls/Call.h"
 
-Routing::Routing() {
-}
-
 Routing::Routing(ResourceAlloc* rsa, RoutingOption option, Topology* topology)
 :resourceAlloc(rsa), routingOption(option), topology(topology){
 
@@ -45,9 +42,8 @@ void Routing::RoutingCall(Call* call) {
 void Routing::SetOfflineRouting(Call* call) {
     NodeId orNode = call->GetOrNode()->GetNodeId();
     NodeId deNode = call->GetDeNode()->GetNodeId();
-    
-    call->PushTrialRoute(this->resourceAlloc->
-                         GetRoutes(orNode, deNode).front());
+
+    call->PushTrialRoutes(this->resourceAlloc->GetRoutes(orNode, deNode));
 }
 
 void Routing::Dijkstra() {

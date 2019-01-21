@@ -1,4 +1,4 @@
-OPITIONS
+OPTIONS
 Topology: NSFNet
 Routing algorithm: Dijkstra
 Spectral allocation algorithm: First Fit

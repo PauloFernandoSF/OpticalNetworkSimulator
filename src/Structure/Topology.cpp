@@ -77,28 +77,9 @@ void Topology::LoadFile() {
     this->SetNumLinks(auxInt);
     this->SetNumSlots(this->simulType->GetParameters()->GetNumberSlots());
     
-    //Create all topology nodes
-    std::shared_ptr<Node> node;
-    for(unsigned int a = 0; a < this->GetNumNodes(); ++a){
-        node = std::make_shared<Node>(this, a);
-        this->InsertNode(node);
-        node.reset();
-    }
+    this->CreateNodes(auxIfstream);
     
-    //Create all topology links
-    unsigned  int orNode, deNode, nSec;
-    double length;
-    std::shared_ptr<Link> link;
-    for(auxInt = 0; auxInt < this->GetNumLinks(); ++auxInt){
-        auxIfstream >> orNode;
-        auxIfstream >> deNode;
-        auxIfstream >> length;
-        auxIfstream >> nSec;
-        link = std::make_shared<Link>(this, orNode, deNode, 
-        length, nSec, this->GetNumSlots());
-        this->InsertLink(link);
-        link.reset();
-    }
+    this->CreateLinks(auxIfstream);
 }
 
 void Topology::Initialize() {
@@ -110,6 +91,33 @@ void Topology::Initialize() {
     for(auto it : this->vecLinks){
         if(it != nullptr)
             it->Initialize();
+    }
+}
+
+void Topology::CreateNodes(std::ifstream& ifstream) {
+    
+    std::shared_ptr<Node> node;
+    for(unsigned int a = 0; a < this->GetNumNodes(); ++a){
+        node = std::make_shared<Node>(this, a);
+        this->InsertNode(node);
+        node.reset();
+    }
+}
+
+void Topology::CreateLinks(std::ifstream& ifstream) {
+    unsigned  int orNode, deNode, nSec;
+    double length;
+    std::shared_ptr<Link> link;
+    
+    for(unsigned int a = 0; a < this->GetNumLinks(); ++a){
+        ifstream >> orNode;
+        ifstream >> deNode;
+        ifstream >> length;
+        ifstream >> nSec;
+        link = std::make_shared<Link>(this, orNode, deNode, 
+        length, nSec, this->GetNumSlots());
+        this->InsertLink(link);
+        link.reset();
     }
 }
 

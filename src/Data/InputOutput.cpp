@@ -171,6 +171,6 @@ void InputOutput::PrintProgressBar(unsigned int actual, unsigned int max) {
             std::cout << " ";
     }
     
-    std::cout << "]" << int(division * 100.0) << std::endl;
+    std::cout << "]" << int(division * 100.0) << "%" << std::endl;
     std::cout.flush();
 }
