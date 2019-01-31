@@ -15,6 +15,7 @@
 
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
+#include "../../include/Data/Parameters.h"
 
 const boost::unordered_map<TopologyOption, std::string> 
 Options::mapTopologyOptions = boost::assign::map_list_of
@@ -63,6 +64,12 @@ Options::mapPhyLayerOption = boost::assign::map_list_of
     (PhyLayerDisabled, "Disabled")
     (PhyLayerEnabled,  "Enabled");
 
+const boost::unordered_map<NetworkOption, std::string>
+Options::mapNetworkOption = boost::assign::map_list_of
+    (NetworkInvalid, "Invalid")
+    (NetworkWDM, "WDM")
+    (NetworkEON, "EON");
+
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
     ostream << "OPITIONS" << std::endl;
@@ -88,7 +95,8 @@ Options::Options(SimulationType* simulType)
 :simulType(simulType), topologyOption(TopologyInvalid),
 routingOption(RoutingInvalid), specAllOption(SpecAllInvalid),
 linkCostType(Invalid), trafficOption(TrafficInvalid), 
-resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled) {
+resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled),
+networkOption(NetworkInvalid) {
     
 }
 
@@ -162,6 +170,15 @@ void Options::Load() {
     std::cin >> auxInt;
     this->SetPhyLayerOption((PhysicalLayerOption) auxInt);
     
+    std::cout << "Network options" << std::endl;
+    for(NetworkOption a = FirstNetworkOption; a <= LastNetworkOption;
+    a = NetworkOption(a+1)){
+        std::cout << a << "-" << this->mapNetworkOption.at(a) << std::endl;
+    }
+    std::cout << "Insert the network option: ";
+    std::cin >> auxInt;
+    this->SetNetworkOption((NetworkOption) auxInt);
+    
     std::cout << std::endl;
 }
 
@@ -184,6 +201,8 @@ void Options::LoadFile() {
     this->SetResourAllocOption((ResourceAllocOption) auxInt);
     auxIfstream >> auxInt;
     this->SetPhyLayerOption((PhysicalLayerOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetNetworkOption((NetworkOption) auxInt);
 }
 
 void Options::Save() {
@@ -286,4 +305,29 @@ std::string Options::GetPhyLayerName() const {
 
 void Options::SetPhyLayerOption(PhysicalLayerOption phyLayerOption) {
     this->phyLayerOption = phyLayerOption;
+}
+
+NetworkOption Options::GetNetworkOption() const {
+    return networkOption;
+}
+
+std::string Options::GetNetworkOptionName() const {
+    return this->mapNetworkOption.at(this->networkOption);
+}
+
+void Options::SetNetworkOption(NetworkOption networkOption) {
+    assert(networkOption >= FirstNetworkOption &&
+           networkOption <= LastNetworkOption);
+    this->networkOption = networkOption;
+    
+    switch(this->networkOption){
+        case NetworkWDM:
+            this->simulType->GetParameters()->SetSlotBandwidth(50.0);
+            break;
+        case NetworkEON:
+            this->simulType->GetParameters()->SetSlotBandwidth(12.5);
+            break;
+        default:
+            std::cout << "Invalid type of network" << std::endl;
+    }
 }

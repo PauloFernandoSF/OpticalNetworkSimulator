@@ -5,6 +5,7 @@
 1
 1
 0
+2
 
 
 #Topology
@@ -34,5 +35,13 @@
     1 - 100-200-400
     2 - 10-40-100-200-400
 #Resource Allocation Option
-
+    0 - Invalid
+    1 - RSA
+    2 - RMSA
 #Physical Layer Option
+    0 - Disabled
+    1 - Enabled
+#Network Option
+    0 - Invalid
+    1 - WDM
+    2 - EON
