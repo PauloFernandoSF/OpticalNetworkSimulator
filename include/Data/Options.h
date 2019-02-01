@@ -96,11 +96,6 @@ enum PhysicalLayerOption {
     PhyLayerEnabled
 };
 
-enum TransponderOption {
-    TransOptionDisabled,
-    TransOptionEnabled
-};
-
 /**
  * @brief The Options class is responsible for storage the simulation
  * options.
@@ -249,13 +244,6 @@ public:
      */
     void SetPhyLayerOption(PhysicalLayerOption phyLayerOption);
     
-    TransponderOption GetTransponderOption() const;
-    
-    std::string GetTranspponderOptionName() const;
-
-    void SetTransponderOption(TransponderOption transponderOption);
-
-    
 private:
     /**
      * @brief A pointer to the simulation this object belong.
@@ -289,8 +277,6 @@ private:
      * @brief Physical layer option selected.
      */
     PhysicalLayerOption phyLayerOption;
-    
-    TransponderOption transponderOption;
     
     /**
      * @brief Map that keeps the topology option 
@@ -335,9 +321,6 @@ private:
      */
     static const boost::unordered_map<PhysicalLayerOption,
     std::string> mapPhyLayerOption;
-    
-    static const boost::unordered_map<TransponderOption,
-    std::string> mapTransponderOption;
 };
 
 #endif /* OPTIONS_H */
