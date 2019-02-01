@@ -6,39 +6,40 @@ Links cost type: Minimum hops
 Traffic requests(Gbps): 100-200-400
 Resource Allocation: RSA
 Physical Layer: Disabled
+Network Type: WDM
 
 PARAMETERS
-Number of slots per fiber: 128
+Number of slots per fiber: 64
 Mu: 1
-Minimum load point(erlang): 30
-Maximum load point(erlang): 40
+Minimum load point(erlang): 250
+Maximum load point(erlang): 270
 Number of points: 6
 Total number of requisitions: 100000
 Maximum blocked requests: 500
-Slot bandwidth (GHz): 12.5
+Slot bandwidth (GHz): 50
 
 DATA
-Simulation time:3328.72  Number of requests:100000
-Load point:30  PbReq:0  PbSlots:-nan  HopsMed:2.14163  NetOcc:1.42865e+06
+Simulation time:399.446  Number of requests:100000
+Load point:250  PbReq:0  PbSlots:-nan  HopsMed:2.14163  NetOcc:214163
 
 
-Simulation time:3126.11  Number of requests:100000
-Load point:32  PbReq:1e-05  PbSlots:-nan  HopsMed:2.14373  NetOcc:1.43061e+06
+Simulation time:393.841  Number of requests:100000
+Load point:254  PbReq:0  PbSlots:-nan  HopsMed:2.14374  NetOcc:214374
 
 
-Simulation time:2957.5  Number of requests:100000
-Load point:34  PbReq:0.00273  PbSlots:-nan  HopsMed:2.13782  NetOcc:1.42179e+06
+Simulation time:389.748  Number of requests:100000
+Load point:258  PbReq:0.02916  PbSlots:-nan  HopsMed:2.12322  NetOcc:206131
 
 
-Simulation time:2778.4  Number of requests:100000
-Load point:36  PbReq:0.03263  PbSlots:-nan  HopsMed:2.12893  NetOcc:1.34855e+06
+Simulation time:381.765  Number of requests:100000
+Load point:262  PbReq:0.41953  PbSlots:-nan  HopsMed:1.83789  NetOcc:106684
 
 
-Simulation time:2623.31  Number of requests:100000
-Load point:38  PbReq:0.12354  PbSlots:-nan  HopsMed:2.07634  NetOcc:1.11262e+06
+Simulation time:374.758  Number of requests:100000
+Load point:266  PbReq:0.67198  PbSlots:-nan  HopsMed:1.51527  NetOcc:49704
 
 
-Simulation time:2497.86  Number of requests:100000
-Load point:40  PbReq:0.19754  PbSlots:-nan  HopsMed:2.03406  NetOcc:962040
+Simulation time:370.053  Number of requests:100000
+Load point:270  PbReq:0.77931  PbSlots:-nan  HopsMed:1.29304  NetOcc:28536
 
 

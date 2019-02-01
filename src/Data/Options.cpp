@@ -87,6 +87,8 @@ const Options* options) {
             << std::endl;
     ostream << "Physical Layer: " << options->GetPhyLayerName()
             << std::endl;
+    ostream << "Network Type: " << options->GetNetworkOptionName()
+            << std::endl;
     
     return ostream;
 }
