@@ -96,6 +96,14 @@ enum PhysicalLayerOption {
     PhyLayerEnabled
 };
 
+enum NetworkOption {
+    NetworkInvalid,
+    NetworkWDM,
+    NetworkEON,
+    FirstNetworkOption = NetworkWDM,
+    LastNetworkOption = NetworkEON
+};
+
 /**
  * @brief The Options class is responsible for storage the simulation
  * options.
@@ -244,6 +252,12 @@ public:
      */
     void SetPhyLayerOption(PhysicalLayerOption phyLayerOption);
     
+    NetworkOption GetNetworkOption() const;
+    
+    std::string GetNetworkOptionName() const;
+
+    void SetNetworkOption(NetworkOption networkOption);
+
 private:
     /**
      * @brief A pointer to the simulation this object belong.
@@ -277,6 +291,8 @@ private:
      * @brief Physical layer option selected.
      */
     PhysicalLayerOption phyLayerOption;
+    
+    NetworkOption networkOption;
     
     /**
      * @brief Map that keeps the topology option 
@@ -321,6 +337,9 @@ private:
      */
     static const boost::unordered_map<PhysicalLayerOption,
     std::string> mapPhyLayerOption;
+    
+    static const boost::unordered_map<NetworkOption,
+    std::string> mapNetworkOption;
 };
 
 #endif /* OPTIONS_H */

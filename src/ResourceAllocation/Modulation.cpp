@@ -42,7 +42,11 @@ void Modulation::SetModulationParam(Call* call) {
     
     bandwidth = this->BandwidthQAM(modValue, bitRate);
     call->SetBandwidth(bandwidth);
-    numSlots = std::ceil(bandwidth/this->slotBandwidth);
+    
+    if(this->isEON())
+        numSlots = std::ceil(bandwidth/this->slotBandwidth);
+    else
+        numSlots = 1;
     call->SetNumberSlots(numSlots);
     OSNRth = this->GetOSNRQAM(modValue, bitRate);
     call->SetOsnrTh(OSNRth);
@@ -114,4 +118,11 @@ double Modulation::GetSNRbQAM(unsigned int M) {
     
     std::cerr << "Problem in modulation" << std::endl;
     return 0.0;
+}
+
+bool Modulation::isEON() {
+    if(this->slotBandwidth <= 12.5*1E9)
+        return true;
+    
+    return false;
 }

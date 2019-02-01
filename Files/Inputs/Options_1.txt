@@ -5,6 +5,7 @@
 1
 1
 0
+2
 
 
 #Topology
@@ -40,4 +41,7 @@
 #Physical Layer Option
     0 - Disabled
     1 - Enabled
-#
+#Network Option
+    0 - Invalid
+    1 - WDM
+    2 - EON

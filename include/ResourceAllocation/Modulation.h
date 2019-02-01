@@ -51,6 +51,8 @@ public:
     
     double GetsnrbQAM(unsigned int M);
     
+    bool isEON();
+    
 private:
     
     ResourceAlloc* resourAlloc;
