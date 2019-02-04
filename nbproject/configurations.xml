@@ -59,6 +59,7 @@
         <itemPath>include/Structure/Node.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
+      <itemPath>include/Structure/Core.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -101,6 +102,7 @@
         <itemPath>src/Structure/Node.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
+      <itemPath>src/Structure/Core.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -222,6 +224,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Structure/Core.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Structure/Link.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/Node.h" ex="false" tool="3" flavor2="0">
@@ -279,6 +283,8 @@
             ex="false"
             tool="1"
             flavor2="0">
+      </item>
+      <item path="src/Structure/Core.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Structure/Link.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -396,6 +402,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Structure/Core.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Structure/Link.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/Node.h" ex="false" tool="3" flavor2="0">
@@ -453,6 +461,8 @@
             ex="false"
             tool="1"
             flavor2="0">
+      </item>
+      <item path="src/Structure/Core.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Structure/Link.cpp" ex="false" tool="1" flavor2="0">
       </item>
