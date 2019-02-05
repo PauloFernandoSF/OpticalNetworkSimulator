@@ -24,6 +24,10 @@ typedef int NumSlots;
  * @brief Core Class represents a core inside a Fiber. 
  */
 class Core {
+    
+    friend std::ostream& operator<<(std::ostream& ostream,
+    Core* core);
+    
 public:
      /**
      * @brief Standard constructor for a Core object.

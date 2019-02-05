@@ -13,32 +13,39 @@
 
 #include "../../include/Structure/Core.h"
 
+std::ostream& operator<<(std::ostream& ostream,
+Core* core) {
+    ostream  << "Core Id: " << core->getCoreId() << std::endl;
+    
+    return ostream;
+}
+
 Core::Core(CoreId cId,NumSlots nSlots)
 :coreId (cId){
-    vDisp = new bool[nSlots];
+    this->vDisp = new bool[nSlots];
     for(int i=0;i < nSlots;i++){
-        vDisp[i]= false;
+        this->vDisp[i]= false;
     }
 }
 
 bool Core::getSlotOccupation(int sPosition){
     //return vDisp.at(sPosition);
-    return vDisp[sPosition];
+    return this->vDisp[sPosition];
 }
 
 //Ocupa o slot atribuindo o valor 1
 void Core::occupySlot(int sPosition){
     //vDisp.at(sPosition)= true;
-    vDisp[sPosition] = true;
+    this->vDisp[sPosition] = true;
 }
 
 void Core::releaseSlot(int sPosition){
-    vDisp[sPosition]= false;
+    this->vDisp[sPosition]= false;
 
 }
 
 CoreId Core::getCoreId(){
-    return coreId;
+    return this->coreId;
 }
 
 
