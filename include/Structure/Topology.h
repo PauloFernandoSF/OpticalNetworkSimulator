@@ -85,6 +85,16 @@ public:
      */
     unsigned int GetNumSlots() const;
     /**
+     * @brief Sets the number of cores in the links
+     * @param numSlots number of core in the links
+     */
+    void SetNumCores(unsigned int numCores);
+    /**
+     * @brief Returns the number of cores in the links
+     * @return The number of cores in the links
+     */
+    unsigned int GetNumCores() const;
+    /**
      * @brief Sets the number of slots in this topology
      * @param numSlots total number of slots
      */
@@ -211,6 +221,10 @@ private:
      * @brief Total number of slots in the topology
      */
     unsigned int numSlots;
+    /**
+     * @brief Total number of cores in the links of the topology
+     */
+    unsigned int numCores;
     /**
      * @brief Length of the longest link
      */

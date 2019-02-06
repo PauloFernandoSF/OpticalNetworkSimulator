@@ -22,6 +22,8 @@ const Parameters* parameters) {
     ostream << "PARAMETERS" << std::endl;
     ostream << "Number of slots per fiber: " 
             << parameters->GetNumberSlots() << std::endl;
+    ostream << "Number of cores per link: " 
+            << parameters->GetNumberCores() << std::endl;
     ostream << "Mu: " << parameters->GetMu() << std::endl;
     ostream << "Minimum load point(erlang): " 
             << parameters->GetMinLoadPoint() << std::endl;
@@ -43,7 +45,7 @@ Parameters::Parameters(SimulationType* simulType)
 :simulType(simulType), loadPoint(0), minLoadPoint(0.0),
 maxLoadPoint(0.0), loadPasso(0.0), numberLoadPoints(0),
 numberReqMax(0.0), mu(0.0), numberBloqMax(0),
-slotBandwidth(0.0), numberSlots(0) {
+slotBandwidth(0.0), numberSlots(0), numberCores(0) {
     
 }
 
@@ -58,6 +60,10 @@ void Parameters::Load() {
     std::cout << "PARAMETERS INPUTS" << std::endl;
     std::cout << "Insert the number  of slots per fiber: ";
     std::cin >> auxUnsInt;
+    this->SetNumberSlots(auxUnsInt);
+    std::cout << "Insert the number  cores per link: ";
+    std::cin >> auxUnsInt;
+    this->SetNumberCores(auxUnsInt);
     std::cout << "Insert Connection Deactivation Rate: ";
     std::cin >> auxDouble;
     this->SetMu(auxDouble);
@@ -93,6 +99,8 @@ void Parameters::LoadFile() {
     this->simulType->GetInputOutput()->LoadParameters(auxIfstream);
     auxIfstream >> auxInt;
     this->SetNumberSlots(auxInt);
+    auxIfstream >> auxInt;
+    this->SetNumberCores(auxInt);
     auxIfstream >> auxDouble;
     this->SetMu(auxDouble);
     auxIfstream >> auxDouble;
@@ -222,4 +230,13 @@ unsigned int Parameters::GetNumberSlots() const {
 
 void Parameters::SetNumberSlots(unsigned int numberSlots) {
     this->numberSlots = numberSlots;
+}
+
+unsigned int Parameters::GetNumberCores() const {
+    return numberCores;
+}
+
+void Parameters::SetNumberCores(unsigned int numberCores) {
+    assert(this->numberCores == 0);
+    this->numberCores = numberCores;
 }

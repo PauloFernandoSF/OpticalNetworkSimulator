@@ -34,6 +34,8 @@ const Topology* topology) {
             << std::endl;
     ostream << "Number of slots: " << topology->GetNumSlots()
             << std::endl;
+    ostream << "Number of cores: " << topology->GetNumCores()
+            << std::endl;
     
     for(auto it: topology->vecNodes){
         ostream << it << std::endl;
@@ -49,7 +51,7 @@ const Topology* topology) {
 
 Topology::Topology(SimulationType* simulType) 
 :simulType(simulType), vecNodes(0), vecLinks(0), 
-numNodes(0), numLinks(0), numSlots(0), maxLength(0.0) {
+numNodes(0), numLinks(0), numSlots(0), maxLength(0.0), numCores(0) {
 
 }
 
@@ -145,6 +147,15 @@ unsigned int Topology::GetNumLinks() const {
 void Topology::SetNumLinks(unsigned int numLinks) {
     assert(this->numLinks == 0);
     this->numLinks = numLinks;
+}
+
+unsigned int Topology::GetNumCores() const {
+    return numCores;
+}
+
+void Topology::SetNumCores(unsigned int numCores) {
+    assert(this->numCores == 0);
+    this->numCores = numCores;
 }
 
 unsigned int Topology::GetNumSlots() const {
