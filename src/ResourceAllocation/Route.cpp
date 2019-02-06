@@ -15,19 +15,30 @@
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Structure/Link.h"
+#include "../../include/Structure/Node.h"
 
 Route::Route(ResourceAlloc* rsaAlg, const std::vector<int>& path)
-:resourceAlloc(rsaAlg), topology(rsaAlg->GetTopology()), path(path) {
-    //this->path.clear();
+:resourceAlloc(rsaAlg), topology(rsaAlg->GetTopology()), path(path),
+pathNodes(0) {
     
-    ///for(unsigned int a = 0; a < path.size(); a++)
-        //this->path.push_back(path.at(a));
+    for(auto it: this->path){
+        this->pathNodes.push_back(this->topology->GetNode(it));
+    }
 }
 
 Route::Route(const Route& orig) {
 }
 
 Route::~Route() {
+    
+}
+
+bool Route::operator==(const Route& right) const {
+    
+    if(right.path == this->path)
+        return true;
+    
+    return false;
 }
 
 int Route::GetOrNode() const {
@@ -36,16 +47,34 @@ int Route::GetOrNode() const {
     return this->path.front();
 }
 
+Node* Route::GetOrNodePointer() const {
+    assert(this->pathNodes.size() > 0);
+    
+    return this->pathNodes.front();
+}
+
 int Route::GetDeNode() const {
     assert(this->path.size() > 0);
     
     return this->path.back();
 }
 
+Node* Route::GetDeNodePointer() const {
+    assert(this->pathNodes.size() > 0);
+    
+    return this->pathNodes.back();
+}
+
 int Route::GetNode(unsigned int index) const {
     assert(index >= 0 && index < this->path.size());
     
     return this->path.at(index);
+}
+
+Node* Route::GetNodePointer(unsigned int index) const {
+    assert(index >= 0 && index < this->pathNodes.size());
+    
+    return this->pathNodes.at(index);
 }
 
 unsigned int Route::GetNumHops() const {
@@ -56,8 +85,8 @@ unsigned int Route::GetNumNodes() const {
     return this->path.size();
 }
 
-std::vector<int>* Route::GetPath() {
-    return &this->path;
+std::vector<int> Route::GetPath() {
+    return this->path;
 }
 
 double Route::GetCost() {
@@ -79,12 +108,30 @@ Link* Route::GetLink(unsigned int index) const {
                                    this->GetNode(index + 1));
 }
 
+void Route::SetAllNodesWorking() {
+    
+    for(auto it: this->pathNodes){
+        it->SetNodeState(true);
+    }
+}
+
 std::shared_ptr<Route> Route::CreatePartialRoute(unsigned int ind1, 
 unsigned int ind2) {
     std::vector<int> newPath(0);
     
     for(unsigned int a = ind1; a <= ind2; a++){
         newPath.push_back(this->GetNode(a));
+    }
+    
+    return std::make_shared<Route>(this->resourceAlloc, newPath);
+}
+
+std::shared_ptr<Route> Route::AddRoute(std::shared_ptr<Route>& route) {
+    assert(this->GetDeNodePointer() == route->GetOrNodePointer());
+    std::vector<int> newPath = this->GetPath();
+    
+    for(unsigned int a = 1; a < route->GetNumNodes(); a++){
+        newPath.push_back(route->GetNode(a));
     }
     
     return std::make_shared<Route>(this->resourceAlloc, newPath);

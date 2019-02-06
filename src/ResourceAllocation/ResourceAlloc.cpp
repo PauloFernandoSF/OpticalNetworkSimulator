@@ -173,6 +173,8 @@ void ResourceAlloc::RoutingOffline() {
             this->routing->Dijkstra();
             break;
         case RoutingYEN:
+            this->routing->YEN();
+            break;
         case RoutingBSR:
         default:
             std::cerr << "Invalid offline routing option" << std::endl;

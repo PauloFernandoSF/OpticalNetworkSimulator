@@ -191,6 +191,15 @@ void Topology::SetAditionalSettings() {
     this->SetLinksIniCost();
 }
 
+void Topology::SetAllLinksWorking() {
+    
+    for(auto it: this->vecLinks){
+        if(it != nullptr){
+            it->SetLinkState(true);
+        }
+    }
+}
+
 void Topology::SetLinksIniCost() {
     
     switch(this->simulType->GetOptions()->GetLinkCostType()){

@@ -172,7 +172,8 @@ void Call::PushTrialRoute(std::shared_ptr<Route> route) {
 void Call::PushTrialRoutes(std::vector<std::shared_ptr<Route> > routes) {
     
     for(auto it : routes)
-        this->trialRoutes.push_back(it);
+        if(it != nullptr)
+            this->trialRoutes.push_back(it);
     routes.clear();
 }
 

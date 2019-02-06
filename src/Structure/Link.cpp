@@ -94,7 +94,7 @@ bool Link::IsLinkWorking() const {
     return this->linkWorking;
 }
 
-void Link::SetLinkWorking(bool linkWorking) {
+void Link::SetLinkState(bool linkWorking) {
     this->linkWorking = linkWorking;
 }
 

@@ -123,7 +123,7 @@ public:
      * @brief Set the link state (working or not).
      * @param NodeWorking Link state.
      */
-    void SetLinkWorking(bool linkWorking);
+    void SetLinkState(bool linkWorking);
 
     
     /**

@@ -25,9 +25,8 @@ std::default_random_engine CallGenerator::random_generator(0);
 bool CallGenerator::EventCompare::operator()(
 const std::shared_ptr<Event> eventA,
 const std::shared_ptr<Event> eventB) const {
-    if(eventA->GetEventTime() > eventB->GetEventTime())
-        return true;
-    return false;
+    
+    return (eventA->GetEventTime() > eventB->GetEventTime());
 }
 
 CallGenerator::CallGenerator(SimulationType* simulType) 
@@ -94,7 +93,7 @@ void CallGenerator::GenerateCall() {
     std::make_shared<Event>(this, newCall, this->GetSimulationTime() + 
                             arrivalTime);
     
-    queueEvents.push(newEvent);
+    this->PushEvent(newEvent);
 }
 
 SimulationType* CallGenerator::GetSimulType() const {

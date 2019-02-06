@@ -111,6 +111,8 @@ public:
      */
     void SetAditionalSettings();
     
+    void SetAllLinksWorking();
+    
     /**
      * @brief Get a specified node in the topology.
      * @param index index of vector of nodes.
