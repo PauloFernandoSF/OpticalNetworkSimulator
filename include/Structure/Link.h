@@ -62,7 +62,7 @@ public:
      * @brief Initialize the link, setting the start values
      * contained in it to free. 
      */
-    void Initialize();
+    virtual void Initialize();
     
     /**
      * @brief Get the origin node of the link.
@@ -166,6 +166,11 @@ public:
      * @return Number of occupied slots.
      */
     unsigned int GetNumberOccupiedSlots() const;
+    /**
+     * @brief Function to return pointer of the topology
+     * @return Pointer to topology
+     */
+    Topology* GetTopology() const;
     
 private:
     /**
@@ -203,6 +208,7 @@ private:
      * @brief Boolean variable to indicate the  link state.
      */
     bool linkWorking;
+    
 };
 
 #endif /* LINK_H */

@@ -170,3 +170,7 @@ unsigned int Link::GetNumberOccupiedSlots() const {
     return numOccupiedSlots;
     
 }
+
+Topology* Link::GetTopology() const{
+    return this->topPointer;
+}

@@ -19,6 +19,7 @@
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Structure/Node.h"
 #include "../../include/Structure/Link.h"
+#include "../../include/Structure/MultiCoreLink.h"
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/Signal.h"
@@ -78,7 +79,8 @@ void Topology::LoadFile() {
     auxIfstream >> auxInt;
     this->SetNumLinks(auxInt);
     this->SetNumSlots(this->simulType->GetParameters()->GetNumberSlots());
-    
+    this->SetNumCores(this->simulType->GetParameters()->GetNumberCores());
+        
     this->CreateNodes(auxIfstream);
     
     this->CreateLinks(auxIfstream);
@@ -116,8 +118,14 @@ void Topology::CreateLinks(std::ifstream& ifstream) {
         ifstream >> deNode;
         ifstream >> length;
         ifstream >> nSec;
-        link = std::make_shared<Link>(this, orNode, deNode, 
+        
+        if(this->GetNumCores() > 1)
+            link = std::make_shared<MultiCoreLink>(this, orNode, deNode,
         length, nSec, this->GetNumSlots());
+        else
+            link = std::make_shared<Link>(this, orNode, deNode, 
+        length, nSec, this->GetNumSlots());
+        
         this->InsertLink(link);
         link.reset();
     }

@@ -16,6 +16,7 @@
 
 #include <vector>
 #include <cstddef>
+#include <iostream>
 
 typedef int CoreId;
 typedef int NumSlots;
