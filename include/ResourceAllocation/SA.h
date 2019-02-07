@@ -23,11 +23,12 @@ class Call;
 
 #include "../Data/Options.h"
 
+/**
+ * @brief SA class responsible for the spectral allocation of the call requests.
+ */
 class SA {
 
 public:
-    
-    SA();
     
     SA(ResourceAlloc* rsa, SpectrumAllocationOption option, Topology* topology);
     

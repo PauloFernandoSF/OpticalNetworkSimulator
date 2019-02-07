@@ -54,9 +54,15 @@ public:
      * links and nodes.
      */
     void Initialize();
-    
+    /**
+     * @brief Function used to create all network nodes.
+     * @param ifstream File stream used to load the nodes.
+     */
     void CreateNodes(std::ifstream& ifstream);
-    
+    /**
+     * @brief Function used to create all network links.
+     * @param ifstream File stream used to load the links.
+     */
     void CreateLinks(std::ifstream& ifstream);
     
     /**
@@ -110,7 +116,9 @@ public:
      * @brief Set additional settings of this topology
      */
     void SetAditionalSettings();
-    
+    /**
+     * @brief Function to set as valid all links in the network.
+     */
     void SetAllLinksWorking();
     
     /**
@@ -159,9 +167,17 @@ public:
      * @return True if the OSNR is larger.
      */
     bool CheckOSNR(const Route* route, double OSNRth);
-    
+    /**
+     * @brief Checks if a specified link is valid.
+     * @param link Link to evaluate.
+     * @return True if the link is valid
+     */
     bool IsValidLink(const Link* link);
-    
+    /**
+     * @brief Checks if a specified node is valid.
+     * @param node Node to evaluate.
+     * @return True if the node is valid
+     */
     bool IsValidNode(const Node* node);
     /**
      * @brief Check if this is a valid route.
@@ -183,9 +199,15 @@ public:
      */
     bool IsValidLigthPath(Call* call);
     
-    
+    /**
+     * @brief Function to set a lightpath in the network of a specified request.
+     * @param call Call request used.
+     */
     void Connect(Call* call);
-    
+    /**
+     * @brief Function to disconnect a specified lightpath from the network.
+     * @param call Call request to disconnect.
+     */
     void Release(Call* call);
     
 private:

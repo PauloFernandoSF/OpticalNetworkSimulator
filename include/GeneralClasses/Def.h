@@ -15,14 +15,23 @@
 #define DEF_H
 
 class Def {
+
 public:
-    
+    /**
+     * @brief Define the minimum integer value
+     */
     static int Min_Int;
-    
+    /**
+     * @brief Define the maximum integer value
+     */
     static int Max_Int;
-    
+    /**
+     * @brief Define the minimum double value
+     */
     static double Min_Double;
-    
+    /**
+     * @brief Define the maximum double value
+     */
     static double Max_Double;
 
 private:

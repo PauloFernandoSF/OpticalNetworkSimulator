@@ -24,6 +24,10 @@ class Topology;
 #include "../Data/Options.h"
 #include "../../include/Structure/Node.h"
 
+/**
+ * @brief Routing class, responsible for find the routes among all node pairs
+ * or the route(s) for a specified node pair.
+ */
 class Routing {
 
 private:
@@ -43,6 +47,7 @@ private:
         bool operator()(const std::shared_ptr<Route> routeA,
                         const std::shared_ptr<Route> routeB);
     };
+
 public:
     /**
      * @brief Standard constructor for a Routing object.

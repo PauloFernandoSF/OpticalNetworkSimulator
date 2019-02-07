@@ -29,6 +29,7 @@ class ResourceAlloc;
  * @brief Base class for Simulations objects.
  */
 class SimulationType {
+
 public:
     /**
      * @brief Standard constructor for a SimulationType object.
@@ -177,7 +178,6 @@ public:
      * @param traffic pointer to a ResourceAlloc object.
      */
     void SetResourceAlloc(std::shared_ptr<ResourceAlloc> rsaAlgorithm);
-
 
 private:
     /**

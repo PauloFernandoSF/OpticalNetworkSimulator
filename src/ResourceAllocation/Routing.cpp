@@ -70,99 +70,102 @@ void Routing::Dijkstra() {
 }
 
 std::shared_ptr<Route> Routing::Dijkstra(NodeId orNode, NodeId deNode) {
-    int k=-1, h, hops;
-    unsigned int i, j, VA;
+    assert(orNode != deNode);
+    
+    int k = -1, h, hops;
+    unsigned int i, j, setVertexes;
     long double min;
     unsigned int numNodes = this->topology->GetNumNodes();
-    std::vector<int> r;
-    Link *link;
+    std::vector<int> path(0);
+    std::vector<int> invPath(0);
+    Link* auxLink;
     std::shared_ptr<Route> routeDJK = nullptr;
-    
-    double *CustoVertice = new double[numNodes];
-    int *Precedente = new int[numNodes];
-    int *PathRev = new int[numNodes];
-    bool *Status = new bool[numNodes];
-    assert(orNode != deNode);
     bool networkDisconnected = false;
-
+    
+    std::vector<double> custoVertice(numNodes);
+    std::vector<int> precedente(numNodes);
+    std::vector<int> pathRev(numNodes);
+    std::vector<bool> status(numNodes);
+    
     //Initializes all vertices with infinite cost
     //and the source vertice with cost zero
     for(i = 0; i < numNodes; i++){
         if(i != orNode)
-            CustoVertice[i] = Def::Max_Double;
+            custoVertice.at(i) = Def::Max_Double;
         else
-            CustoVertice[i] = 0.0;
-        
-        Precedente[i] = -1;
-        Status[i] = 0;
+            custoVertice.at(i) = 0.0;
+        precedente.at(i) = -1;
+        status.at(i) = 0;
     }
-    VA = numNodes;
+    setVertexes = numNodes;
 
-    while(VA > 0 && !networkDisconnected){
+    while(setVertexes > 0 && !networkDisconnected){
 
         min = Def::Max_Double;
         
         for(i = 0; i < numNodes; i++)
-            if((Status[i] == 0) && (CustoVertice[i] < min)){
-                min = CustoVertice[i];
+            if((status.at(i) == 0) && (custoVertice.at(i) < min)){
+                min = custoVertice.at(i);
                 k = i;
             }
 
         if(k == (int) deNode)
             break;
         
-        Status[k] = 1;
-        VA = VA - 1;
+        status.at(k) = 1;
+        setVertexes--;
         bool outputLinkFound = false;
 
         for(j = 0; j < numNodes; j++){
-            link = this->topology->GetLink((unsigned int) k, 
+            auxLink = this->topology->GetLink((unsigned int) k, 
                                            (unsigned int) j);
             //(link->GetCost() < Def::Max_Double)
-            if((link != NULL) && (link->IsLinkWorking()) && 
-               (this->topology->GetNode(link->GetOrigimNode())->
+            if((auxLink != NULL) && (auxLink->IsLinkWorking()) && 
+               (this->topology->GetNode(auxLink->GetOrigimNode())->
                IsNodeWorking()) &&
-               (this->topology->GetNode(link->GetDestinationNode())->
+               (this->topology->GetNode(auxLink->GetDestinationNode())->
                IsNodeWorking())){
                 outputLinkFound = true;
-
-                if((Status[j] == 0) && 
-                   (CustoVertice[k] + link->GetCost() < CustoVertice[j])){
-                    CustoVertice[j] = CustoVertice[k] + link->GetCost();
-                    Precedente[j] = k;
+                
+                if( (status.at(j) == 0) && (custoVertice.at(k) + 
+                  auxLink->GetCost() < custoVertice.at(j)) ){
+                   custoVertice.at(j) = custoVertice.at(k) + auxLink->GetCost();
+                   precedente.at(j) = k;
                 }
             }
         }
         
         if(!outputLinkFound)
             networkDisconnected = true;
-    }//Fim do while
-
+    }
+    
     if(!networkDisconnected){
-        PathRev[0] = deNode;
+        path.push_back(deNode);
         hops = 0;
         j = deNode;
         
         while(j != orNode){
-            hops = hops + 1;
-            PathRev[hops] = Precedente[j];
-            j = Precedente[j];
+            hops++;
+            if(precedente.at(j) != -1){
+                path.push_back(precedente.at(j));
+                j = precedente.at(j);
+            }
+            else{
+                networkDisconnected = true;
+                break;
+            }
         }
-        r.clear();
-        
-        for(h = 0; h <= hops; h++)
-            r.push_back(PathRev[hops-h]);
-        
-        routeDJK = std::make_shared<Route>(this->GetResourceAlloc(), r);
-    }
+        if(!networkDisconnected){     
+            
+            for(h = 0; h <= hops; h++)
+                invPath.push_back(path.at(hops-h));
 
-    delete []CustoVertice; delete []Precedente; 
-    delete []Status; delete []PathRev;
+            routeDJK = std::make_shared<Route>(this->GetResourceAlloc(), 
+                                               invPath);
+        }
+    }
     
-    if(routeDJK != nullptr)
-        return routeDJK;
-    else
-        return nullptr;
+    return routeDJK;
 }
 
 void Routing::YEN() {
@@ -206,24 +209,26 @@ std::vector<std::shared_ptr<Route> > Routing::YEN(NodeId orNode,
         //in the previous k-shortest path.
         for(unsigned int i = 0; i <= auxSize; i++){
             //spurNode is retrieved from the previous k-shortest path, k − 1.
-            spurNode = routesYEN.at(k-1)->GetNodePointer(i);
+            spurNode = routesYEN.at(k-1)->GetNode(i);
             // The sequence of nodes from the source to the spurNode of the 
             //previous k-shortest path.
             rootPath = routesYEN.at(k-1)->CreatePartialRoute(0, i);
             
             for(auto it: routesYEN){
-                // Remove the links that are part of the previous shortest 
+                //Remove the links that are part of the previous shortest 
                 //paths which share the same rootPath.
-                newRoute = it->CreatePartialRoute(0, i);
-                if(rootPath->GetPath() == newRoute->GetPath()){
-                    it->GetLink(i)->SetLinkState(false);
+                if(i < it->GetNumNodes()){
+                    newRoute = it->CreatePartialRoute(0, i);
+                    if(rootPath->GetPath() == newRoute->GetPath()){
+                        it->GetLink(i)->SetLinkState(false);
+                    }
                 }
             }
             
             for(unsigned int  a = 0; a < rootPath->GetNumNodes(); a++){
-                if(rootPath->GetNodePointer(a)->GetNodeId() == spurNode->GetNodeId())
+                if(rootPath->GetNode(a)->GetNodeId() == spurNode->GetNodeId())
                     continue;
-                rootPath->GetNodePointer(a)->SetNodeState(false);
+                rootPath->GetNode(a)->SetNodeState(false);
             }
             
             // Calculate the spurPath from the spurNode to the destination.
