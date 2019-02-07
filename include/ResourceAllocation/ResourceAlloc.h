@@ -73,6 +73,8 @@ public:
      */
     void RMSA(Call* call);
     
+    void SAR(Call* call);
+    
     /**
      * @brief Function to input one route to the container of all routes for a 
      * specified node pair.
@@ -141,6 +143,8 @@ public:
      */
     bool CheckOSNR(Call* call);
     
+    bool CheckResourceAllocOrder(Call* call);
+    
     /**
      * @brief Get the SimulationType object that owns this object.
      * @return SimulationType object.
@@ -161,6 +165,10 @@ public:
      * @param topology Topology object.
      */
     void SetTopology(Topology* topology);
+    
+    std::vector<bool> GetResourceAllocOrder() const;
+
+    void SetResourceAllocOrder(std::vector<bool> resourceAllocOrder);
 
 private:
     /**
@@ -196,6 +204,8 @@ private:
      * @brief Vector of all routes for all network node pairs.
      */
     std::vector<std::vector<std::shared_ptr<Route>>> allRoutes;
+    
+    std::vector<bool> resourceAllocOrder;
 };
 
 #endif /* RESOURCEALLOC_H */

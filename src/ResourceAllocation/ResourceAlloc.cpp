@@ -23,7 +23,7 @@
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :simulType(simulType), topology(nullptr), routing(nullptr), specAlloc(nullptr),
-allRoutes(0){
+allRoutes(0), resourceAllocOrder(0) {
     
 }
 
@@ -66,7 +66,10 @@ void ResourceAlloc::ResourAlloc(Call* call) {
     switch(this->resourAllocOption){
         case ResourAllocRSA:
             call->SetModulation(FixedModulation);
-            this->RSA(call);
+            if(!this->CheckResourceAllocOrder(call))
+                this->RSA(call);
+            else
+                this->SAR(call);
             break;
         case ResourAllocRMSA:
             this->RMSA(call);
@@ -110,6 +113,34 @@ void ResourceAlloc::RMSA(Call* call) {
         this->RSA(call);
         
         if(call->GetStatus() == Accepted)
+            break;
+    }
+}
+
+void ResourceAlloc::SAR(Call* call) {
+    assert(this->simulType->GetOptions()->GetSpecAllOption() == SpecAllFF);
+    this->modulation->SetModulationParam(call);
+    this->routing->RoutingCall(call);
+    bool allocFound = false;
+    
+    unsigned int size = this->topology->GetNumSlots() - call->GetNumberSlots();
+    unsigned int numRoutes = call->GetNumRoutes();
+    
+    for(unsigned int a = 0; a <= size; a++){
+        
+        for(unsigned int b = 0; b < numRoutes; b++){
+            call->SetRoute(call->GetRoute(b));
+            
+            if(this->topology->CheckSlotsDisp(call->GetRoute(), a, a + 
+               call->GetNumberSlots() - 1)){
+                call->SetFirstSlot((int) a);
+                call->SetLastSlot(a + call->GetNumberSlots() - 1);
+                call->ClearTrialRoutes();
+                allocFound = true;
+                break;
+            }
+        }
+        if(allocFound)
             break;
     }
 }
@@ -190,6 +221,11 @@ bool ResourceAlloc::CheckOSNR(Call* call) {
     return true;
 }
 
+bool ResourceAlloc::CheckResourceAllocOrder(Call* call) {
+    return this->resourceAllocOrder.at(call->GetOrNode()->GetNodeId()*
+    this->topology->GetNumNodes()+call->GetDeNode()->GetNodeId());
+}
+
 SimulationType* ResourceAlloc::GetSimulType() const {
     return simulType;
 }
@@ -204,4 +240,12 @@ Topology* ResourceAlloc::GetTopology() const {
 
 void ResourceAlloc::SetTopology(Topology* topology) {
     this->topology = topology;
+}
+
+std::vector<bool> ResourceAlloc::GetResourceAllocOrder() const {
+    return resourceAllocOrder;
+}
+
+void ResourceAlloc::SetResourceAllocOrder(std::vector<bool> resourceAllocOrder) {
+    this->resourceAllocOrder = resourceAllocOrder;
 }

@@ -161,6 +161,16 @@ Route* Call::GetRoute() const {
     return this->route.get();
 }
 
+std::shared_ptr<Route> Call::GetRoute(unsigned int index) const {
+    assert(index < this->trialRoutes.size());
+    
+    return this->trialRoutes.at(index);
+}
+
+unsigned int Call::GetNumRoutes() const {
+    return this->trialRoutes.size();
+}
+
 void Call::SetRoute(std::shared_ptr<Route> route) {
     this->route = route;
 }

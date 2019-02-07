@@ -161,6 +161,10 @@ public:
     void SetDeactivationTime(TIME deactivationTime);
     
     Route* GetRoute() const;
+    
+    std::shared_ptr<Route> GetRoute(unsigned int index) const;
+    
+    unsigned int GetNumRoutes() const;
 
     void SetRoute(std::shared_ptr<Route> route);
 
