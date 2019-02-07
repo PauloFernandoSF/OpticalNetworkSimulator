@@ -24,21 +24,43 @@ class Call;
 #include "../Data/Options.h"
 
 /**
- * @brief SA class responsible for the spectral allocation of the call requests.
+ * @brief Class responsible for spectral allocation of the call requests.
+ * @param rsa RourceAlloc that own this object.
+ * @param option Spectral allocation option.
+ * @param topology Topology used in this spectral allocation.
  */
 class SA {
 
 public:
-    
+    /**
+     * @brief Standard constructor for a SA object.
+     * @param rsa RourceAlloc that own this object.
+     * @param option Spectral allocation option.
+     * @param topology Topology used in this spectral allocation.
+     */
     SA(ResourceAlloc* rsa, SpectrumAllocationOption option, Topology* topology);
-    
+    /**
+     * @brief Virtual destructor of a SA object.
+     */
     virtual ~SA();
     
-    
+    /**
+     * @brief Function that choose the spectral allocation based on the option 
+     * for a specified call request.
+     * @param call Call request.
+     */
     void SpecAllocation(Call* call);
-    
+    /**
+     * @brief Function to apply random spectral allocation to a call request.
+     * This SA randomly select between the available slots.
+     * @param call Call request.
+     */
     void Random(Call* call);
-    
+    /**
+     * @brief Function to apply random spectral allocation to a call request.
+     * This SA select the first available slots.
+     * @param call
+     */
     void FirstFit(Call* call);
     
     void MostUsed(Call* call);
@@ -52,11 +74,17 @@ public:
     void MSCL(Call* call);
 
 private:
-    
+    /**
+     * @brief RourceAlloc that own this object.
+     */
     ResourceAlloc* resourceAlloc;
-    
+    /**
+     * @brief Spectral allocation option.
+     */
     SpectrumAllocationOption specAllOption;
-    
+    /**
+     * @brief Topology used in this SA
+     */
     Topology* topology;
 };
 

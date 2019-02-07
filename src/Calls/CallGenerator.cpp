@@ -96,23 +96,6 @@ void CallGenerator::GenerateCall() {
     this->PushEvent(newEvent);
 }
 
-SimulationType* CallGenerator::GetSimulType() const {
-    return simulType;
-}
-
-void CallGenerator::SetSimulType(SimulationType* const simulType) {
-    assert(simulType != nullptr);
-    this->simulType = simulType;
-}
-
-Data* CallGenerator::GetData() const {
-    return data;
-}
-
-void CallGenerator::SetData(Data* data) {
-    this->data = data;
-}
-
 double CallGenerator::GetNetworkLoad() const {
     return networkLoad;
 }
@@ -143,12 +126,29 @@ void CallGenerator::PushEvent(std::shared_ptr<Event> evt) {
     this->queueEvents.push(evt);
 }
 
+SimulationType* CallGenerator::GetSimulType() const {
+    return simulType;
+}
+
+void CallGenerator::SetSimulType(SimulationType* const simulType) {
+    assert(simulType != nullptr);
+    this->simulType = simulType;
+}
+
 Topology* CallGenerator::GetTopology() const {
     return topology;
 }
 
 void CallGenerator::SetTopology(Topology* topology) {
     this->topology = topology;
+}
+
+Data* CallGenerator::GetData() const {
+    return data;
+}
+
+void CallGenerator::SetData(Data* data) {
+    this->data = data;
 }
 
 ResourceAlloc* CallGenerator::GetResourceAlloc() const {

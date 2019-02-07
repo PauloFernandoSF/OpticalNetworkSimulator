@@ -31,12 +31,20 @@ class ResourceAlloc;
 
 #include "Event.h"
 
-/**
- * @brief 
- */
+
 class CallGenerator {
 private:
+    /**
+     * @brief Structure to compare the events time.
+     * Used to organize the priority queue event used in the simulation.
+     */
     struct EventCompare {
+        /**
+         * @brief Compare the time of two specified events.
+         * @param eventA First event.
+         * @param eventB Second event.
+         * @return True if eventA time is greater then eventB time.
+         */
         bool operator()(const std::shared_ptr<Event> eventA,
                         const std::shared_ptr<Event> eventB) const;
     };
@@ -48,13 +56,19 @@ public:
      * this data.
      */
     CallGenerator(SimulationType* simulType);
-    
+    /**
+     * @brief Virtual destructor of a CallGenerator object.
+     */
     virtual ~CallGenerator();
-    
+    /**
+     * @brief Load the parameters of the generator. Pointers of topology, data, 
+     * traffic and resource allocation. Define the range of the node, traffic 
+     * and deactivation time distributions.
+     */
     void Load();
     /**
      * @brief Initialize this CallGenerator, defining the range of
-     * the distributions (Node, Traffic and Arriaval/Deactivation times).
+     * the exponential distribution of the inter-arrival time.
      * Also sets initial simulation time.
      */
     void Initialize();
@@ -67,22 +81,6 @@ public:
      * Push to the ordered list the new created event.
      */
     void GenerateCall();
-    
-    /**
-     * @brief Get the simulation that owns this object.
-     * @return Pointer to a SimulationType object.
-     */
-    SimulationType* GetSimulType() const;
-    /**
-     * @brief Set the simulation that owns this object.
-     * @param simulType Pointer to a SimulationType object.
-     */
-    void SetSimulType(SimulationType* const simulType);
-    
-    Data* GetData() const;
-
-    void SetData(Data* data);
-
     
     /**
      * @brief Get the network load.
@@ -104,7 +102,6 @@ public:
      * @param simulationTime
      */
     void SetSimulationTime(const TIME simulationTime);
-
     /**
      * @brief Return the first Event of the ordered list.
      * Also remove the same element of this list.
@@ -118,15 +115,47 @@ public:
      */
     void PushEvent(std::shared_ptr<Event> evt);
     
+    /**
+     * @brief Get the simulation that owns this object.
+     * @return Pointer to a SimulationType object.
+     */
+    SimulationType* GetSimulType() const;
+    /**
+     * @brief Set the simulation that owns this object.
+     * @param simulType Pointer to a SimulationType object.
+     */
+    void SetSimulType(SimulationType* const simulType);
+    /**
+     * @brief Get the topology used by this object.
+     * @return Topology pointer.
+     */
     Topology* GetTopology() const;
-
+    /**
+     * @brief Set the topology used by this object.
+     * @param topology Topology pointer.
+     */
     void SetTopology(Topology* topology);
-
+    /**
+     * @brief Get the data used by this object.
+     * @return Data pointer.
+     */
+    Data* GetData() const;
+    /**
+     * @brief Set the data used by this object.
+     * @param data Data pointer.
+     */
+    void SetData(Data* data);
+    /**
+     * @brief Get the resource allocation used by this object.
+     * @return ResourceAlloc pointer.
+     */
     ResourceAlloc* GetResourceAlloc() const;
-
+    /**
+     * @brief Set the resource allocation used by this object.
+     * @param rsaAlgorithm ResourceAlloc pointer.
+     */
     void SetResourceAlloc(ResourceAlloc* rsaAlgorithm);
 
-    
 private:
     /**
      * @breif Pointer to a SimulationType object that
@@ -148,7 +177,9 @@ private:
      * by a SimulationType object.
      */
     Traffic* traffic;
-    
+    /**
+     * @brief Resource allocation option.
+     */
     ResourceAlloc* resourceAlloc;
     
     /**
