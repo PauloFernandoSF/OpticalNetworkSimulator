@@ -91,7 +91,10 @@ public:
      * @return Number of requests.
      */
     double GetNumberBlocReq(unsigned int index) const;
-    
+    /**
+     * @brief Function that return the number of blocked call requests.
+     * @return Number of blocked requests.
+     */
     double GetNumberBlocReq() const;
     
     double GetNumberAccReq(unsigned int index) const;
