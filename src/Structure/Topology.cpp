@@ -19,6 +19,7 @@
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Structure/Node.h"
 #include "../../include/Structure/Link.h"
+#include "../../include/Structure/Core.h"
 #include "../../include/Structure/MultiCoreLink.h"
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/ResourceAllocation/Route.h"
@@ -46,7 +47,6 @@ const Topology* topology) {
         if(it != nullptr)
             ostream << it << std::endl;
     }
-    
     return ostream;
 }
 
@@ -257,6 +257,14 @@ unsigned int indexDeNode) const {
     indexDeNode).get();
 }
 
+std::shared_ptr<Link> Topology::GetLinkPointer(unsigned int indexOrNode, 
+                                             unsigned int indexDeNode) const {
+    assert(indexOrNode < this->GetNumNodes());
+    assert(indexDeNode < this->GetNumNodes());
+    
+    return this->vecLinks.at(indexOrNode * this->numNodes + indexDeNode);
+}
+
 bool Topology::CheckSlotDisp(const Route* route, unsigned int slot) const {
     Link* link;
     unsigned int numHops = route->GetNumHops();
@@ -285,8 +293,47 @@ unsigned int finSlot) const {
     return true;
 }
 
-bool Topology::CheckBlockSlotsDisp(const Route* route, unsigned int numSlots) 
-const {
+bool Topology::CheckSlotsDispCore(const Route* route, unsigned int iniSlot, 
+unsigned int finSlot, unsigned int core) const {
+    
+    unsigned int L_or, L_de,x = route->GetNumHops();
+    L_or = route->GetNode(0);L_de = route->GetNode(1);
+    bool flag = false;
+    //Cast base pointer in derived pointer class
+    std::shared_ptr<MultiCoreLink> link = 
+    std::dynamic_pointer_cast<MultiCoreLink>(this->GetLinkPointer(L_or, L_de));
+    //Check the availability of the set of slots in the core on the first hop
+    for(unsigned int s = iniSlot; s <= finSlot; s++){
+        // is link c->c+1 busy in slot s?
+        if(link->getCore(core)->getSlotOccupation(s)){ 
+            flag = true;
+            break;
+        }
+        // found the core in the first link
+        if(s == finSlot){                
+            break;
+        }
+    }
+        if(flag == true){
+            return false;
+        }
+    //Check the availability of the set of slots in the core on the rest of the 
+    //route
+    for(unsigned int c = 1; c < route->GetNumHops(); c++){
+        L_or = route->GetNode(c);L_de = route->GetNode(c+1);
+        std::shared_ptr<MultiCoreLink> link = 
+        std::dynamic_pointer_cast<MultiCoreLink>(this->GetLinkPointer(L_or,
+        L_de));
+        for(int s = iniSlot;s <= finSlot; s++){
+                       if(link->getCore(core)->getSlotOccupation(s))
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Topology::CheckBlockSlotsDisp(const Route* route, 
+                                   unsigned int numSlots) const {
     unsigned int numContiguousSlots = 0;
 
     for(unsigned int s = 0; s < this->numSlots; s++){

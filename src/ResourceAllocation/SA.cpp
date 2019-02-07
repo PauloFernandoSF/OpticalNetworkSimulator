@@ -89,3 +89,22 @@ void SA::FirstFit(Call* call) {
             sumslots = 0;
     }
 }
+
+/*void SA::FirstFitCore(Call* call){
+    /*Route *route = call->GetRoute();bool flag = false;
+    int numSlotsReq = call->GetNumberSlots();
+    int slot_range = this->topology->GetNumSlots() - numSlotsReq + 1;
+    for(int core = 0;core < this->topology->GetNumSlots();core++){
+        for(int s = 0; s < slot_range;s++){
+            if(Topology::checkSlotsCore(route, s,s + assignment->getNumSlots() - 1,assignment,core)){
+                    assignment->setFirstSlot(s);
+                    assignment->setLastSlot(s + assignment->getNumSlots() - 1);
+                    assignment->setCoreId(core);
+                    flag = true;
+                    break;
+            }
+        }
+        if(flag)
+            break;
+    }
+}*/

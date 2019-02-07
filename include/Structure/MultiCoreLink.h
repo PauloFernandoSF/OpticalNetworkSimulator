@@ -15,7 +15,6 @@
 #define MULTICORELINK_H
 
 #include"Link.h"
-//#include"Core.h"
 #include <vector>
 #include <memory>
 #include <cassert>
@@ -28,6 +27,7 @@ class Topology;
 * @brief Class MultiCoreLink represents a MultiCoreLink inside a topology. 
 */
 class MultiCoreLink : public Link {
+    
 public:   
     /**
      * @brief Standard constructor for a Link object.

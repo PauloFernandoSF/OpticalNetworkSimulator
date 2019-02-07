@@ -29,7 +29,6 @@ Core::Core(CoreId cId,NumSlots nSlots)
 }
 
 bool Core::getSlotOccupation(int sPosition){
-    //return vDisp.at(sPosition);
     return this->vDisp[sPosition];
 }
 

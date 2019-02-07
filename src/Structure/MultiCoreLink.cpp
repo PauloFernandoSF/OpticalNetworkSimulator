@@ -18,6 +18,8 @@
 
 #include <iostream>
 
+
+
 MultiCoreLink::MultiCoreLink(Topology* topPointer, unsigned int origimNode, 
     unsigned int destinationNode, double length, 
     unsigned int numberSections, unsigned int numberSlots):Link(topPointer, 
@@ -36,7 +38,7 @@ void MultiCoreLink::Initialize(){
 }
 
 Core* MultiCoreLink::getCore(int corePosition){
-    return this->coreVector.at(corePosition);
+    return this->coreVector.at(corePosition).get();
 }
 
 MultiCoreLink::~MultiCoreLink() {

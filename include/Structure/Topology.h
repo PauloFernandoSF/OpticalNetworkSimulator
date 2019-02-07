@@ -19,6 +19,8 @@
 #include <cassert>
 #include <iostream>
 
+//#include "Link.h"
+
 class SimulationType;
 class Node;
 class Link;
@@ -136,6 +138,14 @@ public:
     Link* GetLink(unsigned int indexOrNode, 
     unsigned int indexDeNode) const;
     /**
+     * @brief Return strong pointer to cast
+     * @param indexOrNode Origin Node
+     * @param indexDeNode Destination Node
+     * @return Link pointer
+     */
+    std::shared_ptr<Link> GetLinkPointer(unsigned int indexOrNode, 
+    unsigned int indexDeNode) const;
+    /**
      * @brief Checks if an specified slot is free in an specified route.
      * @param route Route to be analyzed.
      * @param slot Slot index.
@@ -151,6 +161,16 @@ public:
      */
     bool CheckSlotsDisp(const Route* route, unsigned int iniSlot,
                                             unsigned int finSlot) const;
+    /**
+     * @brief Checks if a block of slots is free in an specified core in a route.
+     * @param route Route to be analyzed.
+     * @param iniSlot First slot index.
+     * @param finSlot Last slot index.
+     * @param core Index of the core.
+     * @return True if the block of slots is available.
+     */
+    bool CheckSlotsDispCore(const Route* route, unsigned int iniSlot,
+                         unsigned int finSlot, unsigned int core) const;
     /**
      * @brief Checks if there is a contiguous block of free slots in
      * an specified route.
