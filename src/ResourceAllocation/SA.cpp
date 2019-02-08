@@ -22,6 +22,7 @@ SA::SA(ResourceAlloc* rsa, SpectrumAllocationOption option, Topology* topology)
 }
 
 SA::~SA() {
+    
 }
 
 void SA::SpecAllocation(Call* call) {
@@ -45,7 +46,7 @@ void SA::Random(Call* call) {
     std::vector<int> vecSlots;
     
     for(unsigned int a = 0; a < numSlotsTotal; a++){
-        if(this->topology->CheckSlotDisp(route, a)) {
+        if(this->topology->CheckSlotDisp(route, a)){
             sumslots++;
             
             if(sumslots == numSlotsReq){

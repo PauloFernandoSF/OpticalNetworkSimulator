@@ -136,6 +136,7 @@ void ResourceAlloc::SAR(Call* call) {
                 call->SetFirstSlot((int) a);
                 call->SetLastSlot(a + call->GetNumberSlots() - 1);
                 call->ClearTrialRoutes();
+                call->SetStatus(Accepted);
                 allocFound = true;
                 break;
             }
