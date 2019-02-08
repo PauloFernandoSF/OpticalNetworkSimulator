@@ -39,50 +39,61 @@ void SA::SpecAllocation(Call* call) {
 }
 
 void SA::Random(Call* call) {
-    Route* route = call->GetRoute();
-    unsigned int numSlotsReq = call->GetNumberSlots(), sumslots = 0;
-    unsigned int numSlotsTotal = this->topology->GetNumSlots();
-    int firstSlot = 0;
-    std::vector<int> vecSlots;
+    std::vector<unsigned int> vecSlots(0);
+    unsigned int auxVar;
     
-    for(unsigned int a = 0; a < numSlotsTotal; a++){
-        if(this->topology->CheckSlotDisp(route, a)){
-            sumslots++;
-            
-            if(sumslots == numSlotsReq){
-                firstSlot = (int) a-numSlotsReq+1;
-                vecSlots.push_back(firstSlot);
-                a = a-numSlotsReq+1;
-                sumslots = 0;
-            }
-        }
-        else
-            sumslots = 0;
-    }
+    vecSlots = this->FirstFitSlots(call);
     
-    if(vecSlots.size() > 0){
-        firstSlot = vecSlots.at(std::rand() % vecSlots.size());
-        call->SetFirstSlot(firstSlot);
-        call->SetLastSlot(firstSlot + numSlotsReq - 1);
+    if(!vecSlots.empty()){
+        auxVar = vecSlots.at(std::rand() % vecSlots.size());
+        call->SetFirstSlot(auxVar);
+        call->SetLastSlot(auxVar + call->GetNumberSlots() - 1);
     }
 }
 
 void SA::FirstFit(Call* call) {
     Route* route = call->GetRoute();
-    unsigned int numSlotsReq = call->GetNumberSlots(), sumslots = 0;
-    unsigned int numSlotsTotal = this->topology->GetNumSlots();
+    unsigned int numSlotsReq = call->GetNumberSlots();
+    unsigned int maxSlotIndex = this->topology->GetNumSlots() - 
+                                 numSlotsReq;
     
-    for(unsigned int a = 0; a < numSlotsTotal; a++){
-        if(this->topology->CheckSlotDisp(route, a)){
-            sumslots++;
-            
-            if(sumslots == numSlotsReq){
-                call->SetFirstSlot((int) a-numSlotsReq+1);
-                call->SetLastSlot((int) a);
-                break;
-            }
+    for(unsigned int slot = 0; slot <= maxSlotIndex; slot++){
+        if(this->topology->CheckSlotsDisp(route, slot, slot + numSlotsReq - 1)){
+            call->SetFirstSlot(slot);
+            call->SetLastSlot(slot + numSlotsReq - 1);
         }
-        else
-            sumslots = 0;
     }
+
+}
+
+std::vector<unsigned int> SA::RandomSlots(Call* call) {
+    std::vector<unsigned int> auxVecSlots(0);
+    std::vector<unsigned int> vecSlots(0);
+    unsigned int auxVar;
+    
+    auxVecSlots = this->FirstFitSlots(call);
+    
+    while(!auxVecSlots.empty()){
+        auxVar = std::rand() % auxVecSlots.size();
+        vecSlots.push_back(auxVecSlots.at(auxVar));
+        auxVecSlots.erase(auxVecSlots.begin() + auxVar);
+    }
+    
+    return vecSlots;
+}
+
+std::vector<unsigned int> SA::FirstFitSlots(Call* call) {
+    Route* route = call->GetRoute();
+    unsigned int numSlotsReq = call->GetNumberSlots();
+    unsigned int maxSlotIndex = this->topology->GetNumSlots() - 
+                                 numSlotsReq;
+    std::vector<unsigned int> slots(0);
+    
+    for(unsigned int a = 0; a <= maxSlotIndex; a++){
+        if(this->topology->CheckSlotsDisp(route, a, a + numSlotsReq - 1)){
+            slots.push_back(a);
+        }
+    }
+    
+    return slots;
 }

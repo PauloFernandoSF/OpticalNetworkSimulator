@@ -60,7 +60,7 @@ public:
      * @brief Function to apply random spectral allocation to a call request.
      * This SA select the first available slots.
      * @param call
-     */
+     */ 
     void FirstFit(Call* call);
     
     void MostUsed(Call* call);
@@ -72,7 +72,11 @@ public:
     void RCL(Call* call);
     
     void MSCL(Call* call);
-
+    
+    
+    std::vector<unsigned int> RandomSlots(Call* call);
+    
+    std::vector<unsigned int> FirstFitSlots(Call* call);
 private:
     /**
      * @brief RourceAlloc that own this object.

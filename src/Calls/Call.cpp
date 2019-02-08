@@ -36,20 +36,19 @@ std::ostream& operator<<(std::ostream& ostream, const Call* call) {
 }
 
 Call::Call()
-:status(NotEvaluated), orNode(nullptr), deNode(nullptr), firstSlot(-1), 
-lastSlot(-1), numberSlots(0), osnrTh(0.0), bandwidth(0.0), bitRate(0.0), 
-modulation(InvalidModulation), deactivationTime(Def::Max_Double), 
-route(nullptr), trialRoutes(0){
+:status(NotEvaluated), orNode(nullptr), deNode(nullptr), 
+firstSlot(Def::Max_UnInt), lastSlot(Def::Max_UnInt), numberSlots(0), 
+osnrTh(0.0), bandwidth(0.0), bitRate(0.0), modulation(InvalidModulation), 
+deactivationTime(Def::Max_Double), route(nullptr), trialRoutes(0) {
 
 }
 
 
-Call::Call(Node* orNode, Node* deNode, double bitRate, 
-TIME deacTime)
-:status(NotEvaluated), orNode(orNode), deNode(deNode), firstSlot(-1), 
-lastSlot(-1), numberSlots(0), osnrTh(0.0), bandwidth(0.0), bitRate(bitRate), 
-modulation(InvalidModulation), deactivationTime(deacTime), 
-route(nullptr), trialRoutes(0) {
+Call::Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime)
+:status(NotEvaluated), orNode(orNode), deNode(deNode), 
+firstSlot(Def::Max_UnInt), lastSlot(Def::Max_UnInt), numberSlots(0), 
+osnrTh(0.0), bandwidth(0.0), bitRate(bitRate), modulation(InvalidModulation), 
+deactivationTime(deacTime), route(nullptr), trialRoutes(0) {
     
 }
 
@@ -90,19 +89,19 @@ void Call::SetDeNode(Node* deNode) {
     this->deNode = deNode;
 }
 
-int Call::GetFirstSlot() const {
+unsigned int Call::GetFirstSlot() const {
     return firstSlot;
 }
 
-void Call::SetFirstSlot(int firstSlot) {
+void Call::SetFirstSlot(unsigned int firstSlot) {
     this->firstSlot = firstSlot;
 }
 
-int Call::GetLastSlot() const {
+unsigned int Call::GetLastSlot() const {
     return lastSlot;
 }
 
-void Call::SetLastSlot(int lastSlot) {
+void Call::SetLastSlot(unsigned int lastSlot) {
     this->lastSlot = lastSlot;
 }
 

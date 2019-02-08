@@ -45,6 +45,7 @@ void ResourceAlloc::Load() {
     unsigned int numNodes = this->topology->GetNumNodes();
     
     this->allRoutes.resize(numNodes*numNodes);
+    this->resourceAllocOrder.assign(numNodes*numNodes, false);
     
     this->routing = std::make_shared<Routing>(this, 
         this->simulType->GetOptions()->GetRoutingOption(), this->topology);
@@ -92,11 +93,11 @@ void ResourceAlloc::RSA(Call* call) {
             
             this->specAlloc->SpecAllocation(call);
             
-            if(this->topology->IsValidLigthPath(call)){
-                call->ClearTrialRoutes();
-                call->SetStatus(Accepted);
-                break;
-            }
+                if(this->topology->IsValidLigthPath(call)){
+                    call->ClearTrialRoutes();
+                    call->SetStatus(Accepted);
+                    break;
+                }
         }while(call->IsThereTrialRoute());
     }
     
@@ -118,7 +119,6 @@ void ResourceAlloc::RMSA(Call* call) {
 }
 
 void ResourceAlloc::SAR(Call* call) {
-    assert(this->simulType->GetOptions()->GetSpecAllOption() == SpecAllFF);
     this->modulation->SetModulationParam(call);
     this->routing->RoutingCall(call);
     bool allocFound = false;
@@ -127,13 +127,13 @@ void ResourceAlloc::SAR(Call* call) {
     unsigned int numRoutes = call->GetNumRoutes();
     
     for(unsigned int a = 0; a <= size; a++){
-        
+    
         for(unsigned int b = 0; b < numRoutes; b++){
             call->SetRoute(call->GetRoute(b));
-            
+        
             if(this->topology->CheckSlotsDisp(call->GetRoute(), a, a + 
                call->GetNumberSlots() - 1)){
-                call->SetFirstSlot((int) a);
+                call->SetFirstSlot(a);
                 call->SetLastSlot(a + call->GetNumberSlots() - 1);
                 call->ClearTrialRoutes();
                 call->SetStatus(Accepted);
@@ -141,9 +141,13 @@ void ResourceAlloc::SAR(Call* call) {
                 break;
             }
         }
+        
         if(allocFound)
             break;
     }
+    
+    if(!this->topology->IsValidLigthPath(call))
+        call->SetStatus(Blocked);
 }
 
 void ResourceAlloc::SetRoute(unsigned int orN, unsigned int deN, 

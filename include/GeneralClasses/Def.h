@@ -25,6 +25,10 @@ public:
      * @brief Define the maximum integer value
      */
     static int Max_Int;
+    
+    static unsigned int Max_UnInt;
+    
+    static unsigned int Min_UnInt;
     /**
      * @brief Define the minimum double value
      */

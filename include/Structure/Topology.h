@@ -190,7 +190,7 @@ public:
      * @param index Index of the slot.
      * @return True if the slot is valid.
      */
-    bool IsValidSlot(int index);
+    bool IsValidSlot(unsigned int index);
     /**
      * @brief Check if the lightpath is valid. This function checks the route, 
      * the first and the last slot of the call.

@@ -97,13 +97,13 @@ public:
      */
     void SetDeNode(Node* deNode);
     
-    int GetFirstSlot() const;
+    unsigned int GetFirstSlot() const;
 
-    void SetFirstSlot(int firstSlot);
+    void SetFirstSlot(unsigned int firstSlot);
 
-    int GetLastSlot() const;
+    unsigned int GetLastSlot() const;
 
-    void SetLastSlot(int lastSlot);
+    void SetLastSlot(unsigned int lastSlot);
     /**
      * @brief Return the number of slots of this Call.
      * @return Total amount of slots.
@@ -194,9 +194,9 @@ private:
      */
     Node* deNode;
     
-    int firstSlot;
+    unsigned int firstSlot;
     
-    int lastSlot;
+    unsigned int lastSlot;
     /**
      * @brief Number of slots occupied by this call.
      * This value is calculate based in modulation used 

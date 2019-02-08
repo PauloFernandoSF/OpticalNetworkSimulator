@@ -265,13 +265,11 @@ unsigned int finSlot) const {
     Link* link;
     unsigned int numHops = route->GetNumHops();
     
-    for(unsigned int a = 0; a < numHops; a++){
-        link = route->GetLink(a);
-        
-        for(unsigned int b = iniSlot; b <= finSlot; b++)
-            if(link->IsSlotOccupied(b))
-                return false;
+    for(unsigned int a = iniSlot; a <= finSlot; a++){
+        if(!this->CheckSlotDisp(route, a))
+            return false;
     }
+    
     return true;
 }
 
@@ -335,8 +333,8 @@ bool Topology::IsValidRoute(const Route* route) {
     return false;
 }
 
-bool Topology::IsValidSlot(int index) {
-    if(index >= 0 && index < (int) this->numSlots)
+bool Topology::IsValidSlot(unsigned int index) {
+    if(index >= 0 && index < this->numSlots)
         return true;
     return false;
 }
@@ -348,7 +346,7 @@ bool Topology::IsValidLigthPath(Call* call) {
         (this->IsValidSlot(call->GetLastSlot())) ){
         return true;
     }
-        
+    
     return false;
 }
 
@@ -361,7 +359,8 @@ void Topology::Connect(Call* call) {
         link = route->GetLink(a);
         
         if(this->IsValidLink(link)){
-            for(int s = call->GetFirstSlot(); s <= call->GetLastSlot(); s++){
+            for(unsigned int s = call->GetFirstSlot(); s <= 
+            call->GetLastSlot();s++){
                 link->OccupySlot(s);
             }
         }
@@ -378,7 +377,8 @@ void Topology::Release(Call* call) {
         link = route->GetLink(a);
         
         if(this->IsValidLink(link)){
-            for(int s = call->GetFirstSlot(); s <= call->GetLastSlot(); s++){
+            for(unsigned int s = call->GetFirstSlot(); s <= 
+            call->GetLastSlot(); s++){
                 link->ReleaseSlot(s);
             }
         }
