@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Calls/Call.o \
 	${OBJECTDIR}/src/Calls/CallGenerator.o \
 	${OBJECTDIR}/src/Calls/Event.o \
+	${OBJECTDIR}/src/Calls/MultiCoreCall.o \
 	${OBJECTDIR}/src/Calls/Traffic.o \
 	${OBJECTDIR}/src/Data/Data.o \
 	${OBJECTDIR}/src/Data/InputOutput.o \
@@ -47,6 +48,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/GeneralClasses/Def.o \
 	${OBJECTDIR}/src/GeneralClasses/General.o \
 	${OBJECTDIR}/src/Kernel.o \
+	${OBJECTDIR}/src/ResourceAllocation/CSA.o \
 	${OBJECTDIR}/src/ResourceAllocation/Modulation.o \
 	${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o \
 	${OBJECTDIR}/src/ResourceAllocation/Route.o \
@@ -106,6 +108,11 @@ ${OBJECTDIR}/src/Calls/Event.o: src/Calls/Event.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/Event.o src/Calls/Event.cpp
 
+${OBJECTDIR}/src/Calls/MultiCoreCall.o: src/Calls/MultiCoreCall.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Calls
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/MultiCoreCall.o src/Calls/MultiCoreCall.cpp
+
 ${OBJECTDIR}/src/Calls/Traffic.o: src/Calls/Traffic.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls
 	${RM} "$@.d"
@@ -145,6 +152,11 @@ ${OBJECTDIR}/src/Kernel.o: src/Kernel.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Kernel.o src/Kernel.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/CSA.o: src/ResourceAllocation/CSA.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/CSA.o src/ResourceAllocation/CSA.cpp
 
 ${OBJECTDIR}/src/ResourceAllocation/Modulation.o: src/ResourceAllocation/Modulation.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation

@@ -59,8 +59,10 @@
         <itemPath>include/Structure/Node.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
+      <itemPath>include/ResourceAllocation/CSA.h</itemPath>
       <itemPath>include/Structure/Core.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
+      <itemPath>include/Calls/MultiCoreCall.h</itemPath>
       <itemPath>include/Structure/MultiCoreLink.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -103,8 +105,10 @@
         <itemPath>src/Structure/Node.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
+      <itemPath>src/ResourceAllocation/CSA.cpp</itemPath>
       <itemPath>src/Structure/Core.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
+      <itemPath>src/Calls/MultiCoreCall.cpp</itemPath>
       <itemPath>src/Structure/MultiCoreLink.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -124,7 +128,7 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <compilerSet>default</compilerSet>
+        <compilerSet>GNU|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -176,6 +180,8 @@
       </item>
       <item path="include/Calls/Event.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Calls/MultiCoreCall.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Calls/Traffic.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Data/Data.h" ex="false" tool="3" flavor2="0">
@@ -191,6 +197,8 @@
       <item path="include/GeneralClasses/General.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Kernel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/CSA.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/ResourceAllocation/Modulation.h"
             ex="false"
@@ -244,6 +252,8 @@
       </item>
       <item path="src/Calls/Event.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/Calls/MultiCoreCall.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Calls/Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Data/Data.cpp" ex="false" tool="1" flavor2="0">
@@ -259,6 +269,8 @@
       <item path="src/GeneralClasses/General.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Kernel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/CSA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ResourceAllocation/Modulation.cpp"
             ex="false"
@@ -358,6 +370,8 @@
       </item>
       <item path="include/Calls/Event.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Calls/MultiCoreCall.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Calls/Traffic.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Data/Data.h" ex="false" tool="3" flavor2="0">
@@ -373,6 +387,8 @@
       <item path="include/GeneralClasses/General.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Kernel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/CSA.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/ResourceAllocation/Modulation.h"
             ex="false"
@@ -426,6 +442,8 @@
       </item>
       <item path="src/Calls/Event.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/Calls/MultiCoreCall.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Calls/Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Data/Data.cpp" ex="false" tool="1" flavor2="0">
@@ -441,6 +459,8 @@
       <item path="src/GeneralClasses/General.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Kernel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/CSA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ResourceAllocation/Modulation.cpp"
             ex="false"

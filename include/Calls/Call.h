@@ -173,7 +173,7 @@ public:
     bool IsThereTrialRoute() const;
     
     void ClearTrialRoutes();
-
+        
 private:
     /**
      * @brief Status of this Call.

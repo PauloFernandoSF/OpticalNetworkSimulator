@@ -40,8 +40,6 @@ public:
     
     void FirstFit(Call* call);
     
-    //void FirstFitCore(Call* call);
-    
     void MostUsed(Call* call);
     
     void LeastUsed(Call* call);
@@ -51,7 +49,9 @@ public:
     void RCL(Call* call);
     
     void MSCL(Call* call);
-
+    
+    Topology* GetTopology();
+    
 private:
     
     ResourceAlloc* resourceAlloc;

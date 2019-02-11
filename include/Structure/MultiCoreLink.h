@@ -55,7 +55,10 @@ public:
     * @return A core.  
     */
     Core* getCore(int corePosition);
-    //Core*getFiberCore(int);
+    //Implementar Ocupa e libera Slots
+    void OccupySlot(int coreIndex, int slot);
+    
+    void ReleaseSlot(int coreIndex, int slot);
 
 private:
     /**

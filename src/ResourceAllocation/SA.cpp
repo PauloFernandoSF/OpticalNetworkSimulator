@@ -12,6 +12,7 @@
  */
 
 #include "../../include/ResourceAllocation/SA.h"
+#include "../../include/ResourceAllocation/CSA.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/Structure/Topology.h"
@@ -36,6 +37,11 @@ void SA::SpecAllocation(Call* call) {
         case SpecAllFF:
             this->FirstFit(call);
             break;
+        case SpecAllFFC:{
+            CSA* csa = static_cast<CSA *>(this);
+            csa->FirstFitCore(call);
+            break;
+        }
         default:
             std::cerr << "Invalid spectrum allocation option" << std::endl;
     }
@@ -90,21 +96,6 @@ void SA::FirstFit(Call* call) {
     }
 }
 
-/*void SA::FirstFitCore(Call* call){
-    /*Route *route = call->GetRoute();bool flag = false;
-    int numSlotsReq = call->GetNumberSlots();
-    int slot_range = this->topology->GetNumSlots() - numSlotsReq + 1;
-    for(int core = 0;core < this->topology->GetNumSlots();core++){
-        for(int s = 0; s < slot_range;s++){
-            if(Topology::checkSlotsCore(route, s,s + assignment->getNumSlots() - 1,assignment,core)){
-                    assignment->setFirstSlot(s);
-                    assignment->setLastSlot(s + assignment->getNumSlots() - 1);
-                    assignment->setCoreId(core);
-                    flag = true;
-                    break;
-            }
-        }
-        if(flag)
-            break;
-    }
-}*/
+Topology* SA::GetTopology(){
+    return topology;
+}

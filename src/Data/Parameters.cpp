@@ -237,6 +237,6 @@ unsigned int Parameters::GetNumberCores() const {
 }
 
 void Parameters::SetNumberCores(unsigned int numberCores) {
-    assert(this->numberCores == 0);
+    //assert(this->numberCores >= 1);
     this->numberCores = numberCores;
 }

@@ -37,6 +37,7 @@ Options::mapSpecAlgOptions = boost::assign::map_list_of
     (SpecAllInvalid, "Invalid")
     (SpecAllRandom, "Random")
     (SpecAllFF, "First Fit")
+    (SpecAllFFC, "First Fit Core")
     (SpecAllMSCL, "MSCL");
 
 const boost::unordered_map<LinkCostType, std::string>
@@ -50,6 +51,7 @@ const boost::unordered_map<TrafficOption, std::string>
 Options::mapTrafficOptions = boost::assign::map_list_of
     (TrafficInvalid, "Invalid")
     (Traficc_100_200_400, "100-200-400")
+    (Traficc_50_120_300, "50-120-300")
     (Traffic_10_40_100_200_400, "10-40-100-200-400");
 
 const boost::unordered_map<ResourceAllocOption, std::string>

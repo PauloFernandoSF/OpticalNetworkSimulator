@@ -55,6 +55,7 @@ enum SpectrumAllocationOption {
      SpecAllInvalid,
      SpecAllRandom,
      SpecAllFF,
+     SpecAllFFC,
      SpecAllMSCL,
      FirstSpecAllOption = SpecAllRandom,
      LastSpecAllOption = SpecAllMSCL
@@ -78,6 +79,7 @@ enum LinkCostType {
 enum TrafficOption {
     TrafficInvalid,
     Traficc_100_200_400,
+    Traficc_50_120_300,
     Traffic_10_40_100_200_400,
     FirstTrafficOption = Traficc_100_200_400,
     LastTrafficOption = Traffic_10_40_100_200_400
