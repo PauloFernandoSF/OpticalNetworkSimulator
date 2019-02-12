@@ -130,6 +130,9 @@ void ResourceAlloc::SAR(Call* call) {
     
         for(unsigned int b = 0; b < numRoutes; b++){
             call->SetRoute(call->GetRoute(b));
+            
+            if(!this->CheckOSNR(call))
+                continue;
         
             if(this->topology->CheckSlotsDisp(call->GetRoute(), a, a + 
                call->GetNumberSlots() - 1)){

@@ -27,6 +27,12 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="f6" displayName="Algorithms" projectFiles="true">
+        <logicalFolder name="f1" displayName="GA" projectFiles="true">
+          <itemPath>include/Algorithms/GA/GA_RsaOrder.h</itemPath>
+          <itemPath>include/Algorithms/GA/IndividualBool.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
       <logicalFolder name="f4" displayName="Calls" projectFiles="true">
         <itemPath>include/Calls/Call.h</itemPath>
         <itemPath>include/Calls/CallGenerator.h</itemPath>
@@ -60,6 +66,7 @@
         <itemPath>include/Structure/Node.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
+      <itemPath>include/SimulationType/GA_SingleObjective.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -69,6 +76,12 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="f6" displayName="Algorithms" projectFiles="true">
+        <logicalFolder name="f1" displayName="GA" projectFiles="true">
+          <itemPath>src/Algorithms/GA/GA_RsaOrder.cpp</itemPath>
+          <itemPath>src/Algorithms/GA/IndividualBool.cpp</itemPath>
+        </logicalFolder>
+      </logicalFolder>
       <logicalFolder name="f4" displayName="Calls" projectFiles="true">
         <itemPath>src/Calls/Call.cpp</itemPath>
         <itemPath>src/Calls/CallGenerator.cpp</itemPath>
@@ -102,6 +115,7 @@
         <itemPath>src/Structure/Node.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
+      <itemPath>src/SimulationType/GA_SingleObjective.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -169,6 +183,16 @@
       </item>
       <item path="Files/Outputs/1/PBvLoad.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/GA_RsaOrder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/IndividualBool.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Calls/Call.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/CallGenerator.h" ex="false" tool="3" flavor2="0">
@@ -215,6 +239,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/SimulationType/GA_SingleObjective.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/SimulationType/MultiLoadSimulation.h"
             ex="false"
             tool="3"
@@ -232,6 +261,13 @@
       <item path="include/Structure/Topology.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/IndividualBool.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/Calls/Call.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -272,6 +308,11 @@
       <item path="src/ResourceAllocation/SA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ResourceAllocation/Signal.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SimulationType/GA_SingleObjective.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/SimulationType/MultiLoadSimulation.cpp"
             ex="false"
@@ -345,6 +386,16 @@
       </item>
       <item path="Files/Outputs/1/PBvLoad.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/GA_RsaOrder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/IndividualBool.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Calls/Call.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/CallGenerator.h" ex="false" tool="3" flavor2="0">
@@ -391,6 +442,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/SimulationType/GA_SingleObjective.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/SimulationType/MultiLoadSimulation.h"
             ex="false"
             tool="3"
@@ -408,6 +464,13 @@
       <item path="include/Structure/Topology.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/IndividualBool.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/Calls/Call.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -448,6 +511,11 @@
       <item path="src/ResourceAllocation/SA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ResourceAllocation/Signal.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SimulationType/GA_SingleObjective.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/SimulationType/MultiLoadSimulation.cpp"
             ex="false"

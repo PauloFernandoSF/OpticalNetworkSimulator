@@ -101,6 +101,8 @@ public:
 
     double GetNumberAccReq() const;
     
+    double GetPbReq() const;
+    
     double GetNumberSlotsReq() const;
     
     double GetNumberBlocSlots(unsigned int index) const;
@@ -110,6 +112,8 @@ public:
     double GetNumberAccSlots(unsigned int index) const;
     
     double GetNumberAccSlots() const;
+    
+    double GetPbSlots() const;
 
     double GetNumHopsPerRoute(unsigned int index) const;
     

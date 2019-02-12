@@ -50,15 +50,15 @@ Data::~Data() {
 
 void Data::Initialize() {
     int size = this->simulType->GetParameters()->GetNumberLoadPoints();
-    this->numberReq.resize(size, 0.0);
-    this->numberBlocReq.resize(size, 0.0);
-    this->numberAccReq.resize(size, 0.0);
-    this->numberSlotsReq.resize(size, 0.0);
-    this->numberBlocSlots.resize(size, 0.0);
-    this->numberAccSlots.resize(size, 0.0);
-    this->numHopsPerRoute.resize(size, 0.0);
-    this->netOccupancy.resize(size, 0.0);
-    this->simulTime.resize(size, 0.0);
+    this->numberReq.assign(size, 0.0);
+    this->numberBlocReq.assign(size, 0.0);
+    this->numberAccReq.assign(size, 0.0);
+    this->numberSlotsReq.assign(size, 0.0);
+    this->numberBlocSlots.assign(size, 0.0);
+    this->numberAccSlots.assign(size, 0.0);
+    this->numHopsPerRoute.assign(size, 0.0);
+    this->netOccupancy.assign(size, 0.0);
+    this->simulTime.assign(size, 0.0);
 }
 
 void Data::StorageCall(Call* call) {
@@ -134,6 +134,10 @@ double Data::GetNumberAccReq() const {
     return this->numberAccReq.at(this->actualIndex);
 }
 
+double Data::GetPbReq() const {
+    return this->GetNumberBlocReq()/this->GetNumberReq();
+}
+
 double Data::GetNumberSlotsReq() const {
     return this->numberSlotsReq.at(this->actualIndex);
 }
@@ -152,6 +156,10 @@ double Data::GetNumberAccSlots(unsigned int index) const {
 
 double Data::GetNumberAccSlots() const {
     return this->numberAccSlots.at(this->actualIndex);
+}
+
+double Data::GetPbSlots() const {
+    return this->GetNumberBlocSlots()/this->GetNumberSlotsReq();
 }
 
 double Data::GetNumHopsPerRoute(unsigned int index) const {

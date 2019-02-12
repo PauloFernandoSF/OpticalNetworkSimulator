@@ -31,7 +31,6 @@ class ResourceAlloc;
 
 #include "Event.h"
 
-
 class CallGenerator {
 private:
     /**

@@ -262,8 +262,6 @@ bool Topology::CheckSlotDisp(const Route* route, unsigned int slot) const {
 
 bool Topology::CheckSlotsDisp(const Route* route, unsigned int iniSlot, 
 unsigned int finSlot) const {
-    Link* link;
-    unsigned int numHops = route->GetNumHops();
     
     for(unsigned int a = iniSlot; a <= finSlot; a++){
         if(!this->CheckSlotDisp(route, a))

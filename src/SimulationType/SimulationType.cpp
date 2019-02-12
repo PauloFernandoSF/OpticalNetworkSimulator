@@ -90,7 +90,6 @@ void SimulationType::AdditionalSettings() {
     
     if(this->resourceAlloc->IsOfflineRouting())
         this->resourceAlloc->RoutingOffline();
-        
 }
 
 const unsigned int SimulationType::GetSimulationIndex() const {
