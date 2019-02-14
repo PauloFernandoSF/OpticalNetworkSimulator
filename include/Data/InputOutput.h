@@ -71,6 +71,10 @@ public:
      * @return ofstream containing the PBvLoad file.
      */
     std::ofstream& GetResultFile();
+    
+    std::ofstream& GetBestIndividualsFile();
+    
+    std::ofstream& GetWorstIndividualsFile();
     /**
      * @brief Function to print the progress bar, based in 
      * the inputs proportion.
@@ -91,6 +95,8 @@ private:
      * @param results ofstream to the Log.txt.
      */
     void LoadLog(std::ofstream& log);
+    
+    void LoadGaFiles(std::ofstream& best, std::ofstream& worst);
 
 private:
     /**
@@ -105,6 +111,10 @@ private:
      * @brief Ofstream with the PBvLoad.txt file.
      */
     std::ofstream resultFile;
+    
+    std::ofstream bestIndividuals;
+    
+    std::ofstream worstIndividuals;
     /**
      * @brief Size of the progress bar.
      */

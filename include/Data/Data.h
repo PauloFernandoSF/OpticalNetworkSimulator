@@ -63,11 +63,13 @@ public:
     /**
      * @brief Saves the data values in the Log.txt file.
      */
-    void SaveLog();
+    void SaveMultiloadLog();
     /**
      * @brief Saves the data values in the PBvLoad.txt file.
      */
     void SavePBvLoad();
+    
+    void SaveGaFiles();
     
     /**
      * @brief Set the number of request of the actual load point.

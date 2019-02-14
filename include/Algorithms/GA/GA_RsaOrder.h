@@ -18,10 +18,12 @@
 #include <memory>
 #include <cassert>
 #include <random>
-
-class SimulationType;
+#include <algorithm>
 
 #include "IndividualBool.h"
+
+class SimulationType;
+class IndividualBool;
 
 class GA_RsaOrder {
 
@@ -29,9 +31,13 @@ private:
     
     struct IndividualCompare{
         
-        bool operator()(const std::shared_ptr<IndividualBool> indA,
-                        const std::shared_ptr<IndividualBool> indB) const;
+        bool operator()(const std::shared_ptr<IndividualBool>& indA,
+                        const std::shared_ptr<IndividualBool>& indB) const;
     };
+    
+    friend std::ostream& operator<<(std::ostream& ostream, 
+    const GA_RsaOrder* ga_RsaOrder);
+
 public:
     
     GA_RsaOrder(SimulationType* simul);
@@ -45,7 +51,11 @@ public:
     
     void CreateNewPopulation();
     
+    void SimulateIndividuals();
     
+    void SelectPopulation();
+    
+    void SaveBestWorstIndividuals();
     
     const unsigned int GetNumberGenerations() const;
 
@@ -58,16 +68,41 @@ public:
     bool GetBoolDistribution();
 
     double GetProbDistribution();
-
+    
+    unsigned int GetNumTotalPopulation() const;
 
     SimulationType* GetSimul() const;
+    
+    unsigned int GetActualGeneration() const;
+
+    void SetActualGeneration(unsigned int actualGeneration);
+
+    IndividualBool* GetWorstIndividual() const;
+    
+    IndividualBool* GetBestIndividual() const;
     
 private:
     
     void Crossover();
     
-    void Mutation();
+    void GenerateNewIndividuals(const IndividualBool* const ind1,
+                                const IndividualBool* const ind2);
+    
+    void OnePointCrossover(const IndividualBool* const ind1,
+                           const IndividualBool* const ind2);
+    
+    void TwoPointCrossover(const IndividualBool* const ind1,
+                           const IndividualBool* const ind2);
+    
+    void UniformCrossover(const IndividualBool* const ind1,
+                          const IndividualBool* const ind2);
 
+    void Mutation();
+    
+    void MutateIndividual(IndividualBool* const ind);
+    
+    
+    
 private:
     
     SimulationType* simul;
@@ -85,6 +120,14 @@ private:
     std::vector<std::shared_ptr<IndividualBool>> selectedPopulation;
     
     std::vector<std::shared_ptr<IndividualBool>> totalPopulation;
+        
+    std::vector<std::shared_ptr<IndividualBool>> bestIndividuals;
+    
+    std::vector<std::shared_ptr<IndividualBool>> worstIndividuals;
+    
+    const unsigned int numBestIndividuals;
+    
+    unsigned int actualGeneration;
     
     
     static std::default_random_engine random_generator;

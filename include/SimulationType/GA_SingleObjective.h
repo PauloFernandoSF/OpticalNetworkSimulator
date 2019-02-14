@@ -40,6 +40,7 @@ public:
 
     void Help() override;
 
+    GA_RsaOrder* GetGA_RsaOrder() const;
 private:
     
     std::shared_ptr<GA_RsaOrder> gaAlgorithm;

@@ -24,6 +24,7 @@ InputOutput::InputOutput(SimulationType* simulType)
 :simulType(simulType) {
     this->LoadLog(this->logFile);
     this->LoadResults(this->resultFile);
+    this->LoadGaFiles(this->bestIndividuals, this->worstIndividuals);
 }
 
 InputOutput::~InputOutput() {
@@ -148,12 +149,54 @@ void InputOutput::LoadLog(std::ofstream& log) {
     }while(!log.is_open());
 }
 
+void InputOutput::LoadGaFiles(std::ofstream& best, std::ofstream& worst) {
+    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        best.open("Files/Outputs/" + std::to_string(auxInt)
+                  + "/bestIndividuals.txt");
+        
+        if(!best.is_open()){
+            std::cerr << "Wrong best individuals file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!best.is_open());
+    
+    do{
+        worst.open("Files/Outputs/" + std::to_string(auxInt)
+                  + "/worstIndividuals.txt");
+        
+        if(!worst.is_open()){
+            std::cerr << "Wrong best individuals file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!worst.is_open());
+}
+
 std::ofstream& InputOutput::GetLogFile() {
     return this->logFile;
 }
 
 std::ofstream& InputOutput::GetResultFile() {
     return this->resultFile;
+}
+
+std::ofstream& InputOutput::GetBestIndividualsFile() {
+    return this->bestIndividuals;
+}
+
+std::ofstream& InputOutput::GetWorstIndividualsFile() {
+    return this->worstIndividuals;
 }
 
 void InputOutput::PrintProgressBar(unsigned int actual, unsigned int max) {

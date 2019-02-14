@@ -15,23 +15,36 @@
 #define INDIVIDUALBOOL_H
 
 #include <vector>
+#include <memory>
+#include <iostream>
 
 class GA_RsaOrder;
 
 class IndividualBool {
 
+    friend std::ostream& operator<<(std::ostream& ostream, 
+    const IndividualBool* ind);
+
 public:
     
     IndividualBool(GA_RsaOrder* ga);
     
+    IndividualBool(const std::shared_ptr<const IndividualBool>& orig);
+    
     virtual ~IndividualBool();
     
     
-    void CreateGene(unsigned int orNode, unsigned int deNode);
+    bool GetGene(unsigned int orNode, unsigned int deNode) const;
+    
+    std::vector<bool> GetGenes() const;
+    
+    void SetGene(unsigned int orNode, unsigned int deNode, bool value);
     
     double GetBlockProb() const;
 
     void SetBlockProb(double blockProb);
+    
+    unsigned int GetCount() const;
 
 private:
     

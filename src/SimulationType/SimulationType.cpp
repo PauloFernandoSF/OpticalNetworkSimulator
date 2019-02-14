@@ -82,7 +82,6 @@ void SimulationType::Print() {
 void SimulationType::Save() {
     this->options->Save();
     this->parameters->Save();
-    this->GetData()->SaveLog();
 }
 
 void SimulationType::AdditionalSettings() {
@@ -90,6 +89,8 @@ void SimulationType::AdditionalSettings() {
     
     if(this->resourceAlloc->IsOfflineRouting())
         this->resourceAlloc->RoutingOffline();
+    
+    
 }
 
 const unsigned int SimulationType::GetSimulationIndex() const {

@@ -18,6 +18,9 @@
 #include "../../include/Data/Parameters.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
+#include "../../include/SimulationType/GA_SingleObjective.h"
+#include "../../include/Algorithms/GA/GA_RsaOrder.h"
+#include "../../include/Algorithms/GA/IndividualBool.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Data* data) {    
@@ -79,7 +82,7 @@ void Data::StorageCall(Call* call) {
     }   
 }
 
-void Data::SaveLog() {
+void Data::SaveMultiloadLog() {
     std::ofstream &logOfstream = this->simulType->GetInputOutput()
                                      ->GetLogFile();
     unsigned int numLoadPoints = this->simulType->GetParameters()
@@ -102,6 +105,30 @@ void Data::SavePBvLoad() {
         this->SetActualIndex(a);
 
         this->SavePBvLoad(resultOfstream);
+    }
+}
+
+void Data::SaveGaFiles() {
+    std::ofstream &logOfstream = this->simulType->GetInputOutput()
+                                     ->GetLogFile();
+    std::ofstream &resultOfstream = this->simulType->GetInputOutput()
+                                        ->GetResultFile();
+    std::ofstream &bestInd = this->simulType->GetInputOutput()
+                                 ->GetBestIndividualsFile();
+    std::ofstream &worstInd = this->simulType->GetInputOutput()
+                                 ->GetWorstIndividualsFile();
+    GA_RsaOrder* ga = dynamic_cast<GA_SingleObjective*>
+                      (this->simulType)->GetGA_RsaOrder();
+    unsigned int numGen = ga->GetNumberGenerations();
+    IndividualBool* auxInd;
+    
+    for(unsigned int a = 0; a < numGen; a++){
+        ga->SetActualGeneration(a+1);
+        logOfstream << ga << std::endl;
+        bestInd << a << "\t" << ga->GetBestIndividual()->GetBlockProb() 
+                << std::endl;
+        worstInd << a << "\t" << ga->GetWorstIndividual()->GetBlockProb()
+                 << std::endl;
     }
 }
 
