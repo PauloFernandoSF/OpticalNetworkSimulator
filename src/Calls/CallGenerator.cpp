@@ -56,7 +56,7 @@ void CallGenerator::Load() {
 void CallGenerator::Initialize() {
     this->simulationTime = 0.0;
     this->exponencialHDistribution = std::exponential_distribution<TIME>
-    (networkLoad);
+    (this->networkLoad);
 }
 
 void CallGenerator::Finalize() {

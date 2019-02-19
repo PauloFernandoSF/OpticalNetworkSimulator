@@ -15,7 +15,7 @@
 #include "../../../include/Algorithms/GA/GA_RsaOrder.h"
 
 std::ostream& operator<<(std::ostream& ostream, const IndividualBool* ind) {
-    ostream << ind->GetBlockProb() << std::endl;
+    ostream << ind->GetBlockProb();
     
     return ostream;
 }
@@ -24,8 +24,9 @@ IndividualBool::IndividualBool(GA_RsaOrder* ga):
 ga(ga), genes(0), blockProb(0.0), count(0) {
     const unsigned int numNodes = this->ga->GetNumNodes();
     
-    //Verificar se está colocando valores diferentes
-    this->genes.assign(numNodes*numNodes, this->ga->GetBoolDistribution());
+    for(unsigned int a = 0; a < numNodes*numNodes; a++){
+        this->genes.push_back(this->ga->GetBoolDistribution());
+    }
 }
 
 IndividualBool::IndividualBool(
@@ -60,8 +61,7 @@ void IndividualBool::SetBlockProb(double blockProb) {
     
     if(this->count == 1)
         this->blockProb = blockProb;
-    else if(this->count <= 3)
-        this->blockProb = (this->blockProb + blockProb) / 2;
+    this->blockProb = (this->blockProb + blockProb) / 2.0;
 }
 
 unsigned int IndividualBool::GetCount() const {

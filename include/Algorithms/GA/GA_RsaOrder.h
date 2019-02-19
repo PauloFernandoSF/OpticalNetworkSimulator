@@ -51,7 +51,9 @@ public:
     
     void CreateNewPopulation();
     
-    void SimulateIndividuals();
+    void KeepInitialPopulation();
+    
+    void SimulateTotalPop();
     
     void SelectPopulation();
     
@@ -81,6 +83,10 @@ public:
     
     IndividualBool* GetBestIndividual() const;
     
+    IndividualBool* GetIniIndividual(unsigned int index);
+    
+    const unsigned int GetMaxNumSimulation() const;
+
 private:
     
     void Crossover();
@@ -117,9 +123,7 @@ private:
     
     const double probMutation;
     
-    std::vector<std::shared_ptr<IndividualBool>> selectedPopulation;
-    
-    std::vector<std::shared_ptr<IndividualBool>> totalPopulation;
+    std::vector<std::shared_ptr<IndividualBool>> initialPopulation;
         
     std::vector<std::shared_ptr<IndividualBool>> bestIndividuals;
     
@@ -129,12 +133,20 @@ private:
     
     unsigned int actualGeneration;
     
+    const unsigned int maxNumSimulation;
+    
     
     static std::default_random_engine random_generator;
     
     std::uniform_int_distribution<int> boolDistribution;
     
     std::uniform_real_distribution<double> probDistribution;
+    
+public:
+    
+    std::vector<std::shared_ptr<IndividualBool>> selectedPopulation;
+    
+    std::vector<std::shared_ptr<IndividualBool>> totalPopulation;
 };
 
 #endif /* GA_RSAORDER_H */

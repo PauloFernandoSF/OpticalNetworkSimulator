@@ -18,6 +18,7 @@
 #include "../../include/Calls/CallGenerator.h"
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/Data.h"
+#include "../../include/ResourceAllocation/ResourceAlloc.h"
 
 GA_SingleObjective::GA_SingleObjective(unsigned int simulIndex) 
 :SimulationType(simulIndex), gaAlgorithm(std::make_shared<GA_RsaOrder>(this)) {
@@ -30,18 +31,23 @@ GA_SingleObjective::~GA_SingleObjective() {
 
 void GA_SingleObjective::Run() {
     this->GetCallGenerator()->SetNetworkLoad(this->
-    GetParameters()->GetMinLoadPoint());
+    GetParameters()->GetMidLoadPoint());
     unsigned int numGenerations = this->gaAlgorithm->GetNumberGenerations();
     this->gaAlgorithm->InitializePopulation();
+    this->GetInputOutput()->PrintProgressBar(0, numGenerations);
+    this->RunSelectPop();
+    this->gaAlgorithm->KeepInitialPopulation();
     
-    for(unsigned int a = 0; a < numGenerations; a++){
+    for(unsigned int a = 1; a <= numGenerations; a++){
         this->gaAlgorithm->CreateNewPopulation();
-        this->gaAlgorithm->SimulateIndividuals();
+        this->RunTotalPop();
+        
+        if(a == numGenerations)
+            this->CheckMinSimul();
         this->gaAlgorithm->SelectPopulation();
         std::cout << this->gaAlgorithm << std::endl;
         this->GetInputOutput()->PrintProgressBar(a, numGenerations);
     }
-    this->GetInputOutput()->PrintProgressBar(numGenerations, numGenerations);
 }
 
 void GA_SingleObjective::Load() {
@@ -73,4 +79,42 @@ void GA_SingleObjective::Help() {
 
 GA_RsaOrder* GA_SingleObjective::GetGA_RsaOrder() const {
     return this->gaAlgorithm.get();
+}
+
+void GA_SingleObjective::RunSelectPop() {
+    
+    for(auto it: this->gaAlgorithm->selectedPopulation){
+        this->GetResourceAlloc()->SetResourceAllocOrder(it->GetGenes());
+        SimulationType::Run();
+        it->SetBlockProb(this->GetData()->GetPbReq());
+        this->GetData()->Initialize();
+    }
+}
+
+void GA_SingleObjective::RunTotalPop() {
+    unsigned int maxNumSimulPerInd = this->gaAlgorithm->GetMaxNumSimulation();
+
+    for(auto it: this->gaAlgorithm->totalPopulation){
+        
+        if(it->GetCount() <= maxNumSimulPerInd){
+            this->GetResourceAlloc()->SetResourceAllocOrder(it->GetGenes());
+            SimulationType::Run();
+            it->SetBlockProb(this->GetData()->GetPbReq());
+        }
+        this->GetData()->Initialize();
+    }
+}
+
+void GA_SingleObjective::CheckMinSimul() {
+    unsigned int maxNumSimulPerIns = this->gaAlgorithm->GetMaxNumSimulation();
+    
+    for(auto it: this->gaAlgorithm->totalPopulation){
+        
+        while(it->GetCount() < maxNumSimulPerIns){
+            this->GetResourceAlloc()->SetResourceAllocOrder(it->GetGenes());
+            SimulationType::Run();
+            it->SetBlockProb(this->GetData()->GetPbReq());
+            this->GetData()->Initialize();
+        }
+    }
 }

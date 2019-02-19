@@ -15,6 +15,7 @@
 
 #include "../include/SimulationType/SimulationType.h"
 #include "../include/SimulationType/MultiLoadSimulation.h"
+#include "../include/SimulationType/GA_SingleObjective.h"
 
 Kernel::Kernel(int numSimulations)
 :numberSimulations(numSimulations),
@@ -40,7 +41,8 @@ void Kernel::Run() {
 void Kernel::CreateSimulations() {
     
     for(unsigned int a = 1; a <= this->numberSimulations; ++a){
-        simulations.push_back(std::make_shared<MultiLoadSimulation> (a));
+        //simulations.push_back(std::make_shared<MultiLoadSimulation> (a));
+        simulations.push_back(std::make_shared<GA_SingleObjective>(a));
     }
 }
 

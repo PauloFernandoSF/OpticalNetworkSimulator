@@ -70,12 +70,13 @@ void Data::StorageCall(Call* call) {
     
     switch(call->GetStatus()){
         case Accepted:
-            this->numberAccReq.at(actualIndex)++;
-            this->numHopsPerRoute.at(actualIndex) += (double) numHops;
-            this->netOccupancy.at(actualIndex) += (double) numSlots * numHops;
+            this->numberAccReq.at(this->actualIndex)++;
+            this->numHopsPerRoute.at(this->actualIndex) += (double) numHops;
+            this->netOccupancy.at(this->actualIndex) += 
+            (double) numSlots * numHops;
             break;
         case Blocked:
-            this->numberBlocReq.at(actualIndex)++;
+            this->numberBlocReq.at(this->actualIndex)++;
             break;
         case NotEvaluated:
             std::cerr << "Not evaluated call" <<  std::endl;
@@ -103,32 +104,37 @@ void Data::SavePBvLoad() {
     
     for(unsigned int a = 0; a < numLoadPoints; a++){
         this->SetActualIndex(a);
-
         this->SavePBvLoad(resultOfstream);
     }
 }
 
 void Data::SaveGaFiles() {
-    std::ofstream &logOfstream = this->simulType->GetInputOutput()
+    std::ofstream& logOfstream = this->simulType->GetInputOutput()
                                      ->GetLogFile();
-    std::ofstream &resultOfstream = this->simulType->GetInputOutput()
-                                        ->GetResultFile();
-    std::ofstream &bestInd = this->simulType->GetInputOutput()
+    std::ofstream& initPop = this->simulType->GetInputOutput()
+                                        ->GetIniPopulationFile();
+    std::ofstream& bestInd = this->simulType->GetInputOutput()
                                  ->GetBestIndividualsFile();
-    std::ofstream &worstInd = this->simulType->GetInputOutput()
+    std::ofstream& worstInd = this->simulType->GetInputOutput()
                                  ->GetWorstIndividualsFile();
     GA_RsaOrder* ga = dynamic_cast<GA_SingleObjective*>
                       (this->simulType)->GetGA_RsaOrder();
+
     unsigned int numGen = ga->GetNumberGenerations();
-    IndividualBool* auxInd;
+    unsigned int numIniPop = ga->GetNumberIndividuals();
     
-    for(unsigned int a = 0; a < numGen; a++){
-        ga->SetActualGeneration(a+1);
+    for(unsigned int a = 1; a <= numGen; a++){
+        ga->SetActualGeneration(a);
         logOfstream << ga << std::endl;
         bestInd << a << "\t" << ga->GetBestIndividual()->GetBlockProb() 
                 << std::endl;
         worstInd << a << "\t" << ga->GetWorstIndividual()->GetBlockProb()
                  << std::endl;
+    }
+    
+    for(unsigned int a = 0; a < numIniPop; a++){
+        initPop << 0 << "\t" << ga->GetIniIndividual(a)->GetBlockProb() 
+                << std::endl;
     }
 }
 

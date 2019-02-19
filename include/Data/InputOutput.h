@@ -75,6 +75,8 @@ public:
     std::ofstream& GetBestIndividualsFile();
     
     std::ofstream& GetWorstIndividualsFile();
+    
+    std::ofstream& GetIniPopulationFile();
     /**
      * @brief Function to print the progress bar, based in 
      * the inputs proportion.
@@ -96,7 +98,8 @@ private:
      */
     void LoadLog(std::ofstream& log);
     
-    void LoadGaFiles(std::ofstream& best, std::ofstream& worst);
+    void LoadGaFiles(std::ofstream& best, std::ofstream& worst,
+                     std::ofstream& iniPop);
 
 private:
     /**
@@ -115,6 +118,8 @@ private:
     std::ofstream bestIndividuals;
     
     std::ofstream worstIndividuals;
+    
+    std::ofstream initialPopulation;
     /**
      * @brief Size of the progress bar.
      */

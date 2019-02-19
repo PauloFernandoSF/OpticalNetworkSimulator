@@ -44,6 +44,12 @@ public:
 private:
     
     std::shared_ptr<GA_RsaOrder> gaAlgorithm;
+    
+    void RunSelectPop();
+    
+    void RunTotalPop();
+    
+    void CheckMinSimul();
 };
 
 #endif /* GA_SINGLEOBJECTIVE_H */

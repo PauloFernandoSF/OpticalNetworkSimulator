@@ -47,7 +47,7 @@ Link::~Link() {
 
 void Link::Initialize() {
     //Make all slots status for free
-    this->slotsStatus.resize(this->slotsStatus.size(), SlotFree);  
+    this->slotsStatus.assign(this->slotsStatus.size(), SlotFree);
 }
 
 unsigned int Link::GetOrigimNode() const {

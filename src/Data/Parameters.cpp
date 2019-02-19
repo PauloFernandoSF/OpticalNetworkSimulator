@@ -150,6 +150,10 @@ void Parameters::SetMaxLoadPoint(double maxLoadPoint) {
     this->maxLoadPoint = maxLoadPoint;
 }
 
+double Parameters::GetMidLoadPoint() const {
+    return this->minLoadPoint + (this->maxLoadPoint - this->minLoadPoint)/2;
+}
+
 unsigned int Parameters::GetNumberLoadPoints() const {
     return numberLoadPoints;
 }

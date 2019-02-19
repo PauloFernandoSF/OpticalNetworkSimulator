@@ -16,8 +16,6 @@
 #include "../../../include/Structure/Topology.h"
 #include "../../../include/Algorithms/GA/IndividualBool.h"
 #include "../../../include/SimulationType/SimulationType.h"
-#include "../../../include/ResourceAllocation/ResourceAlloc.h"
-#include "../../../include/Data/Data.h"
 
 std::default_random_engine GA_RsaOrder::random_generator(0);
 
@@ -40,10 +38,10 @@ const GA_RsaOrder* ga_RsaOrder) {
 }
 
 GA_RsaOrder::GA_RsaOrder(SimulationType* simul):
-simul(simul), numberIndividuals(50), numberGenerations(50),
-numNodes(0), probCrossover(0.5), probMutation(0.1), selectedPopulation(0), 
-totalPopulation(0), bestIndividuals(0), worstIndividuals(0), 
-numBestIndividuals(30), actualGeneration(0) {
+simul(simul), numberIndividuals(50), numberGenerations(50), numNodes(0), 
+probCrossover(0.5), probMutation(0.1), initialPopulation(0), bestIndividuals(0), 
+worstIndividuals(0), numBestIndividuals(30), actualGeneration(0),
+maxNumSimulation(3), selectedPopulation(0), totalPopulation(0) {
     
 }
 
@@ -63,7 +61,7 @@ void GA_RsaOrder::InitializePopulation() {
     for(unsigned int a = 0; a < this->numberIndividuals; a++){
         this->selectedPopulation.push_back(std::make_shared
                                            <IndividualBool>(this));
-    }
+    }   
 }
 
 void GA_RsaOrder::CreateNewPopulation() {
@@ -73,21 +71,8 @@ void GA_RsaOrder::CreateNewPopulation() {
     this->Mutation();
 }
 
-void GA_RsaOrder::SimulateIndividuals() {
-    
-    for(auto it: this->totalPopulation){
-        
-        if(it->GetCount() <= 3){
-            this->simul->GetResourceAlloc()->
-            SetResourceAllocOrder(it->GetGenes());
-            
-            //Check if this run is executing the base or the derived function.
-            //It has to be the base class function.
-            this->simul->Run();
-            it->SetBlockProb(this->simul->GetData()->GetPbReq());
-        }
-        this->simul->GetData()->Initialize();
-    }
+void GA_RsaOrder::KeepInitialPopulation() {
+    this->initialPopulation = this->selectedPopulation;
 }
 
 void GA_RsaOrder::SelectPopulation() {
@@ -172,6 +157,14 @@ IndividualBool* GA_RsaOrder::GetWorstIndividual() const {
 IndividualBool* GA_RsaOrder::GetBestIndividual() const{
     return this->bestIndividuals.at(this->actualGeneration-1).get();
     //return this->selectedPopulation.back().get();
+}
+
+IndividualBool* GA_RsaOrder::GetIniIndividual(unsigned int index) {
+    return this->initialPopulation.at(index).get();
+}
+
+const unsigned int GA_RsaOrder::GetMaxNumSimulation() const {
+    return maxNumSimulation;
 }
 
 void GA_RsaOrder::Crossover() {

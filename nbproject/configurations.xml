@@ -11,7 +11,7 @@
           <itemPath>Files/Inputs/Topologies/Toroidal.txt</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="Traffics" projectFiles="true">
-          <itemPath>Files/Inputs/Traffics/Traffic_10-40-100-200_400.txt</itemPath>
+          <itemPath>Files/Inputs/Traffics/Traffic_10-40-100-200-400.txt</itemPath>
           <itemPath>Files/Inputs/Traffics/Traffic_100-200-400.txt</itemPath>
         </logicalFolder>
         <itemPath>Files/Inputs/Options_1.txt</itemPath>
@@ -169,7 +169,7 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="Files/Inputs/Traffics/Traffic_10-40-100-200_400.txt"
+      <item path="Files/Inputs/Traffics/Traffic_10-40-100-200-400.txt"
             ex="false"
             tool="3"
             flavor2="0">
@@ -372,7 +372,7 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="Files/Inputs/Traffics/Traffic_10-40-100-200_400.txt"
+      <item path="Files/Inputs/Traffics/Traffic_10-40-100-200-400.txt"
             ex="false"
             tool="3"
             flavor2="0">

@@ -24,7 +24,8 @@ InputOutput::InputOutput(SimulationType* simulType)
 :simulType(simulType) {
     this->LoadLog(this->logFile);
     this->LoadResults(this->resultFile);
-    this->LoadGaFiles(this->bestIndividuals, this->worstIndividuals);
+    this->LoadGaFiles(this->bestIndividuals, this->worstIndividuals,
+                      this->initialPopulation);
 }
 
 InputOutput::~InputOutput() {
@@ -102,7 +103,7 @@ void InputOutput::LoadTraffic(std::ifstream& traffic) {
         if(!traffic.is_open()) {       
             std::cerr << "Wrong traffic file." << std::endl;
             std::cerr << "The file required is: Traffic_" 
-                      << trafficName << ".txt";
+                      << trafficName << ".txt" << std::endl;
             std::cerr << "Add/Fix the file then press 'Enter'" 
                       << std::endl;
             
@@ -149,12 +150,13 @@ void InputOutput::LoadLog(std::ofstream& log) {
     }while(!log.is_open());
 }
 
-void InputOutput::LoadGaFiles(std::ofstream& best, std::ofstream& worst) {
+void InputOutput::LoadGaFiles(std::ofstream& best, std::ofstream& worst,
+std::ofstream& iniPop) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
     
     do{
         best.open("Files/Outputs/" + std::to_string(auxInt)
-                  + "/bestIndividuals.txt");
+                  + "/BestIndividuals.txt");
         
         if(!best.is_open()){
             std::cerr << "Wrong best individuals file." << std::endl;
@@ -169,10 +171,10 @@ void InputOutput::LoadGaFiles(std::ofstream& best, std::ofstream& worst) {
     
     do{
         worst.open("Files/Outputs/" + std::to_string(auxInt)
-                  + "/worstIndividuals.txt");
+                  + "/WorstIndividuals.txt");
         
         if(!worst.is_open()){
-            std::cerr << "Wrong best individuals file." << std::endl;
+            std::cerr << "Wrong worst individuals file." << std::endl;
             std::cerr << "The folder required is: " << auxInt 
                       << "/" << std::endl;
             std::cerr << "Add/Fix the folder, then press 'Enter'"
@@ -181,6 +183,21 @@ void InputOutput::LoadGaFiles(std::ofstream& best, std::ofstream& worst) {
             std::cin.get();
         }
     }while(!worst.is_open());
+    
+    do{
+        iniPop.open("Files/Outputs/" + std::to_string(auxInt)
+                  + "/InitialPopulation.txt");
+        
+        if(!iniPop.is_open()){
+            std::cerr << "Wrong initial population file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!iniPop.is_open());
 }
 
 std::ofstream& InputOutput::GetLogFile() {
@@ -197,6 +214,10 @@ std::ofstream& InputOutput::GetBestIndividualsFile() {
 
 std::ofstream& InputOutput::GetWorstIndividualsFile() {
     return this->worstIndividuals;
+}
+
+std::ofstream& InputOutput::GetIniPopulationFile() {
+    return this->initialPopulation;
 }
 
 void InputOutput::PrintProgressBar(unsigned int actual, unsigned int max) {
