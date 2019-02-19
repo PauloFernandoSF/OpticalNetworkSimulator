@@ -61,6 +61,7 @@ public:
      * @param traffic stream that operates in Traffic file.
      */
     void LoadTraffic(std::ifstream& traffic);
+    
     /**
      * @brief Get the Log.txt ofstream.
      * @return ofstream containing the log file.
@@ -74,9 +75,12 @@ public:
     
     std::ofstream& GetBestIndividualsFile();
     
+    std::ofstream& GetBestIndividualFile();
+    
     std::ofstream& GetWorstIndividualsFile();
     
     std::ofstream& GetIniPopulationFile();
+    
     /**
      * @brief Function to print the progress bar, based in 
      * the inputs proportion.
@@ -98,8 +102,8 @@ private:
      */
     void LoadLog(std::ofstream& log);
     
-    void LoadGaFiles(std::ofstream& best, std::ofstream& worst,
-                     std::ofstream& iniPop);
+    void LoadGaFiles(std::ofstream& bests, std::ofstream& best, 
+                     std::ofstream& worst, std::ofstream& iniPop);
 
 private:
     /**
@@ -116,6 +120,8 @@ private:
     std::ofstream resultFile;
     
     std::ofstream bestIndividuals;
+    
+    std::ofstream bestIndividual;
     
     std::ofstream worstIndividuals;
     

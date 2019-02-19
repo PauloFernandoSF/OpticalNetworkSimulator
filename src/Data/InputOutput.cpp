@@ -24,8 +24,8 @@ InputOutput::InputOutput(SimulationType* simulType)
 :simulType(simulType) {
     this->LoadLog(this->logFile);
     this->LoadResults(this->resultFile);
-    this->LoadGaFiles(this->bestIndividuals, this->worstIndividuals,
-                      this->initialPopulation);
+    this->LoadGaFiles(this->bestIndividuals, this->bestIndividual, 
+                      this->worstIndividuals, this->initialPopulation);
 }
 
 InputOutput::~InputOutput() {
@@ -150,18 +150,33 @@ void InputOutput::LoadLog(std::ofstream& log) {
     }while(!log.is_open());
 }
 
-void InputOutput::LoadGaFiles(std::ofstream& best, std::ofstream& worst,
-std::ofstream& iniPop) {
+void InputOutput::LoadGaFiles(std::ofstream& bests, std::ofstream& best, 
+std::ofstream& worst, std::ofstream& iniPop) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
     
     do{
-        best.open("Files/Outputs/" + std::to_string(auxInt)
-                  + "/BestIndividuals.txt");
+        bests.open("Files/Outputs/" + std::to_string(auxInt)
+                  + "/GA/BestIndividuals.txt");
         
-        if(!best.is_open()){
+        if(!bests.is_open()){
             std::cerr << "Wrong best individuals file." << std::endl;
             std::cerr << "The folder required is: " << auxInt 
-                      << "/" << std::endl;
+                      << "/GA/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!bests.is_open());
+    
+    do{
+        best.open("Files/Outputs/" + std::to_string(auxInt)
+                  + "/GA/BestIndividual.txt");
+        
+        if(!bests.is_open()){
+            std::cerr << "Wrong best individuals file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/GA/" << std::endl;
             std::cerr << "Add/Fix the folder, then press 'Enter'"
                       << std::endl;
             
@@ -171,12 +186,12 @@ std::ofstream& iniPop) {
     
     do{
         worst.open("Files/Outputs/" + std::to_string(auxInt)
-                  + "/WorstIndividuals.txt");
+                  + "/GA/WorstIndividuals.txt");
         
         if(!worst.is_open()){
             std::cerr << "Wrong worst individuals file." << std::endl;
             std::cerr << "The folder required is: " << auxInt 
-                      << "/" << std::endl;
+                      << "/GA/" << std::endl;
             std::cerr << "Add/Fix the folder, then press 'Enter'"
                       << std::endl;
             
@@ -186,12 +201,12 @@ std::ofstream& iniPop) {
     
     do{
         iniPop.open("Files/Outputs/" + std::to_string(auxInt)
-                  + "/InitialPopulation.txt");
+                  + "/GA/InitialPopulation.txt");
         
         if(!iniPop.is_open()){
             std::cerr << "Wrong initial population file." << std::endl;
             std::cerr << "The folder required is: " << auxInt 
-                      << "/" << std::endl;
+                      << "/GA/" << std::endl;
             std::cerr << "Add/Fix the folder, then press 'Enter'"
                       << std::endl;
             
@@ -210,6 +225,10 @@ std::ofstream& InputOutput::GetResultFile() {
 
 std::ofstream& InputOutput::GetBestIndividualsFile() {
     return this->bestIndividuals;
+}
+
+std::ofstream& InputOutput::GetBestIndividualFile() {
+    return this->bestIndividual;
 }
 
 std::ofstream& InputOutput::GetWorstIndividualsFile() {

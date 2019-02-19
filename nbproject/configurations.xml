@@ -19,6 +19,11 @@
       </logicalFolder>
       <logicalFolder name="f2" displayName="Outputs" projectFiles="true">
         <logicalFolder name="f1" displayName="1" projectFiles="true">
+          <logicalFolder name="f1" displayName="GA" projectFiles="true">
+            <itemPath>Files/Outputs/1/GA/BestIndividuals.txt</itemPath>
+            <itemPath>Files/Outputs/1/GA/InitialPopulation.txt</itemPath>
+            <itemPath>Files/Outputs/1/GA/WorstIndividuals.txt</itemPath>
+          </logicalFolder>
           <itemPath>Files/Outputs/1/Log.txt</itemPath>
           <itemPath>Files/Outputs/1/PBvLoad.txt</itemPath>
         </logicalFolder>
@@ -175,6 +180,21 @@
             flavor2="0">
       </item>
       <item path="Files/Inputs/Traffics/Traffic_100-200-400.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/BestIndividuals.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/InitialPopulation.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/WorstIndividuals.txt"
             ex="false"
             tool="3"
             flavor2="0">
@@ -378,6 +398,21 @@
             flavor2="0">
       </item>
       <item path="Files/Inputs/Traffics/Traffic_100-200-400.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/BestIndividuals.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/InitialPopulation.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/WorstIndividuals.txt"
             ex="false"
             tool="3"
             flavor2="0">

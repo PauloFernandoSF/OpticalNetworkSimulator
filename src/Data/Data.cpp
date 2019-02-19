@@ -113,9 +113,11 @@ void Data::SaveGaFiles() {
                                      ->GetLogFile();
     std::ofstream& initPop = this->simulType->GetInputOutput()
                                         ->GetIniPopulationFile();
-    std::ofstream& bestInd = this->simulType->GetInputOutput()
+    std::ofstream& bestInds = this->simulType->GetInputOutput()
                                  ->GetBestIndividualsFile();
-    std::ofstream& worstInd = this->simulType->GetInputOutput()
+    std::ofstream& besInd = this->simulType->GetInputOutput()
+                                ->GetBestIndividualFile();
+    std::ofstream& worstInds = this->simulType->GetInputOutput()
                                  ->GetWorstIndividualsFile();
     GA_RsaOrder* ga = dynamic_cast<GA_SingleObjective*>
                       (this->simulType)->GetGA_RsaOrder();
@@ -126,10 +128,15 @@ void Data::SaveGaFiles() {
     for(unsigned int a = 1; a <= numGen; a++){
         ga->SetActualGeneration(a);
         logOfstream << ga << std::endl;
-        bestInd << a << "\t" << ga->GetBestIndividual()->GetBlockProb() 
+        bestInds << a << "\t" << ga->GetBestIndividual()->GetBlockProb() 
                 << std::endl;
-        worstInd << a << "\t" << ga->GetWorstIndividual()->GetBlockProb()
+        worstInds << a << "\t" << ga->GetWorstIndividual()->GetBlockProb()
                  << std::endl;
+    }
+    
+    std::vector<bool> gene = ga->GetBestIndividual()->GetGenes();
+    for(unsigned int a = 0; a < gene.size(); a++){
+        besInd << gene.at(a) << std::endl;
     }
     
     for(unsigned int a = 0; a < numIniPop; a++){

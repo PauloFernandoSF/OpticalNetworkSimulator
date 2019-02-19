@@ -33,6 +33,7 @@ void GA_SingleObjective::Run() {
     this->GetCallGenerator()->SetNetworkLoad(this->
     GetParameters()->GetMidLoadPoint());
     unsigned int numGenerations = this->gaAlgorithm->GetNumberGenerations();
+    
     this->gaAlgorithm->InitializePopulation();
     this->GetInputOutput()->PrintProgressBar(0, numGenerations);
     this->RunSelectPop();
