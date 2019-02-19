@@ -20,6 +20,7 @@
 #include "../../include/Data/Parameters.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Modulation.h"
+#include "../../include/Data/InputOutput.h"
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :simulType(simulType), topology(nullptr), routing(nullptr), specAlloc(nullptr),
@@ -45,7 +46,21 @@ void ResourceAlloc::Load() {
     unsigned int numNodes = this->topology->GetNumNodes();
     
     this->allRoutes.resize(numNodes*numNodes);
-    this->resourceAllocOrder.assign(numNodes*numNodes, false);
+    
+    switch(this->simulType->GetOptions()->GetOrderRSA()){
+        case OrderRoutingSa:
+            this->resourceAllocOrder.assign(numNodes*numNodes, false);
+            break;
+        case OrderSaRouting:
+            this->resourceAllocOrder.assign(numNodes*numNodes, true);
+            break;
+        case GaOrder:
+            this->resourceAllocOrder.resize(numNodes*numNodes);
+            this->SetResourceAllocOrder();
+            break;
+        default:
+            std::cout << "Invalid RSA order" << std::endl;
+    }
     
     this->routing = std::make_shared<Routing>(this, 
         this->simulType->GetOptions()->GetRoutingOption(), this->topology);
@@ -149,7 +164,7 @@ void ResourceAlloc::SAR(Call* call) {
             break;
     }
     
-    if(!this->topology->IsValidLigthPath(call))
+    if(call->GetStatus() == NotEvaluated)
         call->SetStatus(Blocked);
 }
 
@@ -258,4 +273,18 @@ void ResourceAlloc::SetResourceAllocOrder(std::vector<bool> resourceAllocOrder) 
     assert(resourceAllocOrder.size() == this->resourceAllocOrder.size());
     
     this->resourceAllocOrder = resourceAllocOrder;
+}
+
+void ResourceAlloc::SetResourceAllocOrder() {
+    std::ifstream auxIfstream;
+    std::vector<bool> vecBool;
+    bool auxBool;
+    unsigned int numNodes = this->topology->GetNumNodes();
+    this->simulType->GetInputOutput()->LoadRsaOrderFirstSimul(auxIfstream);
+    
+    for(unsigned int a = 0; a < numNodes*numNodes; a++){
+        auxIfstream >> auxBool;
+        vecBool.push_back(auxBool);
+    }
+    this->SetResourceAllocOrder(vecBool);
 }

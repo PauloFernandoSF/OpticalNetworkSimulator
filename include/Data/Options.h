@@ -104,6 +104,14 @@ enum NetworkOption {
     LastNetworkOption = NetworkEON
 };
 
+enum RsaOrder {
+    OrderRoutingSa,
+    OrderSaRouting,
+    GaOrder,
+    FirstOrderRSA = OrderRoutingSa,
+    LastOrderRSA = GaOrder
+};
+
 /**
  * @brief The Options class is responsible for storage the simulation
  * options.
@@ -257,6 +265,13 @@ public:
     std::string GetNetworkOptionName() const;
 
     void SetNetworkOption(NetworkOption networkOption);
+    
+    RsaOrder GetOrderRSA() const;
+    
+    std::string GetOrderRsaName() const;
+
+    void SetOrderRSA(RsaOrder orderRSA);
+
 
 private:
     /**
@@ -293,6 +308,8 @@ private:
     PhysicalLayerOption phyLayerOption;
     
     NetworkOption networkOption;
+    
+    RsaOrder orderRSA;
     
     /**
      * @brief Map that keeps the topology option 
@@ -340,6 +357,9 @@ private:
     
     static const boost::unordered_map<NetworkOption,
     std::string> mapNetworkOption;
+    
+    static const boost::unordered_map<RsaOrder,
+    std::string> mapOrderRSA;
 };
 
 #endif /* OPTIONS_H */

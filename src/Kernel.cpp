@@ -33,16 +33,22 @@ Kernel::~Kernel() {
 void Kernel::Run() {
     
     CreateSimulations();
-    Pre_Simulation();
-    Simulation();
-    Pos_Simulation();
+    
+    for(auto it: this->simulations){
+        it->LoadFile();
+        it->AdditionalSettings();
+        
+        it->Print();
+        it->Run();
+        
+        it->Save();
+    }
 }
 
 void Kernel::CreateSimulations() {
     
     for(unsigned int a = 1; a <= this->numberSimulations; ++a){
-        //simulations.push_back(std::make_shared<MultiLoadSimulation> (a));
-        simulations.push_back(std::make_shared<GA_SingleObjective>(a));
+        simulations.push_back(std::make_shared<MultiLoadSimulation>(a));
     }
 }
 

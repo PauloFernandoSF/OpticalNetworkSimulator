@@ -16,8 +16,9 @@
 #include "../../../include/Structure/Topology.h"
 #include "../../../include/Algorithms/GA/IndividualBool.h"
 #include "../../../include/SimulationType/SimulationType.h"
+#include "../../../include/GeneralClasses/Def.h"
 
-std::default_random_engine GA_RsaOrder::random_generator(0);
+std::default_random_engine GA_RsaOrder::random_generator(Def::randomDevice());
 
 bool GA_RsaOrder::IndividualCompare::operator()(
 const std::shared_ptr<IndividualBool>& indA, 

@@ -70,6 +70,12 @@ Options::mapNetworkOption = boost::assign::map_list_of
     (NetworkWDM, "WDM")
     (NetworkEON, "EON");
 
+const boost::unordered_map<RsaOrder,  std::string>
+Options::mapOrderRSA = boost::assign::map_list_of
+    (OrderRoutingSa, "Routing-SA")
+    (OrderSaRouting, "SA-Routing")
+    (GaOrder, "GA order");
+
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
     ostream << "OPTIONS" << std::endl;
@@ -89,6 +95,8 @@ const Options* options) {
             << std::endl;
     ostream << "Network Type: " << options->GetNetworkOptionName()
             << std::endl;
+    ostream << "RSA Order: " << options->GetOrderRsaName()
+            << std::endl;
     
     return ostream;
 }
@@ -98,7 +106,7 @@ Options::Options(SimulationType* simulType)
 routingOption(RoutingInvalid), specAllOption(SpecAllInvalid),
 linkCostType(Invalid), trafficOption(TrafficInvalid), 
 resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled),
-networkOption(NetworkInvalid) {
+networkOption(NetworkInvalid), orderRSA(OrderRoutingSa) {
     
 }
 
@@ -181,6 +189,15 @@ void Options::Load() {
     std::cin >> auxInt;
     this->SetNetworkOption((NetworkOption) auxInt);
     
+    std::cout << "RSA Order" << std::endl;
+    for(RsaOrder a = FirstOrderRSA; a <= LastOrderRSA;
+    a = RsaOrder(a+1)){
+        std::cout << a << "-" << this->mapOrderRSA.at(a) << std::endl;
+    }
+    std::cout << "Insert the RSA order: ";
+    std::cin >> auxInt;
+    this->SetOrderRSA((RsaOrder) auxInt);
+    
     std::cout << std::endl;
 }
 
@@ -205,6 +222,8 @@ void Options::LoadFile() {
     this->SetPhyLayerOption((PhysicalLayerOption) auxInt);
     auxIfstream >> auxInt;
     this->SetNetworkOption((NetworkOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetOrderRSA((RsaOrder) auxInt);
 }
 
 void Options::Save() {
@@ -332,4 +351,16 @@ void Options::SetNetworkOption(NetworkOption networkOption) {
         default:
             std::cout << "Invalid type of network" << std::endl;
     }
+}
+
+RsaOrder Options::GetOrderRSA() const {
+    return orderRSA;
+}
+
+std::string Options::GetOrderRsaName() const {
+    return this->mapOrderRSA.at(this->orderRSA);
+}
+
+void Options::SetOrderRSA(RsaOrder orderRSA) {
+    this->orderRSA = orderRSA;
 }

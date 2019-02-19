@@ -112,6 +112,23 @@ void InputOutput::LoadTraffic(std::ifstream& traffic) {
     }while(!traffic.is_open());
 }
 
+void InputOutput::LoadRsaOrderFirstSimul(std::ifstream& orderRsa) {
+    
+    do{
+        orderRsa.open("Files/Outputs/1/GA/BestIndividual.txt");
+        
+        if(!orderRsa.is_open()) {
+            std::cerr << "Wrong RSA order file." << std::endl;
+            std::cerr << "The file required is: Files/Outputs/"
+            "1/GA/BestIndividual.txt" << std::endl;
+            std::cerr << "Add/Fix the file then press 'Enter'" 
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!orderRsa.is_open());
+}
+
 void InputOutput::LoadResults(std::ofstream& pBvLoad) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
     

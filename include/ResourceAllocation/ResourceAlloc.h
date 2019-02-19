@@ -169,6 +169,8 @@ public:
     std::vector<bool> GetResourceAllocOrder() const;
 
     void SetResourceAllocOrder(std::vector<bool> resourceAllocOrder);
+    
+    void SetResourceAllocOrder();
 
 private:
     /**

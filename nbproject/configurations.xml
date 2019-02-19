@@ -15,11 +15,18 @@
           <itemPath>Files/Inputs/Traffics/Traffic_100-200-400.txt</itemPath>
         </logicalFolder>
         <itemPath>Files/Inputs/Options_1.txt</itemPath>
+        <itemPath>Files/Inputs/Options_2.txt</itemPath>
+        <itemPath>Files/Inputs/Options_3.txt</itemPath>
+        <itemPath>Files/Inputs/Options_4.txt</itemPath>
         <itemPath>Files/Inputs/Parameters_1.txt</itemPath>
+        <itemPath>Files/Inputs/Parameters_2.txt</itemPath>
+        <itemPath>Files/Inputs/Parameters_3.txt</itemPath>
+        <itemPath>Files/Inputs/Parameters_4.txt</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Outputs" projectFiles="true">
         <logicalFolder name="f1" displayName="1" projectFiles="true">
           <logicalFolder name="f1" displayName="GA" projectFiles="true">
+            <itemPath>Files/Outputs/1/GA/BestIndividual.txt</itemPath>
             <itemPath>Files/Outputs/1/GA/BestIndividuals.txt</itemPath>
             <itemPath>Files/Outputs/1/GA/InitialPopulation.txt</itemPath>
             <itemPath>Files/Outputs/1/GA/WorstIndividuals.txt</itemPath>
@@ -27,6 +34,9 @@
           <itemPath>Files/Outputs/1/Log.txt</itemPath>
           <itemPath>Files/Outputs/1/PBvLoad.txt</itemPath>
         </logicalFolder>
+        <itemPath>Files/Outputs/2</itemPath>
+        <itemPath>Files/Outputs/3</itemPath>
+        <itemPath>Files/Outputs/4</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
@@ -156,7 +166,19 @@
       </compileType>
       <item path="Files/Inputs/Options_1.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Files/Inputs/Options_2.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Options_3.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Options_4.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Files/Inputs/Parameters_1.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_2.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_3.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_4.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Topologies/Germany.txt"
             ex="false"
@@ -184,6 +206,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="Files/Outputs/1/GA/BestIndividual.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="Files/Outputs/1/GA/BestIndividuals.txt"
             ex="false"
             tool="3"
@@ -202,6 +229,12 @@
       <item path="Files/Outputs/1/Log.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Outputs/1/PBvLoad.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/2" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/3" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/4" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Algorithms/GA/GA_RsaOrder.h"
             ex="false"
@@ -374,7 +407,19 @@
       </compileType>
       <item path="Files/Inputs/Options_1.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Files/Inputs/Options_2.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Options_3.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Options_4.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Files/Inputs/Parameters_1.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_2.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_3.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_4.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Topologies/Germany.txt"
             ex="false"
@@ -402,6 +447,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="Files/Outputs/1/GA/BestIndividual.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="Files/Outputs/1/GA/BestIndividuals.txt"
             ex="false"
             tool="3"
@@ -420,6 +470,12 @@
       <item path="Files/Outputs/1/Log.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Outputs/1/PBvLoad.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/2" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/3" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/4" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Algorithms/GA/GA_RsaOrder.h"
             ex="false"

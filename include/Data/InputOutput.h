@@ -62,6 +62,8 @@ public:
      */
     void LoadTraffic(std::ifstream& traffic);
     
+    void LoadRsaOrderFirstSimul(std::ifstream& orderRsa);
+    
     /**
      * @brief Get the Log.txt ofstream.
      * @return ofstream containing the log file.
