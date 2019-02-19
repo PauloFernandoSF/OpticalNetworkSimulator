@@ -15,6 +15,7 @@
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/ResourceAllocation/Routing.h"
+#include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/SA.h"
 #include "../../include/Data/Options.h"
 #include "../../include/Data/Parameters.h"
@@ -45,7 +46,7 @@ void ResourceAlloc::Load() {
     unsigned int numNodes = this->topology->GetNumNodes();
     
     this->allRoutes.resize(numNodes*numNodes);
-    
+       
     this->routing = std::make_shared<Routing>(this, 
         this->simulType->GetOptions()->GetRoutingOption(), this->topology);
     
@@ -171,6 +172,7 @@ void ResourceAlloc::RoutingOffline() {
     switch(this->routing->GetRoutingOption()){
         case RoutingDJK:
             this->routing->Dijkstra();
+            //this->SetInterferingRoutes();
             break;
         case RoutingYEN:
         case RoutingBSR:
@@ -202,4 +204,64 @@ Topology* ResourceAlloc::GetTopology() const {
 
 void ResourceAlloc::SetTopology(Topology* topology) {
     this->topology = topology;
+}
+
+void ResourceAlloc::SetInterferingRoutes(){
+    std::shared_ptr<Route> routeAux, routeAux2;
+    int nodeRoute[2], nodeRouteInt[2], totalRoutes = 0, countRoutes = 0;
+    bool flag = true;
+    
+    /*Initialize vector of vector of route pointer for Interfering Routes*/
+    for(int r = 1;r < this->allRoutes.size() - 1;r++){
+        if(r%(this->topology->GetNumNodes() + 1) == 0)
+            r += 1;
+        totalRoutes = totalRoutes + allRoutes.at(r).size();
+    }
+    this->interRoutes.resize(totalRoutes); 
+    /*Vary the first position of allRoutes*/
+    for(unsigned int a = 1; a < allRoutes.size() - 1; a++){
+      if(a%(this->topology->GetNumNodes() + 1) == 0)
+            a += 1;
+      /*Vary second position of allRoutes*/
+      for(unsigned int e = 0;e < allRoutes.at(a).size();e++){  
+        routeAux = this->allRoutes.at(a).at(e);
+        /*Search links to verify interfering routes*/
+        for(unsigned int b = 0; b < routeAux->GetNumHops() - 1; b++){
+            nodeRoute[0] = routeAux->GetNode(b);
+            nodeRoute[1] = routeAux->GetNode(b+1);
+            /*Search in allRoutes to extract all interfering routes*/
+            for(unsigned int c = 1; c < allRoutes.size() - 1; c++){
+              if(c%(this->topology->GetNumNodes() + 1) == 0)
+                 c += 1;
+              for(unsigned int f = 0;f < allRoutes.at(c).size();f++){
+                routeAux2 = allRoutes.at(c).at(f);
+                if(routeAux == routeAux2)
+                   continue;
+                for(unsigned int d = 0; d < (routeAux2->GetNumHops()-1); d++){
+                   nodeRouteInt[0] = routeAux2->GetNode(d);
+                   nodeRouteInt[1] = routeAux2->GetNode(d+1);
+                   if(nodeRoute[0]==nodeRouteInt[0] && 
+                          nodeRoute[1]==nodeRouteInt[1]){
+                      /*Verify if interfering route is already in interRoutes*/
+                       for(unsigned int e = 0; e < interRoutes.at(countRoutes)
+                               .size(); e++){
+                          if(interRoutes.at(countRoutes).at(e) == routeAux2){
+                              flag = false;
+                              d = routeAux2->GetNumHops()-1;
+                              break;
+                          }
+                       }
+                       if(flag){
+                         this->interRoutes.at(countRoutes).push_back(routeAux2);
+                         break;
+                       }
+                       flag = true;
+                   }
+                }
+              }
+            }
+        }
+        countRoutes++;
+      }
+    }
 }

@@ -51,6 +51,11 @@ public:
     void SetRoutes(unsigned int orN, unsigned int deN, 
                    std::vector<std::shared_ptr<Route>> routes);
     
+    /**
+     * @brief Set interfering routes for all routes in the network
+     */
+    void SetInterferingRoutes();
+    
     void AddRoute(unsigned int orN, unsigned int deN, 
                   std::shared_ptr<Route> route);
     
@@ -98,6 +103,12 @@ private:
     std::shared_ptr<Modulation> modulation;
     
     std::vector<std::vector<std::shared_ptr<Route>>> allRoutes;
-};
-
+    
+    /**
+     *@brief Vector of vector of route pointers to store interfering routes of 
+     * all routes in the network
+     */
+    std::vector<std::vector<std::shared_ptr<Route>>> interRoutes;
+    
+};    
 #endif /* RESOURCEALLOC_H */
