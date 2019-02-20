@@ -38,6 +38,7 @@ Options::mapSpecAlgOptions = boost::assign::map_list_of
     (SpecAllRandom, "Random")
     (SpecAllFF, "First Fit")
     (SpecAllFFC, "First Fit Core")
+    (SpecAllMC_MSCL, "Multicore MSCL")
     (SpecAllMSCL, "MSCL");
 
 const boost::unordered_map<LinkCostType, std::string>

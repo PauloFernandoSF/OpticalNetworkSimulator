@@ -56,6 +56,7 @@ enum SpectrumAllocationOption {
      SpecAllRandom,
      SpecAllFF,
      SpecAllFFC,
+     SpecAllMC_MSCL,
      SpecAllMSCL,
      FirstSpecAllOption = SpecAllRandom,
      LastSpecAllOption = SpecAllMSCL

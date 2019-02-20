@@ -172,7 +172,7 @@ void ResourceAlloc::RoutingOffline() {
     switch(this->routing->GetRoutingOption()){
         case RoutingDJK:
             this->routing->Dijkstra();
-            //this->SetInterferingRoutes();
+            this->SetInterferingRoutes();
             break;
         case RoutingYEN:
         case RoutingBSR:
@@ -211,13 +211,14 @@ void ResourceAlloc::SetInterferingRoutes(){
     int nodeRoute[2], nodeRouteInt[2], totalRoutes = 0, countRoutes = 0;
     bool flag = true;
     
+    this->interRoutes.resize(this->allRoutes.size());
     /*Initialize vector of vector of route pointer for Interfering Routes*/
     for(int r = 1;r < this->allRoutes.size() - 1;r++){
         if(r%(this->topology->GetNumNodes() + 1) == 0)
             r += 1;
-        totalRoutes = totalRoutes + allRoutes.at(r).size();
+        this->interRoutes.at(r).resize(this->allRoutes.at(r).size());
     }
-    this->interRoutes.resize(totalRoutes); 
+    //this->interRoutes.resize(totalRoutes); 
     /*Vary the first position of allRoutes*/
     for(unsigned int a = 1; a < allRoutes.size() - 1; a++){
       if(a%(this->topology->GetNumNodes() + 1) == 0)
@@ -243,16 +244,16 @@ void ResourceAlloc::SetInterferingRoutes(){
                    if(nodeRoute[0]==nodeRouteInt[0] && 
                           nodeRoute[1]==nodeRouteInt[1]){
                       /*Verify if interfering route is already in interRoutes*/
-                       for(unsigned int e = 0; e < interRoutes.at(countRoutes)
-                               .size(); e++){
-                          if(interRoutes.at(countRoutes).at(e) == routeAux2){
+                       for(unsigned int p = 0; p < this->interRoutes.at(a).at(e)
+                               .size(); p++){
+                          if(this->interRoutes.at(a).at(e).at(p) == routeAux2){
                               flag = false;
                               d = routeAux2->GetNumHops()-1;
                               break;
                           }
                        }
                        if(flag){
-                         this->interRoutes.at(countRoutes).push_back(routeAux2);
+                         this->interRoutes.at(a).at(e).push_back(routeAux2);
                          break;
                        }
                        flag = true;

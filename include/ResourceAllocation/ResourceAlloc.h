@@ -105,10 +105,10 @@ private:
     std::vector<std::vector<std::shared_ptr<Route>>> allRoutes;
     
     /**
-     *@brief Vector of vector of route pointers to store interfering routes of 
-     * all routes in the network
+     *@brief Vector of vector of vector of route pointers to store interfering 
+     * routes of all routes in the network
      */
-    std::vector<std::vector<std::shared_ptr<Route>>> interRoutes;
+    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> interRoutes;
     
 };    
 #endif /* RESOURCEALLOC_H */
