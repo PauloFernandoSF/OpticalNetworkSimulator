@@ -61,7 +61,10 @@ public:
      * @param traffic stream that operates in Traffic file.
      */
     void LoadTraffic(std::ifstream& traffic);
-    
+    /**
+     * @brief Loads the RSA order input file from the first simulation made.
+     * @param orderRsa Ifstream with the input file.
+     */
     void LoadRsaOrderFirstSimul(std::ifstream& orderRsa);
     
     /**
@@ -74,13 +77,29 @@ public:
      * @return ofstream containing the PBvLoad file.
      */
     std::ofstream& GetResultFile();
-    
+    /**
+     * @brief Get the output file that will contain the best individuals, with
+     * their correspondent generation and blocking probability.
+     * @return Best individuals output file.
+     */
     std::ofstream& GetBestIndividualsFile();
-    
+    /**
+     * @brief Get the output file that will contain the best individual of the 
+     * last generation (Genes of this individual).
+     * @return Best individual output file.
+     */
     std::ofstream& GetBestIndividualFile();
-    
+    /**
+     * @brief Get the output file that will contain the worst individuals, with
+     * their correspondent generation and blocking probability.
+     * @return Worst individuals output file.
+     */
     std::ofstream& GetWorstIndividualsFile();
-    
+    /**
+     * @brief Get the output file that will contain the initial population, 
+     * before the first generation, with their blocking probability.
+     * @return Initial population output file.
+     */
     std::ofstream& GetIniPopulationFile();
     
     /**
@@ -103,7 +122,13 @@ private:
      * @param results ofstream to the Log.txt.
      */
     void LoadLog(std::ofstream& log);
-    
+    /**
+     * @brief Function to load the GA algorithm files.
+     * @param bests Best individuals file.
+     * @param best Best individual file.
+     * @param worst Worst individuals file.
+     * @param iniPop Initial population file.
+     */
     void LoadGaFiles(std::ofstream& bests, std::ofstream& best, 
                      std::ofstream& worst, std::ofstream& iniPop);
 

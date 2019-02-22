@@ -72,9 +72,9 @@ void GA_SingleObjective::Save() {
 }
 
 void GA_SingleObjective::Help() {
-    std::cout << "GA SINGLE OBJECTIVE SIMULATION" << std::endl
+    std::cout << "GA SINGLE OBJECTIVE SIMULATION FOR RSA ORDER" << std::endl
               << "This type of simulation applies the genetic algorithm "
-              << "for single objective. "
+              << "for single objective."
               << std::endl << std::endl;
 }
 

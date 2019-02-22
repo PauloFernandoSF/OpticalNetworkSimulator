@@ -172,20 +172,30 @@ void GA_RsaOrder::Crossover() {
     assert(this->selectedPopulation.size() == this->numberIndividuals);
     IndividualBool *auxInd1, *auxInd2;
     
-    std::shuffle(this->selectedPopulation.begin(), 
-                 this->selectedPopulation.end(), this->random_generator);
-    
-    while(!this->selectedPopulation.empty()){
-        this->totalPopulation.push_back(this->selectedPopulation.back());
-        auxInd1 = totalPopulation.back().get();
-        this->selectedPopulation.pop_back();
-        
-        this->totalPopulation.push_back(this->selectedPopulation.back());
-        auxInd2 = totalPopulation.back().get();
-        this->selectedPopulation.pop_back();
+    while(this->totalPopulation.size() < this->numberIndividuals){
+        auxInd1 = this->RoullleteIndividual();
+        auxInd2 = this->RoullleteIndividual();
         
         this->GenerateNewIndividuals(auxInd1, auxInd2);
     }
+}
+
+IndividualBool* GA_RsaOrder::RoullleteIndividual() {
+    double auxDouble = 0.0;
+    unsigned int index;
+       
+    this->fitnessDistribution = std::uniform_real_distribution<double>(0, 
+                                this->sumFitness);
+    double fitness = this->fitnessDistribution(random_generator);
+    
+    for(index = 0; index < this->selectedPopulation.size(); index++){
+        auxDouble += 1/this->selectedPopulation.at(index)->GetBlockProb();
+        
+        if(auxDouble > fitness)
+            break;
+    }
+    
+    return this->selectedPopulation.at(index).get();
 }
 
 void GA_RsaOrder::GenerateNewIndividuals(const IndividualBool* const ind1, 
@@ -222,15 +232,15 @@ void GA_RsaOrder::UniformCrossover(const IndividualBool* const ind1,
 }
 
 void GA_RsaOrder::Mutation() {
-    assert(this->totalPopulation.size() == 2*this->numberIndividuals);
+    assert(this->totalPopulation.size() == this->numberIndividuals);
     unsigned int popSize = this->totalPopulation.size();
-    std::shared_ptr<IndividualBool> newInd;
     
     for(unsigned int a = 0; a < popSize; a++){
-        newInd = std::make_shared<IndividualBool>(this->totalPopulation.at(a));
-        this->MutateIndividual(newInd.get());
-        this->totalPopulation.push_back(newInd);
+        this->MutateIndividual(this->totalPopulation.at(a).get());
     }
+    
+    this->totalPopulation.insert(this->totalPopulation.end(), 
+          this->selectedPopulation.begin(), this->selectedPopulation.end());
 }
 
 void GA_RsaOrder::MutateIndividual(IndividualBool* const ind) {
@@ -244,4 +254,14 @@ void GA_RsaOrder::MutateIndividual(IndividualBool* const ind) {
                 ind->SetGene(a, b, !ind->GetGene(a, b));
         }
     }    
+}
+
+void GA_RsaOrder::SetSumFitnessSelectedPop() {
+    double sum = 0.0;
+    
+    for(auto it: this->selectedPopulation){
+        sum += (1 / it->GetBlockProb());
+    }
+    
+    this->sumFitness = sum;
 }

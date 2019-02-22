@@ -47,6 +47,7 @@ void ResourceAlloc::Load() {
     
     this->allRoutes.resize(numNodes*numNodes);
     
+    //Create the RSA order vector based on the option set.
     switch(this->simulType->GetOptions()->GetOrderRSA()){
         case OrderRoutingSa:
             this->resourceAllocOrder.assign(numNodes*numNodes, false);

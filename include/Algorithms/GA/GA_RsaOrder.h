@@ -91,6 +91,8 @@ private:
     
     void Crossover();
     
+    IndividualBool* RoullleteIndividual();
+    
     void GenerateNewIndividuals(const IndividualBool* const ind1,
                                 const IndividualBool* const ind2);
     
@@ -108,6 +110,7 @@ private:
     void MutateIndividual(IndividualBool* const ind);
     
     
+    void SetSumFitnessSelectedPop();
     
 private:
     
@@ -135,12 +138,16 @@ private:
     
     const unsigned int maxNumSimulation;
     
+    double sumFitness;
+    
     
     static std::default_random_engine random_generator;
     
     std::uniform_int_distribution<int> boolDistribution;
     
     std::uniform_real_distribution<double> probDistribution;
+    
+    std::uniform_real_distribution<double> fitnessDistribution;
     
 public:
     
