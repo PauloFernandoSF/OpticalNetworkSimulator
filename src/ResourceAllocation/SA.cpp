@@ -42,13 +42,18 @@ void SA::SpecAllocation(Call* call) {
             csa->FirstFitCore(call);
             break;
         }
+        case SpecAllMC_MSCL:{
+            CSA* csa = static_cast<CSA *>(this);
+            csa->MulticoreMSCL(call);
+            break;
+        }
         default:
             std::cerr << "Invalid spectrum allocation option" << std::endl;
     }
 }
 
 void SA::Random(Call* call) {
-    Route* route = call->GetRoute();
+    std::shared_ptr<Route> route = call->GetRoute();
     unsigned int numSlotsReq = call->GetNumberSlots(), sumslots = 0;
     unsigned int numSlotsTotal = this->topology->GetNumSlots();
     int firstSlot = 0;
@@ -77,7 +82,7 @@ void SA::Random(Call* call) {
 }
 
 void SA::FirstFit(Call* call) {
-    Route* route = call->GetRoute();
+    std::shared_ptr<Route> route = call->GetRoute();
     unsigned int numSlotsReq = call->GetNumberSlots(), sumslots = 0;
     unsigned int numSlotsTotal = this->topology->GetNumSlots();
     
@@ -98,4 +103,42 @@ void SA::FirstFit(Call* call) {
 
 Topology* SA::GetTopology(){
     return topology;
+}
+
+int SA::CalcNumFormAloc(int L, bool* Disp,int tam){ 
+//L indica a largura da requisicao e Disp o vetor de disponibilidade
+/*
+	int sum = 0, si, se; //si eh o slot inicial da alocacao, que vai de 0 ate SE-L
+	for(si = 0; si <= tam-L; si++){
+		for(se = si; se < si+L; se++) //se checa se todos os slots de si ate si+L-1 estao disponiveis
+			if(Disp[se] == false)
+				break;
+		if(se == si+L) // Os slots si,si+1,...,si+Lf-1 estao disponiveis
+			sum++;
+	}
+	return sum;
+}
+*/
+    int sum = 0, si;//si eh o slot inicial da alocacao, que vai de 0 ate SE-L
+    int cont = 0;
+    for(si = 0; si < tam; si++){
+        if(Disp[si] == false){
+            if(cont >= L){
+                 sum += cont - L + 1;
+                 //sum += floor (cont/L);
+            }
+                cont = 0;
+        }
+            else{
+                cont++;
+            }
+    }
+    if(cont >= L){
+       sum += cont - L + 1;
+    }
+    return sum;
+}
+
+ResourceAlloc* SA::GetResourceAlloc(){
+    return this->resourceAlloc;
 }

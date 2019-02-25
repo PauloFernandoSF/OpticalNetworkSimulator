@@ -81,6 +81,8 @@ public:
     Topology* GetTopology() const;
 
     void SetTopology(Topology* topology);
+    
+    std::vector<std::shared_ptr<Route>> GetInterRoutes(int ori,int des,int pos);
 
 
 private:

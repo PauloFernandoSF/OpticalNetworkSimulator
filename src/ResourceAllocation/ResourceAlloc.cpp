@@ -172,7 +172,7 @@ void ResourceAlloc::RoutingOffline() {
     switch(this->routing->GetRoutingOption()){
         case RoutingDJK:
             this->routing->Dijkstra();
-            this->SetInterferingRoutes();
+            //this->SetInterferingRoutes();
             break;
         case RoutingYEN:
         case RoutingBSR:
@@ -204,6 +204,12 @@ Topology* ResourceAlloc::GetTopology() const {
 
 void ResourceAlloc::SetTopology(Topology* topology) {
     this->topology = topology;
+}
+
+std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes
+        (int ori,int des,int pos){
+    return this->interRoutes.at(ori*(this->topology->GetNumNodes())+ des)
+            .at(pos);
 }
 
 void ResourceAlloc::SetInterferingRoutes(){

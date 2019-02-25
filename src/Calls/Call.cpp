@@ -157,8 +157,8 @@ void Call::SetDeactivationTime(TIME deactivationTime) {
     this->deactivationTime = deactivationTime;
 }
 
-Route* Call::GetRoute() const {
-    return this->route.get();
+std::shared_ptr<Route> Call::GetRoute() const {
+    return this->route;
 }
 
 void Call::SetRoute(std::shared_ptr<Route> route) {

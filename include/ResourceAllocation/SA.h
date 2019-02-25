@@ -52,6 +52,10 @@ public:
     
     Topology* GetTopology();
     
+    int CalcNumFormAloc(int L, bool* Disp,int tam);
+    
+    ResourceAlloc* GetResourceAlloc();
+    
 private:
     
     ResourceAlloc* resourceAlloc;

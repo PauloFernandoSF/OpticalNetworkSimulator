@@ -33,9 +33,12 @@ public:
      * @return Call pointer
      */
     
+    void MulticoreMSCL(Call* call);
+    
+    
     
 private:
-
+    
 };
 
 #endif /* CSA_H */

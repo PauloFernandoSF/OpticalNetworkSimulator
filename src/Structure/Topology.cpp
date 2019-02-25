@@ -270,7 +270,8 @@ std::shared_ptr<Link> Topology::GetLinkPointer(unsigned int indexOrNode,
     return this->vecLinks.at(indexOrNode * this->numNodes + indexDeNode);
 }
 
-bool Topology::CheckSlotDisp(const Route* route, unsigned int slot) const {
+bool Topology::CheckSlotDisp(std::shared_ptr<Route> route, unsigned int slot) 
+const {
     Link* link;
     unsigned int numHops = route->GetNumHops();
     
@@ -283,7 +284,7 @@ bool Topology::CheckSlotDisp(const Route* route, unsigned int slot) const {
     return true;
 }
 
-bool Topology::CheckSlotsDisp(const Route* route, unsigned int iniSlot, 
+bool Topology::CheckSlotsDisp(std::shared_ptr<Route> route,unsigned int iniSlot, 
 unsigned int finSlot) const {
     Link* link;
     unsigned int numHops = route->GetNumHops();
@@ -298,8 +299,8 @@ unsigned int finSlot) const {
     return true;
 }
 
-bool Topology::CheckSlotsDispCore(const Route* route, unsigned int iniSlot, 
-unsigned int finSlot, unsigned int core) const {
+bool Topology::CheckSlotsDispCore(std::shared_ptr<Route> route,
+unsigned int iniSlot,unsigned int finSlot, unsigned int core) const {
     
     unsigned int L_or, L_de,x = route->GetNumHops();
     L_or = route->GetNode(0);L_de = route->GetNode(1);
@@ -337,7 +338,7 @@ unsigned int finSlot, unsigned int core) const {
     return true;
 }
 
-bool Topology::CheckBlockSlotsDisp(const Route* route, 
+bool Topology::CheckBlockSlotsDisp(std::shared_ptr<Route> route, 
                                    unsigned int numSlots) const {
     unsigned int numContiguousSlots = 0;
 
@@ -352,7 +353,7 @@ bool Topology::CheckBlockSlotsDisp(const Route* route,
     return false;
 }
 
-bool Topology::CheckOSNR(const Route* route, double OSNRth) {
+bool Topology::CheckOSNR(std::shared_ptr<Route> route, double OSNRth) {
     Link* link;
     unsigned int numHops = route->GetNumHops();
     std::shared_ptr<Signal> signal = std::make_shared<Signal>();
@@ -383,7 +384,7 @@ bool Topology::IsValidNode(const Node* node) {
     return false;
 }
 
-bool Topology::IsValidRoute(const Route* route) {
+bool Topology::IsValidRoute(std::shared_ptr<Route> route) {
     
     if(route != nullptr){
         Link* link;
@@ -416,7 +417,7 @@ bool Topology::IsValidLigthPath(Call* call) {
 
 void Topology::Connect(Call* call) {
     Link* link;
-    const Route* route = call->GetRoute();
+    std::shared_ptr<Route> route = call->GetRoute();
     unsigned int numHops = route->GetNumHops(), core;
     
     for(unsigned int a = 0; a < numHops; a++){
@@ -444,7 +445,7 @@ void Topology::Connect(Call* call) {
 
 void Topology::Release(Call* call) {
     Link* link;
-    const Route* route = call->GetRoute();
+    std::shared_ptr<Route> route = call->GetRoute();
     unsigned int numHops = route->GetNumHops(), core;
     
     for(unsigned int a = 0; a < numHops; a++){
