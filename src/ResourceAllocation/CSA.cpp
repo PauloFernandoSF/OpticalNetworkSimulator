@@ -104,15 +104,15 @@ void CSA::MulticoreMSCL(Call* call){
 			vetCapInic = 0;
 			vetCapFin  = 0;
 			//Calcula a capacidade inicial baseada no número de 
-                        //formas de alocação,requisições->2,3,4,9,10
-			for(int b=2; b <= 10; b++){
-                            if(b == 2 || b == 3 || b == 4 || b == 9 || b == 10)
+                        //formas de alocação,requisições->2,4,8
+			for(int b=2; b <= 8; b++){
+                            if(b == 2 || b == 4 || b == 8)
                                 vetCapInic += this->SA::CalcNumFormAloc(b,
                                 vetDispInt,totalSlots);
 			}
-			//Requisições->2,3,4,9,10
-			for(int d=2; d <= 10; d++){
-			    if(d == 2 || d == 3 || d == 4 || d == 9 || d == 10)
+			//Requisições->2,4,8
+			for(int d=2; d <= 8; d++){
+			    if(d == 2 || d == 4 || d == 8)
                                 vetCapFin += this->SA::CalcNumFormAloc(d,
                                 vetDispFin,totalSlots);
 			}

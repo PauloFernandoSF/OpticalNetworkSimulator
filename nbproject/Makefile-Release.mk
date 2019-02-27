@@ -36,6 +36,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o \
+	${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o \
 	${OBJECTDIR}/src/Calls/Call.o \
 	${OBJECTDIR}/src/Calls/CallGenerator.o \
 	${OBJECTDIR}/src/Calls/Event.o \
@@ -92,6 +94,16 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o: src/Algorithms/GA/CoreOrderIndividual.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o src/Algorithms/GA/CoreOrderIndividual.cpp
+
+${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o: src/Algorithms/GA/GACoreOrder.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o src/Algorithms/GA/GACoreOrder.cpp
 
 ${OBJECTDIR}/src/Calls/Call.o: src/Calls/Call.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls

@@ -71,6 +71,11 @@ Options::mapTransponderOption = boost::assign::map_list_of
     (TransOptionDisabled, "Disabled")
     (TransOptionEnabled, "Enabled");
 
+const boost::unordered_map<GACoreOrder, std::string>
+Options::mapGACoreOrder = boost::assign::map_list_of
+    (GAOptionDisabled, "Disabled")
+    (GAOptionEnabled, "Enabled");
+
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
     ostream << "OPTIONS" << std::endl;
@@ -88,6 +93,8 @@ const Options* options) {
             << std::endl;
     ostream << "Physical Layer: " << options->GetPhyLayerName()
             << std::endl;
+    ostream << "GA: " << options->GetGAOption()
+            << std::endl;
     
     return ostream;
 }
@@ -97,7 +104,7 @@ Options::Options(SimulationType* simulType)
 routingOption(RoutingInvalid), specAllOption(SpecAllInvalid),
 linkCostType(Invalid), trafficOption(TrafficInvalid), 
 resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled), 
-transponderOption(TransOptionDisabled) {
+transponderOption(TransOptionDisabled),coreOrder(GAOptionDisabled) {
     
 }
 
@@ -307,4 +314,12 @@ std::string Options::GetTranspponderOptionName() const {
 
 void Options::SetTransponderOption(TransponderOption transponderOption) {
     this->transponderOption = transponderOption;
+}
+
+std::string Options::GetGAOption() const {
+    return this->mapGACoreOrder.at(this->coreOrder);
+}
+
+void Options::SetGAOption(GACoreOrder coreOrder) {
+    this->coreOrder = coreOrder;
 }

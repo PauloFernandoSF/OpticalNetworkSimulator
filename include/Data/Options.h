@@ -104,6 +104,11 @@ enum TransponderOption {
     TransOptionEnabled
 };
 
+enum GACoreOrder{
+    GAOptionDisabled,
+    GAOptionEnabled
+};
+
 /**
  * @brief The Options class is responsible for storage the simulation
  * options.
@@ -257,6 +262,10 @@ public:
     std::string GetTranspponderOptionName() const;
 
     void SetTransponderOption(TransponderOption transponderOption);
+    
+    std::string GetGAOption() const;
+
+    void SetGAOption(GACoreOrder coreOrder);
 
     
 private:
@@ -294,6 +303,8 @@ private:
     PhysicalLayerOption phyLayerOption;
     
     TransponderOption transponderOption;
+    
+    GACoreOrder coreOrder;
     
     /**
      * @brief Map that keeps the topology option 
@@ -341,6 +352,12 @@ private:
     
     static const boost::unordered_map<TransponderOption,
     std::string> mapTransponderOption;
+    /**
+     * @brief Map that keeps the GA options 
+     * and the name of each one (Enabled and Disabled).
+     */
+    static const boost::unordered_map<GACoreOrder,
+    std::string> mapGACoreOrder;
 };
 
 #endif /* OPTIONS_H */
