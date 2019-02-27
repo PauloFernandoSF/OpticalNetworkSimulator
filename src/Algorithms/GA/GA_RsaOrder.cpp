@@ -17,6 +17,8 @@
 #include "../../../include/Algorithms/GA/IndividualBool.h"
 #include "../../../include/SimulationType/SimulationType.h"
 #include "../../../include/GeneralClasses/Def.h"
+#include "../../../include/ResourceAllocation/ResourceAlloc.h"
+#include "../../../include/Data/Data.h"
 
 std::default_random_engine GA_RsaOrder::random_generator(Def::randomDevice());
 
@@ -168,6 +170,14 @@ const unsigned int GA_RsaOrder::GetMaxNumSimulation() const {
     return maxNumSimulation;
 }
 
+void GA_RsaOrder::ApplyIndividualGene(const IndividualBool * const ind) {
+    this->simul->GetResourceAlloc()->SetResourceAllocOrder(ind->GetGenes());
+}
+
+void GA_RsaOrder::SetIndFitness(IndividualBool * const ind) {
+    ind->SetBlockProb(this->simul->GetData()->GetPbReq());
+}
+
 void GA_RsaOrder::Crossover() {
     assert(this->selectedPopulation.size() == this->numberIndividuals);
     IndividualBool *auxInd1, *auxInd2;
@@ -241,6 +251,8 @@ void GA_RsaOrder::Mutation() {
     
     this->totalPopulation.insert(this->totalPopulation.end(), 
           this->selectedPopulation.begin(), this->selectedPopulation.end());
+    
+    this->selectedPopulation.clear();
 }
 
 void GA_RsaOrder::MutateIndividual(IndividualBool* const ind) {

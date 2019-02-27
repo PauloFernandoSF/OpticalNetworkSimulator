@@ -27,6 +27,5 @@
 //
 Number of Nodes
 Number of Links
-Number of Slots
 SourceNode  DestinationNode LinkLength (m)  NumberOfSections
 

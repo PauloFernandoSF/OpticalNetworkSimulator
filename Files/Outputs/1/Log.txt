@@ -5,7 +5,7 @@ Spectral allocation algorithm: First Fit
 Links cost type: Minimum hops
 Traffic requests(Gbps): 10-40-100-200-400
 Resource Allocation: RSA
-Physical Layer: Disabled
+Physical Layer: Enabled
 Network Type: EON
 RSA Order: Routing-SA
 
@@ -21,26 +21,26 @@ Slot bandwidth (GHz): 12.5
 
 DATA
 Simulation time:82.9647  Number of requests:10000
-Load point:120  PbReq:0  PbSlots:-nan  HopsMed:2.1307  NetOcc:97637
+Load point:120  PbReq:0.0154  PbSlots:-nan  HopsMed:2.11964  NetOcc:92830
 
 
 Simulation time:70.9124  Number of requests:10000
-Load point:140  PbReq:0.0002  PbSlots:-nan  HopsMed:2.15583  NetOcc:99184
+Load point:140  PbReq:0.019  PbSlots:-nan  HopsMed:2.13629  NetOcc:92642
 
 
 Simulation time:62.2879  Number of requests:10000
-Load point:160  PbReq:0.0015  PbSlots:-nan  HopsMed:2.15924  NetOcc:99975
+Load point:160  PbReq:0.0229  PbSlots:-nan  HopsMed:2.13458  NetOcc:92300
 
 
 Simulation time:55.2468  Number of requests:10000
-Load point:180  PbReq:0.005  PbSlots:-nan  HopsMed:2.16231  NetOcc:99792
+Load point:180  PbReq:0.0237  PbSlots:-nan  HopsMed:2.13899  NetOcc:92818
 
 
 Simulation time:50.2877  Number of requests:10000
-Load point:200  PbReq:0.0092  PbSlots:-nan  HopsMed:2.16108  NetOcc:98054
+Load point:200  PbReq:0.0273  PbSlots:-nan  HopsMed:2.13632  NetOcc:91050
 
 
 Simulation time:45.732  Number of requests:10000
-Load point:220  PbReq:0.0174  PbSlots:-nan  HopsMed:2.16986  NetOcc:96284
+Load point:220  PbReq:0.0329  PbSlots:-nan  HopsMed:2.13939  NetOcc:89335
 
 

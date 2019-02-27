@@ -94,6 +94,9 @@ void ResourceAlloc::ResourAlloc(Call* call) {
         default:
             std::cerr << "Invalid resource allocation option" << std::endl;
     }
+    
+    if(call->GetStatus() == NotEvaluated)
+        call->SetStatus(Blocked);
 }
 
 void ResourceAlloc::RSA(Call* call) {
@@ -116,9 +119,6 @@ void ResourceAlloc::RSA(Call* call) {
                 }
         }while(call->IsThereTrialRoute());
     }
-    
-    if(!this->topology->IsValidLigthPath(call))
-        call->SetStatus(Blocked);
 }
 
 void ResourceAlloc::RMSA(Call* call) {
@@ -127,7 +127,11 @@ void ResourceAlloc::RMSA(Call* call) {
     for(mod = LastModulation; mod >= FirstModulation; 
                               mod = TypeModulation(mod-1)){
         call->SetModulation(mod);
-        this->RSA(call);
+        
+        if(!this->CheckResourceAllocOrder(call))
+            this->RSA(call);
+        else
+            this->SAR(call);
         
         if(call->GetStatus() == Accepted)
             break;
@@ -164,9 +168,6 @@ void ResourceAlloc::SAR(Call* call) {
         if(allocFound)
             break;
     }
-    
-    if(call->GetStatus() == NotEvaluated)
-        call->SetStatus(Blocked);
 }
 
 void ResourceAlloc::SetRoute(unsigned int orN, unsigned int deN, 

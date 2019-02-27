@@ -86,6 +86,11 @@ public:
     IndividualBool* GetIniIndividual(unsigned int index);
     
     const unsigned int GetMaxNumSimulation() const;
+    
+    
+    void ApplyIndividualGene(const IndividualBool* const ind);
+    
+    void SetIndFitness(IndividualBool* const ind);
 
 private:
     
