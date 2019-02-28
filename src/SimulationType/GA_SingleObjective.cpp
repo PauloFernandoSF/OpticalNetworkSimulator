@@ -18,7 +18,6 @@
 #include "../../include/Calls/CallGenerator.h"
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/Data.h"
-//#include "../../include/ResourceAllocation/ResourceAlloc.h"
 
 GA_SingleObjective::GA_SingleObjective(unsigned int simulIndex) 
 :SimulationType(simulIndex), gaAlgorithm(std::make_shared<GA_RsaOrder>(this)) {

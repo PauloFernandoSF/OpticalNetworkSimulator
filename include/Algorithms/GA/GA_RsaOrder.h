@@ -25,10 +25,15 @@
 class SimulationType;
 class IndividualBool;
 
-class GA_RsaOrder {
+/**
+ * @brief GA algorithm applied for RSA order.
+ */
+class GA_RsaOrder{
 
 private:
-    
+    /**
+     * @brief 
+     */
     struct IndividualCompare{
         
         bool operator()(const std::shared_ptr<IndividualBool>& indA,
@@ -125,7 +130,7 @@ private:
     
     const unsigned int numberGenerations;
     
-    unsigned int numNodes; 
+    unsigned int numNodes; //Derived
     
     const double probCrossover;
     
@@ -148,9 +153,9 @@ private:
     
     static std::default_random_engine random_generator;
     
-    std::uniform_int_distribution<int> boolDistribution;
+    std::uniform_int_distribution<int> boolDistribution; //Derived
     
-    std::uniform_real_distribution<double> probDistribution;
+    std::uniform_real_distribution<double> probDistribution; 
     
     std::uniform_real_distribution<double> fitnessDistribution;
     
