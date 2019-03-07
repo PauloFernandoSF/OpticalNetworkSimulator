@@ -19,7 +19,7 @@
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/SimulationType/GA_SingleObjective.h"
-#include "../../include/Algorithms/GA/GA_RsaOrder.h"
+#include "../../include/Algorithms/GA/GA.h"
 #include "../../include/Algorithms/GA/IndividualBool.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
@@ -119,8 +119,8 @@ void Data::SaveGaFiles() {
                                 ->GetBestIndividualFile();
     std::ofstream& worstInds = this->simulType->GetInputOutput()
                                  ->GetWorstIndividualsFile();
-    GA_RsaOrder* ga = dynamic_cast<GA_SingleObjective*>
-                      (this->simulType)->GetGA_RsaOrder();
+    GA* ga = dynamic_cast<GA_SingleObjective*>
+                      (this->simulType)->GetGA();
 
     unsigned int numGen = ga->GetNumberGenerations();
     unsigned int numIniPop = ga->GetNumberIndividuals();

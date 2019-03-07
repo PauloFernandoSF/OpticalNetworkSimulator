@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/src/Algorithms/GA/GA.o \
 	${OBJECTDIR}/src/Algorithms/GA/GA_RsaOrder.o \
 	${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o \
 	${OBJECTDIR}/src/Calls/Call.o \
@@ -91,6 +92,11 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/src/Algorithms/GA/GA.o: src/Algorithms/GA/GA.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/GA.o src/Algorithms/GA/GA.cpp
 
 ${OBJECTDIR}/src/Algorithms/GA/GA_RsaOrder.o: src/Algorithms/GA/GA_RsaOrder.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA

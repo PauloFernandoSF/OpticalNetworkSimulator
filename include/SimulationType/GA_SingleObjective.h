@@ -16,7 +16,7 @@
 
 #include "SimulationType.h"
 
-class GA_RsaOrder;
+class GA;
 
 #include <iostream>
 
@@ -67,14 +67,15 @@ public:
      * @brief Get the GA algorithm of this simulation.
      * @return Weak pointer of GA algorithm.
      */
-    GA_RsaOrder* GetGA_RsaOrder() const;
+    GA* GetGA() const;
+
 private:
     
     /**
      * 
      * @brief Genetic algorithm of this simulation.
      */
-    std::shared_ptr<GA_RsaOrder> gaAlgorithm;
+    std::shared_ptr<GA> gaAlgorithm;
     /**
      * @brief Runs the simulation for the selected population of the GA.
      */

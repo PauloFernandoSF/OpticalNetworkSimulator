@@ -12,39 +12,14 @@
  */
 
 #include "../../../include/Algorithms/GA/GA_RsaOrder.h"
-#include "../../../include/SimulationType/GA_SingleObjective.h"
 #include "../../../include/Structure/Topology.h"
 #include "../../../include/Algorithms/GA/IndividualBool.h"
 #include "../../../include/SimulationType/SimulationType.h"
-#include "../../../include/GeneralClasses/Def.h"
 #include "../../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../../include/Data/Data.h"
 
-std::default_random_engine GA_RsaOrder::random_generator(Def::randomDevice());
-
-bool GA_RsaOrder::IndividualCompare::operator()(
-const std::shared_ptr<IndividualBool>& indA, 
-const std::shared_ptr<IndividualBool>& indB) const {
-    
-    return (indA->GetBlockProb() < indB->GetBlockProb());
-}
-
-std::ostream& operator<<(std::ostream& ostream, 
-const GA_RsaOrder* ga_RsaOrder) {
-    ostream << "Generation: " << ga_RsaOrder->actualGeneration << std::endl;
-    ostream << "Best individual: " << ga_RsaOrder->GetBestIndividual()
-            << std::endl;
-    ostream << "Worst individual: " << ga_RsaOrder->GetWorstIndividual()
-            << std::endl;
-    
-    return ostream;
-}
-
-GA_RsaOrder::GA_RsaOrder(SimulationType* simul):
-simul(simul), numberIndividuals(50), numberGenerations(50), numNodes(0), 
-probCrossover(0.5), probMutation(0.1), initialPopulation(0), bestIndividuals(0), 
-worstIndividuals(0), numBestIndividuals(30), actualGeneration(0),
-maxNumSimulation(3), selectedPopulation(0), totalPopulation(0) {
+GA_RsaOrder::GA_RsaOrder(SimulationType* simul)
+:GA(simul), numNodes(0) {
     
 }
 
@@ -53,69 +28,26 @@ GA_RsaOrder::~GA_RsaOrder() {
 }
 
 void GA_RsaOrder::Initialize() {
+    GA::Initialize();
     this->SetNumNodes(this->GetSimul()->GetTopology()->GetNumNodes());
     this->boolDistribution = std::uniform_int_distribution<int>(0, 1);
-    this->probDistribution = std::uniform_real_distribution<double>(0, 1);
 }
 
 void GA_RsaOrder::InitializePopulation() {
     assert(this->selectedPopulation.empty() && this->totalPopulation.empty());
     
-    for(unsigned int a = 0; a < this->numberIndividuals; a++){
+    for(unsigned int a = 0; a < this->GetNumberIndividuals(); a++){
         this->selectedPopulation.push_back(std::make_shared
                                            <IndividualBool>(this));
-    }   
+    }
 }
 
 void GA_RsaOrder::CreateNewPopulation() {
-    this->actualGeneration++;
+    GA::CreateNewPopulation();
     this->totalPopulation.clear();
+    this->SetSumFitnessSelectedPop();
     this->Crossover();
     this->Mutation();
-}
-
-void GA_RsaOrder::KeepInitialPopulation() {
-    this->initialPopulation = this->selectedPopulation;
-}
-
-void GA_RsaOrder::SelectPopulation() {
-    assert(this->selectedPopulation.empty());
-    
-    //Order all individuals, with best(smallest) Pb at the end of the vector.
-    std::make_heap(this->totalPopulation.begin(), this->totalPopulation.end(),
-                   IndividualCompare());
-    
-    //Select numBestIndividuals best individuals (Block. Prob.)
-    for(unsigned int a = 0; a < this->numBestIndividuals; a++){
-        this->selectedPopulation.push_back(this->totalPopulation.back());
-        this->totalPopulation.pop_back();
-    }
-    //Select randomly the others.
-    std::shuffle(this->totalPopulation.begin(), 
-                 this->totalPopulation.end(), this->random_generator);
-    while(this->selectedPopulation.size() < this->numberIndividuals){
-        this->selectedPopulation.push_back(this->totalPopulation.back());
-        this->totalPopulation.pop_back();
-    }
-    
-    //Sort the selected individuals, first worst last best.
-    std::make_heap(this->selectedPopulation.begin(), 
-                 this->selectedPopulation.end(), IndividualCompare());
-    
-    this->SaveBestWorstIndividuals();
-}
-
-void GA_RsaOrder::SaveBestWorstIndividuals() {
-    this->bestIndividuals.push_back(this->selectedPopulation.back());
-    this->worstIndividuals.push_back(this->selectedPopulation.front());
-}
-
-const unsigned int GA_RsaOrder::GetNumberIndividuals() const {
-    return numberIndividuals;
-}
-
-const unsigned int GA_RsaOrder::GetNumberGenerations() const {
-    return numberGenerations;
 }
 
 unsigned int GA_RsaOrder::GetNumNodes() const {
@@ -129,83 +61,33 @@ void GA_RsaOrder::SetNumNodes(unsigned int numNodes) {
 }
 
 bool GA_RsaOrder::GetBoolDistribution() {
-    return (bool) boolDistribution(random_generator);
+    return (bool) boolDistribution(this->random_generator);
 }
 
-double GA_RsaOrder::GetProbDistribution() {
-    return probDistribution(random_generator);
+void GA_RsaOrder::ApplyIndividualGene(const IndividualBool* const ind) {
+    this->GetSimul()->GetResourceAlloc()
+        ->SetResourceAllocOrder(ind->GetGenes());
 }
 
-unsigned int GA_RsaOrder::GetNumTotalPopulation() const {
-    return this->totalPopulation.size();
-}
-
-SimulationType* GA_RsaOrder::GetSimul() const {
-    return simul;
-}
-
-unsigned int GA_RsaOrder::GetActualGeneration() const {
-    return actualGeneration;
-}
-
-void GA_RsaOrder::SetActualGeneration(unsigned int actualGeneration) {
-    this->actualGeneration = actualGeneration;
-}
-
-IndividualBool* GA_RsaOrder::GetWorstIndividual() const {
-    return this->worstIndividuals.at(this->actualGeneration-1).get();
-    //return this->selectedPopulation.front().get();
-}
-
-IndividualBool* GA_RsaOrder::GetBestIndividual() const{
-    return this->bestIndividuals.at(this->actualGeneration-1).get();
-    //return this->selectedPopulation.back().get();
-}
-
-IndividualBool* GA_RsaOrder::GetIniIndividual(unsigned int index) {
-    return this->initialPopulation.at(index).get();
-}
-
-const unsigned int GA_RsaOrder::GetMaxNumSimulation() const {
-    return maxNumSimulation;
-}
-
-void GA_RsaOrder::ApplyIndividualGene(const IndividualBool * const ind) {
-    this->simul->GetResourceAlloc()->SetResourceAllocOrder(ind->GetGenes());
-}
-
-void GA_RsaOrder::SetIndFitness(IndividualBool * const ind) {
-    ind->SetBlockProb(this->simul->GetData()->GetPbReq());
+void GA_RsaOrder::SetIndFitness(IndividualBool* const ind) {
+    double blockProb = this->GetSimul()->GetData()->GetPbReq();
+    
+    ind->SetBlockProb(blockProb);
+    ind->SetFitness(1.0 / blockProb);
 }
 
 void GA_RsaOrder::Crossover() {
-    assert(this->selectedPopulation.size() == this->numberIndividuals);
+    assert(this->selectedPopulation.size() == this->GetNumberIndividuals());
     IndividualBool *auxInd1, *auxInd2;
     
-    while(this->totalPopulation.size() < this->numberIndividuals){
+    while(this->totalPopulation.size() < this->GetNumberIndividuals()){
         auxInd1 = this->RoullleteIndividual();
-        auxInd2 = this->RoullleteIndividual();
+        do{
+            auxInd2 = this->RoullleteIndividual();
+        }while(auxInd1 == auxInd2);
         
         this->GenerateNewIndividuals(auxInd1, auxInd2);
     }
-}
-
-IndividualBool* GA_RsaOrder::RoullleteIndividual() {
-    double auxDouble = 0.0;
-    unsigned int index;
-       
-    this->fitnessDistribution = std::uniform_real_distribution<double>(0, 
-                                this->sumFitness);
-    double fitness = this->fitnessDistribution(random_generator);
-    
-    for(index = 0; index < this->selectedPopulation.size(); index++){
-        auxDouble += 1/this->selectedPopulation.at(index)->GetBlockProb();
-        
-        if(auxDouble > fitness)
-            break;
-    }
-    
-    return this->selectedPopulation.at(index).get();
 }
 
 void GA_RsaOrder::GenerateNewIndividuals(const IndividualBool* const ind1, 
@@ -226,7 +108,7 @@ void GA_RsaOrder::UniformCrossover(const IndividualBool* const ind1,
         for(unsigned int b = 0; b < this->numNodes; b++){
             auxProb = this->GetProbDistribution();
             
-            if(auxProb < this->probCrossover){
+            if(auxProb < this->GetProbCrossover()){
                 newInd1->SetGene(a, b, ind1->GetGene(a, b));
                 newInd2->SetGene(a, b, ind2->GetGene(a, b));
             }
@@ -242,7 +124,7 @@ void GA_RsaOrder::UniformCrossover(const IndividualBool* const ind1,
 }
 
 void GA_RsaOrder::Mutation() {
-    assert(this->totalPopulation.size() == this->numberIndividuals);
+    assert(this->totalPopulation.size() == this->GetNumberIndividuals());
     unsigned int popSize = this->totalPopulation.size();
     
     for(unsigned int a = 0; a < popSize; a++){
@@ -262,18 +144,8 @@ void GA_RsaOrder::MutateIndividual(IndividualBool* const ind) {
         for(unsigned int b = 0; b < this->numNodes; b++){
             auxProb = this->GetProbDistribution();
             
-            if(auxProb < this->probMutation)
+            if(auxProb < this->GetProbMutation())
                 ind->SetGene(a, b, !ind->GetGene(a, b));
         }
     }    
-}
-
-void GA_RsaOrder::SetSumFitnessSelectedPop() {
-    double sum = 0.0;
-    
-    for(auto it: this->selectedPopulation){
-        sum += (1 / it->GetBlockProb());
-    }
-    
-    this->sumFitness = sum;
 }

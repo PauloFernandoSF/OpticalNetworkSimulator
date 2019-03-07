@@ -44,6 +44,10 @@ public:
 
     void SetBlockProb(double blockProb);
     
+    double GetFitness() const;
+
+    void SetFitness(double fitness);
+
     unsigned int GetCount() const;
 
 private:
@@ -53,6 +57,8 @@ private:
     std::vector<bool> genes;
     
     double blockProb;
+    
+    double fitness;
     
     unsigned int count;
 };

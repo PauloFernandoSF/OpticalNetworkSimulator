@@ -18,10 +18,12 @@
 #include "../../include/Calls/CallGenerator.h"
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/Data.h"
+#include "../../include/Algorithms/GA/GA_RsaOrder.h"
 
 GA_SingleObjective::GA_SingleObjective(unsigned int simulIndex) 
-:SimulationType(simulIndex), gaAlgorithm(std::make_shared<GA_RsaOrder>(this)) {
+:SimulationType(simulIndex) {
     //Create the GA based in the options(Future).
+    this->gaAlgorithm = std::make_shared<GA_RsaOrder>(this);
 }
 
 GA_SingleObjective::~GA_SingleObjective() {
@@ -45,6 +47,7 @@ void GA_SingleObjective::Run() {
         if(a == numGenerations)
             this->CheckMinSimul();
         this->gaAlgorithm->SelectPopulation();
+        this->gaAlgorithm->SaveIndividuals();
         std::cout << this->gaAlgorithm << std::endl;
         this->GetInputOutput()->PrintProgressBar(a, numGenerations);
     }
@@ -71,13 +74,13 @@ void GA_SingleObjective::Save() {
 }
 
 void GA_SingleObjective::Help() {
-    std::cout << "GA SINGLE OBJECTIVE SIMULATION FOR RSA ORDER" << std::endl
+    std::cout << "GA SINGLE OBJECTIVE SIMULATION" << std::endl
               << "This type of simulation applies the genetic algorithm "
               << "for single objective."
               << std::endl << std::endl;
 }
 
-GA_RsaOrder* GA_SingleObjective::GetGA_RsaOrder() const {
+GA* GA_SingleObjective::GetGA() const {
     return this->gaAlgorithm.get();
 }
 

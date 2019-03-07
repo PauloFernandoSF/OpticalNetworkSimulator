@@ -20,28 +20,15 @@
 #include <random>
 #include <algorithm>
 
+#include "GA.h"
 #include "IndividualBool.h"
 
 class SimulationType;
-class IndividualBool;
 
 /**
  * @brief GA algorithm applied for RSA order.
  */
-class GA_RsaOrder{
-
-private:
-    /**
-     * @brief 
-     */
-    struct IndividualCompare{
-        
-        bool operator()(const std::shared_ptr<IndividualBool>& indA,
-                        const std::shared_ptr<IndividualBool>& indB) const;
-    };
-    
-    friend std::ostream& operator<<(std::ostream& ostream, 
-    const GA_RsaOrder* ga_RsaOrder);
+class GA_RsaOrder : public GA {
 
 public:
     
@@ -50,58 +37,27 @@ public:
     virtual ~GA_RsaOrder();
     
     
-    void Initialize();
+    void Initialize() override;
     
-    void InitializePopulation();
+    void InitializePopulation() override;
     
-    void CreateNewPopulation();
-    
-    void KeepInitialPopulation();
-    
-    void SimulateTotalPop();
-    
-    void SelectPopulation();
-    
-    void SaveBestWorstIndividuals();
-    
-    const unsigned int GetNumberGenerations() const;
+    void CreateNewPopulation() override;
 
-    const unsigned int GetNumberIndividuals() const;
-
+    
     unsigned int GetNumNodes() const;
 
     void SetNumNodes(unsigned int numNodes);
 
     bool GetBoolDistribution();
-
-    double GetProbDistribution();
-    
-    unsigned int GetNumTotalPopulation() const;
-
-    SimulationType* GetSimul() const;
-    
-    unsigned int GetActualGeneration() const;
-
-    void SetActualGeneration(unsigned int actualGeneration);
-
-    IndividualBool* GetWorstIndividual() const;
-    
-    IndividualBool* GetBestIndividual() const;
-    
-    IndividualBool* GetIniIndividual(unsigned int index);
-    
-    const unsigned int GetMaxNumSimulation() const;
     
     
-    void ApplyIndividualGene(const IndividualBool* const ind);
+    void ApplyIndividualGene(const IndividualBool* const ind) override;
     
-    void SetIndFitness(IndividualBool* const ind);
+    void SetIndFitness(IndividualBool* const ind) override;
 
 private:
     
     void Crossover();
-    
-    IndividualBool* RoullleteIndividual();
     
     void GenerateNewIndividuals(const IndividualBool* const ind1,
                                 const IndividualBool* const ind2);
@@ -119,51 +75,11 @@ private:
     
     void MutateIndividual(IndividualBool* const ind);
     
-    
-    void SetSumFitnessSelectedPop();
-    
 private:
     
-    SimulationType* simul;
+    unsigned int numNodes;
     
-    const unsigned int numberIndividuals;
-    
-    const unsigned int numberGenerations;
-    
-    unsigned int numNodes; //Derived
-    
-    const double probCrossover;
-    
-    const double probMutation;
-    
-    std::vector<std::shared_ptr<IndividualBool>> initialPopulation;
-        
-    std::vector<std::shared_ptr<IndividualBool>> bestIndividuals;
-    
-    std::vector<std::shared_ptr<IndividualBool>> worstIndividuals;
-    
-    const unsigned int numBestIndividuals;
-    
-    unsigned int actualGeneration;
-    
-    const unsigned int maxNumSimulation;
-    
-    double sumFitness;
-    
-    
-    static std::default_random_engine random_generator;
-    
-    std::uniform_int_distribution<int> boolDistribution; //Derived
-    
-    std::uniform_real_distribution<double> probDistribution; 
-    
-    std::uniform_real_distribution<double> fitnessDistribution;
-    
-public:
-    
-    std::vector<std::shared_ptr<IndividualBool>> selectedPopulation;
-    
-    std::vector<std::shared_ptr<IndividualBool>> totalPopulation;
+    std::uniform_int_distribution<int> boolDistribution;
 };
 
 #endif /* GA_RSAORDER_H */
