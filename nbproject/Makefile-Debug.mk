@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/Algorithms/GA/GA.o \
 	${OBJECTDIR}/src/Algorithms/GA/GA_RsaOrder.o \
+	${OBJECTDIR}/src/Algorithms/GA/Individual.o \
 	${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o \
 	${OBJECTDIR}/src/Calls/Call.o \
 	${OBJECTDIR}/src/Calls/CallGenerator.o \
@@ -102,6 +103,11 @@ ${OBJECTDIR}/src/Algorithms/GA/GA_RsaOrder.o: src/Algorithms/GA/GA_RsaOrder.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/GA_RsaOrder.o src/Algorithms/GA/GA_RsaOrder.cpp
+
+${OBJECTDIR}/src/Algorithms/GA/Individual.o: src/Algorithms/GA/Individual.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/Individual.o src/Algorithms/GA/Individual.cpp
 
 ${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o: src/Algorithms/GA/IndividualBool.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA

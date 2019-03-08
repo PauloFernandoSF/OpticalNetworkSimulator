@@ -109,7 +109,7 @@ void Data::SavePBvLoad() {
 }
 
 void Data::SaveGaFiles() {
-    std::ofstream& logOfstream = this->simulType->GetInputOutput()
+    /*std::ofstream& logOfstream = this->simulType->GetInputOutput()
                                      ->GetLogFile();
     std::ofstream& initPop = this->simulType->GetInputOutput()
                                         ->GetIniPopulationFile();
@@ -143,7 +143,7 @@ void Data::SaveGaFiles() {
     for(unsigned int a = 0; a < numIniPop; a++){
         initPop << 0 << "\t" << ga->GetIniIndividual(a)->GetBlockProb() 
                 << std::endl;
-    }
+    }*/
 }
 
 void Data::SetNumberReq(double numReq) {

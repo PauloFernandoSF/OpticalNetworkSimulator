@@ -20,6 +20,8 @@
 
 class GA_RsaOrder;
 
+#include "Individual.h"
+
 class IndividualBool {
 
     friend std::ostream& operator<<(std::ostream& ostream, 

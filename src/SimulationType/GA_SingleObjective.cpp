@@ -49,7 +49,7 @@ void GA_SingleObjective::Run() {
             this->CheckMinSimul();
         this->gaAlgorithm->SelectPopulation();
         this->gaAlgorithm->SaveIndividuals();
-        std::cout << this->gaAlgorithm << std::endl;
+        //std::cout << this->gaAlgorithm << std::endl;
         this->GetInputOutput()->PrintProgressBar(a, numGenerations);
     }
 }

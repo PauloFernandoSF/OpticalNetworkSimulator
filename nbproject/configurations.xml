@@ -83,6 +83,7 @@
         <itemPath>include/Structure/Node.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
+      <itemPath>include/Algorithms/GA/Individual.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -133,6 +134,7 @@
         <itemPath>src/Structure/Node.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
+      <itemPath>src/Algorithms/GA/Individual.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -245,6 +247,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/Individual.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Algorithms/GA/IndividualBool.h"
             ex="false"
             tool="3"
@@ -322,6 +326,8 @@
       <item path="src/Algorithms/GA/GA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/Individual.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/IndividualBool.cpp"
             ex="false"
@@ -490,6 +496,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/Individual.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Algorithms/GA/IndividualBool.h"
             ex="false"
             tool="3"
@@ -567,6 +575,8 @@
       <item path="src/Algorithms/GA/GA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/Individual.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/IndividualBool.cpp"
             ex="false"
