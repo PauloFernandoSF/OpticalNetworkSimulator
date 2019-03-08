@@ -17,8 +17,8 @@
 std::default_random_engine GA::random_generator(Def::randomDevice());
 
 bool GA::IndividualCompare::operator()(
-const std::shared_ptr<IndividualBool>& indA, 
-const std::shared_ptr<IndividualBool>& indB) const {
+const std::shared_ptr<Individual>& indA, 
+const std::shared_ptr<Individual>& indB) const {
     
     return (indA->GetFitness() > indB->GetFitness());
 }
@@ -53,6 +53,8 @@ void GA::Initialize() {
 
 void GA::KeepInitialPopulation() {
     this->initialPopulation = this->selectedPopulation;
+    std::make_heap(this->initialPopulation.begin(), 
+                   this->initialPopulation.end(), IndividualCompare());
 }
 
 void GA::SelectPopulation() {
@@ -140,20 +142,20 @@ void GA::SetSumFitnessSelectedPop() {
     this->SetSumFitness(sum);
 }
 
-IndividualBool* GA::GetWorstIndividual() const {
+Individual* GA::GetWorstIndividual() const {
     return this->worstIndividuals.at(this->actualGeneration-1).get();
 }
 
-IndividualBool* GA::GetBestIndividual() const {
+Individual* GA::GetBestIndividual() const {
     return this->bestIndividuals.at(this->actualGeneration-1).get();
 }
 
-IndividualBool* GA::GetIniIndividual(unsigned int index) {
+Individual* GA::GetIniIndividual(unsigned int index) {
     assert(index < this->initialPopulation.size());
     return this->initialPopulation.at(index).get();
 }
 
-IndividualBool* GA::RoullleteIndividual() {
+Individual* GA::RoullleteIndividual() {
     double auxDouble = 0.0;
     unsigned int index;
     

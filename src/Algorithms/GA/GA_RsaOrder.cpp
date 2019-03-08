@@ -63,16 +63,18 @@ bool GA_RsaOrder::GetBoolDistribution() {
     return (bool) boolDistribution(this->random_generator);
 }
 
-void GA_RsaOrder::ApplyIndividualGene(const IndividualBool* const ind) {
+void GA_RsaOrder::ApplyIndividualGene(Individual* ind) {
+    IndividualBool* indBool = dynamic_cast<IndividualBool*>(ind);
     this->GetSimul()->GetResourceAlloc()
-        ->SetResourceAllocOrder(ind->GetGenes());
+        ->SetResourceAllocOrder(indBool->GetGenes());
 }
 
-void GA_RsaOrder::SetIndFitness(IndividualBool* const ind) {
+void GA_RsaOrder::SetIndFitness(Individual* ind) {
     double blockProb = this->GetSimul()->GetData()->GetPbReq();
+    IndividualBool* indBool = dynamic_cast<IndividualBool*>(ind);
     
-    ind->SetBlockProb(blockProb);
-    ind->SetFitness(1.0 / blockProb);
+    indBool->SetBlockProb(blockProb);
+    indBool->SetFitness(1.0 / blockProb);
 }
 
 void GA_RsaOrder::Crossover() {
@@ -80,9 +82,10 @@ void GA_RsaOrder::Crossover() {
     IndividualBool *auxInd1, *auxInd2;
     
     while(this->totalPopulation.size() < this->GetNumberIndividuals()){
-        auxInd1 = this->RoullleteIndividual();
+        auxInd1 = dynamic_cast<IndividualBool*>(this->RoullleteIndividual());
         do{
-            auxInd2 = this->RoullleteIndividual();
+            auxInd2 = dynamic_cast<IndividualBool*>
+                      (this->RoullleteIndividual());
         }while(auxInd1 == auxInd2);
         
         this->GenerateNewIndividuals(auxInd1, auxInd2);
@@ -127,7 +130,8 @@ void GA_RsaOrder::Mutation() {
     unsigned int popSize = this->totalPopulation.size();
     
     for(unsigned int a = 0; a < popSize; a++){
-        this->MutateIndividual(this->totalPopulation.at(a).get());
+        this->MutateIndividual(dynamic_cast<IndividualBool*>
+                               (this->totalPopulation.at(a).get()));
     }
     
     this->totalPopulation.insert(this->totalPopulation.end(), 
@@ -146,5 +150,5 @@ void GA_RsaOrder::MutateIndividual(IndividualBool* const ind) {
             if(auxProb < this->GetProbMutation())
                 ind->SetGene(a, b, !ind->GetGene(a, b));
         }
-    }    
+    }
 }

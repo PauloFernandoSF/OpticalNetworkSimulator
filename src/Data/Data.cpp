@@ -20,7 +20,6 @@
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/SimulationType/GA_SingleObjective.h"
 #include "../../include/Algorithms/GA/GA.h"
-#include "../../include/Algorithms/GA/IndividualBool.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Data* data) {    
@@ -109,7 +108,7 @@ void Data::SavePBvLoad() {
 }
 
 void Data::SaveGaFiles() {
-    /*std::ofstream& logOfstream = this->simulType->GetInputOutput()
+    std::ofstream& logOfstream = this->simulType->GetInputOutput()
                                      ->GetLogFile();
     std::ofstream& initPop = this->simulType->GetInputOutput()
                                         ->GetIniPopulationFile();
@@ -129,21 +128,26 @@ void Data::SaveGaFiles() {
     for(unsigned int a = 1; a <= numGen; a++){
         ga->SetActualGeneration(a);
         logOfstream << ga << std::endl;
-        bestInds << a << "\t" << ga->GetBestIndividual()->GetBlockProb() 
+        bestInds << a << "\t" << ga->GetBestIndividual()->GetMainParameter() 
                 << std::endl;
-        worstInds << a << "\t" << ga->GetWorstIndividual()->GetBlockProb()
+        worstInds << a << "\t" << ga->GetWorstIndividual()->GetMainParameter()
                  << std::endl;
     }
     
-    std::vector<bool> gene = ga->GetBestIndividual()->GetGenes();
+    //Make function to check the cast for the best individual
+    //and a switch function for casting according to the individual. 
+    IndividualBool* ind = dynamic_cast<IndividualBool*>
+                          (ga->GetBestIndividual());
+    
+    std::vector<bool> gene = ind->GetGenes();
     for(unsigned int a = 0; a < gene.size(); a++){
         besInd << gene.at(a) << std::endl;
     }
     
     for(unsigned int a = 0; a < numIniPop; a++){
-        initPop << 0 << "\t" << ga->GetIniIndividual(a)->GetBlockProb() 
+        initPop << 0 << "\t" << ga->GetIniIndividual(a)->GetMainParameter()
                 << std::endl;
-    }*/
+    }
 }
 
 void Data::SetNumberReq(double numReq) {

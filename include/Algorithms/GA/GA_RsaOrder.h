@@ -51,9 +51,9 @@ public:
     bool GetBoolDistribution();
     
     
-    void ApplyIndividualGene(const IndividualBool* const ind) override;
+    void ApplyIndividualGene(Individual* ind) override;
     
-    void SetIndFitness(IndividualBool* const ind) override;
+    void SetIndFitness(Individual* ind) override;
 
 private:
     

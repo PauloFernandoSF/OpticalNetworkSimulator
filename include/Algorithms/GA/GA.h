@@ -23,6 +23,7 @@ class SimulationType;
 #include <algorithm>
 
 #include "IndividualBool.h"
+#include "Individual.h"
 
 /**
  * @brief Generic genetic algorithm class for single objective. 
@@ -43,8 +44,8 @@ private:
          * @return True if the first individual fitness is larger than 
          * the second.
          */
-        bool operator()(const std::shared_ptr<IndividualBool>& indA,
-                        const std::shared_ptr<IndividualBool>& indB) const;
+        bool operator()(const std::shared_ptr<Individual>& indA,
+                        const std::shared_ptr<Individual>& indB) const;
     };
     
     friend std::ostream& operator<<(std::ostream& ostream, 
@@ -158,35 +159,35 @@ public:
      * @brief Gets the worst individual of the actual generation.
      * @return Worst individual.
      */
-    IndividualBool* GetWorstIndividual() const;
+    Individual* GetWorstIndividual() const;
     /**
      * @brief Gets the best individual of the actual generation.
      * @return Best individual.
      */
-    IndividualBool* GetBestIndividual() const;
+    Individual* GetBestIndividual() const;
     /**
      * @brief Gets an specified individual from the initial population
      * container,
      * @param index Index of the initial population container.
      * @return Specified individual.
      */
-    IndividualBool* GetIniIndividual(unsigned int index);
+    Individual* GetIniIndividual(unsigned int index);
     
     /**
      * @brief Apply the gene of a specified individual in the network.
      * @param ind Individual pointer.
      */
-    virtual void ApplyIndividualGene(const IndividualBool* const ind) = 0;
+    virtual void ApplyIndividualGene(Individual* ind) = 0;
     /**
      * @brief Set the individual parameters found by the simulation.
      * @param ind Specified individual.
      */
-    virtual void SetIndFitness(IndividualBool* const ind) = 0;
+    virtual void SetIndFitness(Individual* ind) = 0;
     /**
      * @brief Pick an individual based on the roulette choosing process. 
      * @return Chosen individual.
      */
-    IndividualBool* RoullleteIndividual();
+    Individual* RoullleteIndividual();
     
 private:
     /**
@@ -230,17 +231,17 @@ private:
     /**
      * @brief Container of individuals, representing the initial population.
      */
-    std::vector<std::shared_ptr<IndividualBool>> initialPopulation;
+    std::vector<std::shared_ptr<Individual>> initialPopulation;
     /**
      * @brief Container of individuals, representing the best individuals, one
      * for each generation.
      */
-    std::vector<std::shared_ptr<IndividualBool>> bestIndividuals;
+    std::vector<std::shared_ptr<Individual>> bestIndividuals;
     /**
      * @brief Container of individuals, representing the worst individuals, one
      * for each generation.
      */
-    std::vector<std::shared_ptr<IndividualBool>> worstIndividuals;
+    std::vector<std::shared_ptr<Individual>> worstIndividuals;
     
     /**
      * @brief Probability distribution used in this GA algorithm for crossover
@@ -257,11 +258,11 @@ public:
     /**
      * @brief Container of individuals, representing the selected population.
      */
-    std::vector<std::shared_ptr<IndividualBool>> selectedPopulation;
+    std::vector<std::shared_ptr<Individual>> selectedPopulation;
     /**
      * @brief Container of individuals, representing the total population.
      */
-    std::vector<std::shared_ptr<IndividualBool>> totalPopulation;
+    std::vector<std::shared_ptr<Individual>> totalPopulation;
     /**
      * @brief Random generator.
      */

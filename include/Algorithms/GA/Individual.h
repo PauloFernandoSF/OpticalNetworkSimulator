@@ -19,6 +19,9 @@
 class GA;
 
 class Individual {
+    
+    friend std::ostream& operator<<(std::ostream& ostream, 
+    Individual* ind);
 
 public:
     
@@ -34,6 +37,10 @@ public:
     void SetFitness(double fitness);
 
     unsigned int GetCount() const;
+
+    void SetCount(unsigned int count);
+    
+    virtual double GetMainParameter() = 0;
 
 private:
     

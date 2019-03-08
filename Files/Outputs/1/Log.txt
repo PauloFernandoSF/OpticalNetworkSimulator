@@ -1,0 +1,221 @@
+OPTIONS
+Topology: NSFNet
+Routing algorithm: YEN
+Spectral allocation algorithm: First Fit
+Links cost type: Minimum hops
+Traffic requests(Gbps): 10-40-100-200-400
+Resource Allocation: RSA
+Physical Layer: Enabled
+Network Type: EON
+RSA Order: Routing-SA
+
+PARAMETERS
+Number of slots per fiber: 128
+Mu: 1
+Minimum load point(erlang): 120
+Maximum load point(erlang): 220
+Number of points: 6
+Total number of requisitions: 1000
+Maximum blocked requests: 500
+Slot bandwidth (GHz): 12.5
+
+Generation: 1
+Best individual: 0.0165
+Worst individual: 0.02425
+
+Generation: 2
+Best individual: 0.01775
+Worst individual: 0.0265
+
+Generation: 3
+Best individual: 0.020875
+Worst individual: 0.022625
+
+Generation: 4
+Best individual: 0.022
+Worst individual: 0.032
+
+Generation: 5
+Best individual: 0.01675
+Worst individual: 0.022875
+
+Generation: 6
+Best individual: 0.019125
+Worst individual: 0.023
+
+Generation: 7
+Best individual: 0.0185
+Worst individual: 0.022
+
+Generation: 8
+Best individual: 0.018
+Worst individual: 0.0205
+
+Generation: 9
+Best individual: 0.01775
+Worst individual: 0.031
+
+Generation: 10
+Best individual: 0.018125
+Worst individual: 0.024
+
+Generation: 11
+Best individual: 0.02475
+Worst individual: 0.0235
+
+Generation: 12
+Best individual: 0.016375
+Worst individual: 0.0285
+
+Generation: 13
+Best individual: 0.023
+Worst individual: 0.02475
+
+Generation: 14
+Best individual: 0.01725
+Worst individual: 0.0275
+
+Generation: 15
+Best individual: 0.016625
+Worst individual: 0.02675
+
+Generation: 16
+Best individual: 0.019
+Worst individual: 0.0255
+
+Generation: 17
+Best individual: 0.02
+Worst individual: 0.02625
+
+Generation: 18
+Best individual: 0.02775
+Worst individual: 0.02875
+
+Generation: 19
+Best individual: 0.024
+Worst individual: 0.03
+
+Generation: 20
+Best individual: 0.019
+Worst individual: 0.025
+
+Generation: 21
+Best individual: 0.021875
+Worst individual: 0.0215
+
+Generation: 22
+Best individual: 0.01975
+Worst individual: 0.0265
+
+Generation: 23
+Best individual: 0.017
+Worst individual: 0.026
+
+Generation: 24
+Best individual: 0.01925
+Worst individual: 0.0205
+
+Generation: 25
+Best individual: 0.01675
+Worst individual: 0.028
+
+Generation: 26
+Best individual: 0.01325
+Worst individual: 0.0205
+
+Generation: 27
+Best individual: 0.014
+Worst individual: 0.019625
+
+Generation: 28
+Best individual: 0.014
+Worst individual: 0.02475
+
+Generation: 29
+Best individual: 0.02175
+Worst individual: 0.02225
+
+Generation: 30
+Best individual: 0.015125
+Worst individual: 0.0265
+
+Generation: 31
+Best individual: 0.016625
+Worst individual: 0.026
+
+Generation: 32
+Best individual: 0.017
+Worst individual: 0.02275
+
+Generation: 33
+Best individual: 0.0185
+Worst individual: 0.025
+
+Generation: 34
+Best individual: 0.017
+Worst individual: 0.024125
+
+Generation: 35
+Best individual: 0.01325
+Worst individual: 0.025625
+
+Generation: 36
+Best individual: 0.019625
+Worst individual: 0.031
+
+Generation: 37
+Best individual: 0.016625
+Worst individual: 0.03
+
+Generation: 38
+Best individual: 0.0235
+Worst individual: 0.03
+
+Generation: 39
+Best individual: 0.016875
+Worst individual: 0.024
+
+Generation: 40
+Best individual: 0.017
+Worst individual: 0.023875
+
+Generation: 41
+Best individual: 0.018
+Worst individual: 0.023
+
+Generation: 42
+Best individual: 0.0225
+Worst individual: 0.0235
+
+Generation: 43
+Best individual: 0.016875
+Worst individual: 0.0245
+
+Generation: 44
+Best individual: 0.0205
+Worst individual: 0.02
+
+Generation: 45
+Best individual: 0.016875
+Worst individual: 0.02275
+
+Generation: 46
+Best individual: 0.015
+Worst individual: 0.0235
+
+Generation: 47
+Best individual: 0.01325
+Worst individual: 0.02775
+
+Generation: 48
+Best individual: 0.0155
+Worst individual: 0.01975
+
+Generation: 49
+Best individual: 0.0235
+Worst individual: 0.02675
+
+Generation: 50
+Best individual: 0.016375
+Worst individual: 0.0315
+

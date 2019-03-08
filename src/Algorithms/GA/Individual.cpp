@@ -12,6 +12,13 @@
  */
 
 #include "../../../include/Algorithms/GA/Individual.h"
+#include "../../../include/Algorithms/GA/IndividualBool.h"
+
+std::ostream& operator<<(std::ostream& ostream, Individual* ind){
+    ostream << ind->GetMainParameter();
+    
+    return ostream;
+}
 
 Individual::Individual(GA* ga)
 :ga(ga), fitness(0.0), count(0) {
@@ -37,4 +44,8 @@ void Individual::SetFitness(double fitness) {
 
 unsigned int Individual::GetCount() const {
     return count;
+}
+
+void Individual::SetCount(unsigned int count) {
+    this->count = count;
 }

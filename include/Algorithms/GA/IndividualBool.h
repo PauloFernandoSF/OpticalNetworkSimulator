@@ -22,10 +22,7 @@ class GA_RsaOrder;
 
 #include "Individual.h"
 
-class IndividualBool {
-
-    friend std::ostream& operator<<(std::ostream& ostream, 
-    const IndividualBool* ind);
+class IndividualBool : public Individual {
 
 public:
     
@@ -45,12 +42,8 @@ public:
     double GetBlockProb() const;
 
     void SetBlockProb(double blockProb);
-    
-    double GetFitness() const;
 
-    void SetFitness(double fitness);
-
-    unsigned int GetCount() const;
+    double GetMainParameter() override;
 
 private:
     
@@ -59,10 +52,6 @@ private:
     std::vector<bool> genes;
     
     double blockProb;
-    
-    double fitness;
-    
-    unsigned int count;
 };
 
 #endif /* INDIVIDUALBOOL_H */
