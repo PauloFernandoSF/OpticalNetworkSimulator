@@ -69,7 +69,7 @@ void GA_RsaOrder::ApplyIndividualGene(Individual* ind) {
         ->SetResourceAllocOrder(indBool->GetGenes());
 }
 
-void GA_RsaOrder::SetIndFitness(Individual* ind) {
+void GA_RsaOrder::SetIndParameters(Individual* ind) {
     double blockProb = this->GetSimul()->GetData()->GetPbReq();
     IndividualBool* indBool = dynamic_cast<IndividualBool*>(ind);
     
@@ -82,10 +82,10 @@ void GA_RsaOrder::Crossover() {
     IndividualBool *auxInd1, *auxInd2;
     
     while(this->totalPopulation.size() < this->GetNumberIndividuals()){
-        auxInd1 = dynamic_cast<IndividualBool*>(this->RoullleteIndividual());
+        auxInd1 = dynamic_cast<IndividualBool*>(this->RouletteIndividual());
         do{
             auxInd2 = dynamic_cast<IndividualBool*>
-                      (this->RoullleteIndividual());
+                      (this->RouletteIndividual());
         }while(auxInd1 == auxInd2);
         
         this->GenerateNewIndividuals(auxInd1, auxInd2);

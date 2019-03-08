@@ -182,12 +182,12 @@ public:
      * @brief Set the individual parameters found by the simulation.
      * @param ind Specified individual.
      */
-    virtual void SetIndFitness(Individual* ind) = 0;
+    virtual void SetIndParameters(Individual* ind) = 0;
     /**
      * @brief Pick an individual based on the roulette choosing process. 
      * @return Chosen individual.
      */
-    Individual* RoullleteIndividual();
+    Individual* RouletteIndividual();
     
 private:
     /**

@@ -68,7 +68,11 @@ public:
      * @brief Saves the data values in the PBvLoad.txt file.
      */
     void SavePBvLoad();
-    
+    /**
+     * @brief Saves the genetic algorithms files. Log, initial population, 
+     * best individuals, worst individuals and best individual of the last
+     * generation.
+     */
     void SaveGaFiles();
     
     /**

@@ -155,7 +155,7 @@ Individual* GA::GetIniIndividual(unsigned int index) {
     return this->initialPopulation.at(index).get();
 }
 
-Individual* GA::RoullleteIndividual() {
+Individual* GA::RouletteIndividual() {
     double auxDouble = 0.0;
     unsigned int index;
     

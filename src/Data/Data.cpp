@@ -118,6 +118,7 @@ void Data::SaveGaFiles() {
                                 ->GetBestIndividualFile();
     std::ofstream& worstInds = this->simulType->GetInputOutput()
                                  ->GetWorstIndividualsFile();
+    
     //Make function to check the cast for each possible GA SimulationType
     GA* ga = dynamic_cast<GA_SingleObjective*>
                       (this->simulType)->GetGA();
