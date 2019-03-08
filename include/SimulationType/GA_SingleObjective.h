@@ -24,7 +24,6 @@ class GA;
  * @brief Derived class from SimulationType.
  * This type pf simulation runs a genetic algorithm for a single load point,
  * for a single objective(fitness).
- * @param simulIndex Index of this simulation.
  */
 class GA_SingleObjective : public SimulationType {
 

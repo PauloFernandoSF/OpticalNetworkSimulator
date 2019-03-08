@@ -35,10 +35,11 @@ const GA* ga) {
 }
 
 GA::GA(SimulationType* simul)
-:simul(simul), numberIndividuals(50), numberGenerations(300), 
-probCrossover(0.5), probMutation(0.1), initialPopulation(0), bestIndividuals(0), 
-worstIndividuals(0), numBestIndividuals(30), actualGeneration(0),
-maxNumSimulation(3), selectedPopulation(0), totalPopulation(0) {
+:simul(simul), numberIndividuals(50), numberGenerations(50), 
+probCrossover(0.5), probMutation(0.1), numBestIndividuals(30), 
+actualGeneration(0), maxNumSimulation(3), sumFitness(0.0),
+initialPopulation(0), bestIndividuals(0), worstIndividuals(0),  
+selectedPopulation(0), totalPopulation(0) {
     
 }
 
@@ -48,10 +49,6 @@ GA::~GA() {
 
 void GA::Initialize() {
     this->probDistribution = std::uniform_real_distribution<double>(0, 1);
-}
-
-void GA::CreateNewPopulation() {
-    this->actualGeneration++;
 }
 
 void GA::KeepInitialPopulation() {
@@ -152,6 +149,7 @@ IndividualBool* GA::GetBestIndividual() const {
 }
 
 IndividualBool* GA::GetIniIndividual(unsigned int index) {
+    assert(index < this->initialPopulation.size());
     return this->initialPopulation.at(index).get();
 }
 

@@ -43,7 +43,6 @@ void GA_RsaOrder::InitializePopulation() {
 }
 
 void GA_RsaOrder::CreateNewPopulation() {
-    GA::CreateNewPopulation();
     this->totalPopulation.clear();
     this->SetSumFitnessSelectedPop();
     this->Crossover();

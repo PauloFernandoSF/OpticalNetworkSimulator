@@ -41,6 +41,7 @@ void GA_SingleObjective::Run() {
     this->gaAlgorithm->KeepInitialPopulation();
     
     for(unsigned int a = 1; a <= numGenerations; a++){
+        this->gaAlgorithm->SetActualGeneration(a);
         this->gaAlgorithm->CreateNewPopulation();
         this->RunTotalPop();
         
