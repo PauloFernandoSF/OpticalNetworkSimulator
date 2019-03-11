@@ -80,7 +80,7 @@ public:
      * order .
      * @param ind Specified individual.
      */
-    void ApplyIndividualGene(Individual* ind) override;
+    void ApplyIndividual(Individual* ind) override;
     /**
      * @brief Set the individual parameters. For this GA, set the blocking
      * probability found and the fitness.

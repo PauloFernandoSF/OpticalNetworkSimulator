@@ -79,7 +79,7 @@ public:
     /**
      * @brief Keeps the selected population in the initial population container.
      */
-    virtual void KeepInitialPopulation();
+    void KeepInitialPopulation();
     /**
      * @brief Selects the best population among the total population generated
      * by crossover and mutation. The selection is made first, selecting a 
@@ -177,7 +177,7 @@ public:
      * @brief Apply the gene of a specified individual in the network.
      * @param ind Individual pointer.
      */
-    virtual void ApplyIndividualGene(Individual* ind) = 0;
+    virtual void ApplyIndividual(Individual* ind) = 0;
     /**
      * @brief Set the individual parameters found by the simulation.
      * @param ind Specified individual.

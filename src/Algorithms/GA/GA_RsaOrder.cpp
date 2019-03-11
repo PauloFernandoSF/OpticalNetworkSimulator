@@ -63,7 +63,7 @@ bool GA_RsaOrder::GetBoolDistribution() {
     return (bool) boolDistribution(this->random_generator);
 }
 
-void GA_RsaOrder::ApplyIndividualGene(Individual* ind) {
+void GA_RsaOrder::ApplyIndividual(Individual* ind) {
     IndividualBool* indBool = dynamic_cast<IndividualBool*>(ind);
     this->GetSimul()->GetResourceAlloc()
         ->SetResourceAllocOrder(indBool->GetGenes());

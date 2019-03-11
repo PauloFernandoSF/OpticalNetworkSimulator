@@ -88,7 +88,7 @@ GA* GA_SingleObjective::GetGA() const {
 void GA_SingleObjective::RunSelectPop() {
     
     for(auto it: this->gaAlgorithm->selectedPopulation){
-        this->gaAlgorithm->ApplyIndividualGene(it.get());
+        this->gaAlgorithm->ApplyIndividual(it.get());
         SimulationType::Run();
         this->gaAlgorithm->SetIndParameters(it.get());
         this->GetData()->Initialize();
@@ -101,7 +101,7 @@ void GA_SingleObjective::RunTotalPop() {
     for(auto it: this->gaAlgorithm->totalPopulation){
         
         if(it->GetCount() <= maxNumSimulPerInd){
-            this->gaAlgorithm->ApplyIndividualGene(it.get());
+            this->gaAlgorithm->ApplyIndividual(it.get());
             SimulationType::Run();
             this->gaAlgorithm->SetIndParameters(it.get());
         }
@@ -115,7 +115,7 @@ void GA_SingleObjective::CheckMinSimul() {
     for(auto it: this->gaAlgorithm->totalPopulation){
         
         while(it->GetCount() < maxNumSimulPerIns){
-            this->gaAlgorithm->ApplyIndividualGene(it.get());
+            this->gaAlgorithm->ApplyIndividual(it.get());
             SimulationType::Run();
             this->gaAlgorithm->SetIndParameters(it.get());
             this->GetData()->Initialize();
