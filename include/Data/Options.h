@@ -83,6 +83,10 @@ enum TrafficOption {
     LastTrafficOption = Traffic_10_40_100_200_400
 };
 
+/**
+ * @brief Enumerate the resource allocation option. 
+ * The options are RSA or RMSA.
+ */
 enum ResourceAllocOption {
     ResourAllocInvalid,
     ResourAllocRSA,
@@ -91,11 +95,17 @@ enum ResourceAllocOption {
     LastResourAllocOption = ResourAllocRMSA
 };
 
+/**
+ * @brief Option that enable/disable the network physical layer option.
+ */
 enum PhysicalLayerOption {
     PhyLayerDisabled,
     PhyLayerEnabled
 };
 
+/**
+ * @brief 
+ */
 enum NetworkOption {
     NetworkInvalid,
     NetworkWDM,
