@@ -46,6 +46,7 @@
         <logicalFolder name="f1" displayName="GA" projectFiles="true">
           <itemPath>include/Algorithms/GA/GA.h</itemPath>
           <itemPath>include/Algorithms/GA/GA_RsaOrder.h</itemPath>
+          <itemPath>include/Algorithms/GA/Individual.h</itemPath>
           <itemPath>include/Algorithms/GA/IndividualBool.h</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -83,7 +84,6 @@
         <itemPath>include/Structure/Node.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
-      <itemPath>include/Algorithms/GA/Individual.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -97,6 +97,7 @@
         <logicalFolder name="f1" displayName="GA" projectFiles="true">
           <itemPath>src/Algorithms/GA/GA.cpp</itemPath>
           <itemPath>src/Algorithms/GA/GA_RsaOrder.cpp</itemPath>
+          <itemPath>src/Algorithms/GA/Individual.cpp</itemPath>
           <itemPath>src/Algorithms/GA/IndividualBool.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -134,7 +135,6 @@
         <itemPath>src/Structure/Node.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
-      <itemPath>src/Algorithms/GA/Individual.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
