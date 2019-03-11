@@ -38,6 +38,8 @@ Options::mapSpecAlgOptions = boost::assign::map_list_of
     (SpecAllInvalid, "Invalid")
     (SpecAllRandom, "Random")
     (SpecAllFF, "First Fit")
+    (SpecAllFFC, "First Fit Core")
+    (SpecAllMC_MSCL, "Multicore MSCL")
     (SpecAllMSCL, "MSCL");
 
 const boost::unordered_map<LinkCostType, std::string>
@@ -51,6 +53,7 @@ const boost::unordered_map<TrafficOption, std::string>
 Options::mapTrafficOptions = boost::assign::map_list_of
     (TrafficInvalid, "Invalid")
     (Traficc_100_200_400, "100-200-400")
+    (Traficc_50_120_300, "50-120-300")
     (Traffic_10_40_100_200_400, "10-40-100-200-400");
 
 const boost::unordered_map<ResourceAllocOption, std::string>
@@ -76,6 +79,11 @@ Options::mapOrderRSA = boost::assign::map_list_of
     (OrderSaRouting, "SA-Routing")
     (GaOrder, "GA order");
 
+const boost::unordered_map<GACoreOrder, std::string>
+Options::mapGACoreOrder = boost::assign::map_list_of
+    (GAOptionDisabled, "Disabled")
+    (GAOptionEnabled, "Enabled");
+
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
     ostream << "OPTIONS" << std::endl;
@@ -96,6 +104,7 @@ const Options* options) {
     ostream << "Network Type: " << options->GetNetworkOptionName()
             << std::endl;
     ostream << "RSA Order: " << options->GetOrderRsaName()
+    ostream << "GA: " << options->GetGAOption()
             << std::endl;
     
     return ostream;
@@ -107,6 +116,8 @@ routingOption(RoutingInvalid), specAllOption(SpecAllInvalid),
 linkCostType(Invalid), trafficOption(TrafficInvalid), 
 resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled),
 networkOption(NetworkInvalid), orderRSA(OrderRoutingSa) {
+resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled), 
+transponderOption(TransOptionDisabled),coreOrder(GAOptionDisabled) {
     
 }
 
@@ -363,4 +374,12 @@ std::string Options::GetOrderRsaName() const {
 
 void Options::SetOrderRSA(RsaOrder orderRSA) {
     this->orderRSA = orderRSA;
+}
+
+std::string Options::GetGAOption() const {
+    return this->mapGACoreOrder.at(this->coreOrder);
+}
+
+void Options::SetGAOption(GACoreOrder coreOrder) {
+    this->coreOrder = coreOrder;
 }

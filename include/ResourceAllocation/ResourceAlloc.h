@@ -93,6 +93,12 @@ public:
      */
     void SetRoutes(unsigned int orN, unsigned int deN, 
                    std::vector<std::shared_ptr<Route>> routes);
+    
+    /**
+     * @brief Set interfering routes for all routes in the network
+     */
+    void SetInterferingRoutes();
+    
     /**
      * @brief Function that add a route in the container of all routes 
      * for a specified node pair.
@@ -167,6 +173,7 @@ public:
     void SetTopology(Topology* topology);
     
     std::vector<bool> GetResourceAllocOrder() const;
+    std::vector<std::shared_ptr<Route>> GetInterRoutes(int ori,int des,int pos);
 
     void SetResourceAllocOrder(std::vector<bool> resourceAllocOrder);
     
@@ -210,4 +217,11 @@ private:
     std::vector<bool> resourceAllocOrder;
 };
 
+    /**
+     *@brief Vector of vector of vector of route pointers to store interfering 
+     * routes of all routes in the network
+     */
+    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> interRoutes;
+    
+};    
 #endif /* RESOURCEALLOC_H */

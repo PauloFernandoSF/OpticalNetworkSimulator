@@ -19,6 +19,8 @@
 #include <cassert>
 #include <iostream>
 
+//#include "Link.h"
+
 class SimulationType;
 class Node;
 class Link;
@@ -91,6 +93,16 @@ public:
      */
     unsigned int GetNumSlots() const;
     /**
+     * @brief Sets the number of cores in the links
+     * @param numSlots number of core in the links
+     */
+    void SetNumCores(unsigned int numCores);
+    /**
+     * @brief Returns the number of cores in the links
+     * @return The number of cores in the links
+     */
+    unsigned int GetNumCores() const;
+    /**
      * @brief Sets the number of slots in this topology
      * @param numSlots total number of slots
      */
@@ -136,12 +148,20 @@ public:
     Link* GetLink(unsigned int indexOrNode, 
     unsigned int indexDeNode) const;
     /**
+     * @brief Return strong pointer to cast
+     * @param indexOrNode Origin Node
+     * @param indexDeNode Destination Node
+     * @return Link pointer
+     */
+    std::shared_ptr<Link> GetLinkPointer(unsigned int indexOrNode, 
+    unsigned int indexDeNode) const;
+    /**
      * @brief Checks if an specified slot is free in an specified route.
      * @param route Route to be analyzed.
      * @param slot Slot index.
      * @return True if the slot is available.
      */
-    bool CheckSlotDisp(const Route* route, unsigned int slot) const;
+    bool CheckSlotDisp(std::shared_ptr<Route>route, unsigned int slot) const;
     /**
      * @brief Checks if a block of slots is free in an specified route.
      * @param route Route to be analyzed.
@@ -149,8 +169,18 @@ public:
      * @param finSlot Last slot index.
      * @return True if the block of slots is available.
      */
-    bool CheckSlotsDisp(const Route* route, unsigned int iniSlot,
+    bool CheckSlotsDisp(std::shared_ptr<Route> route, unsigned int iniSlot,
                                             unsigned int finSlot) const;
+    /**
+     * @brief Checks if a block of slots is free in an specified core in a route.
+     * @param route Route to be analyzed.
+     * @param iniSlot First slot index.
+     * @param finSlot Last slot index.
+     * @param core Index of the core.
+     * @return True if the block of slots is available.
+     */
+    bool CheckSlotsDispCore(std::shared_ptr<Route> route, unsigned int iniSlot,
+                         unsigned int finSlot, unsigned int core) const;
     /**
      * @brief Checks if there is a contiguous block of free slots in
      * an specified route.
@@ -158,7 +188,8 @@ public:
      * @param numSlots Number of slots.
      * @return True if there is a block of avaliable slots.
      */
-    bool CheckBlockSlotsDisp(const Route* route, unsigned int numSlots) const;
+    bool CheckBlockSlotsDisp(std::shared_ptr<Route> route, 
+                         unsigned int numSlots) const;
     /**
      * @brief Check if the specified OSNR is larger than the signal OSNR for
      * the specified route.
@@ -184,7 +215,7 @@ public:
      * @param route Route to analyze.
      * @return True if the route is valid.
      */
-    bool IsValidRoute(const Route* route);
+    bool IsValidRoute(std::shared_ptr<Route> route);
     /**
      * @brief Check if the slot is valid.
      * @param index Index of the slot.
@@ -235,6 +266,10 @@ private:
      * @brief Total number of slots in the topology
      */
     unsigned int numSlots;
+    /**
+     * @brief Total number of cores in the links of the topology
+     */
+    unsigned int numCores;
     /**
      * @brief Length of the longest link
      */

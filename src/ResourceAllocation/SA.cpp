@@ -12,6 +12,7 @@
  */
 
 #include "../../include/ResourceAllocation/SA.h"
+#include "../../include/ResourceAllocation/CSA.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/Structure/Topology.h"
@@ -33,6 +34,16 @@ void SA::SpecAllocation(Call* call) {
         case SpecAllFF:
             this->FirstFit(call);
             break;
+        case SpecAllFFC:{
+            CSA* csa = static_cast<CSA *>(this);
+            csa->FirstFitCore(call);
+            break;
+        }
+        case SpecAllMC_MSCL:{
+            CSA* csa = static_cast<CSA *>(this);
+            csa->MulticoreMSCL(call);
+            break;
+        }
         default:
             std::cerr << "Invalid spectrum allocation option" << std::endl;
     }
@@ -66,34 +77,44 @@ void SA::FirstFit(Call* call) {
 
 }
 
-std::vector<unsigned int> SA::RandomSlots(Call* call) {
-    std::vector<unsigned int> auxVecSlots(0);
-    std::vector<unsigned int> vecSlots(0);
-    unsigned int auxVar;
-    
-    auxVecSlots = this->FirstFitSlots(call);
-    
-    while(!auxVecSlots.empty()){
-        auxVar = std::rand() % auxVecSlots.size();
-        vecSlots.push_back(auxVecSlots.at(auxVar));
-        auxVecSlots.erase(auxVecSlots.begin() + auxVar);
-    }
-    
-    return vecSlots;
+Topology* SA::GetTopology(){
+    return topology;
 }
 
-std::vector<unsigned int> SA::FirstFitSlots(Call* call) {
-    Route* route = call->GetRoute();
-    unsigned int numSlotsReq = call->GetNumberSlots();
-    unsigned int maxSlotIndex = this->topology->GetNumSlots() - 
-                                 numSlotsReq;
-    std::vector<unsigned int> slots(0);
-    
-    for(unsigned int a = 0; a <= maxSlotIndex; a++){
-        if(this->topology->CheckSlotsDisp(route, a, a + numSlotsReq - 1)){
-            slots.push_back(a);
+int SA::CalcNumFormAloc(int L, bool* Disp,int tam){ 
+//L indica a largura da requisicao e Disp o vetor de disponibilidade
+/*
+	int sum = 0, si, se; //si eh o slot inicial da alocacao, que vai de 0 ate SE-L
+	for(si = 0; si <= tam-L; si++){
+		for(se = si; se < si+L; se++) //se checa se todos os slots de si ate si+L-1 estao disponiveis
+			if(Disp[se] == false)
+				break;
+		if(se == si+L) // Os slots si,si+1,...,si+Lf-1 estao disponiveis
+			sum++;
+	}
+	return sum;
+}
+*/
+    int sum = 0, si;//si eh o slot inicial da alocacao, que vai de 0 ate SE-L
+    int cont = 0;
+    for(si = 0; si < tam; si++){
+        if(Disp[si] == false){
+            if(cont >= L){
+                 sum += cont - L + 1;
+                 //sum += floor (cont/L);
+            }
+                cont = 0;
         }
+            else{
+                cont++;
+            }
     }
-    
-    return slots;
+    if(cont >= L){
+       sum += cont - L + 1;
+    }
+    return sum;
+}
+
+ResourceAlloc* SA::GetResourceAlloc(){
+    return this->resourceAlloc;
 }

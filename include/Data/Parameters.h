@@ -159,6 +159,16 @@ public:
      * @brief Gets the number of slots per fiber/core.
      * @return Number of slots per fiber/core.
      */
+    void SetNumberCores(unsigned int numberCores);
+    /**
+     * @brief Returns the number of cores in the links
+     * @return The number of cores in the links
+     */
+    unsigned int GetNumberCores() const;
+    /**
+     * @brief Sets the number of slots in this topology
+     * @param numSlots total number of slots
+     */
     unsigned int GetNumberSlots() const;
     /**
      * @brief Sets the number of slots per fiber/core.
@@ -212,6 +222,10 @@ private:
      * @brief Number of slots per fiber/core.
      */
     unsigned int numberSlots;
+    /**
+     * @brief Number of cores per link.
+     */
+    unsigned int numberCores;
     
     /**
      * @brief Calculate the load step.

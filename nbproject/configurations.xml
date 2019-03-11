@@ -84,7 +84,13 @@
         <itemPath>include/Structure/Node.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
+      <itemPath>include/ResourceAllocation/CSA.h</itemPath>
+      <itemPath>include/Structure/Core.h</itemPath>
+      <itemPath>include/Algorithms/GA/CoreOrderIndividual.h</itemPath>
+      <itemPath>include/Algorithms/GA/GACoreOrder.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
+      <itemPath>include/Calls/MultiCoreCall.h</itemPath>
+      <itemPath>include/Structure/MultiCoreLink.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -135,7 +141,13 @@
         <itemPath>src/Structure/Node.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
+      <itemPath>src/ResourceAllocation/CSA.cpp</itemPath>
+      <itemPath>src/Structure/Core.cpp</itemPath>
+      <itemPath>src/Algorithms/GA/CoreOrderIndividual.cpp</itemPath>
+      <itemPath>src/Algorithms/GA/GACoreOrder.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
+      <itemPath>src/Calls/MultiCoreCall.cpp</itemPath>
+      <itemPath>src/Structure/MultiCoreLink.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -154,7 +166,7 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <compilerSet>default</compilerSet>
+        <compilerSet>GNU|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -254,11 +266,23 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/CoreOrderIndividual.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/GACoreOrder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Calls/Call.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/CallGenerator.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/Event.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Calls/MultiCoreCall.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/Traffic.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -275,6 +299,8 @@
       <item path="include/GeneralClasses/General.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Kernel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/CSA.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/ResourceAllocation/Modulation.h"
             ex="false"
@@ -315,7 +341,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Structure/Core.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Structure/Link.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Structure/MultiCoreLink.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/Node.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -334,11 +364,20 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/Algorithms/GA/CoreOrderIndividual.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GACoreOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Calls/Call.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/CallGenerator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Event.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Calls/MultiCoreCall.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -355,6 +394,8 @@
       <item path="src/GeneralClasses/General.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Kernel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/CSA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ResourceAllocation/Modulation.cpp"
             ex="false"
@@ -389,7 +430,11 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/Structure/Core.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Structure/Link.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Structure/MultiCoreLink.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Structure/Node.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -503,11 +548,23 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/CoreOrderIndividual.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/GACoreOrder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Calls/Call.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/CallGenerator.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/Event.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Calls/MultiCoreCall.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/Traffic.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -524,6 +581,8 @@
       <item path="include/GeneralClasses/General.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Kernel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/CSA.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/ResourceAllocation/Modulation.h"
             ex="false"
@@ -564,7 +623,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Structure/Core.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Structure/Link.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Structure/MultiCoreLink.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/Node.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -583,11 +646,20 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/Algorithms/GA/CoreOrderIndividual.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GACoreOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Calls/Call.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/CallGenerator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Event.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Calls/MultiCoreCall.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -604,6 +676,8 @@
       <item path="src/GeneralClasses/General.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Kernel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/CSA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ResourceAllocation/Modulation.cpp"
             ex="false"
@@ -638,7 +712,11 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/Structure/Core.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Structure/Link.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Structure/MultiCoreLink.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Structure/Node.cpp" ex="false" tool="1" flavor2="0">
       </item>

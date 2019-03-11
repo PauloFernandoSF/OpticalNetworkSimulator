@@ -35,13 +35,13 @@ std::ostream& operator<<(std::ostream& ostream, const Call* call) {
     return ostream;
 }
 
-Call::Call()
-:status(NotEvaluated), orNode(nullptr), deNode(nullptr), 
-firstSlot(Def::Max_UnInt), lastSlot(Def::Max_UnInt), numberSlots(0), 
-osnrTh(0.0), bandwidth(0.0), bitRate(0.0), modulation(InvalidModulation), 
-deactivationTime(Def::Max_Double), route(nullptr), trialRoutes(0) {
+/*Call::Call()
+:status(NotEvaluated), orNode(nullptr), deNode(nullptr), firstSlot(-1), 
+lastSlot(-1), numberSlots(0), osnrTh(0.0), bandwidth(0.0), bitRate(0.0), 
+modulation(InvalidModulation), deactivationTime(Def::Max_Double), 
+route(nullptr), trialRoutes(0){
 
-}
+}*/
 
 
 Call::Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime)
@@ -156,8 +156,8 @@ void Call::SetDeactivationTime(TIME deactivationTime) {
     this->deactivationTime = deactivationTime;
 }
 
-Route* Call::GetRoute() const {
-    return this->route.get();
+std::shared_ptr<Route> Call::GetRoute() const {
+    return this->route;
 }
 
 std::shared_ptr<Route> Call::GetRoute(unsigned int index) const {

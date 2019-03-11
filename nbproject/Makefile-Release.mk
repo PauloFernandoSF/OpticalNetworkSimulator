@@ -40,9 +40,12 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Algorithms/GA/GA_RsaOrder.o \
 	${OBJECTDIR}/src/Algorithms/GA/Individual.o \
 	${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o \
+	${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o \
+	${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o \
 	${OBJECTDIR}/src/Calls/Call.o \
 	${OBJECTDIR}/src/Calls/CallGenerator.o \
 	${OBJECTDIR}/src/Calls/Event.o \
+	${OBJECTDIR}/src/Calls/MultiCoreCall.o \
 	${OBJECTDIR}/src/Calls/Traffic.o \
 	${OBJECTDIR}/src/Data/Data.o \
 	${OBJECTDIR}/src/Data/InputOutput.o \
@@ -51,6 +54,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/GeneralClasses/Def.o \
 	${OBJECTDIR}/src/GeneralClasses/General.o \
 	${OBJECTDIR}/src/Kernel.o \
+	${OBJECTDIR}/src/ResourceAllocation/CSA.o \
 	${OBJECTDIR}/src/ResourceAllocation/Modulation.o \
 	${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o \
 	${OBJECTDIR}/src/ResourceAllocation/Route.o \
@@ -60,7 +64,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/SimulationType/GA_SingleObjective.o \
 	${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o \
 	${OBJECTDIR}/src/SimulationType/SimulationType.o \
+	${OBJECTDIR}/src/Structure/Core.o \
 	${OBJECTDIR}/src/Structure/Link.o \
+	${OBJECTDIR}/src/Structure/MultiCoreLink.o \
 	${OBJECTDIR}/src/Structure/Node.o \
 	${OBJECTDIR}/src/Structure/Topology.o
 
@@ -83,11 +89,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulatoropticalnetwork
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/opticalnetworksimulator
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulatoropticalnetwork: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/opticalnetworksimulator: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulatoropticalnetwork ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/opticalnetworksimulator ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -113,6 +119,15 @@ ${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o: src/Algorithms/GA/IndividualBoo
 	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o src/Algorithms/GA/IndividualBool.cpp
+${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o: src/Algorithms/GA/CoreOrderIndividual.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o src/Algorithms/GA/CoreOrderIndividual.cpp
+
+${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o: src/Algorithms/GA/GACoreOrder.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o src/Algorithms/GA/GACoreOrder.cpp
 
 ${OBJECTDIR}/src/Calls/Call.o: src/Calls/Call.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls
@@ -128,6 +143,11 @@ ${OBJECTDIR}/src/Calls/Event.o: src/Calls/Event.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/Event.o src/Calls/Event.cpp
+
+${OBJECTDIR}/src/Calls/MultiCoreCall.o: src/Calls/MultiCoreCall.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Calls
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/MultiCoreCall.o src/Calls/MultiCoreCall.cpp
 
 ${OBJECTDIR}/src/Calls/Traffic.o: src/Calls/Traffic.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls
@@ -168,6 +188,11 @@ ${OBJECTDIR}/src/Kernel.o: src/Kernel.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Kernel.o src/Kernel.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/CSA.o: src/ResourceAllocation/CSA.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/CSA.o src/ResourceAllocation/CSA.cpp
 
 ${OBJECTDIR}/src/ResourceAllocation/Modulation.o: src/ResourceAllocation/Modulation.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation
@@ -214,10 +239,20 @@ ${OBJECTDIR}/src/SimulationType/SimulationType.o: src/SimulationType/SimulationT
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/SimulationType.o src/SimulationType/SimulationType.cpp
 
+${OBJECTDIR}/src/Structure/Core.o: src/Structure/Core.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Structure
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Structure/Core.o src/Structure/Core.cpp
+
 ${OBJECTDIR}/src/Structure/Link.o: src/Structure/Link.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Structure
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Structure/Link.o src/Structure/Link.cpp
+
+${OBJECTDIR}/src/Structure/MultiCoreLink.o: src/Structure/MultiCoreLink.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Structure
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Structure/MultiCoreLink.o src/Structure/MultiCoreLink.cpp
 
 ${OBJECTDIR}/src/Structure/Node.o: src/Structure/Node.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Structure

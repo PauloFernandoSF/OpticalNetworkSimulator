@@ -19,10 +19,13 @@
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Structure/Node.h"
 #include "../../include/Structure/Link.h"
+#include "../../include/Structure/Core.h"
+#include "../../include/Structure/MultiCoreLink.h"
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/Signal.h"
 #include "../../include/Calls/Call.h"
+#include "../../include/Calls/MultiCoreCall.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Topology* topology) {
@@ -34,6 +37,8 @@ const Topology* topology) {
             << std::endl;
     ostream << "Number of slots: " << topology->GetNumSlots()
             << std::endl;
+    ostream << "Number of cores: " << topology->GetNumCores()
+            << std::endl;
     
     for(auto it: topology->vecNodes){
         ostream << it << std::endl;
@@ -43,13 +48,12 @@ const Topology* topology) {
         if(it != nullptr)
             ostream << it << std::endl;
     }
-    
     return ostream;
 }
 
 Topology::Topology(SimulationType* simulType) 
 :simulType(simulType), vecNodes(0), vecLinks(0), 
-numNodes(0), numLinks(0), numSlots(0), maxLength(0.0) {
+numNodes(0), numLinks(0), numSlots(0), maxLength(0.0), numCores(0) {
 
 }
 
@@ -76,7 +80,8 @@ void Topology::LoadFile() {
     auxIfstream >> auxInt;
     this->SetNumLinks(auxInt);
     this->SetNumSlots(this->simulType->GetParameters()->GetNumberSlots());
-    
+    this->SetNumCores(this->simulType->GetParameters()->GetNumberCores());
+        
     this->CreateNodes(auxIfstream);
     
     this->CreateLinks(auxIfstream);
@@ -107,15 +112,25 @@ void Topology::CreateNodes(std::ifstream& ifstream) {
 void Topology::CreateLinks(std::ifstream& ifstream) {
     unsigned  int orNode, deNode, nSec;
     double length;
-    std::shared_ptr<Link> link;
     
     for(unsigned int a = 0; a < this->GetNumLinks(); ++a){
         ifstream >> orNode;
         ifstream >> deNode;
         ifstream >> length;
         ifstream >> nSec;
-        link = std::make_shared<Link>(this, orNode, deNode, 
-        length, nSec, this->GetNumSlots());
+        std::shared_ptr<Link> link;
+        //std::shared_ptr<MultiCoreLink> mclink;
+        
+        if(this->GetNumCores() > 1){
+            link = std::make_shared<MultiCoreLink>(this, orNode, deNode, 
+            length, nSec, this->GetNumSlots());
+                   // mclink = std::dynamic_pointer_cast<MultiCoreLink>(link);
+        }
+        else{
+            link =std::make_shared<Link>(this, orNode, deNode, 
+            length, nSec, this->GetNumSlots());
+        }
+                  
         this->InsertLink(link);
         link.reset();
     }
@@ -145,6 +160,15 @@ unsigned int Topology::GetNumLinks() const {
 void Topology::SetNumLinks(unsigned int numLinks) {
     assert(this->numLinks == 0);
     this->numLinks = numLinks;
+}
+
+unsigned int Topology::GetNumCores() const {
+    return numCores;
+}
+
+void Topology::SetNumCores(unsigned int numCores) {
+    //assert(this->numCores == 0);
+    this->numCores = numCores;
 }
 
 unsigned int Topology::GetNumSlots() const {
@@ -247,7 +271,16 @@ unsigned int indexDeNode) const {
     indexDeNode).get();
 }
 
-bool Topology::CheckSlotDisp(const Route* route, unsigned int slot) const {
+std::shared_ptr<Link> Topology::GetLinkPointer(unsigned int indexOrNode, 
+                                             unsigned int indexDeNode) const {
+    assert(indexOrNode < this->GetNumNodes());
+    assert(indexDeNode < this->GetNumNodes());
+    
+    return this->vecLinks.at(indexOrNode * this->numNodes + indexDeNode);
+}
+
+bool Topology::CheckSlotDisp(std::shared_ptr<Route> route, unsigned int slot) 
+const {
     Link* link;
     unsigned int numHops = route->GetNumHops();
     
@@ -260,7 +293,7 @@ bool Topology::CheckSlotDisp(const Route* route, unsigned int slot) const {
     return true;
 }
 
-bool Topology::CheckSlotsDisp(const Route* route, unsigned int iniSlot, 
+bool Topology::CheckSlotsDisp(std::shared_ptr<Route> route,unsigned int iniSlot, 
 unsigned int finSlot) const {
     
     for(unsigned int a = iniSlot; a <= finSlot; a++){
@@ -271,8 +304,47 @@ unsigned int finSlot) const {
     return true;
 }
 
-bool Topology::CheckBlockSlotsDisp(const Route* route, unsigned int numSlots) 
-const {
+bool Topology::CheckSlotsDispCore(std::shared_ptr<Route> route,
+unsigned int iniSlot,unsigned int finSlot, unsigned int core) const {
+    
+    unsigned int L_or, L_de,x = route->GetNumHops();
+    L_or = route->GetNode(0);L_de = route->GetNode(1);
+    bool flag = false;
+    //Cast base pointer in derived pointer class
+    std::shared_ptr<MultiCoreLink> link = 
+    std::dynamic_pointer_cast<MultiCoreLink>(this->GetLinkPointer(L_or, L_de));
+    //Check the availability of the set of slots in the core on the first hop
+    for(unsigned int s = iniSlot; s <= finSlot; s++){
+        // is link c->c+1 busy in slot s?
+        if(link->getCore(core)->getSlotOccupation(s)){ 
+            flag = true;
+            break;
+        }
+        // found the core in the first link
+        if(s == finSlot){                
+            break;
+        }
+    }
+        if(flag == true){
+            return false;
+        }
+    //Check the availability of the set of slots in the core on the rest of the 
+    //route
+    for(unsigned int c = 1; c < route->GetNumHops(); c++){
+        L_or = route->GetNode(c);L_de = route->GetNode(c+1);
+        std::shared_ptr<MultiCoreLink> link = 
+        std::dynamic_pointer_cast<MultiCoreLink>(this->GetLinkPointer(L_or,
+        L_de));
+        for(int s = iniSlot;s <= finSlot; s++){
+                       if(link->getCore(core)->getSlotOccupation(s))
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Topology::CheckBlockSlotsDisp(std::shared_ptr<Route> route, 
+                                   unsigned int numSlots) const {
     unsigned int numContiguousSlots = 0;
 
     for(unsigned int s = 0; s < this->numSlots; s++){
@@ -286,7 +358,7 @@ const {
     return false;
 }
 
-bool Topology::CheckOSNR(const Route* route, double OSNRth) {
+bool Topology::CheckOSNR(std::shared_ptr<Route> route, double OSNRth) {
     Link* link;
     unsigned int numHops = route->GetNumHops();
     std::shared_ptr<Signal> signal = std::make_shared<Signal>();
@@ -317,7 +389,7 @@ bool Topology::IsValidNode(const Node* node) {
     return false;
 }
 
-bool Topology::IsValidRoute(const Route* route) {
+bool Topology::IsValidRoute(std::shared_ptr<Route> route) {
     
     if(route != nullptr){
         Link* link;
@@ -350,16 +422,26 @@ bool Topology::IsValidLigthPath(Call* call) {
 
 void Topology::Connect(Call* call) {
     Link* link;
-    const Route* route = call->GetRoute();
-    unsigned int numHops = route->GetNumHops();
+    std::shared_ptr<Route> route = call->GetRoute();
+    unsigned int numHops = route->GetNumHops(), core;
     
     for(unsigned int a = 0; a < numHops; a++){
         link = route->GetLink(a);
-        
         if(this->IsValidLink(link)){
-            for(unsigned int s = call->GetFirstSlot(); s <= 
-            call->GetLastSlot();s++){
-                link->OccupySlot(s);
+            //Condition to connect the call- MultiCore or SingleCore
+            if(this->numCores == 1)
+                for(int s = call->GetFirstSlot(); s <= call->GetLastSlot(); s++)
+                {
+                    link->OccupySlot(s);
+                }
+            else{
+                MultiCoreLink* mcLink = static_cast<MultiCoreLink *>(link);
+                MultiCoreCall* mcCall = static_cast<MultiCoreCall *>(call);
+                core = mcCall->GetCore();
+                for(int s = mcCall->GetFirstSlot(); s <= mcCall->GetLastSlot(); 
+                    s++){
+                    mcLink->OccupySlot(core, s);
+                }
             }
         }
     }
@@ -368,16 +450,27 @@ void Topology::Connect(Call* call) {
 
 void Topology::Release(Call* call) {
     Link* link;
-    const Route* route = call->GetRoute();
-    unsigned int numHops = route->GetNumHops();
+    std::shared_ptr<Route> route = call->GetRoute();
+    unsigned int numHops = route->GetNumHops(), core;
     
     for(unsigned int a = 0; a < numHops; a++){
         link = route->GetLink(a);
         
         if(this->IsValidLink(link)){
-            for(unsigned int s = call->GetFirstSlot(); s <= 
-            call->GetLastSlot(); s++){
-                link->ReleaseSlot(s);
+            //Condition to release the call- MultiCore or SingleCore
+            if(this->numCores == 1)
+                for(int s = call->GetFirstSlot(); s <= call->GetLastSlot(); s++)
+                {
+                    link->ReleaseSlot(s);
+                }
+            else{
+                MultiCoreLink* mcLink = static_cast<MultiCoreLink *>(link);
+                MultiCoreCall* mcCall = static_cast<MultiCoreCall *>(call);
+                core = mcCall->GetCore();
+                for(int s = mcCall->GetFirstSlot(); s <= mcCall->GetLastSlot(); 
+                    s++){
+                    mcLink->ReleaseSlot(core, s);
+                }
             }
         }
     }

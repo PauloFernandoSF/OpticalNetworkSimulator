@@ -73,6 +73,12 @@ public:
     
     void MSCL(Call* call);
     
+    Topology* GetTopology();
+    
+    int CalcNumFormAloc(int L, bool* Disp,int tam);
+    
+    ResourceAlloc* GetResourceAlloc();
+    
     
     std::vector<unsigned int> RandomSlots(Call* call);
     
