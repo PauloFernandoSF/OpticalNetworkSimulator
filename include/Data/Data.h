@@ -16,6 +16,7 @@
 
 class SimulationType;
 class Call;
+class GA;
 
 #include <vector>
 #include <ostream>
@@ -143,6 +144,13 @@ private:
      * @param ostream Stream that contain the PBvLoad file.
      */
     void SavePBvLoad(std::ostream& ostream);
+    
+    void SaveBestWorstIndividuals(GA* ga, std::ostream& logOfstream, 
+    std::ostream& bestInds, std::ostream& worstInds);
+    
+    void SaveBestIndividual(GA* ga, std::ostream& bestInd);
+    
+    void SaveInitPopulation(GA* ga, std::ostream& initPop);
     
 private:
     /**

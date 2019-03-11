@@ -25,23 +25,18 @@ simulations(0) {
 
 Kernel::~Kernel() {
     
-    for(auto it : simulations) {
+    for(auto it : simulations)
         it.reset();
-    }
 }
 
 void Kernel::Run() {
     
-    CreateSimulations();
+    this->CreateSimulations();
     
     for(auto it: this->simulations){
-        it->LoadFile();
-        it->AdditionalSettings();
-        
-        it->Print();
-        it->Run();
-        
-        it->Save();
+        this->Pre_Simulation(it.get());
+        this->Simulation(it.get());
+        this->Pos_Simulation(it.get());
     }
 }
 
@@ -55,25 +50,19 @@ void Kernel::CreateSimulations() {
     }
 }
 
-void Kernel::Pre_Simulation() {
+void Kernel::Pre_Simulation(SimulationType* simul) {
     
-    for(auto it : simulations){
-        it->LoadFile();
-        it->AdditionalSettings();
-    }
+    simul->LoadFile();
+    simul->AdditionalSettings();
 }
 
-void Kernel::Simulation() {
+void Kernel::Simulation(SimulationType* simul) {
     
-    for(auto it : this->simulations){
-        it->Print();
-        it->Run();
-    }
+    simul->Print();
+    simul->Run();
 }
 
-void Kernel::Pos_Simulation() {
+void Kernel::Pos_Simulation(SimulationType* simul) {
     
-    for(auto it : this->simulations){
-        it->Save();
-    }
+    simul->Save();
 }
