@@ -25,7 +25,6 @@
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/Signal.h"
 #include "../../include/Calls/Call.h"
-#include "../../include/Calls/MultiCoreCall.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Topology* topology) {
@@ -303,10 +302,10 @@ unsigned int finSlot) const {
     return true;
 }
 
-bool Topology::CheckSlotsDispCore(Route* route, unsigned int iniSlot, 
+bool Topology::CheckSlotsDispCore(Route* route, unsigned int iniSlot,
 unsigned int finSlot, unsigned int core) const {
     
-    unsigned int L_or, L_de,x = route->GetNumHops();
+    unsigned int L_or, L_de, x = route->GetNumHops();
     L_or = route->GetNodeId(0);L_de = route->GetNodeId(1);
     bool flag = false;
     //Cast base pointer in derived pointer class
@@ -334,9 +333,9 @@ unsigned int finSlot, unsigned int core) const {
         std::shared_ptr<MultiCoreLink> link = 
         std::dynamic_pointer_cast<MultiCoreLink>(this->GetLinkPointer(L_or,
         L_de));
-        for(int s = iniSlot;s <= finSlot; s++){
-                       if(link->getCore(core)->getSlotOccupation(s))
-            return false;
+        for(unsigned int s = iniSlot; s <= finSlot; s++){
+            if(link->getCore(core)->getSlotOccupation(s))
+                return false;
         }
     }
     return true;
@@ -428,16 +427,15 @@ void Topology::Connect(Call* call) {
         if(this->IsValidLink(link)){
             //Condition to connect the call- MultiCore or SingleCore
             if(this->numCores == 1)
-                for(int s = call->GetFirstSlot(); s <= call->GetLastSlot(); s++)
-                {
+                for(unsigned int s = call->GetFirstSlot(); s <= call->GetLastSlot(); 
+                s++){
                     link->OccupySlot(s);
                 }
             else{
                 MultiCoreLink* mcLink = static_cast<MultiCoreLink *>(link);
-                MultiCoreCall* mcCall = static_cast<MultiCoreCall *>(call);
-                core = mcCall->GetCore();
-                for(int s = mcCall->GetFirstSlot(); s <= mcCall->GetLastSlot(); 
-                    s++){
+                core = call->GetCore();
+                for(unsigned int s = call->GetFirstSlot(); s <= call->
+                GetLastSlot(); s++){
                     mcLink->OccupySlot(core, s);
                 }
             }
@@ -456,16 +454,15 @@ void Topology::Release(Call* call) {
         if(this->IsValidLink(link)){
             //Condition to release the call- MultiCore or SingleCore
             if(this->numCores == 1)
-                for(int s = call->GetFirstSlot(); s <= call->GetLastSlot(); s++)
-                {
+                for(unsigned int s = call->GetFirstSlot(); s <= call->
+                GetLastSlot(); s++){
                     link->ReleaseSlot(s);
                 }
             else{
                 MultiCoreLink* mcLink = static_cast<MultiCoreLink *>(link);
-                MultiCoreCall* mcCall = static_cast<MultiCoreCall *>(call);
-                core = mcCall->GetCore();
-                for(int s = mcCall->GetFirstSlot(); s <= mcCall->GetLastSlot(); 
-                    s++){
+                core = call->GetCore();
+                for(unsigned int s = call->GetFirstSlot(); s <= call->
+                GetLastSlot(); s++){
                     mcLink->ReleaseSlot(core, s);
                 }
             }

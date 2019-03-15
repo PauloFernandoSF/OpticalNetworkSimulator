@@ -213,13 +213,12 @@ private:
      * @brief Vector of all routes for all network node pairs.
      */
     std::vector<std::vector<std::shared_ptr<Route>>> allRoutes;
-    
-    std::vector<bool> resourceAllocOrder;
     /**
      *@brief Vector of vector of vector of route pointers to store interfering 
      * routes of all routes in the network
      */
     std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> interRoutes;
     
+    std::vector<bool> resourceAllocOrder;
 };    
 #endif /* RESOURCEALLOC_H */

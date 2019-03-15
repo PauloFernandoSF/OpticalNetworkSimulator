@@ -45,7 +45,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Calls/Call.o \
 	${OBJECTDIR}/src/Calls/CallGenerator.o \
 	${OBJECTDIR}/src/Calls/Event.o \
-	${OBJECTDIR}/src/Calls/MultiCoreCall.o \
 	${OBJECTDIR}/src/Calls/Traffic.o \
 	${OBJECTDIR}/src/Data/Data.o \
 	${OBJECTDIR}/src/Data/InputOutput.o \
@@ -144,11 +143,6 @@ ${OBJECTDIR}/src/Calls/Event.o: src/Calls/Event.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/Event.o src/Calls/Event.cpp
-
-${OBJECTDIR}/src/Calls/MultiCoreCall.o: src/Calls/MultiCoreCall.cpp
-	${MKDIR} -p ${OBJECTDIR}/src/Calls
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/MultiCoreCall.o src/Calls/MultiCoreCall.cpp
 
 ${OBJECTDIR}/src/Calls/Traffic.o: src/Calls/Traffic.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls

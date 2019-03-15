@@ -25,7 +25,7 @@
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :simulType(simulType), topology(nullptr), routing(nullptr), specAlloc(nullptr),
-allRoutes(0), resourceAllocOrder(0) {
+allRoutes(0), interRoutes(0), resourceAllocOrder(0) {
     
 }
 
@@ -307,12 +307,12 @@ std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes
 
 void ResourceAlloc::SetInterferingRoutes(){
     std::shared_ptr<Route> routeAux, routeAux2;
-    int nodeRoute[2], nodeRouteInt[2], totalRoutes = 0, countRoutes = 0;
+    int nodeRoute[2], nodeRouteInt[2], countRoutes = 0;
     bool flag = true;
     
     this->interRoutes.resize(this->allRoutes.size());
     /*Initialize vector of vector of route pointer for Interfering Routes*/
-    for(int r = 1;r < this->allRoutes.size() - 1;r++){
+    for(unsigned int r = 1; r < this->allRoutes.size() - 1; r++){
         if(r%(this->topology->GetNumNodes() + 1) == 0)
             r += 1;
         this->interRoutes.at(r).resize(this->allRoutes.at(r).size());

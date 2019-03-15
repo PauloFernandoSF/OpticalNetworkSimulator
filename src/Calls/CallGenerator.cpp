@@ -18,7 +18,6 @@
 #include "../../include/Data/Parameters.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Calls/Call.h"
-#include "../../include/Calls/MultiCoreCall.h"
 #include "../../include/Calls/Event.h"
 
 std::default_random_engine CallGenerator::random_generator(0);
@@ -68,11 +67,9 @@ void CallGenerator::Finalize() {
 
 void CallGenerator::GenerateCall() {
     this->simulType->numberRequests++;
-    
+    std::shared_ptr<Call> newCall;
     unsigned int auxIndexOrNode = uniformNodeDistribution(random_generator);
     unsigned int auxIndexDeNode;
-    
-    std::shared_ptr<Call> newCall;
     
     do{
         auxIndexDeNode = uniformNodeDistribution(random_generator);
@@ -84,20 +81,9 @@ void CallGenerator::GenerateCall() {
     TIME arrivalTime = exponencialHDistribution(random_generator);
     TIME deactvationTime = exponencialMuDistribution(random_generator);
     
-    //Call creation-Conditions to create MultiCore or Single Core call
-    if(this->topology->GetNumCores() == 1){
     newCall = std::make_shared<Call>(this->topology->GetNode(auxIndexOrNode),
     this->topology->GetNode(auxIndexDeNode), this->traffic->
     GetTraffic(auxIndexTraffic), deactvationTime);
-    }
-    else{
-    newCall = std::make_shared<MultiCoreCall>
-            (this->topology->GetNode(auxIndexOrNode),
-                           this->topology->GetNode(auxIndexDeNode),
-                           this->traffic->GetTraffic(auxIndexTraffic),
-                           deactvationTime);
-    
-    }
     
     //Event creation from the call created before
     std::shared_ptr<Event> newEvent = 

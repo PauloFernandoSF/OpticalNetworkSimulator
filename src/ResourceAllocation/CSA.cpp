@@ -17,7 +17,6 @@
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/Structure/Topology.h"
-#include "../../include/Calls/MultiCoreCall.h"
 
 CSA::CSA(ResourceAlloc* rsa, SpectrumAllocationOption option,Topology* topology)
 :SA(rsa, option, topology){
@@ -29,19 +28,21 @@ CSA::~CSA() {
 }
 
 void CSA::FirstFit(Call* call){
-    MultiCoreCall* mcCall = static_cast<MultiCoreCall *>(call);
-    Route* route = mcCall->GetRoute();bool flag = false;
-    int numSlotsReq = mcCall->GetNumberSlots();
+    Route* route = call->GetRoute();
+    bool flag = false;
+    int numSlotsReq = call->GetNumberSlots();
     int slot_range = this->GetTopology()->GetNumSlots() - numSlotsReq + 1;
+    
     //Tries to find a set of available slots in a core- vary slots and later 
     //cores
-    for(int core = 0;core < this->GetTopology()->GetNumCores();core++){
-        for(int s = 0; s < slot_range;s++){
-            if(this->GetTopology()->CheckSlotsDispCore(route, s,
-                    s + mcCall->GetNumberSlots() - 1,core)){
-                mcCall->SetFirstSlot(s);
-                mcCall->SetLastSlot(s + mcCall->GetNumberSlots() - 1);
-                mcCall->SetCore(core);
+    for(unsigned int core = 0; core < this->GetTopology()->GetNumCores(); 
+    core++){
+        for(int s = 0; s < slot_range; s++){
+            if(this->GetTopology()->CheckSlotsDispCore(route, s, s + 
+            call->GetNumberSlots() - 1, core)){
+                call->SetFirstSlot(s);
+                call->SetLastSlot(s + call->GetNumberSlots() - 1);
+                call->SetCore(core);
                 flag = true;
                 break;
             }
@@ -54,17 +55,16 @@ void CSA::FirstFit(Call* call){
 void CSA::MSCL(Call* call){
     /*Set Interfering routes to aplly Multicore MSCL*/
     this->SA::GetResourceAlloc()->SetInterferingRoutes();
-    MultiCoreCall* mcCall = static_cast<MultiCoreCall*>(call);
     int totalSlots=this->GetTopology()->GetNumSlots(),s,core;
-    Route *route = mcCall->GetRoute(), *route_aux;
-    int NslotsReq = mcCall->GetNumberSlots(),slot_range = 
+    Route *route = call->GetRoute(), *route_aux;
+    int NslotsReq = call->GetNumberSlots(),slot_range = 
     totalSlots - NslotsReq + 1;
     int core_size = this->GetTopology()->GetNumCores(),orNode = 
     route->GetOrNodeId(),desNode = route->GetDeNodeId();
     //Ponteiro que receberá todas as rotas que interferem com route
     std::vector<std::shared_ptr<Route>> RouteInt = this->SA::GetResourceAlloc()
     ->GetInterRoutes(orNode,desNode,0);
-    int a = RouteInt.size();
+    //int a = RouteInt.size();
     int vetCapInic,vetCapFin,si;
     double perda, perdaMin = std::numeric_limits<double>::max();
     Topology* topology = this->GetTopology();
@@ -140,9 +140,9 @@ void CSA::MSCL(Call* call){
             }//Fim da verificação dos slots
         }//Fim da verificação dos núcleos
         if(perdaMin < std::numeric_limits<double>::max()){
-            mcCall->SetFirstSlot(si);
-            mcCall->SetLastSlot(si+NslotsReq-1);
-            mcCall->SetCore(core);
+            call->SetFirstSlot(si);
+            call->SetLastSlot(si+NslotsReq-1);
+            call->SetCore(core);
             /*if(numSlotsReq == 2){
                 Def::numReq_Acc_2slots.at(core)++;
             }
