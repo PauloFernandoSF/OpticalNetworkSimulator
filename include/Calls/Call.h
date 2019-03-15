@@ -54,6 +54,7 @@ public:
          TIME deacTime);
     
     Call(const Call& orig);
+    
     virtual ~Call();
     
     /**
@@ -114,6 +115,11 @@ public:
      * @param numberSlots Amount of slots to input.
      */
     void SetNumberSlots(unsigned int numberSlots);
+    
+    unsigned int GetCore() const;
+
+    void SetCore(unsigned int core);
+
     /**
      * @brief Returns the value of OSNR of this Call.
      * @return OSNR value.
@@ -160,7 +166,8 @@ public:
      */
     void SetDeactivationTime(TIME deactivationTime);
     
-    std::shared_ptr<Route> GetRoute() const;
+    //std::shared_ptr<Route> GetRoute() const;
+    
     Route* GetRoute() const;
     
     std::shared_ptr<Route> GetRoute(unsigned int index) const;
@@ -205,6 +212,8 @@ private:
      * the fibers.
      */
     unsigned int numberSlots;
+    
+    unsigned int core;
     /**
      * @brief OSNr of the call calculated based 
      * in the distance of origin and destination node,

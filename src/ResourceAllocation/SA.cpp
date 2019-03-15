@@ -16,6 +16,7 @@
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/Structure/Topology.h"
+#include "../../include/GeneralClasses/Def.h"
 
 SA::SA(ResourceAlloc* rsa, SpectrumAllocationOption option, Topology* topology) 
 :resourceAlloc(rsa), specAllOption(option), topology(topology) {
@@ -34,16 +35,9 @@ void SA::SpecAllocation(Call* call) {
         case SpecAllFF:
             this->FirstFit(call);
             break;
-        case SpecAllFFC:{
-            CSA* csa = static_cast<CSA *>(this);
-            csa->FirstFitCore(call);
+        case SpecAllMSCL:
+            this->MSCL(call);
             break;
-        }
-        case SpecAllMC_MSCL:{
-            CSA* csa = static_cast<CSA *>(this);
-            csa->MulticoreMSCL(call);
-            break;
-        }
         default:
             std::cerr << "Invalid spectrum allocation option" << std::endl;
     }
@@ -51,15 +45,11 @@ void SA::SpecAllocation(Call* call) {
 
 void SA::Random(Call* call) {
     std::vector<unsigned int> vecSlots(0);
-    unsigned int auxVar;
     
     vecSlots = this->FirstFitSlots(call);
     
-    if(!vecSlots.empty()){
-        auxVar = vecSlots.at(std::rand() % vecSlots.size());
-        call->SetFirstSlot(auxVar);
-        call->SetLastSlot(auxVar + call->GetNumberSlots() - 1);
-    }
+    call->SetFirstSlot(vecSlots.back());
+    call->SetLastSlot(vecSlots.back() + call->GetNumberSlots() - 1);
 }
 
 void SA::FirstFit(Call* call) {
@@ -75,6 +65,10 @@ void SA::FirstFit(Call* call) {
         }
     }
 
+}
+
+void SA::MSCL(Call* call) {
+    std::cout << "Function not implemented" << std::endl;
 }
 
 Topology* SA::GetTopology(){
@@ -117,4 +111,29 @@ int SA::CalcNumFormAloc(int L, bool* Disp,int tam){
 
 ResourceAlloc* SA::GetResourceAlloc(){
     return this->resourceAlloc;
+}
+
+std::vector<unsigned int> SA::RandomSlots(Call* call) {
+    std::vector<unsigned int> vecSlots(0);
+    vecSlots = this->FirstFitSlots(call);
+    
+    std::shuffle(vecSlots.begin(), vecSlots.end(), Def::randomDevice);
+    
+    return vecSlots;
+}
+
+std::vector<unsigned int> SA::FirstFitSlots(Call* call) {
+    Route* route = call->GetRoute();
+    unsigned int numSlotsReq = call->GetNumberSlots();
+    unsigned int maxSlotIndex = this->topology->GetNumSlots() - 
+                                 numSlotsReq;
+    std::vector<unsigned int> slots(0);
+    
+    for(unsigned int a = 0; a <= maxSlotIndex; a++){
+        if(this->topology->CheckSlotsDisp(route, a, a + numSlotsReq - 1)){
+            slots.push_back(a);
+        }
+    }
+    
+    return slots;
 }

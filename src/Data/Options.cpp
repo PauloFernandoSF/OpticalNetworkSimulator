@@ -38,8 +38,6 @@ Options::mapSpecAlgOptions = boost::assign::map_list_of
     (SpecAllInvalid, "Invalid")
     (SpecAllRandom, "Random")
     (SpecAllFF, "First Fit")
-    (SpecAllFFC, "First Fit Core")
-    (SpecAllMC_MSCL, "Multicore MSCL")
     (SpecAllMSCL, "MSCL");
 
 const boost::unordered_map<LinkCostType, std::string>
@@ -104,6 +102,7 @@ const Options* options) {
     ostream << "Network Type: " << options->GetNetworkOptionName()
             << std::endl;
     ostream << "RSA Order: " << options->GetOrderRsaName()
+            << std::endl;
     ostream << "GA: " << options->GetGAOption()
             << std::endl;
     
@@ -115,9 +114,8 @@ Options::Options(SimulationType* simulType)
 routingOption(RoutingInvalid), specAllOption(SpecAllInvalid),
 linkCostType(Invalid), trafficOption(TrafficInvalid), 
 resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled),
-networkOption(NetworkInvalid), orderRSA(OrderRoutingSa) {
-resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled), 
-transponderOption(TransOptionDisabled),coreOrder(GAOptionDisabled) {
+networkOption(NetworkInvalid), orderRSA(OrderRoutingSa),
+coreOrder(GAOptionDisabled), transponderOption(TransOptionDisabled) {
     
 }
 

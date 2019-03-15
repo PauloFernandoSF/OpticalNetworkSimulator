@@ -17,7 +17,7 @@
 #include "../../include/ResourceAllocation/Routing.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/SA.h"
-#include "../../include/Data/Options.h"
+#include "../../include/ResourceAllocation/CSA.h"
 #include "../../include/Data/Parameters.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Modulation.h"
@@ -64,11 +64,17 @@ void ResourceAlloc::Load() {
             std::cout << "Invalid RSA order" << std::endl;
     }
     
-    this->routing = std::make_shared<Routing>(this, 
+    this->routing = std::make_shared<Routing>(this,
         this->simulType->GetOptions()->GetRoutingOption(), this->topology);
     
-    this->specAlloc = std::make_shared<SA>(this, 
-        this->simulType->GetOptions()->GetSpecAllOption(), this->topology);
+    if(this->topology->GetNumCores() == 1){
+        this->specAlloc = std::make_shared<SA>(this, this->simulType->
+                          GetOptions()->GetSpecAllOption(), this->topology);
+    }
+    else{
+        this->specAlloc = std::make_shared<CSA>(this, this->simulType->
+                          GetOptions()->GetSpecAllOption(), this->topology);
+    }
     
     this->modulation = std::make_shared<Modulation>(this, 
         this->simulType->GetParameters()->GetSlotBandwidth());
@@ -292,6 +298,7 @@ void ResourceAlloc::SetResourceAllocOrder() {
     }
     this->SetResourceAllocOrder(vecBool);
 }
+
 std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes
         (int ori,int des,int pos){
     return this->interRoutes.at(ori*(this->topology->GetNumNodes())+ des)
@@ -320,8 +327,8 @@ void ResourceAlloc::SetInterferingRoutes(){
         routeAux = this->allRoutes.at(a).at(e);
         /*Search links to verify interfering routes*/
         for(unsigned int b = 0; b < routeAux->GetNumHops() - 1; b++){
-            nodeRoute[0] = routeAux->GetNode(b);
-            nodeRoute[1] = routeAux->GetNode(b+1);
+            nodeRoute[0] = routeAux->GetNodeId(b);
+            nodeRoute[1] = routeAux->GetNodeId(b+1);
             /*Search in allRoutes to extract all interfering routes*/
             for(unsigned int c = 1; c < allRoutes.size() - 1; c++){
               if(c%(this->topology->GetNumNodes() + 1) == 0)
@@ -331,8 +338,8 @@ void ResourceAlloc::SetInterferingRoutes(){
                 if(routeAux == routeAux2)
                    continue;
                 for(unsigned int d = 0; d < (routeAux2->GetNumHops()-1); d++){
-                   nodeRouteInt[0] = routeAux2->GetNode(d);
-                   nodeRouteInt[1] = routeAux2->GetNode(d+1);
+                   nodeRouteInt[0] = routeAux2->GetNodeId(d);
+                   nodeRouteInt[1] = routeAux2->GetNodeId(d+1);
                    if(nodeRoute[0]==nodeRouteInt[0] && 
                           nodeRoute[1]==nodeRouteInt[1]){
                       /*Verify if interfering route is already in interRoutes*/

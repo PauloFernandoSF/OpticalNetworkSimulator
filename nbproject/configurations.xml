@@ -44,7 +44,9 @@
                    projectFiles="true">
       <logicalFolder name="f6" displayName="Algorithms" projectFiles="true">
         <logicalFolder name="f1" displayName="GA" projectFiles="true">
+          <itemPath>include/Algorithms/GA/CoreOrderIndividual.h</itemPath>
           <itemPath>include/Algorithms/GA/GA.h</itemPath>
+          <itemPath>include/Algorithms/GA/GACoreOrder.h</itemPath>
           <itemPath>include/Algorithms/GA/GA_RsaOrder.h</itemPath>
           <itemPath>include/Algorithms/GA/Individual.h</itemPath>
           <itemPath>include/Algorithms/GA/IndividualBool.h</itemPath>
@@ -54,6 +56,7 @@
         <itemPath>include/Calls/Call.h</itemPath>
         <itemPath>include/Calls/CallGenerator.h</itemPath>
         <itemPath>include/Calls/Event.h</itemPath>
+        <itemPath>include/Calls/MultiCoreCall.h</itemPath>
         <itemPath>include/Calls/Traffic.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="Data" projectFiles="true">
@@ -67,6 +70,7 @@
         <itemPath>include/GeneralClasses/General.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="ResourceAllocation" projectFiles="true">
+        <itemPath>include/ResourceAllocation/CSA.h</itemPath>
         <itemPath>include/ResourceAllocation/Modulation.h</itemPath>
         <itemPath>include/ResourceAllocation/ResourceAlloc.h</itemPath>
         <itemPath>include/ResourceAllocation/Route.h</itemPath>
@@ -80,17 +84,13 @@
         <itemPath>include/SimulationType/SimulationType.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Structure" projectFiles="true">
+        <itemPath>include/Structure/Core.h</itemPath>
         <itemPath>include/Structure/Link.h</itemPath>
+        <itemPath>include/Structure/MultiCoreLink.h</itemPath>
         <itemPath>include/Structure/Node.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
-      <itemPath>include/ResourceAllocation/CSA.h</itemPath>
-      <itemPath>include/Structure/Core.h</itemPath>
-      <itemPath>include/Algorithms/GA/CoreOrderIndividual.h</itemPath>
-      <itemPath>include/Algorithms/GA/GACoreOrder.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
-      <itemPath>include/Calls/MultiCoreCall.h</itemPath>
-      <itemPath>include/Structure/MultiCoreLink.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -101,7 +101,9 @@
                    projectFiles="true">
       <logicalFolder name="f6" displayName="Algorithms" projectFiles="true">
         <logicalFolder name="f1" displayName="GA" projectFiles="true">
+          <itemPath>src/Algorithms/GA/CoreOrderIndividual.cpp</itemPath>
           <itemPath>src/Algorithms/GA/GA.cpp</itemPath>
+          <itemPath>src/Algorithms/GA/GACoreOrder.cpp</itemPath>
           <itemPath>src/Algorithms/GA/GA_RsaOrder.cpp</itemPath>
           <itemPath>src/Algorithms/GA/Individual.cpp</itemPath>
           <itemPath>src/Algorithms/GA/IndividualBool.cpp</itemPath>
@@ -111,6 +113,7 @@
         <itemPath>src/Calls/Call.cpp</itemPath>
         <itemPath>src/Calls/CallGenerator.cpp</itemPath>
         <itemPath>src/Calls/Event.cpp</itemPath>
+        <itemPath>src/Calls/MultiCoreCall.cpp</itemPath>
         <itemPath>src/Calls/Traffic.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="Data" projectFiles="true">
@@ -124,6 +127,7 @@
         <itemPath>src/GeneralClasses/General.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="ResourceAllocation" projectFiles="true">
+        <itemPath>src/ResourceAllocation/CSA.cpp</itemPath>
         <itemPath>src/ResourceAllocation/Modulation.cpp</itemPath>
         <itemPath>src/ResourceAllocation/ResourceAlloc.cpp</itemPath>
         <itemPath>src/ResourceAllocation/Route.cpp</itemPath>
@@ -137,17 +141,13 @@
         <itemPath>src/SimulationType/SimulationType.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Structure" projectFiles="true">
+        <itemPath>src/Structure/Core.cpp</itemPath>
         <itemPath>src/Structure/Link.cpp</itemPath>
+        <itemPath>src/Structure/MultiCoreLink.cpp</itemPath>
         <itemPath>src/Structure/Node.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
-      <itemPath>src/ResourceAllocation/CSA.cpp</itemPath>
-      <itemPath>src/Structure/Core.cpp</itemPath>
-      <itemPath>src/Algorithms/GA/CoreOrderIndividual.cpp</itemPath>
-      <itemPath>src/Algorithms/GA/GACoreOrder.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
-      <itemPath>src/Calls/MultiCoreCall.cpp</itemPath>
-      <itemPath>src/Structure/MultiCoreLink.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -252,7 +252,17 @@
       </item>
       <item path="Files/Outputs/4" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/CoreOrderIndividual.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Algorithms/GA/GA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/GACoreOrder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="include/Algorithms/GA/GA_RsaOrder.h"
             ex="false"
@@ -262,16 +272,6 @@
       <item path="include/Algorithms/GA/Individual.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Algorithms/GA/IndividualBool.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="include/Algorithms/GA/CoreOrderIndividual.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="include/Algorithms/GA/GACoreOrder.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -353,7 +353,14 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/Algorithms/GA/CoreOrderIndividual.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/Algorithms/GA/GA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GACoreOrder.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -363,13 +370,6 @@
             ex="false"
             tool="1"
             flavor2="0">
-      </item>
-      <item path="src/Algorithms/GA/CoreOrderIndividual.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/Algorithms/GA/GACoreOrder.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Call.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -534,7 +534,17 @@
       </item>
       <item path="Files/Outputs/4" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/CoreOrderIndividual.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Algorithms/GA/GA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/GACoreOrder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="include/Algorithms/GA/GA_RsaOrder.h"
             ex="false"
@@ -544,16 +554,6 @@
       <item path="include/Algorithms/GA/Individual.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Algorithms/GA/IndividualBool.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="include/Algorithms/GA/CoreOrderIndividual.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="include/Algorithms/GA/GACoreOrder.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -635,7 +635,14 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/Algorithms/GA/CoreOrderIndividual.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/Algorithms/GA/GA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GACoreOrder.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -645,13 +652,6 @@
             ex="false"
             tool="1"
             flavor2="0">
-      </item>
-      <item path="src/Algorithms/GA/CoreOrderIndividual.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/Algorithms/GA/GACoreOrder.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Call.cpp" ex="false" tool="1" flavor2="0">
       </item>

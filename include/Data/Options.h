@@ -55,8 +55,6 @@ enum SpectrumAllocationOption {
      SpecAllInvalid,
      SpecAllRandom,
      SpecAllFF,
-     SpecAllFFC,
-     SpecAllMC_MSCL,
      SpecAllMSCL,
      FirstSpecAllOption = SpecAllRandom,
      LastSpecAllOption = SpecAllMSCL
@@ -123,14 +121,16 @@ enum RsaOrder {
     GaOrder,
     FirstOrderRSA = OrderRoutingSa,
     LastOrderRSA = GaOrder
-enum TransponderOption {
-    TransOptionDisabled,
-    TransOptionEnabled
 };
 
 enum GACoreOrder{
     GAOptionDisabled,
     GAOptionEnabled
+};
+
+enum TransponderOption {
+    TransOptionDisabled,
+    TransOptionEnabled
 };
 
 /**
@@ -286,20 +286,18 @@ public:
     std::string GetNetworkOptionName() const;
 
     void SetNetworkOption(NetworkOption networkOption);
-    void SetTransponderOption(TransponderOption transponderOption);
-    
-    std::string GetGAOption() const;
-
-    void SetGAOption(GACoreOrder coreOrder);
-
     
     RsaOrder GetOrderRSA() const;
     
     std::string GetOrderRsaName() const;
 
     void SetOrderRSA(RsaOrder orderRSA);
+    
+    void SetTransponderOption(TransponderOption transponderOption);
+    
+    std::string GetGAOption() const;
 
-
+    void SetGAOption(GACoreOrder coreOrder);
 private:
     /**
      * @brief A pointer to the simulation this object belong.
@@ -337,9 +335,10 @@ private:
     NetworkOption networkOption;
     
     RsaOrder orderRSA;
-    TransponderOption transponderOption;
     
     GACoreOrder coreOrder;
+    
+    TransponderOption transponderOption;
     
     /**
      * @brief Map that keeps the topology option 
@@ -390,6 +389,7 @@ private:
     
     static const boost::unordered_map<RsaOrder,
     std::string> mapOrderRSA;
+    
     static const boost::unordered_map<TransponderOption,
     std::string> mapTransponderOption;
     /**

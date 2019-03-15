@@ -35,9 +35,9 @@ Link* link) {
 Link::Link(Topology* topPointer, unsigned int origimNode, 
 unsigned int destinationNode, double length, 
 unsigned int numberSections, unsigned int numberSlots) 
-:topPointer(topPointer), origimNode(origimNode), destinationNode(destinationNode), 
-length(length), numberSections(numberSections), cost(0.0),
-slotsStatus(0), linkWorking(true) {
+:topPointer(topPointer), origimNode(origimNode), 
+destinationNode(destinationNode), length(length), 
+numberSections(numberSections), cost(0.0), slotsStatus(0), linkWorking(true) {
     slotsStatus.resize(numberSlots, SlotFree);
 }
 

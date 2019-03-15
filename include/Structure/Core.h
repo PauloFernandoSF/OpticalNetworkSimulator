@@ -18,6 +18,8 @@
 #include <cstddef>
 #include <iostream>
 
+#include "Link.h"
+
 typedef int CoreId;
 typedef int NumSlots;
 
@@ -71,6 +73,8 @@ private:
      * @brief Vector of occupation of the core.
      */
      bool* vDisp;
+     
+     std::vector<SlotStatus> slotsStatus;
 
 };
 

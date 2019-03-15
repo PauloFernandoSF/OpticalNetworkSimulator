@@ -12,28 +12,22 @@
  */
 
 #include "../../include/Structure/MultiCoreLink.h"
-//#include "../../include/Structure/Link.h"
 #include "../../include/Structure/Core.h"
 #include "../../include/Structure/Topology.h"
 
-#include <iostream>
-
-
-
 MultiCoreLink::MultiCoreLink(Topology* topPointer, unsigned int origimNode, 
-    unsigned int destinationNode, double length, 
-    unsigned int numberSections, unsigned int numberSlots):Link(topPointer, 
-    origimNode, destinationNode, length, numberSections, numberSlots){
-    
-    this->coreVector.resize(topPointer->GetNumCores());
-     
+unsigned int destinationNode, double length, unsigned int numberSections, 
+unsigned int numberSlots)
+:Link(topPointer, origimNode, destinationNode, length, numberSections, 
+numberSlots){
+    this->coreVector.resize(topPointer->GetNumCores()); 
 }
 
 void MultiCoreLink::Initialize(){
     
     for(unsigned int c = 0;c < this->Link::GetTopology()->GetNumCores();c++){
         this->coreVector.at(c) = (std::make_shared<Core>(c,
-                this->Link::GetTopology()->GetNumSlots()));   
+                                  this->Link::GetTopology()->GetNumSlots()));   
     }
 }
 
@@ -51,5 +45,5 @@ void MultiCoreLink::ReleaseSlot(int coreIndex, int slot){
 
 
 MultiCoreLink::~MultiCoreLink() {
+    
 }
-

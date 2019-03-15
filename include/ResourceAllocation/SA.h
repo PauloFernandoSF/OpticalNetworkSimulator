@@ -61,7 +61,7 @@ public:
      * This SA select the first available slots.
      * @param call
      */ 
-    void FirstFit(Call* call);
+    virtual void FirstFit(Call* call);
     
     void MostUsed(Call* call);
     
@@ -71,14 +71,13 @@ public:
     
     void RCL(Call* call);
     
-    void MSCL(Call* call);
+    virtual void MSCL(Call* call);
     
     Topology* GetTopology();
     
     int CalcNumFormAloc(int L, bool* Disp,int tam);
     
     ResourceAlloc* GetResourceAlloc();
-    
     
     std::vector<unsigned int> RandomSlots(Call* call);
     

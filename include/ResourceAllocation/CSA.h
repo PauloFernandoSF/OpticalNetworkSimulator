@@ -18,7 +18,7 @@
 class CSA: public SA {
 public:
     CSA(ResourceAlloc* rsa, SpectrumAllocationOption option, 
-            Topology* topology);
+        Topology* topology);
     /**
      * @brief Spectrum allocation that chooses first core and first set of slots
      * available to allocate the call
@@ -26,17 +26,13 @@ public:
      */    
     virtual ~CSA();
     
-    void FirstFitCore(Call* call);        
+    void FirstFit(Call* call);        
     /**
      * @brief Return strong call class pointer to cast
      * @param call pointer of call class
      * @return Call pointer
-     */
-    
-    void MulticoreMSCL(Call* call);
-    
-    
-    
+     */    
+    void MSCL(Call* call);
 private:
     
 };

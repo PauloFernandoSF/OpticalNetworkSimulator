@@ -58,10 +58,10 @@ void Parameters::Load() {
     double auxDouble;
     
     std::cout << "PARAMETERS INPUTS" << std::endl;
-    std::cout << "Insert the number  of slots per fiber: ";
+    std::cout << "Insert the number of slots per fiber: ";
     std::cin >> auxUnsInt;
     this->SetNumberSlots(auxUnsInt);
-    std::cout << "Insert the number  cores per link: ";
+    std::cout << "Insert the number cores per link: ";
     std::cin >> auxUnsInt;
     this->SetNumberCores(auxUnsInt);
     std::cout << "Insert Connection Deactivation Rate: ";

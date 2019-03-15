@@ -124,7 +124,7 @@ public:
      * @param NodeWorking Link state.
      */
     void SetLinkState(bool linkWorking);
-
+    
     
     /**
      * @brief Update the signal power, ASE power and

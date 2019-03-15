@@ -36,12 +36,12 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o \
 	${OBJECTDIR}/src/Algorithms/GA/GA.o \
+	${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o \
 	${OBJECTDIR}/src/Algorithms/GA/GA_RsaOrder.o \
 	${OBJECTDIR}/src/Algorithms/GA/Individual.o \
 	${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o \
-	${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o \
-	${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o \
 	${OBJECTDIR}/src/Calls/Call.o \
 	${OBJECTDIR}/src/Calls/CallGenerator.o \
 	${OBJECTDIR}/src/Calls/Event.o \
@@ -89,21 +89,31 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/opticalnetworksimulator
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulatoropticalnetwork
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/opticalnetworksimulator: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulatoropticalnetwork: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/opticalnetworksimulator ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulatoropticalnetwork ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
+${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o: src/Algorithms/GA/CoreOrderIndividual.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o src/Algorithms/GA/CoreOrderIndividual.cpp
+
 ${OBJECTDIR}/src/Algorithms/GA/GA.o: src/Algorithms/GA/GA.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/GA.o src/Algorithms/GA/GA.cpp
+
+${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o: src/Algorithms/GA/GACoreOrder.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o src/Algorithms/GA/GACoreOrder.cpp
 
 ${OBJECTDIR}/src/Algorithms/GA/GA_RsaOrder.o: src/Algorithms/GA/GA_RsaOrder.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
@@ -119,15 +129,6 @@ ${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o: src/Algorithms/GA/IndividualBoo
 	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o src/Algorithms/GA/IndividualBool.cpp
-${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o: src/Algorithms/GA/CoreOrderIndividual.cpp
-	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o src/Algorithms/GA/CoreOrderIndividual.cpp
-
-${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o: src/Algorithms/GA/GACoreOrder.cpp
-	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o src/Algorithms/GA/GACoreOrder.cpp
 
 ${OBJECTDIR}/src/Calls/Call.o: src/Calls/Call.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls

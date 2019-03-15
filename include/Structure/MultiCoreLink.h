@@ -28,7 +28,7 @@ class Topology;
 */
 class MultiCoreLink : public Link {
     
-public:   
+public:
     /**
      * @brief Standard constructor for a Link object.
      * @param topPointer pointer to a Topology object that

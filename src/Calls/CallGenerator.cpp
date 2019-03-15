@@ -86,11 +86,9 @@ void CallGenerator::GenerateCall() {
     
     //Call creation-Conditions to create MultiCore or Single Core call
     if(this->topology->GetNumCores() == 1){
-    newCall = std::make_shared<Call>
-            (this->topology->GetNode(auxIndexOrNode),
-                           this->topology->GetNode(auxIndexDeNode),
-                           this->traffic->GetTraffic(auxIndexTraffic),
-                           deactvationTime);
+    newCall = std::make_shared<Call>(this->topology->GetNode(auxIndexOrNode),
+    this->topology->GetNode(auxIndexDeNode), this->traffic->
+    GetTraffic(auxIndexTraffic), deactvationTime);
     }
     else{
     newCall = std::make_shared<MultiCoreCall>
