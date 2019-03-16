@@ -14,12 +14,33 @@
 #ifndef COREORDERINDIVIDUAL_H
 #define COREORDERINDIVIDUAL_H
 
+#include <iostream>;
+class GACoreOrder;
+
 class CoreOrderIndividual {
 public:
+    
+    friend std::ostream& operator<<(std::ostream& ostream, 
+    const CoreOrderIndividual* ind);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     CoreOrderIndividual();
     CoreOrderIndividual(const CoreOrderIndividual& orig);
     virtual ~CoreOrderIndividual();
 private:
+    GACoreOrder* ga;
 
 };
 

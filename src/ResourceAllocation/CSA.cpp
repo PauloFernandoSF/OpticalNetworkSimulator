@@ -32,7 +32,7 @@ void CSA::FirstFitCore(Call* call){
     //cores
     for(int core = 0;core < this->GetTopology()->GetNumCores();core++){
         for(int s = 0; s < slot_range;s++){
-            if(this->GetTopology()->CheckSlotsDispCore(route, s,
+            if(this->GetTopology()->CheckBlockSlotsDisp(route, s,
                     s + mcCall->GetNumberSlots() - 1,core)){
                 mcCall->SetFirstSlot(s);
                 mcCall->SetLastSlot(s + mcCall->GetNumberSlots() - 1);
@@ -86,7 +86,7 @@ void CSA::MulticoreMSCL(Call* call){
                         if(r == RouteInt.size())
                             route_aux = route;
                         else
-                            route_aux = RouteInt.at(0);
+                            route_aux = RouteInt.at(r);
                         for(int se = 0;se < totalSlots;se++){
 				if(!(topology->CheckSlotsDispCore(route_aux,
                                 se,se,e))){

@@ -14,6 +14,8 @@
 #ifndef DEF_H
 #define DEF_H
 
+#include <random>
+
 class Def {
 public:
     
@@ -24,6 +26,8 @@ public:
     static double Min_Double;
     
     static double Max_Double;
+    
+    static std::random_device randomDevice;
 
 private:
 

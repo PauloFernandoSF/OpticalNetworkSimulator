@@ -7,22 +7,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/Data/InputOutput.h</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/SimulationType/SimulationType.h</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/ResourceAllocation/CSA.cpp</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/Data/Options.h</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/ResourceAllocation/ResourceAlloc.h</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Data/Data.cpp</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Data/Options.cpp</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Kernel.cpp</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Data/Parameters.cpp</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/Data/Data.h</file>
+            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/SimulationType/GA.h</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/ResourceAllocation/ResourceAlloc.cpp</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Algorithms/GA/GACoreOrder.cpp</file>
+            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/Data/InputOutput.h</file>
+            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/Algorithms/GA/CoreOrderIndividual.h</file>
+            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/ResourceAllocation/CSA.cpp</file>
+            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/ResourceAllocation/ResourceAlloc.h</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/SimulationType/SimulationType.cpp</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Structure/Topology.cpp</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Data/InputOutput.cpp</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/Algorithms/GA/GACoreOrder.h</file>
+            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Kernel.cpp</file>
+            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/SimulationType/GA.cpp</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/Structure/Topology.h</file>
         </group>
     </open-files>

@@ -19,3 +19,4 @@ int Def::Min_Int = std::numeric_limits<int>::lowest();
 int Def::Max_Int = std::numeric_limits<int>::max();
 double Def::Min_Double = std::numeric_limits<double>::lowest();
 double Def::Max_Double = std::numeric_limits<double>::max();
+std::random_device Def::randomDevice;

@@ -57,6 +57,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ResourceAllocation/Routing.o \
 	${OBJECTDIR}/src/ResourceAllocation/SA.o \
 	${OBJECTDIR}/src/ResourceAllocation/Signal.o \
+	${OBJECTDIR}/src/SimulationType/GA.o \
 	${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o \
 	${OBJECTDIR}/src/SimulationType/SimulationType.o \
 	${OBJECTDIR}/src/Structure/Core.o \
@@ -199,6 +200,11 @@ ${OBJECTDIR}/src/ResourceAllocation/Signal.o: src/ResourceAllocation/Signal.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/Signal.o src/ResourceAllocation/Signal.cpp
+
+${OBJECTDIR}/src/SimulationType/GA.o: src/SimulationType/GA.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/SimulationType
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/GA.o src/SimulationType/GA.cpp
 
 ${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o: src/SimulationType/MultiLoadSimulation.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType

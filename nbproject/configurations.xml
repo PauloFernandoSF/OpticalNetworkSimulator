@@ -62,6 +62,7 @@
       <itemPath>include/ResourceAllocation/CSA.h</itemPath>
       <itemPath>include/Structure/Core.h</itemPath>
       <itemPath>include/Algorithms/GA/CoreOrderIndividual.h</itemPath>
+      <itemPath>include/SimulationType/GA.h</itemPath>
       <itemPath>include/Algorithms/GA/GACoreOrder.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
       <itemPath>include/Calls/MultiCoreCall.h</itemPath>
@@ -110,6 +111,7 @@
       <itemPath>src/ResourceAllocation/CSA.cpp</itemPath>
       <itemPath>src/Structure/Core.cpp</itemPath>
       <itemPath>src/Algorithms/GA/CoreOrderIndividual.cpp</itemPath>
+      <itemPath>src/SimulationType/GA.cpp</itemPath>
       <itemPath>src/Algorithms/GA/GACoreOrder.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
       <itemPath>src/Calls/MultiCoreCall.cpp</itemPath>
@@ -238,6 +240,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/SimulationType/GA.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/SimulationType/MultiLoadSimulation.h"
             ex="false"
             tool="3"
@@ -310,6 +314,8 @@
       <item path="src/ResourceAllocation/SA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ResourceAllocation/Signal.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SimulationType/GA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SimulationType/MultiLoadSimulation.cpp"
             ex="false"
@@ -445,6 +451,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/SimulationType/GA.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/SimulationType/MultiLoadSimulation.h"
             ex="false"
             tool="3"
@@ -517,6 +525,8 @@
       <item path="src/ResourceAllocation/SA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ResourceAllocation/Signal.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SimulationType/GA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SimulationType/MultiLoadSimulation.cpp"
             ex="false"
