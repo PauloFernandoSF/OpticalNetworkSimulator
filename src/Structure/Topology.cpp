@@ -314,7 +314,7 @@ unsigned int finSlot, unsigned int core) const {
     //Check the availability of the set of slots in the core on the first hop
     for(unsigned int s = iniSlot; s <= finSlot; s++){
         // is link c->c+1 busy in slot s?
-        if(link->getCore(core)->getSlotOccupation(s)){ 
+        if(link->GetCore(core)->IsSlotOccupied(s)){
             flag = true;
             break;
         }
@@ -334,7 +334,7 @@ unsigned int finSlot, unsigned int core) const {
         std::dynamic_pointer_cast<MultiCoreLink>(this->GetLinkPointer(L_or,
         L_de));
         for(unsigned int s = iniSlot; s <= finSlot; s++){
-            if(link->getCore(core)->getSlotOccupation(s))
+            if(link->GetCore(core)->IsSlotOccupied(s))
                 return false;
         }
     }
@@ -427,8 +427,8 @@ void Topology::Connect(Call* call) {
         if(this->IsValidLink(link)){
             //Condition to connect the call- MultiCore or SingleCore
             if(this->numCores == 1)
-                for(unsigned int s = call->GetFirstSlot(); s <= call->GetLastSlot(); 
-                s++){
+                for(unsigned int s = call->GetFirstSlot(); s <= call->
+                GetLastSlot(); s++){
                     link->OccupySlot(s);
                 }
             else{

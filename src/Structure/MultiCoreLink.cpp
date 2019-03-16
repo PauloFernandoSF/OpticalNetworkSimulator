@@ -20,30 +20,41 @@ unsigned int destinationNode, double length, unsigned int numberSections,
 unsigned int numberSlots)
 :Link(topPointer, origimNode, destinationNode, length, numberSections, 
 numberSlots){
-    this->coreVector.resize(topPointer->GetNumCores()); 
-}
-
-void MultiCoreLink::Initialize(){
+    this->coreVector.resize(topPointer->GetNumCores());
     
-    for(unsigned int c = 0;c < this->Link::GetTopology()->GetNumCores();c++){
-        this->coreVector.at(c) = (std::make_shared<Core>(c,
-                                  this->Link::GetTopology()->GetNumSlots()));   
+    for(unsigned int a = 0; a < topPointer->GetNumCores(); a++){
+        this->coreVector.at(a) = std::make_shared<Core>(a, topPointer->
+                                 GetNumSlots());
     }
 }
 
-Core* MultiCoreLink::getCore(int corePosition){
+MultiCoreLink::~MultiCoreLink() {
+    
+}
+
+void MultiCoreLink::Initialize() {
+    
+    for(auto it: this->coreVector){
+        it->Initialize();
+    }
+}
+
+Core* MultiCoreLink::GetCore(unsigned int corePosition) {
+    assert(corePosition < this->GetTopology()->GetNumCores());
+    
     return this->coreVector.at(corePosition).get();
 }
 
-void MultiCoreLink::OccupySlot(int coreIndex,int slot){
-    this->getCore(coreIndex)->occupySlot(slot);
-}
-
-void MultiCoreLink::ReleaseSlot(int coreIndex, int slot){
-    this->getCore(coreIndex)->releaseSlot(slot);
-}
-
-
-MultiCoreLink::~MultiCoreLink() {
+void MultiCoreLink::OccupySlot(unsigned int coreIndex, unsigned int slot) {
+    assert(coreIndex < this->GetTopology()->GetNumCores() &&
+           slot < this->GetTopology()->GetNumSlots());
     
+    this->GetCore(coreIndex)->OccupySlot(slot);
+}
+
+void MultiCoreLink::ReleaseSlot(unsigned int coreIndex, unsigned int slot) {
+    assert(coreIndex < this->GetTopology()->GetNumCores() &&
+           slot < this->GetTopology()->GetNumSlots());
+    
+    this->GetCore(coreIndex)->ReleaseSlot(slot);
 }
