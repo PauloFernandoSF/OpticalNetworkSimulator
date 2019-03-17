@@ -27,9 +27,7 @@
     0 - Invalid
     1 - Random
     2 - FF
-    3 - FFC
-    4 - MC_MSCL
-    5 - MSCL
+    3 - MSCL
 #Link cost type
     0 - Invalid
     1 - MinHops
