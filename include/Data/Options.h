@@ -105,7 +105,7 @@ enum PhysicalLayerOption {
 };
 
 /**
- * @brief 
+ * @brief Numerate the network options, WDM or EON.
  */
 enum NetworkOption {
     NetworkInvalid,
@@ -115,6 +115,10 @@ enum NetworkOption {
     LastNetworkOption = NetworkEON
 };
 
+/**
+ * @brief Choose the resource allocation choice order, R-SA, SA-R or GA found 
+ * order.
+ */
 enum RsaOrder {
     OrderRoutingSa,
     OrderSaRouting,
