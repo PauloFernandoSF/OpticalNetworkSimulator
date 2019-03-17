@@ -331,7 +331,9 @@ private:
      * @brief Physical layer option selected.
      */
     PhysicalLayerOption phyLayerOption;
-    
+    /**
+     * @brief Network option selected. WDM or EON.
+     */
     NetworkOption networkOption;
     
     RsaOrder orderRSA;
