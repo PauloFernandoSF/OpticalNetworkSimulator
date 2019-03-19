@@ -30,7 +30,6 @@ class Modulation;
 /**
  * @brief Class responsible for resource allocation, at least routing and 
  * spectral allocation.
- * @param simulType SimulationType object that use this object.
  */
 class ResourceAlloc {
     
@@ -72,7 +71,12 @@ public:
      * @param call Call request that the function will try to allocate.
      */
     void RMSA(Call* call);
-    
+    /**
+     * @brief Function for spectral allocation then routing for a specified 
+     * call. Try the first possible set of slots in each possible route. If
+     * not possible, try the second set of slots, and so on.
+     * @param call Call request that the function will try to allocate.
+     */
     void SAR(Call* call);
     
     /**
@@ -148,7 +152,12 @@ public:
      * @return True if the call presents a acceptable OSNR.
      */
     bool CheckOSNR(Call* call);
-    
+    /**
+     * @brief Check if this ResourceAlloc will apply R-SA or SA-R, depending 
+     * on the order vector.
+     * @param call Call request.
+     * @return 0 if will apply R-SA or 1 if will apply SA-R.
+     */
     bool CheckResourceAllocOrder(Call* call);
     
     /**
@@ -173,6 +182,7 @@ public:
     void SetTopology(Topology* topology);
     
     std::vector<bool> GetResourceAllocOrder() const;
+    
     std::vector<std::shared_ptr<Route>> GetInterRoutes(int ori,int des,int pos);
 
     void SetResourceAllocOrder(std::vector<bool> resourceAllocOrder);

@@ -46,18 +46,28 @@ public:
     * @brief Destructor of MultiCoreLink. 
     */
     ~MultiCoreLink();
+    
     /**
     * @brief Initialize a MultiCoreLink inside a topology. 
     */
     void Initialize();
+    
     /**
     * @brief  Get a specific core.
     * @return A core.  
     */
     Core* GetCore(unsigned int corePosition);
-    //Implementar Ocupa e libera Slots
+    /**
+     * @brief Function to occupy a specified slot of a specified core.
+     * @param coreIndex Core index.
+     * @param slot Slot index.
+     */
     void OccupySlot(unsigned int coreIndex, unsigned int slot);
-    
+    /**
+     * @brief Function to release a specified slot of a specified core.
+     * @param coreIndex Core index.
+     * @param slot Slot index.
+     */
     void ReleaseSlot(unsigned int coreIndex, unsigned int slot);
 
 private:

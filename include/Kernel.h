@@ -47,7 +47,9 @@ public:
      * Three steps are done, each one for all simulation.
      */
     void Run();
-    
+    /**
+     * @brief Function to create all simulation of this kernel.
+     */
     void CreateSimulations();
 private:
     /**

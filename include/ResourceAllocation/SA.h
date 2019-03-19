@@ -25,9 +25,6 @@ class Call;
 
 /**
  * @brief Class responsible for spectral allocation of the call requests.
- * @param rsa RourceAlloc that own this object.
- * @param option Spectral allocation option.
- * @param topology Topology used in this spectral allocation.
  */
 class SA {
 
@@ -59,8 +56,8 @@ public:
     /**
      * @brief Function to apply random spectral allocation to a call request.
      * This SA select the first available slots.
-     * @param call
-     */ 
+     * @param call Call request.
+     */
     virtual void FirstFit(Call* call);
     
     void MostUsed(Call* call);
@@ -70,18 +67,39 @@ public:
     void MaxSum(Call* call);
     
     void RCL(Call* call);
-    
+    /**
+     * @brief Function to apply the MSCL spectral allocation to a call request.
+     * This SA select the option with minimum loss of capacity, considering the
+     * interfering routes of the call route.
+     * @param call Call request.
+     */
     virtual void MSCL(Call* call);
+    /**
+     * @brief Function that find all possible slots for SA, based on random 
+     * order.
+     * @param call Call request.
+     * @return Vector with all possible slots for allocation.
+     */
+    std::vector<unsigned int> RandomSlots(Call* call);
+    /**
+     * @brief Function that find all possible slots for SA, based on FF order.
+     * @param call Call request.
+     * @return Vector with all possible slots for allocation.
+     */
+    std::vector<unsigned int> FirstFitSlots(Call* call);
     
+    /**
+     * @brief Gets the topology in which this SA is done.
+     * @return Topology pointer.
+     */
     Topology* GetTopology();
-    
-    int CalcNumFormAloc(int L, bool* Disp,int tam);
-    
+    /**
+     * @brief Gets the ResosurceAlloc object that owns this SA.
+     * @return ResourceAlloc pointer.
+     */
     ResourceAlloc* GetResourceAlloc();
     
-    std::vector<unsigned int> RandomSlots(Call* call);
-    
-    std::vector<unsigned int> FirstFitSlots(Call* call);
+    int CalcNumFormAloc(int L, bool* Disp, int tam);
 private:
     /**
      * @brief RourceAlloc that own this object.

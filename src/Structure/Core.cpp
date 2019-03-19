@@ -22,10 +22,6 @@ Core* core) {
 
 Core::Core(CoreId cId, NumSlots nSlots)
 :coreId(cId), slotsStatus(0) {
-    /*this->vDisp = new bool[nSlots];
-    for(unsigned int i=0;i < nSlots;i++){
-        this->vDisp[i]= false;
-    }*/
     this->slotsStatus.assign(nSlots, SlotFree);
 }
 
@@ -42,7 +38,6 @@ CoreId Core::GetCoreId(){
 }
 
 bool Core::IsSlotOccupied(unsigned int sPosition){
-    //return this->vDisp[sPosition];
     if(this->slotsStatus.at(sPosition) == SlotUsed)
         return true;
     return false;
@@ -53,7 +48,6 @@ bool Core::IsSlotFree(unsigned int sPosition) {
 }
 
 void Core::OccupySlot(unsigned int sPosition){
-    //this->vDisp[sPosition] = true;
     assert(sPosition < this->slotsStatus.size());
     assert(this->slotsStatus.at(sPosition) == SlotFree);
     
@@ -61,7 +55,6 @@ void Core::OccupySlot(unsigned int sPosition){
 }
 
 void Core::ReleaseSlot(unsigned int sPosition){
-    //this->vDisp[sPosition]= false;
     assert(sPosition < this->slotsStatus.size());
     assert(this->slotsStatus.at(sPosition) == SlotUsed);
     
