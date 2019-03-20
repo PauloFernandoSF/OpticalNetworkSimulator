@@ -13,6 +13,7 @@
         <logicalFolder name="f2" displayName="Traffics" projectFiles="true">
           <itemPath>Files/Inputs/Traffics/Traffic_10-40-100-200-400.txt</itemPath>
           <itemPath>Files/Inputs/Traffics/Traffic_100-200-400.txt</itemPath>
+          <itemPath>Files/Inputs/Traffics/Traffic_50-120-300.txt</itemPath>
         </logicalFolder>
         <itemPath>Files/Inputs/Options_1.txt</itemPath>
         <itemPath>Files/Inputs/Options_2.txt</itemPath>
@@ -216,6 +217,11 @@
             flavor2="0">
       </item>
       <item path="Files/Inputs/Traffics/Traffic_100-200-400.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Inputs/Traffics/Traffic_50-120-300.txt"
             ex="false"
             tool="3"
             flavor2="0">
@@ -494,6 +500,11 @@
             flavor2="0">
       </item>
       <item path="Files/Inputs/Traffics/Traffic_100-200-400.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Inputs/Traffics/Traffic_50-120-300.txt"
             ex="false"
             tool="3"
             flavor2="0">

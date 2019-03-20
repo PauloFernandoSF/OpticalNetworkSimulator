@@ -1,5 +1,5 @@
 OPTIONS
-Topology: NSFNet
+Topology: Germany
 Routing algorithm: Dijkstra
 Spectral allocation algorithm: First Fit
 Links cost type: Minimum hops
@@ -14,35 +14,35 @@ PARAMETERS
 Number of slots per fiber: 128
 Number of cores per link: 1
 Mu: 1
-Minimum load point(erlang): 120
-Maximum load point(erlang): 220
+Minimum load point(erlang): 80
+Maximum load point(erlang): 130
 Number of points: 6
 Total number of requisitions: 10000
 Maximum blocked requests: 500
 Slot bandwidth (GHz): 12.5
 
 DATA
-Simulation time:82.9647  Number of requests:10000
-Load point:120  PbReq:0.0004  PbSlots:-nan  HopsMed:2.13025  NetOcc:97494
+Simulation time:126.399  Number of requests:10000
+Load point:80  PbReq:0.0019  PbSlots:-nan  HopsMed:2.67669  NetOcc:123297
 
 
-Simulation time:70.9124  Number of requests:10000
-Load point:140  PbReq:0.0042  PbSlots:-nan  HopsMed:2.14772  NetOcc:97442
+Simulation time:109.372  Number of requests:10000
+Load point:90  PbReq:0.003  PbSlots:-nan  HopsMed:2.69488  NetOcc:123172
 
 
-Simulation time:62.2879  Number of requests:10000
-Load point:160  PbReq:0.0108  PbSlots:-nan  HopsMed:2.14042  NetOcc:95999
+Simulation time:101.151  Number of requests:10000
+Load point:100  PbReq:0.0061  PbSlots:-nan  HopsMed:2.6886  NetOcc:122602
 
 
-Simulation time:55.2468  Number of requests:10000
-Load point:180  PbReq:0.0171  PbSlots:-nan  HopsMed:2.13725  NetOcc:94565
+Simulation time:90.849  Number of requests:10000
+Load point:110  PbReq:0.0064  PbSlots:-nan  HopsMed:2.67965  NetOcc:120810
 
 
-Simulation time:50.2877  Number of requests:10000
-Load point:200  PbReq:0.0282  PbSlots:-nan  HopsMed:2.12729  NetOcc:90468
+Simulation time:82.4599  Number of requests:10000
+Load point:120  PbReq:0.0127  PbSlots:-nan  HopsMed:2.67973  NetOcc:118338
 
 
-Simulation time:45.732  Number of requests:10000
-Load point:220  PbReq:0.0385  PbSlots:-nan  HopsMed:2.12356  NetOcc:87515
+Simulation time:76.6858  Number of requests:10000
+Load point:130  PbReq:0.0205  PbSlots:-nan  HopsMed:2.70373  NetOcc:117597
 
 
