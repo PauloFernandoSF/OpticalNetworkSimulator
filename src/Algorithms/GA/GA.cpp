@@ -35,7 +35,7 @@ const GA* ga) {
 }
 
 GA::GA(SimulationType* simul)
-:simul(simul), numberIndividuals(50), numberGenerations(50), 
+:simul(simul), numberIndividuals(50), numberGenerations(100), 
 probCrossover(0.5), probMutation(0.1), numBestIndividuals(30), 
 actualGeneration(0), maxNumSimulation(3), sumFitness(0.0),
 initialPopulation(0), bestIndividuals(0), worstIndividuals(0),  
