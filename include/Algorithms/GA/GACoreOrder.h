@@ -14,13 +14,35 @@
 #ifndef GACOREORDER_H
 #define GACOREORDER_H
 
-class GACoreOrder {
+#include "GA.h"
+#include "CoreOrderIndividual.h"
+
+class GACoreOrder: public GA {
 public:
     GACoreOrder();
+    
     GACoreOrder(const GACoreOrder& orig);
+    
     virtual ~GACoreOrder();
+    
+    unsigned int GetNumCores();
+    
+    void SetNumCores();
+    
+    unsigned int GetNumReq();
+    
+    void SetNumReq();
+    
 private:
-
+    /**
+     * @brief Number of cores in the network.
+     */
+    unsigned int numCores;
+    /*
+     * @brief Number of different requisitions classes that can arrive 
+     * in the network.
+     */
+    unsigned int numReq;
 };
 
 #endif /* GACOREORDER_H */

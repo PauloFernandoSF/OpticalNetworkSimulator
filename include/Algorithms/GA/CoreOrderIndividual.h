@@ -14,12 +14,63 @@
 #ifndef COREORDERINDIVIDUAL_H
 #define COREORDERINDIVIDUAL_H
 
-class CoreOrderIndividual {
+class GACoreOrder;
+
+#include"Individual.h"
+
+class CoreOrderIndividual: public Individual {
 public:
-    CoreOrderIndividual();
+    CoreOrderIndividual(GACoreOrder* ga);
+    
     CoreOrderIndividual(const CoreOrderIndividual& orig);
+    
     virtual ~CoreOrderIndividual();
+    /**
+     * @brief Gets the gene of  this individual,for a specified line and column, 
+     * used to find the container position.
+     * @param line-requisitions, used to find the container position.
+     * @param column-cores, used to find the container position.
+     * @return Gene, unsigned int value, of this individual.
+     */
+    unsigned int GetGene(unsigned int line, unsigned int column) const;
+    /**
+     * @brief Sets the gene of  this individual,for a specified line and column, 
+     * used to set the container position.
+     * @param line-requisitions, used to find the container position.
+     * @param column-cores, used to find the container position.
+     * @param value Gene, unsigned int value, of this individual.
+     */
+    void SetGene(unsigned int line, unsigned int column,unsigned int value);
+    /**
+     * @brief Gets the blocking probability of this individual.
+     * @return Blocking probability.
+     */
+    double GetBlockProb() const;
+    /**
+     * @brief Sets the blocking probability of this individual. 
+     * @param blockProb Blocking probability.
+     */
+    void SetBlockProb(double blockProb);
+    /**
+     * @brief Gets the main parameter of this individual, in this case the
+     * blocking probability.
+     * @return Blocking probability.
+     */
+    double GetMainParameter() override;
 private:
+    /**
+     * @brief GA_RsaOrder that owns this individual.
+     */
+    GA_RsaOrder* ga;
+    /**
+     * @brief Individual Genes,matrix number of lines express the number of
+     * possible requisitions and the columns represent the number of cores.
+     */
+    std::vector<std::vector<unsigned int>> genes;
+    /**
+     * @brief Blocking probability of this individual.
+     */
+    double blockProb;
 
 };
 
