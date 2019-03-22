@@ -54,7 +54,7 @@ void CSA::FirstFit(Call* call){
 
 void CSA::MSCL(Call* call){
     /*Set Interfering routes to aplly Multicore MSCL*/
-    this->SA::GetResourceAlloc()->SetInterferingRoutes();
+    //this->SA::GetResourceAlloc()->SetInterferingRoutes();
     int totalSlots=this->GetTopology()->GetNumSlots(),s,core;
     Route *route = call->GetRoute(), *route_aux;
     int NslotsReq = call->GetNumberSlots(),slot_range = 

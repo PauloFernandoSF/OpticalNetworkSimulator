@@ -87,10 +87,12 @@ void SimulationType::Save() {
 void SimulationType::AdditionalSettings() {
     this->topology->SetAditionalSettings();
     
-    if(this->resourceAlloc->IsOfflineRouting())
+    if(this->resourceAlloc->IsOfflineRouting()){
         this->resourceAlloc->RoutingOffline();
-    
-    
+        
+        if(this->resourceAlloc->CheckInterRouting())
+            this->resourceAlloc->SetInterferingRoutes();
+    }
 }
 
 const unsigned int SimulationType::GetSimulationIndex() const {

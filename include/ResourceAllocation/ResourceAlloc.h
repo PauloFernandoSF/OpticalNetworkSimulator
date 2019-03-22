@@ -146,6 +146,8 @@ public:
      * @brief Runs the offline routing for all node pairs in the network.
      */
     void RoutingOffline();
+    
+    bool CheckInterRouting();
     /**
      * @brief Check if the call request OSNR is acceptable.
      * @param call Call request to evaluate the OSNR.

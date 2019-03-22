@@ -100,7 +100,7 @@ void GA_SingleObjective::RunTotalPop() {
 
     for(auto it: this->gaAlgorithm->totalPopulation){
         
-        if(it->GetCount() <= maxNumSimulPerInd){
+        if(it->GetCount() < maxNumSimulPerInd){
             this->gaAlgorithm->ApplyIndividual(it.get());
             SimulationType::Run();
             this->gaAlgorithm->SetIndParameters(it.get());
@@ -110,11 +110,11 @@ void GA_SingleObjective::RunTotalPop() {
 }
 
 void GA_SingleObjective::CheckMinSimul() {
-    unsigned int maxNumSimulPerIns = this->gaAlgorithm->GetMaxNumSimulation();
+    unsigned int maxNumSimulPerInd = this->gaAlgorithm->GetMaxNumSimulation();
     
     for(auto it: this->gaAlgorithm->totalPopulation){
         
-        while(it->GetCount() < maxNumSimulPerIns){
+        while(it->GetCount() < maxNumSimulPerInd){
             this->gaAlgorithm->ApplyIndividual(it.get());
             SimulationType::Run();
             this->gaAlgorithm->SetIndParameters(it.get());

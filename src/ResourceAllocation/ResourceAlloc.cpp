@@ -234,7 +234,6 @@ void ResourceAlloc::RoutingOffline() {
     switch(this->routing->GetRoutingOption()){
         case RoutingDJK:
             this->routing->Dijkstra();
-            //this->SetInterferingRoutes();
             break;
         case RoutingYEN:
             this->routing->YEN();
@@ -242,6 +241,16 @@ void ResourceAlloc::RoutingOffline() {
         case RoutingBSR:
         default:
             std::cerr << "Invalid offline routing option" << std::endl;
+    }
+}
+
+bool ResourceAlloc::CheckInterRouting() {
+    switch(this->resourAllocOption){
+        case SpecAllMSCL:
+            return true;
+            break;
+        default:
+            return false;
     }
 }
 
@@ -299,13 +308,13 @@ void ResourceAlloc::SetResourceAllocOrder() {
     this->SetResourceAllocOrder(vecBool);
 }
 
-std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes
-        (int ori,int des,int pos){
-    return this->interRoutes.at(ori*(this->topology->GetNumNodes())+ des)
-            .at(pos);
+std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes(int ori, 
+int des, int pos) {
+    return this->interRoutes.at(ori*(this->topology->GetNumNodes()) + des)
+           .at(pos);
 }
 
-void ResourceAlloc::SetInterferingRoutes(){
+void ResourceAlloc::SetInterferingRoutes() {
     std::shared_ptr<Route> routeAux, routeAux2;
     int nodeRoute[2], nodeRouteInt[2], countRoutes = 0;
     bool flag = true;
