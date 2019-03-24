@@ -103,6 +103,8 @@ public:
      */
     void SetInterferingRoutes();
     
+    void SetInterferingRoutes2();
+    
     /**
      * @brief Function that add a route in the container of all routes 
      * for a specified node pair.
