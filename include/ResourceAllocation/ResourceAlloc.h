@@ -234,5 +234,5 @@ private:
     std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> interRoutes;
     
     std::vector<bool> resourceAllocOrder;
-};    
+};
 #endif /* RESOURCEALLOC_H */

@@ -93,6 +93,7 @@ void GA_SingleObjective::RunSelectPop() {
         this->gaAlgorithm->SetIndParameters(it.get());
         this->GetData()->Initialize();
     }
+    this->gaAlgorithm->SetSelectedPopFitness();
 }
 
 void GA_SingleObjective::RunTotalPop() {
@@ -107,6 +108,7 @@ void GA_SingleObjective::RunTotalPop() {
         }
         this->GetData()->Initialize();
     }
+    this->gaAlgorithm->SetTotalPopFitness();
 }
 
 void GA_SingleObjective::CheckMinSimul() {
@@ -121,4 +123,5 @@ void GA_SingleObjective::CheckMinSimul() {
             this->GetData()->Initialize();
         }
     }
+    this->gaAlgorithm->SetTotalPopFitness();
 }
