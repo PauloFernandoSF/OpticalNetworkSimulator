@@ -93,6 +93,7 @@ void GA_SingleObjective::RunSelectPop() {
         this->gaAlgorithm->SetIndParameters(it.get());
         this->GetData()->Initialize();
     }
+    //Set fitness here 1/(Pb_best+Pb_individual)
 }
 
 void GA_SingleObjective::RunTotalPop() {

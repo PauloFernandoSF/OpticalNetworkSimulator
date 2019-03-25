@@ -17,6 +17,7 @@
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/Structure/Topology.h"
+#include "../../../include/Algorithms/GA/CoreOrderIndividual.h"
 
 CSA::CSA(ResourceAlloc* rsa, SpectrumAllocationOption option,Topology* topology)
 :SA(rsa, option, topology){
@@ -40,6 +41,43 @@ void CSA::FirstFit(Call* call){
         for(int s = 0; s < slot_range; s++){
             if(this->GetTopology()->CheckSlotsDispCore(route, s, s + 
             call->GetNumberSlots() - 1, core)){
+                call->SetFirstSlot(s);
+                call->SetLastSlot(s + call->GetNumberSlots() - 1);
+                call->SetCore(core);
+                flag = true;
+                break;
+            }
+        }
+        if(flag)
+            break;
+    }
+}
+
+void CSA::FirstFit(Call* call,CoreOrderIndividual* ind){
+    Route* route = call->GetRoute();
+    std::vector<double> vecTraffic = this->GetResourceAlloc()->GetSimulType()
+    ->GetTraffic()->GetVecTraffic();
+    double traffic = this->GetResourceAlloc()->GetSimulType()->GetTraffic()
+    ->GetTraffic();
+    bool flag = false;
+    int numSlotsReq = call->GetNumberSlots();
+    int slot_range = this->GetTopology()->GetNumSlots() - numSlotsReq + 1;
+    unsigned int reqIndex,core;
+    
+    for(unsigned int i = 0;i < vecTraffic.size();i++){
+        if(vecTraffic.at(i) == traffic){
+            reqIndex = i;
+            break;
+        }
+    }
+    //Tries to find a set of available slots in a core- vary slots and later 
+    //cores
+    for(unsigned int a = 0; a < this->GetTopology()->GetNumCores(); 
+    a++){
+        core = ind->GetGene(reqIndex,a);
+        for(int s = 0; s < slot_range; s++){
+            if(this->GetTopology()->CheckSlotsDispCore(route, s, s + 
+            call->GetNumberSlots() - 1,core)){
                 call->SetFirstSlot(s);
                 call->SetLastSlot(s + call->GetNumberSlots() - 1);
                 call->SetCore(core);

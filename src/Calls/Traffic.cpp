@@ -68,3 +68,7 @@ double Traffic::GetTraffic(unsigned int index) const {
 void Traffic::SetVecTraffic(std::vector<double> vecTraffic) {
     this->vecTraffic = vecTraffic;
 }
+
+unsigned int Traffic::GetRequisitionClasses(){
+    return(vecTraffic.size());
+}

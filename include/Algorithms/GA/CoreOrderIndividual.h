@@ -18,12 +18,24 @@ class GACoreOrder;
 
 #include"Individual.h"
 
+/**
+ * @brief Specific individual for Core Order, composed by a genes matrix.
+ */
 class CoreOrderIndividual: public Individual {
 public:
+    /**
+     * @brief Default constructor for this specified individual.
+     * @param ga GACoreOrder pointer that owns this individual.
+     */
     CoreOrderIndividual(GACoreOrder* ga);
-    
+    /**
+     * @brief Copy constructor for this individual.
+     * @param orig Original individual to be copied.
+     */
     CoreOrderIndividual(const CoreOrderIndividual& orig);
-    
+    /**
+     * @brief Default destructor of this individual.
+     */
     virtual ~CoreOrderIndividual();
     /**
      * @brief Gets the gene of  this individual,for a specified line and column, 
@@ -61,7 +73,7 @@ private:
     /**
      * @brief GA_RsaOrder that owns this individual.
      */
-    GA_RsaOrder* ga;
+    GACoreOrder* ga;
     /**
      * @brief Individual Genes,matrix number of lines express the number of
      * possible requisitions and the columns represent the number of cores.

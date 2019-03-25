@@ -14,6 +14,7 @@
 #ifndef CSA_H
 #define CSA_H
 #include "SA.h"
+#include "CoreOrderIndividual.h"
 
 class CSA: public SA {
 public:
@@ -25,6 +26,8 @@ public:
      * @param call
      */    
     virtual ~CSA();
+    
+    void FirstFit(Call* call,CoreOrderIndividual* ind);
     
     void FirstFit(Call* call);        
     /**

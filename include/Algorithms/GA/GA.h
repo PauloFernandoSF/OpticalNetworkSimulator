@@ -172,7 +172,6 @@ public:
      * @return Specified individual.
      */
     Individual* GetIniIndividual(unsigned int index);
-    
     /**
      * @brief Apply the gene of a specified individual in the network.
      * @param ind Individual pointer.
@@ -227,7 +226,7 @@ private:
      * container.
      */
     double sumFitness;
-    
+        
     /**
      * @brief Container of individuals, representing the initial population.
      */

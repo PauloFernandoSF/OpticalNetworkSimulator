@@ -41,7 +41,6 @@ public:
      * @brief Virtual destructor of a Traffic object.
      */
     virtual ~Traffic();
-    
     /**
      * @brief  Loads the traffic from a .txt file.
      */
@@ -63,6 +62,11 @@ public:
      * @param vecTraffic all traffic values.
      */
     void SetVecTraffic(std::vector<double> vecTraffic);
+    /**
+     * @brief Return the size of vecTraffic(number of requisition classes).
+     * @return size of vecTraffic.
+     */
+    unsigned int GetRequisitionClasses();
 
 private:
     /**
