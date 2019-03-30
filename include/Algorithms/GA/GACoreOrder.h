@@ -72,6 +72,10 @@ public:
     
     void SetIndParameters(Individual* ind) override;
     
+    void SetSelectedPopFitness() override;
+    
+    void SetTotalPopFitness() override;
+    
 private:
     /**
      * @brief Function to create new individuals by crossover.

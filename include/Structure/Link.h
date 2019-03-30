@@ -58,6 +58,7 @@ public:
      */
     virtual ~Link();
     
+    bool operator==(const Link& right) const;
     /**
      * @brief Initialize the link, setting the start values
      * contained in it to free. 

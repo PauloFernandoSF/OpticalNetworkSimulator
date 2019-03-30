@@ -45,6 +45,14 @@ Link::~Link() {
     
 }
 
+bool Link::operator==(const Link& right) const {
+    if(right.origimNode == this->origimNode && 
+    right.destinationNode == this->destinationNode)
+        return true;
+    
+    return false;
+}
+
 void Link::Initialize() {
     //Make all slots status for free
     this->slotsStatus.assign(this->slotsStatus.size(), SlotFree);

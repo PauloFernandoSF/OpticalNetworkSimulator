@@ -14,6 +14,10 @@
 #ifndef COREORDERINDIVIDUAL_H
 #define COREORDERINDIVIDUAL_H
 
+#include <vector>
+#include <memory>
+#include <iostream>
+
 class GACoreOrder;
 
 #include"Individual.h"
@@ -32,7 +36,7 @@ public:
      * @brief Copy constructor for this individual.
      * @param orig Original individual to be copied.
      */
-    CoreOrderIndividual(const CoreOrderIndividual& orig);
+    CoreOrderIndividual(const std::shared_ptr<const CoreOrderIndividual>& orig);
     /**
      * @brief Default destructor of this individual.
      */
@@ -52,7 +56,7 @@ public:
      * @param column-cores, used to find the container position.
      * @param value Gene, unsigned int value, of this individual.
      */
-    void SetGene(unsigned int line, unsigned int column,unsigned int value);
+    void SetGene(unsigned int line, unsigned int column,unsigned int val);
     /**
      * @brief Gets the blocking probability of this individual.
      * @return Blocking probability.

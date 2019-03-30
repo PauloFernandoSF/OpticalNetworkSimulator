@@ -43,6 +43,10 @@ public:
      */
     void Run() override;
     /**
+     * @brief @brief Runs the simulation for the total population of the GA.
+     */
+    void RunTotalPop();
+    /**
      * @brief Load simulation inputs from the terminal.
      */
     void Load() override;
@@ -79,10 +83,6 @@ private:
      * @brief Runs the simulation for the selected population of the GA.
      */
     void RunSelectPop();
-    /**
-     * @brief @brief Runs the simulation for the total population of the GA.
-     */
-    void RunTotalPop();
     /**
      * @brief Check and run the simulation if there is any individual, of total
      * population, with less simulation than the minimum required.

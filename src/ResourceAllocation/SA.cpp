@@ -17,6 +17,7 @@
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/GeneralClasses/Def.h"
+#include "../../include/Algorithms/GA/CoreOrderIndividual.h"
 
 SA::SA(ResourceAlloc* rsa, SpectrumAllocationOption option, Topology* topology) 
 :resourceAlloc(rsa), specAllOption(option), topology(topology) {
@@ -136,4 +137,8 @@ std::vector<unsigned int> SA::FirstFitSlots(Call* call) {
     }
     
     return slots;
+}
+
+void SA::SetInd(CoreOrderIndividual* ind){
+    
 }

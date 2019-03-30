@@ -17,6 +17,7 @@
 #include "../../../include/SimulationType/SimulationType.h"
 #include "../../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../../include/Data/Data.h"
+#include "../../../include/GeneralClasses/Def.h"
 
 GA_RsaOrder::GA_RsaOrder(SimulationType* simul)
 :GA(simul), numNodes(0) {
@@ -74,7 +75,42 @@ void GA_RsaOrder::SetIndParameters(Individual* ind) {
     IndividualBool* indBool = dynamic_cast<IndividualBool*>(ind);
     
     indBool->SetBlockProb(blockProb);
-    indBool->SetFitness(1.0 / blockProb);
+}
+
+void GA_RsaOrder::SetSelectedPopFitness() {
+    double bestPb = Def::Max_Double;
+    IndividualBool* auxInd;
+    
+    //Find the best blocking probability of the selectedPop container
+    for(auto it: this->selectedPopulation){
+        auxInd = dynamic_cast<IndividualBool*>(it.get());
+        
+        if(bestPb > auxInd->GetBlockProb())
+            bestPb = auxInd->GetBlockProb();
+    }
+    
+    for(auto it: this->selectedPopulation){
+        auxInd = dynamic_cast<IndividualBool*>(it.get());
+        auxInd->SetFitness(1.0 / (bestPb + auxInd->GetBlockProb()));
+    }
+}
+
+void GA_RsaOrder::SetTotalPopFitness() {
+    double bestPb = Def::Max_Double;
+    IndividualBool* auxInd;
+    
+    //Find the best blocking probability of the selectedPop container
+    for(auto it: this->totalPopulation){
+        auxInd = dynamic_cast<IndividualBool*>(it.get());
+        
+        if(bestPb > auxInd->GetBlockProb())
+            bestPb = auxInd->GetBlockProb();
+    }
+    
+    for(auto it: this->totalPopulation){
+        auxInd = dynamic_cast<IndividualBool*>(it.get());
+        auxInd->SetFitness(1.0 / (bestPb + auxInd->GetBlockProb()));
+    }
 }
 
 void GA_RsaOrder::Crossover() {

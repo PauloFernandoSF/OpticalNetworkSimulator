@@ -15,15 +15,27 @@
 #include "../../include/Algorithms/GA/GA_RsaOrder.h"
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
+#include "../../include/Data/Options.h"
 #include "../../include/Calls/CallGenerator.h"
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/Data.h"
 #include "../../include/Algorithms/GA/GA_RsaOrder.h"
+#include "../../include/Algorithms/GA/GACoreOrder.h"
 
 GA_SingleObjective::GA_SingleObjective(unsigned int simulIndex) 
 :SimulationType(simulIndex) {
     //Create the GA based in the options(Future).
-    this->gaAlgorithm = std::make_shared<GA_RsaOrder>(this);
+    switch(this->GetOptions()->GetGAOption()){
+        case GaRsaOrder:
+            this->gaAlgorithm = std::make_shared<GA_RsaOrder>(this);
+            break;
+        case GaCoreOrder:
+            this->gaAlgorithm = std::make_shared<GACoreOrder>(this);
+            break;
+        default:
+            std::cerr << "Invalid GA Option" << std::endl;
+        
+    }
 }
 
 GA_SingleObjective::~GA_SingleObjective() {
@@ -93,7 +105,7 @@ void GA_SingleObjective::RunSelectPop() {
         this->gaAlgorithm->SetIndParameters(it.get());
         this->GetData()->Initialize();
     }
-    //Set fitness here 1/(Pb_best+Pb_individual)
+    this->gaAlgorithm->SetSelectedPopFitness();
 }
 
 void GA_SingleObjective::RunTotalPop() {
@@ -101,25 +113,27 @@ void GA_SingleObjective::RunTotalPop() {
 
     for(auto it: this->gaAlgorithm->totalPopulation){
         
-        if(it->GetCount() <= maxNumSimulPerInd){
+        if(it->GetCount() < maxNumSimulPerInd){
             this->gaAlgorithm->ApplyIndividual(it.get());
             SimulationType::Run();
             this->gaAlgorithm->SetIndParameters(it.get());
         }
         this->GetData()->Initialize();
     }
+    this->gaAlgorithm->SetTotalPopFitness();
 }
 
 void GA_SingleObjective::CheckMinSimul() {
-    unsigned int maxNumSimulPerIns = this->gaAlgorithm->GetMaxNumSimulation();
+    unsigned int maxNumSimulPerInd = this->gaAlgorithm->GetMaxNumSimulation();
     
     for(auto it: this->gaAlgorithm->totalPopulation){
         
-        while(it->GetCount() < maxNumSimulPerIns){
+        while(it->GetCount() < maxNumSimulPerInd){
             this->gaAlgorithm->ApplyIndividual(it.get());
             SimulationType::Run();
             this->gaAlgorithm->SetIndParameters(it.get());
             this->GetData()->Initialize();
         }
     }
+    this->gaAlgorithm->SetTotalPopFitness();
 }

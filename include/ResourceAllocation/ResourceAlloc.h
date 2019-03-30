@@ -26,6 +26,7 @@ class Call;
 class Modulation;
 
 #include "../Data/Options.h"
+#include"SA.h"
 
 /**
  * @brief Class responsible for resource allocation, at least routing and 
@@ -103,6 +104,8 @@ public:
      */
     void SetInterferingRoutes();
     
+    void SetInterferingRoutes2();
+    
     /**
      * @brief Function that add a route in the container of all routes 
      * for a specified node pair.
@@ -146,6 +149,8 @@ public:
      * @brief Runs the offline routing for all node pairs in the network.
      */
     void RoutingOffline();
+    
+    bool CheckInterRouting();
     /**
      * @brief Check if the call request OSNR is acceptable.
      * @param call Call request to evaluate the OSNR.
@@ -188,6 +193,8 @@ public:
     void SetResourceAllocOrder(std::vector<bool> resourceAllocOrder);
     
     void SetResourceAllocOrder();
+    
+    std::shared_ptr<SA> GetSpecAlloc();
 
 private:
     /**
@@ -230,5 +237,5 @@ private:
     std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> interRoutes;
     
     std::vector<bool> resourceAllocOrder;
-};    
+};
 #endif /* RESOURCEALLOC_H */

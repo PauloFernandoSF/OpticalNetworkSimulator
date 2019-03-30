@@ -17,7 +17,9 @@
 #include "../../../include/SimulationType/SimulationType.h"
 #include "../../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../../include/Data/Data.h"
-
+#include "../../../include/SimulationType/GA_SingleObjective.h"
+#include "../../../include/Calls/Traffic.h"
+#include "../../../include/GeneralClasses/Def.h"
 GACoreOrder::GACoreOrder(SimulationType* simul):GA(simul),numCores(0),numReq(0) 
 {
 }
@@ -39,46 +41,82 @@ void GACoreOrder::InitializePopulation(){
 }
 }
 
-unsigned int GACoreOrder::SetNumCores(unsigned int cores){
+void GACoreOrder::SetNumCores(unsigned int cores){
     this->numCores = cores;
 }
 
-void GACoreOrder::GetNumCores(){
+unsigned int GACoreOrder::GetNumCores(){
     return this->GetNumCores();
 }
 
-unsigned int GACoreOrder::SetNumReq(unsigned int req){
+void GACoreOrder::SetNumReq(unsigned int req){
     this->numCores = req;
 }
 
-void GACoreOrder::GetNumReq(){
-    return this->numReq();
+unsigned int GACoreOrder::GetNumReq(){
+    return this->numReq;
 }
-//MODIFICAR PARA A MINHA APLICAÇÃO
+//FIX IT TO MY APP
 void GACoreOrder::ApplyIndividual(Individual* ind){
     CoreOrderIndividual* indCore = dynamic_cast<CoreOrderIndividual*>(ind);
-    this->GetSimul()->GetResourceAlloc()
-        ->SetResourceAllocOrder(indCore->GetGene());
+    this->GetSimul()->GetResourceAlloc()->GetSpecAlloc()->SetInd(indCore);
 }
-//MODIFICAR PARA A MINHA APLICAÇÃO
-void GACoreOrder::SetIndParameters(CoreOrderIndividual* ind){
+
+void GACoreOrder::SetIndParameters(Individual* ind){
     double blockProb = this->GetSimul()->GetData()->GetPbReq();
     CoreOrderIndividual* indCore = dynamic_cast<CoreOrderIndividual*>(ind);
     
     indCore->SetBlockProb(blockProb);
-    //MODIFICAR FITNESS
-    indCore->SetFitness(1.0 / blockProb);
 }
-//MODIFICAR ORDEM PARA O MEU AG
+
 void GACoreOrder::CreateNewPopulation(){
+    SimulationType* single = this->GetSimul();
+    GA_SingleObjective* singleObjective = dynamic_cast<GA_SingleObjective*>(single);
+    
     this->totalPopulation.clear();
     this->SetSumFitnessSelectedPop();
     this->Crossover();
-    //Selecionar 40 melhores e 10 aleatórios
+    //Select numBestIndividuals based on Bp and the rest randomly
+    singleObjective->RunTotalPop();
+    singleObjective->GetGA()->SelectPopulation();
     this->Mutation();
-    //Selecionar 40 melhores e 10 aleatórios
+ }
+
+void GACoreOrder::SetSelectedPopFitness() {
+    double bestPb = Def::Max_Double;
+    CoreOrderIndividual* auxInd;
+    
+    //Find the best blocking probability of the selectedPop container
+    for(auto it: this->selectedPopulation){
+        auxInd = dynamic_cast<CoreOrderIndividual*>(it.get());
+        
+        if(bestPb > auxInd->GetBlockProb())
+            bestPb = auxInd->GetBlockProb();
+    }
+    
+    for(auto it: this->selectedPopulation){
+        auxInd = dynamic_cast<CoreOrderIndividual*>(it.get());
+        auxInd->SetFitness(1.0 / (bestPb + auxInd->GetBlockProb()));
+    }
 }
 
+void GACoreOrder::SetTotalPopFitness() {
+    double bestPb = Def::Max_Double;
+    CoreOrderIndividual* auxInd;
+    
+    //Find the best blocking probability of the selectedPop container
+    for(auto it: this->totalPopulation){
+        auxInd = dynamic_cast<CoreOrderIndividual*>(it.get());
+        
+        if(bestPb > auxInd->GetBlockProb())
+            bestPb = auxInd->GetBlockProb();
+    }
+    
+    for(auto it: this->totalPopulation){
+        auxInd = dynamic_cast<CoreOrderIndividual*>(it.get());
+        auxInd->SetFitness(1.0 / (bestPb + auxInd->GetBlockProb()));
+    }
+}
 
 void GACoreOrder::Crossover() {
     assert(this->selectedPopulation.size() == this->GetNumberIndividuals());

@@ -29,8 +29,8 @@ genes(0), blockProb(0.0) {
             do
                 num = rand()%cores;
                 
-            while(std::find(std::begin(vec), std::end(vec), num));
-            
+            while(std::find(vec.begin(), vec.end(), num)!= vec.end());
+          
             vec.push_back(num);
             SetGene(a,b,num);
             if(b == cores - 1)
@@ -46,21 +46,23 @@ const std::shared_ptr<const CoreOrderIndividual>& orig):Individual(orig),
 CoreOrderIndividual::~CoreOrderIndividual() {
 }
 
-CoreOrderIndividual::SetGene(unsigned int line, unsigned int column, 
-        unsigned int value){
-    this->genes.at(line).at(column) = value;
+void CoreOrderIndividual::SetGene(unsigned int line, unsigned int column, 
+        unsigned int val){
+    this->genes.at(line).at(column) = val;
 }
 
 unsigned int CoreOrderIndividual::GetGene(unsigned int line, 
-        unsigned int column){
-    return this->genes.at(line).at(column);
+       unsigned int column) const{
+    return (this->genes.at(line).at(column));
+    //return (this->GetGene(line,column));
+    
 }
 
-double IndividualBool::GetBlockProb() const {
+double CoreOrderIndividual::GetBlockProb() const {
     return blockProb;
 }
 
-void IndividualBool::SetBlockProb(double blockProb) {
+void CoreOrderIndividual::SetBlockProb(double blockProb) {
     assert(this->GetCount() < this->ga->GetMaxNumSimulation());
     this->SetCount(this->GetCount()+1);
     
@@ -69,6 +71,6 @@ void IndividualBool::SetBlockProb(double blockProb) {
     this->blockProb = (this->blockProb + blockProb) / 2.0;
 }
 
-double IndividualBool::GetMainParameter() {
+double CoreOrderIndividual::GetMainParameter() {
     return this->GetBlockProb();
 }

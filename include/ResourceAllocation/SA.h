@@ -20,6 +20,7 @@
 class ResourceAlloc;
 class Topology;
 class Call;
+class CoreOrderIndividual;
 
 #include "../Data/Options.h"
 
@@ -88,6 +89,7 @@ public:
      */
     std::vector<unsigned int> FirstFitSlots(Call* call);
     
+    virtual void SetInd(CoreOrderIndividual* ind);
     /**
      * @brief Gets the topology in which this SA is done.
      * @return Topology pointer.

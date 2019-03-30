@@ -13,13 +13,15 @@
 
 #ifndef CSA_H
 #define CSA_H
+
 #include "SA.h"
-#include "CoreOrderIndividual.h"
+#include "../Algorithms/GA/CoreOrderIndividual.h"
+#include"../Data/Options.h"
 
 class CSA: public SA {
 public:
     CSA(ResourceAlloc* rsa, SpectrumAllocationOption option, 
-        Topology* topology);
+        Topology* topology,GAOption gaOption);
     /**
      * @brief Spectrum allocation that chooses first core and first set of slots
      * available to allocate the call
@@ -36,8 +38,22 @@ public:
      * @return Call pointer
      */    
     void MSCL(Call* call);
+    /**
+     * @brief Set the individual for GA operation
+     * @param pointer of CoreOrderIndividual class
+     */    
+    void SetInd(CoreOrderIndividual* ind);
 private:
+    /**
+     * @brief Individual that will be used in the CoreOrder GA algorithm
+    */  
+    CoreOrderIndividual* ind;
     
+    void GAFirstFit(Call* call);
+    
+    void NormalFirstFit(Call* call);
+    //Create GAOption parameter
+    GAOption gaOption;
 };
 
 #endif /* CSA_H */

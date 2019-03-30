@@ -188,6 +188,10 @@ public:
      */
     Individual* RouletteIndividual();
     
+    virtual void SetSelectedPopFitness() = 0;
+    
+    virtual void SetTotalPopFitness() = 0;
+    
 private:
     /**
      * @brief Pointer to a SimulationType object that owns this algorithm.

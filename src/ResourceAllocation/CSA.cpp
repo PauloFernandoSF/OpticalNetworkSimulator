@@ -12,28 +12,41 @@
  */
 
 #include "../../include/ResourceAllocation/CSA.h"
-#include "../../include/ResourceAllocation/SA.h"
+//#include "../../include/ResourceAllocation/SA.h"
 #include "../../include/Calls/Call.h"
+#include "../../include/Calls/Traffic.h"
+#include "../../include/SimulationType/SimulationType.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/Structure/Topology.h"
-#include "../../../include/Algorithms/GA/CoreOrderIndividual.h"
+#include "../../include/Algorithms/GA/CoreOrderIndividual.h"
 
-CSA::CSA(ResourceAlloc* rsa, SpectrumAllocationOption option,Topology* topology)
-:SA(rsa, option, topology){
+CSA::CSA(ResourceAlloc* rsa, SpectrumAllocationOption option,Topology* topology,
+        GAOption gaOption):gaOption(gaOption),SA(rsa, option, topology){;
 
 }
 
 CSA::~CSA() {
     
 }
-
 void CSA::FirstFit(Call* call){
+    switch(this->gaOption){
+        case GAOptionDisabled:
+            this->NormalFirstFit(call);
+            break;
+        case GaCoreOrder:
+            this->GAFirstFit(call);
+            break;
+        default:
+            std::cerr << "Invalid Heuristic" << std::endl;
+        
+    }
+}
+void CSA::NormalFirstFit(Call* call){
     Route* route = call->GetRoute();
     bool flag = false;
     int numSlotsReq = call->GetNumberSlots();
     int slot_range = this->GetTopology()->GetNumSlots() - numSlotsReq + 1;
-    
     //Tries to find a set of available slots in a core- vary slots and later 
     //cores
     for(unsigned int core = 0; core < this->GetTopology()->GetNumCores(); 
@@ -53,12 +66,11 @@ void CSA::FirstFit(Call* call){
     }
 }
 
-void CSA::FirstFit(Call* call,CoreOrderIndividual* ind){
+void CSA::GAFirstFit(Call* call){
     Route* route = call->GetRoute();
     std::vector<double> vecTraffic = this->GetResourceAlloc()->GetSimulType()
     ->GetTraffic()->GetVecTraffic();
-    double traffic = this->GetResourceAlloc()->GetSimulType()->GetTraffic()
-    ->GetTraffic();
+    double traffic = call->GetBandwidth();
     bool flag = false;
     int numSlotsReq = call->GetNumberSlots();
     int slot_range = this->GetTopology()->GetNumSlots() - numSlotsReq + 1;
@@ -74,7 +86,7 @@ void CSA::FirstFit(Call* call,CoreOrderIndividual* ind){
     //cores
     for(unsigned int a = 0; a < this->GetTopology()->GetNumCores(); 
     a++){
-        core = ind->GetGene(reqIndex,a);
+        core = this->ind->GetGene(reqIndex,a);
         for(int s = 0; s < slot_range; s++){
             if(this->GetTopology()->CheckSlotsDispCore(route, s, s + 
             call->GetNumberSlots() - 1,core)){
@@ -90,9 +102,13 @@ void CSA::FirstFit(Call* call,CoreOrderIndividual* ind){
     }
 }
 
+void CSA::SetInd(CoreOrderIndividual* ind){
+    this->ind = ind;
+}
+
 void CSA::MSCL(Call* call){
     /*Set Interfering routes to aplly Multicore MSCL*/
-    this->SA::GetResourceAlloc()->SetInterferingRoutes();
+    //this->SA::GetResourceAlloc()->SetInterferingRoutes();
     int totalSlots=this->GetTopology()->GetNumSlots(),s,core;
     Route *route = call->GetRoute(), *route_aux;
     int NslotsReq = call->GetNumberSlots(),slot_range = 

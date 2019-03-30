@@ -454,6 +454,7 @@
         <ccTool>
           <developmentMode>5</developmentMode>
           <standard>8</standard>
+          <warningLevel>2</warningLevel>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
