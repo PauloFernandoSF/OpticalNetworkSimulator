@@ -20,22 +20,30 @@
 
 class CSA: public SA {
 public:
+    /**
+     * @brief Standard constructor for a CSA object.
+     * @param rsa RourceAlloc that own this object.
+     * @param option Spectral allocation option.
+     * @param topology Topology used in this spectral allocation.
+     * @param gaOption GAOption selected in the simulation.
+     */
     CSA(ResourceAlloc* rsa, SpectrumAllocationOption option, 
         Topology* topology,GAOption gaOption);
+    /**
+     * @brief Virtual destructor of a CSA object.
+     */
+    virtual ~CSA();
     /**
      * @brief Spectrum allocation that chooses first core and first set of slots
      * available to allocate the call
      * @param call
-     */    
-    virtual ~CSA();
-    
-    void FirstFit(Call* call,CoreOrderIndividual* ind);
-    
+     */ 
     void FirstFit(Call* call);        
     /**
-     * @brief Return strong call class pointer to cast
+     * @brief Spectrum allocation that uses MSCL in all available set of slots
+     * in all cores
      * @param call pointer of call class
-     * @return Call pointer
+     * @return void
      */    
     void MSCL(Call* call);
     /**
@@ -48,11 +56,19 @@ private:
      * @brief Individual that will be used in the CoreOrder GA algorithm
     */  
     CoreOrderIndividual* ind;
-    
+    /**
+     * @brief Spectrum allocation used when GACoreOrder is selescted
+     * @param call pointer of call class
+     */ 
     void GAFirstFit(Call* call);
-    
+    /**
+     * @brief Spectrum allocation used when GA is NOT selected
+     * @param call
+     */ 
     void NormalFirstFit(Call* call);
-    //Create GAOption parameter
+    /**
+     * @brief GA option selected.
+    */
     GAOption gaOption;
 };
 

@@ -305,7 +305,7 @@ unsigned int finSlot) const {
 bool Topology::CheckSlotsDispCore(Route* route, unsigned int iniSlot,
 unsigned int finSlot, unsigned int core) const {
     
-    unsigned int L_or, L_de, x = route->GetNumHops();
+    unsigned int L_or, L_de;
     L_or = route->GetNodeId(0);L_de = route->GetNodeId(1);
     bool flag = false;
     //Cast base pointer in derived pointer class

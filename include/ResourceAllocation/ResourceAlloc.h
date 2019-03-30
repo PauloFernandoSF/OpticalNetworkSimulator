@@ -193,7 +193,10 @@ public:
     void SetResourceAllocOrder(std::vector<bool> resourceAllocOrder);
     
     void SetResourceAllocOrder();
-    
+    /**
+     * @brief Gets the selected Spectral Allocation option.
+     * @return SA strong pointer.
+     */
     std::shared_ptr<SA> GetSpecAlloc();
 
 private:

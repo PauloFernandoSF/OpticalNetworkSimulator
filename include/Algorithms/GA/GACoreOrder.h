@@ -23,11 +23,11 @@ class GACoreOrder: public GA {
 public:
     /**
      * @brief Default constructor for GA Core Order.
-     * @param simul SimulationType that owns this GA Core Order.
+     * @param simul SimulationType that owns this GACoreOrder.
      */
     GACoreOrder(SimulationType* simul);
     /**
-     * @brief Default destructor for GA Core Order.
+     * @brief Default destructor for GACoreOrder.
      */
     virtual ~GACoreOrder();
     /**
@@ -38,8 +38,8 @@ public:
     void Initialize() override;
     /**
      * @brief Function to create the initial population in the selected 
-     * population container. This GA create individuals of the IndividualBool 
-     * type.
+     * population container. This GA create individuals of the 
+     * CoreOrderIndividual type. 
      */
     void InitializePopulation() override;
     /**
@@ -71,9 +71,15 @@ public:
     void ApplyIndividual(Individual* ind) override;
     
     void SetIndParameters(Individual* ind) override;
-    
+    /**
+     * @brief Calculate and set Fitness values to all selected individuals,based 
+     * on best Bp individual.
+    */
     void SetSelectedPopFitness() override;
-    
+    /**
+     * @brief Calculate and set Fitness values to total population individuals,
+     * based on best Bp individual.
+    */
     void SetTotalPopFitness() override;
     
 private:
@@ -136,7 +142,6 @@ private:
     void MutateIndividual(CoreOrderIndividual* const ind);
     
 private:
-    
     /**
      * @brief Number of cores in the network.
      */

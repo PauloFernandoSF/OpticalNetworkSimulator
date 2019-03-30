@@ -301,9 +301,15 @@ public:
     void SetOrderRSA(RsaOrder orderRSA);
     
     void SetTransponderOption(TransponderOption transponderOption);
-    
+    /**
+     * @brief Gets GA selected option.
+     * @return GaOption.
+     */
     GAOption GetGAOption() const;
-    
+    /**
+     * @brief Gets the name of the selected GA option.
+     * @return String with the name of the GA option.
+     */
     std::string GetGAOptionName() const;
 
     void SetGAOption(GAOption coreOrder);
@@ -346,9 +352,9 @@ private:
     NetworkOption networkOption;
     
     RsaOrder orderRSA;
-    
-    //GaCoreOrder coreOrder;
-    
+    /**
+     * @brief GA option selected.
+    */
     GAOption GaOption;
     
     TransponderOption transponderOption;
