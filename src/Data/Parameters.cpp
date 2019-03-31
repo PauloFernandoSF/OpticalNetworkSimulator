@@ -58,10 +58,10 @@ void Parameters::Load() {
     double auxDouble;
     
     std::cout << "PARAMETERS INPUTS" << std::endl;
-    std::cout << "Insert the number  of slots per fiber: ";
+    std::cout << "Insert the number of slots per fiber: ";
     std::cin >> auxUnsInt;
     this->SetNumberSlots(auxUnsInt);
-    std::cout << "Insert the number  cores per link: ";
+    std::cout << "Insert the number cores per link: ";
     std::cin >> auxUnsInt;
     this->SetNumberCores(auxUnsInt);
     std::cout << "Insert Connection Deactivation Rate: ";
@@ -82,9 +82,6 @@ void Parameters::Load() {
     std::cout << "Insert maximum number of blocked calls: ";
     std::cin >> auxDouble;
     this->SetNumberBloqMax(auxDouble);
-    std::cout << "Insert slot bandwidth(GHz): ";
-    std::cin >> auxDouble;
-    this->SetSlotBandwidth(auxDouble*1E9);
     
     this->SetLoadPointUniform();
     
@@ -113,8 +110,6 @@ void Parameters::LoadFile() {
     this->SetNumberReqMax(auxDouble);
     auxIfstream >> auxDouble;
     this->SetNumberBloqMax(auxDouble);
-    auxIfstream >> auxDouble;
-    this->SetSlotBandwidth(auxDouble*1E9);
     
     this->SetLoadPointUniform();
 }
@@ -161,6 +156,10 @@ double Parameters::GetMaxLoadPoint() const {
 void Parameters::SetMaxLoadPoint(double maxLoadPoint) {
     assert(maxLoadPoint > 0.0);
     this->maxLoadPoint = maxLoadPoint;
+}
+
+double Parameters::GetMidLoadPoint() const {
+    return this->minLoadPoint + (this->maxLoadPoint - this->minLoadPoint)/2;
 }
 
 unsigned int Parameters::GetNumberLoadPoints() const {
@@ -221,7 +220,7 @@ double Parameters::GetSlotBandwidth() const {
 
 void Parameters::SetSlotBandwidth(double slotBandwidth) {
     assert(slotBandwidth > 0.0);
-    this->slotBandwidth = slotBandwidth;
+    this->slotBandwidth = slotBandwidth*1E9;
 }
 
 unsigned int Parameters::GetNumberSlots() const {

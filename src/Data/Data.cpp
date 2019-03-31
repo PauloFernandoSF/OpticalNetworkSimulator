@@ -18,6 +18,8 @@
 #include "../../include/Data/Parameters.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
+#include "../../include/SimulationType/GA_SingleObjective.h"
+#include "../../include/Algorithms/GA/GA.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Data* data) {    
@@ -67,19 +69,20 @@ void Data::StorageCall(Call* call) {
     
     switch(call->GetStatus()){
         case Accepted:
-            this->numberAccReq.at(actualIndex)++;
-            this->numHopsPerRoute.at(actualIndex) += (double) numHops;
-            this->netOccupancy.at(actualIndex) += (double) numSlots * numHops;
+            this->numberAccReq.at(this->actualIndex)++;
+            this->numHopsPerRoute.at(this->actualIndex) += (double) numHops;
+            this->netOccupancy.at(this->actualIndex) += 
+            (double) numSlots * numHops;
             break;
         case Blocked:
-            this->numberBlocReq.at(actualIndex)++;
+            this->numberBlocReq.at(this->actualIndex)++;
             break;
         case NotEvaluated:
             std::cerr << "Not evaluated call" <<  std::endl;
     }   
 }
 
-void Data::SaveLog() {
+void Data::SaveMultiloadLog() {
     std::ofstream &logOfstream = this->simulType->GetInputOutput()
                                      ->GetLogFile();
     unsigned int numLoadPoints = this->simulType->GetParameters()
@@ -100,9 +103,29 @@ void Data::SavePBvLoad() {
     
     for(unsigned int a = 0; a < numLoadPoints; a++){
         this->SetActualIndex(a);
-
         this->SavePBvLoad(resultOfstream);
     }
+}
+
+void Data::SaveGaFiles() {
+    std::ofstream& logOfstream = this->simulType->GetInputOutput()
+                                     ->GetLogFile();
+    std::ofstream& initPop = this->simulType->GetInputOutput()
+                                        ->GetIniPopulationFile();
+    std::ofstream& bestInds = this->simulType->GetInputOutput()
+                                 ->GetBestIndividualsFile();
+    std::ofstream& bestInd = this->simulType->GetInputOutput()
+                                ->GetBestIndividualFile();
+    std::ofstream& worstInds = this->simulType->GetInputOutput()
+                                 ->GetWorstIndividualsFile();
+    
+    //Make function to check the cast for each possible GA SimulationType
+    GA* ga = dynamic_cast<GA_SingleObjective*>
+                      (this->simulType)->GetGA();
+    
+    this->SaveBestWorstIndividuals(ga, logOfstream, bestInds, worstInds);
+    this->SaveBestIndividual(ga, bestInd);
+    this->SaveInitPopulation(ga, initPop);
 }
 
 void Data::SetNumberReq(double numReq) {
@@ -134,6 +157,10 @@ double Data::GetNumberAccReq() const {
     return this->numberAccReq.at(this->actualIndex);
 }
 
+double Data::GetPbReq() const {
+    return this->GetNumberBlocReq()/this->GetNumberReq();
+}
+
 double Data::GetNumberSlotsReq() const {
     return this->numberSlotsReq.at(this->actualIndex);
 }
@@ -152,6 +179,10 @@ double Data::GetNumberAccSlots(unsigned int index) const {
 
 double Data::GetNumberAccSlots() const {
     return this->numberAccSlots.at(this->actualIndex);
+}
+
+double Data::GetPbSlots() const {
+    return this->GetNumberBlocSlots()/this->GetNumberSlotsReq();
 }
 
 double Data::GetNumHopsPerRoute(unsigned int index) const {
@@ -191,4 +222,39 @@ void Data::SavePBvLoad(std::ostream& ostream) {
     ostream << this->simulType->GetParameters()->GetLoadPoint(this
                    ->GetActualIndex()) << "\t" << this->GetNumberBlocReq()/
                    this->GetNumberReq() << std::endl;
+}
+
+void Data::SaveBestWorstIndividuals(GA* ga, std::ostream& logOfstream, 
+std::ostream& bestInds, std::ostream& worstInds) {
+    unsigned int numGen = ga->GetNumberGenerations();
+    
+    for(unsigned int a = 1; a <= numGen; a++){
+        ga->SetActualGeneration(a);
+        logOfstream << ga << std::endl;
+        bestInds << a << "\t" << ga->GetBestIndividual()->GetMainParameter() 
+                << std::endl;
+        worstInds << a << "\t" << ga->GetWorstIndividual()->GetMainParameter()
+                 << std::endl;
+    }
+}
+
+void Data::SaveBestIndividual(GA* ga, std::ostream& bestInd) {
+    //Make function to check the cast for the best individual
+    //and a switch function for casting according to the individual. 
+    IndividualBool* ind = dynamic_cast<IndividualBool*>
+                          (ga->GetBestIndividual());
+    
+    std::vector<bool> gene = ind->GetGenes();
+    for(unsigned int a = 0; a < gene.size(); a++){
+        bestInd << gene.at(a) << std::endl;
+    }
+}
+
+void Data::SaveInitPopulation(GA* ga, std::ostream& initPop) {
+    unsigned int numIniPop = ga->GetNumberIndividuals();
+    
+    for(unsigned int a = 0; a < numIniPop; a++){
+        initPop << 0 << "\t" << ga->GetIniIndividual(a)->GetMainParameter()
+                << std::endl;
+    }
 }

@@ -62,6 +62,12 @@ public:
      */
     void LoadTraffic(std::ifstream& traffic);
     /**
+     * @brief Loads the RSA order input file from the first simulation made.
+     * @param orderRsa Ifstream with the input file.
+     */
+    void LoadRsaOrderFirstSimul(std::ifstream& orderRsa);
+    
+    /**
      * @brief Get the Log.txt ofstream.
      * @return ofstream containing the log file.
      */
@@ -71,6 +77,31 @@ public:
      * @return ofstream containing the PBvLoad file.
      */
     std::ofstream& GetResultFile();
+    /**
+     * @brief Get the output file that will contain the best individuals, with
+     * their correspondent generation and blocking probability.
+     * @return Best individuals output file.
+     */
+    std::ofstream& GetBestIndividualsFile();
+    /**
+     * @brief Get the output file that will contain the best individual of the 
+     * last generation (Genes of this individual).
+     * @return Best individual output file.
+     */
+    std::ofstream& GetBestIndividualFile();
+    /**
+     * @brief Get the output file that will contain the worst individuals, with
+     * their correspondent generation and blocking probability.
+     * @return Worst individuals output file.
+     */
+    std::ofstream& GetWorstIndividualsFile();
+    /**
+     * @brief Get the output file that will contain the initial population, 
+     * before the first generation, with their blocking probability.
+     * @return Initial population output file.
+     */
+    std::ofstream& GetIniPopulationFile();
+    
     /**
      * @brief Function to print the progress bar, based in 
      * the inputs proportion.
@@ -91,6 +122,15 @@ private:
      * @param results ofstream to the Log.txt.
      */
     void LoadLog(std::ofstream& log);
+    /**
+     * @brief Function to load the GA algorithm files.
+     * @param bests Best individuals file.
+     * @param best Best individual file.
+     * @param worst Worst individuals file.
+     * @param iniPop Initial population file.
+     */
+    void LoadGaFiles(std::ofstream& bests, std::ofstream& best, 
+                     std::ofstream& worst, std::ofstream& iniPop);
 
 private:
     /**
@@ -105,6 +145,14 @@ private:
      * @brief Ofstream with the PBvLoad.txt file.
      */
     std::ofstream resultFile;
+    
+    std::ofstream bestIndividuals;
+    
+    std::ofstream bestIndividual;
+    
+    std::ofstream worstIndividuals;
+    
+    std::ofstream initialPopulation;
     /**
      * @brief Size of the progress bar.
      */

@@ -35,9 +35,9 @@ Link* link) {
 Link::Link(Topology* topPointer, unsigned int origimNode, 
 unsigned int destinationNode, double length, 
 unsigned int numberSections, unsigned int numberSlots) 
-:topPointer(topPointer), origimNode(origimNode), destinationNode(destinationNode), 
-length(length), numberSections(numberSections), cost(0.0),
-slotsStatus(0), linkWorking(true) {
+:topPointer(topPointer), origimNode(origimNode), 
+destinationNode(destinationNode), length(length), 
+numberSections(numberSections), cost(0.0), slotsStatus(0), linkWorking(true) {
     slotsStatus.resize(numberSlots, SlotFree);
 }
 
@@ -45,9 +45,17 @@ Link::~Link() {
     
 }
 
+bool Link::operator==(const Link& right) const {
+    if(right.origimNode == this->origimNode && 
+    right.destinationNode == this->destinationNode)
+        return true;
+    
+    return false;
+}
+
 void Link::Initialize() {
     //Make all slots status for free
-    this->slotsStatus.assign(this->slotsStatus.size(), SlotFree);  
+    this->slotsStatus.assign(this->slotsStatus.size(), SlotFree);
 }
 
 unsigned int Link::GetOrigimNode() const {
@@ -94,7 +102,7 @@ bool Link::IsLinkWorking() const {
     return this->linkWorking;
 }
 
-void Link::SetLinkWorking(bool linkWorking) {
+void Link::SetLinkState(bool linkWorking) {
     this->linkWorking = linkWorking;
 }
 

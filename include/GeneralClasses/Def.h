@@ -17,18 +17,32 @@
 #include <random>
 
 class Def {
+
 public:
-    
+    /**
+     * @brief Define the minimum integer value
+     */
     static int Min_Int;
-    
+    /**
+     * @brief Define the maximum integer value
+     */
     static int Max_Int;
     
-    static double Min_Double;
+    static unsigned int Max_UnInt;
     
+    static unsigned int Min_UnInt;
+    /**
+     * @brief Define the minimum double value
+     */
+    static double Min_Double;
+    /**
+     * @brief Define the maximum double value
+     */
     static double Max_Double;
     
     static std::random_device randomDevice;
 
+    static std::random_device randomDevice;
 private:
 
 };

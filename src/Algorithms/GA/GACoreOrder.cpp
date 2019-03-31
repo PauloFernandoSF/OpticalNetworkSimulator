@@ -11,184 +11,126 @@
  * Created on 25 de fevereiro de 2019, 12:26
  */
 
-#include "../../../include/Algorithms/GA/GACoreOrder.h"
-//doubt, why take from Def?
-std::default_random_engine GACoreOrder::random_generator(Def::randomDevice());
-
-bool GACoreOrder::IndividualCompare::operator()(
-const std::shared_ptr<CoreOrderIndividual>& indA, 
-const std::shared_ptr<CoreOrderIndividual>& indB) const {
-    
-    return (indA->GetBlockProb() < indB->GetBlockProb());
-}
-
-std::ostream& operator<<(std::ostream& ostream, 
-const GACoreOrder* ga_CoreOrder) {
-    ostream << "Generation: " << ga_CoreOrder->actualGeneration << std::endl;
-    ostream << "Best individual: " << ga_CoreOrder->GetBestIndividual()
-            << std::endl;
-    ostream << "Worst individual: " << ga_CoreOrder->GetWorstIndividual()
-            << std::endl;
-    
-    return ostream;
-}
-
-GACoreOrder::GACoreOrder(SimulationType* simul):
-simul(simul), numberIndividuals(50), numberGenerations(50),probCrossover(0.5), 
-probMutation(0.1), initialPopulation(0), bestIndividuals(0), 
-worstIndividuals(0), numBestIndividuals(30), actualGeneration(0),
-maxNumSimulation(3), selectedPopulation(0), totalPopulation(0) {
-    
+#include "../../../include/Algorithms/GA/GACoreOrder.h
+#include "../../../include/Structure/Topology.h"
+#include "../../../include/Algorithms/GA/CoreOrderIndividual.h"
+#include "../../../include/SimulationType/SimulationType.h"
+#include "../../../include/ResourceAllocation/ResourceAlloc.h"
+#include "../../../include/Data/Data.h"
+#include "../../../include/SimulationType/GA_SingleObjective.h"
+#include "../../../include/Calls/Traffic.h"
+#include "../../../include/GeneralClasses/Def.h"
+GACoreOrder::GACoreOrder(SimulationType* simul):GA(simul),numCores(0),numReq(0) 
+{
 }
 
 GACoreOrder::~GACoreOrder() {
-    
 }
 
-void GACoreOrder::Initialize() {
-    //this->SetNumNodes(this->GetSimul()->GetTopology()->GetNumNodes());
-    this->boolDistribution = std::uniform_int_distribution<int>(0, 1);
-    this->probDistribution = std::uniform_real_distribution<double>(0, 1);
+void GACoreOrder::Initialize(){
+    GA::Initialize();
+    this->SetNumCores(this->GetSimul()->GetTopology()->GetNumCores());
+    this->SetNumReq(this->GetSimul()->GetTraffic()->GetRequisitionClasses());
 }
 
-void GACoreOrder::InitializePopulation() {
+void GACoreOrder::InitializePopulation(){
     assert(this->selectedPopulation.empty() && this->totalPopulation.empty());
-    
-    for(unsigned int a = 0; a < this->numberIndividuals; a++){
+    for(unsigned int a = 0; a < this->GetNumberIndividuals(); a++){
         this->selectedPopulation.push_back(std::make_shared
                                            <CoreOrderIndividual>(this));
-    }   
+}
 }
 
-void GACoreOrder::CreateNewPopulation() {
-    this->actualGeneration++;
+void GACoreOrder::SetNumCores(unsigned int cores){
+    this->numCores = cores;
+}
+
+unsigned int GACoreOrder::GetNumCores(){
+    return this->GetNumCores();
+}
+
+void GACoreOrder::SetNumReq(unsigned int req){
+    this->numCores = req;
+}
+
+unsigned int GACoreOrder::GetNumReq(){
+    return this->numReq;
+}
+//FIX IT TO MY APP
+void GACoreOrder::ApplyIndividual(Individual* ind){
+    CoreOrderIndividual* indCore = dynamic_cast<CoreOrderIndividual*>(ind);
+    this->GetSimul()->GetResourceAlloc()->GetSpecAlloc()->SetInd(indCore);
+}
+
+void GACoreOrder::SetIndParameters(Individual* ind){
+    double blockProb = this->GetSimul()->GetData()->GetPbReq();
+    CoreOrderIndividual* indCore = dynamic_cast<CoreOrderIndividual*>(ind);
+    
+    indCore->SetBlockProb(blockProb);
+}
+
+void GACoreOrder::CreateNewPopulation(){
+    SimulationType* single = this->GetSimul();
+    GA_SingleObjective* singleObjective = dynamic_cast<GA_SingleObjective*>(single);
+    
     this->totalPopulation.clear();
+    this->SetSumFitnessSelectedPop();
     this->Crossover();
+    //Select numBestIndividuals based on Bp and the rest randomly
+    singleObjective->RunTotalPop();
+    singleObjective->GetGA()->SelectPopulation();
     this->Mutation();
-}
+ }
 
-void GACoreOrder::KeepInitialPopulation() {
-    this->initialPopulation = this->selectedPopulation;
-}
-
-void GACoreOrder::SelectPopulation() {
-    assert(this->selectedPopulation.empty());
+void GACoreOrder::SetSelectedPopFitness() {
+    double bestPb = Def::Max_Double;
+    CoreOrderIndividual* auxInd;
     
-    //Order all individuals, with best(smallest) Bp at the end of the vector.
-    std::make_heap(this->totalPopulation.begin(), this->totalPopulation.end(),
-                   IndividualCompare());
-    
-    //Select numBestIndividuals best individuals (Block. Prob.)
-    for(unsigned int a = 0; a < this->numBestIndividuals; a++){
-        this->selectedPopulation.push_back(this->totalPopulation.back());
-        this->totalPopulation.pop_back();
-    }
-    //Select randomly the others.
-    std::shuffle(this->totalPopulation.begin(), 
-                 this->totalPopulation.end(), this->random_generator);
-    while(this->selectedPopulation.size() < this->numberIndividuals){
-        this->selectedPopulation.push_back(this->totalPopulation.back());
-        this->totalPopulation.pop_back();
+    //Find the best blocking probability of the selectedPop container
+    for(auto it: this->selectedPopulation){
+        auxInd = dynamic_cast<CoreOrderIndividual*>(it.get());
+        
+        if(bestPb > auxInd->GetBlockProb())
+            bestPb = auxInd->GetBlockProb();
     }
     
-    //Sort the selected individuals, first worst last best.
-    std::make_heap(this->selectedPopulation.begin(), 
-                 this->selectedPopulation.end(), IndividualCompare());
+    for(auto it: this->selectedPopulation){
+        auxInd = dynamic_cast<CoreOrderIndividual*>(it.get());
+        auxInd->SetFitness(1.0 / (bestPb + auxInd->GetBlockProb()));
+    }
+}
+
+void GACoreOrder::SetTotalPopFitness() {
+    double bestPb = Def::Max_Double;
+    CoreOrderIndividual* auxInd;
     
-    this->SaveBestWorstIndividuals();
-}
-
-void GACoreOrder::SaveBestWorstIndividuals() {
-    this->bestIndividuals.push_back(this->selectedPopulation.back());
-    this->worstIndividuals.push_back(this->selectedPopulation.front());
-}
-
-const unsigned int GACoreOrder::GetNumberIndividuals() const {
-    return numberIndividuals;
-}
-
-const unsigned int GACoreOrder::GetNumberGenerations() const {
-    return numberGenerations;
-}
-
-bool GACoreOrder::GetBoolDistribution() {
-    return (bool) boolDistribution(random_generator);
-}
-
-double GACoreOrder::GetProbDistribution() {
-    return probDistribution(random_generator);
-}
-
-unsigned int GACoreOrder::GetNumTotalPopulation() const {
-    return this->totalPopulation.size();
-}
-
-SimulationType* GACoreOrder::GetSimul() const {
-    return simul;
-}
-
-unsigned int GACoreOrder::GetActualGeneration() const {
-    return actualGeneration;
-}
-
-void GACoreOrder::SetActualGeneration(unsigned int actualGeneration) {
-    this->actualGeneration = actualGeneration;
-}
-
-CoreOrderIndividual* GACoreOrder::GetWorstIndividual() const {
-    return this->worstIndividuals.at(this->actualGeneration-1).get();
-    //return this->selectedPopulation.front().get();
-}
-
-CoreOrderIndividual* GACoreOrder::GetBestIndividual() const{
-    return this->bestIndividuals.at(this->actualGeneration-1).get();
-    //return this->selectedPopulation.back().get();
-}
-
-CoreOrderIndividual* GACoreOrder::GetIniIndividual(unsigned int index) {
-    return this->initialPopulation.at(index).get();
-}
-
-const unsigned int GACoreOrder::GetMaxNumSimulation() const {
-    return maxNumSimulation;
-}
-//Find a way to aplly individual in the net to simulate
-void GACoreOrder::ApplyIndividual(const CoreOrderIndividual * const ind) {
-    //this->simul->GetResourceAlloc()->SetResourceAllocOrder(ind->GetGenes());
-}
-//Implement individual functions
-void GACoreOrder::SetIndFitness(CoreOrderIndividual * const ind) {
-    ind->SetBlockProb(this->simul->GetData()->GetPbReq());
+    //Find the best blocking probability of the selectedPop container
+    for(auto it: this->totalPopulation){
+        auxInd = dynamic_cast<CoreOrderIndividual*>(it.get());
+        
+        if(bestPb > auxInd->GetBlockProb())
+            bestPb = auxInd->GetBlockProb();
+    }
+    
+    for(auto it: this->totalPopulation){
+        auxInd = dynamic_cast<CoreOrderIndividual*>(it.get());
+        auxInd->SetFitness(1.0 / (bestPb + auxInd->GetBlockProb()));
+    }
 }
 
 void GACoreOrder::Crossover() {
-    assert(this->selectedPopulation.size() == this->numberIndividuals);
+    assert(this->selectedPopulation.size() == this->GetNumberIndividuals());
     CoreOrderIndividual *auxInd1, *auxInd2;
     
-    while(this->totalPopulation.size() < this->numberIndividuals){
-        auxInd1 = this->RoullleteIndividual();
-        auxInd2 = this->RoullleteIndividual();
+    while(this->totalPopulation.size() < this->GetNumberIndividuals()){
+        auxInd1 = dynamic_cast<CoreOrderIndividual*>(this->RouletteIndividual());
+        do{
+            auxInd2 = dynamic_cast<CoreOrderIndividual*>
+                      (this->RouletteIndividual());
+        }while(auxInd1 == auxInd2);
         
         this->GenerateNewIndividuals(auxInd1, auxInd2);
     }
-}
-
-CoreOrderIndividual* GACoreOrder::RoullleteIndividual() {
-    double auxDouble = 0.0;
-    unsigned int index;
-       
-    this->fitnessDistribution = std::uniform_real_distribution<double>(0, 
-                                this->sumFitness);
-    double fitness = this->fitnessDistribution(random_generator);
-    
-    for(index = 0; index < this->selectedPopulation.size(); index++){
-        auxDouble += 1/this->selectedPopulation.at(index)->GetBlockProb();
-        
-        if(auxDouble > fitness)
-            break;
-    }
-    
-    return this->selectedPopulation.at(index).get();
 }
 
 void GACoreOrder::GenerateNewIndividuals(const CoreOrderIndividual* const ind1, 
@@ -196,27 +138,27 @@ void GACoreOrder::GenerateNewIndividuals(const CoreOrderIndividual* const ind1,
     //Put condition for choose  the crossover
     this->UniformCrossover(ind1, ind2);
 }
-//Change to CoreOrder application
+
 void GACoreOrder::UniformCrossover(const CoreOrderIndividual* const ind1, 
                                    const CoreOrderIndividual* const ind2) {
     std::shared_ptr<CoreOrderIndividual> newInd1 = 
     std::make_shared<CoreOrderIndividual>(this);
     std::shared_ptr<CoreOrderIndividual> newInd2 = 
     std::make_shared<CoreOrderIndividual>(this);
-    double auxProb;
-    
-    for(unsigned int a = 0; a < this->numNodes; a++){
-        for(unsigned int b = 0; b < this->numNodes; b++){
-            auxProb = this->GetProbDistribution();
+    //double auxProb;
+    unsigned int crossoverPoint = rand()%(this->numReq-1);
+    for(unsigned int a = 0; a < this->numReq; a++){
+        for(unsigned int b = 0; b < this->numCores; b++){
             
-            if(auxProb < this->probCrossover){
-                newInd1->SetGene(a, b, ind1->GetGene(a, b));
-                newInd2->SetGene(a, b, ind2->GetGene(a, b));
+            //auxProb = this->GetProbDistribution();
+            if(a >= crossoverPoint+1){
+                newInd1->SetGene(a,b,ind2->GetGene(a,b));
+                newInd2->SetGene(a,b,ind1->GetGene(a,b));
             }
             else{
-                newInd1->SetGene(a, b, ind2->GetGene(a, b));
-                newInd2->SetGene(a, b, ind1->GetGene(a, b));
-            }
+                newInd1->SetGene(a,b,ind1->GetGene(a,b));
+                newInd2->SetGene(a,b,ind2->GetGene(a,b));
+            }     
         }
     }
     
@@ -225,11 +167,22 @@ void GACoreOrder::UniformCrossover(const CoreOrderIndividual* const ind1,
 }
 
 void GACoreOrder::Mutation() {
-    assert(this->totalPopulation.size() == this->numberIndividuals);
+    assert(this->totalPopulation.size() == this->GetNumberIndividuals());
     unsigned int popSize = this->totalPopulation.size();
+    std::shared_ptr<CoreOrderIndividual> newInd;
     
+    //Create a copy of each individual generated by the crossover
     for(unsigned int a = 0; a < popSize; a++){
-        this->MutateIndividual(this->totalPopulation.at(a).get());
+        newInd = std::make_shared<CoreOrderIndividual>(std::static_pointer_cast
+        <CoreOrderIndividual>(this->totalPopulation.at(a)));
+        this->totalPopulation.push_back(newInd);
+    }
+    
+    //Apply the mutation only in the copies created.
+    for(unsigned int a = popSize; a < (2*popSize); a++){
+        this->MutateIndividual(dynamic_cast<CoreOrderIndividual*>
+                               (this->totalPopulation.at(a).get()));
+
     }
     
     this->totalPopulation.insert(this->totalPopulation.end(), 
@@ -240,23 +193,22 @@ void GACoreOrder::Mutation() {
 
 void GACoreOrder::MutateIndividual(CoreOrderIndividual* const ind) {
     double auxProb;
-    
-    for(unsigned int a = 0; a < this->numNodes; a++){
-        for(unsigned int b = 0; b < this->numNodes; b++){
+    unsigned int pos_1,pos_2,aux_1,aux_2;
+    for(unsigned int a = 0; a < this->numReq; a++){
+        for(unsigned int b = 0; b < this->numCores; b++){
             auxProb = this->GetProbDistribution();
             
-            if(auxProb < this->probMutation)
-                ind->SetGene(a, b, !ind->GetGene(a, b));
+            if(auxProb < this->GetProbMutation()){
+                pos_1 = b;
+                do
+                    pos_2 = rand()%this->numCores;
+                while(pos_1 == pos_2); 
+                aux_1 = ind->GetGene(a, pos_1);
+                aux_2 = ind->GetGene(a,pos_2);
+                ind->SetGene(a,pos_1,aux_2);
+                ind->SetGene(a,pos_2,aux_1);
+            }
         }
-    }    
-}
-
-void GACoreOrder::SetSumFitnessSelectedPop() {
-    double sum = 0.0;
-    
-    for(auto it: this->selectedPopulation){
-        sum += (1 / it->GetBlockProb());
     }
-    
-    this->sumFitness = sum;
+
 }

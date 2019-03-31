@@ -35,21 +35,12 @@ std::ostream& operator<<(std::ostream& ostream, const Call* call) {
     return ostream;
 }
 
-/*Call::Call()
-:status(NotEvaluated), orNode(nullptr), deNode(nullptr), firstSlot(-1), 
-lastSlot(-1), numberSlots(0), osnrTh(0.0), bandwidth(0.0), bitRate(0.0), 
-modulation(InvalidModulation), deactivationTime(Def::Max_Double), 
-route(nullptr), trialRoutes(0){
-
-}*/
-
-
-Call::Call(Node* orNode, Node* deNode, double bitRate, 
-TIME deacTime)
-:status(NotEvaluated), orNode(orNode), deNode(deNode), firstSlot(-1), 
-lastSlot(-1), numberSlots(0), osnrTh(0.0), bandwidth(0.0), bitRate(bitRate), 
-modulation(InvalidModulation), deactivationTime(deacTime), 
-route(nullptr), trialRoutes(0) {
+Call::Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime)
+:status(NotEvaluated), orNode(orNode), deNode(deNode), 
+firstSlot(Def::Max_UnInt), lastSlot(Def::Max_UnInt), numberSlots(0), 
+core(Def::Max_UnInt), osnrTh(0.0), bandwidth(0.0), bitRate(bitRate), 
+modulation(InvalidModulation), deactivationTime(deacTime), route(nullptr), 
+trialRoutes(0) {
     
 }
 
@@ -90,19 +81,19 @@ void Call::SetDeNode(Node* deNode) {
     this->deNode = deNode;
 }
 
-int Call::GetFirstSlot() const {
+unsigned int Call::GetFirstSlot() const {
     return firstSlot;
 }
 
-void Call::SetFirstSlot(int firstSlot) {
+void Call::SetFirstSlot(unsigned int firstSlot) {
     this->firstSlot = firstSlot;
 }
 
-int Call::GetLastSlot() const {
+unsigned int Call::GetLastSlot() const {
     return lastSlot;
 }
 
-void Call::SetLastSlot(int lastSlot) {
+void Call::SetLastSlot(unsigned int lastSlot) {
     this->lastSlot = lastSlot;
 }
 
@@ -112,6 +103,14 @@ unsigned int Call::GetNumberSlots() const {
 
 void Call::SetNumberSlots(unsigned int numberSlots) {
     this->numberSlots = numberSlots;
+}
+
+unsigned int Call::GetCore() const {
+    return core;
+}
+
+void Call::SetCore(unsigned int core) {
+    this->core = core;
 }
 
 double Call::GetOsnrTh() const {
@@ -157,8 +156,18 @@ void Call::SetDeactivationTime(TIME deactivationTime) {
     this->deactivationTime = deactivationTime;
 }
 
-std::shared_ptr<Route> Call::GetRoute() const {
-    return this->route;
+Route* Call::GetRoute() const {
+    return this->route.get();
+}
+
+std::shared_ptr<Route> Call::GetRoute(unsigned int index) const {
+    assert(index < this->trialRoutes.size());
+    
+    return this->trialRoutes.at(index);
+}
+
+unsigned int Call::GetNumRoutes() const {
+    return this->trialRoutes.size();
 }
 
 void Call::SetRoute(std::shared_ptr<Route> route) {
@@ -172,7 +181,8 @@ void Call::PushTrialRoute(std::shared_ptr<Route> route) {
 void Call::PushTrialRoutes(std::vector<std::shared_ptr<Route> > routes) {
     
     for(auto it : routes)
-        this->trialRoutes.push_back(it);
+        if(it != nullptr)
+            this->trialRoutes.push_back(it);
     routes.clear();
 }
 

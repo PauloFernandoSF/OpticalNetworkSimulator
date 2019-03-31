@@ -1,0 +1,18 @@
+128
+1
+1
+80
+130
+6
+10000
+500
+
+
+#Number of slots per fiber
+#Number of cores per link
+#Deactivation time
+#Minimum load
+#Maximum load
+#Number of points
+#Maximum number  of requisitions
+#Maximum  number of blocked requests

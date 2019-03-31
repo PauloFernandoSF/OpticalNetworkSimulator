@@ -33,9 +33,7 @@ enum EventType{
     LastEventType = CallEnd
 };
 
-/**
- * @brief 
- */
+
 class Event : public std::enable_shared_from_this<Event> {
     
     friend std::ostream& operator<<(std::ostream& ostream, 

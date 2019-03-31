@@ -15,6 +15,7 @@
 
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
+#include "../../include/Data/Parameters.h"
 
 const boost::unordered_map<TopologyOption, std::string> 
 Options::mapTopologyOptions = boost::assign::map_list_of
@@ -37,8 +38,6 @@ Options::mapSpecAlgOptions = boost::assign::map_list_of
     (SpecAllInvalid, "Invalid")
     (SpecAllRandom, "Random")
     (SpecAllFF, "First Fit")
-    (SpecAllFFC, "First Fit Core")
-    (SpecAllMC_MSCL, "Multicore MSCL")
     (SpecAllMSCL, "MSCL");
 
 const boost::unordered_map<LinkCostType, std::string>
@@ -66,15 +65,23 @@ Options::mapPhyLayerOption = boost::assign::map_list_of
     (PhyLayerDisabled, "Disabled")
     (PhyLayerEnabled,  "Enabled");
 
-const boost::unordered_map<TransponderOption, std::string>
-Options::mapTransponderOption = boost::assign::map_list_of
-    (TransOptionDisabled, "Disabled")
-    (TransOptionEnabled, "Enabled");
+const boost::unordered_map<NetworkOption, std::string>
+Options::mapNetworkOption = boost::assign::map_list_of
+    (NetworkInvalid, "Invalid")
+    (NetworkWDM, "WDM")
+    (NetworkEON, "EON");
 
-const boost::unordered_map<GACoreOrder, std::string>
-Options::mapGACoreOrder = boost::assign::map_list_of
-    (GAOptionDisabled, "Disabled")
-    (GAOptionEnabled, "Enabled");
+const boost::unordered_map<RsaOrder,  std::string>
+Options::mapOrderRSA = boost::assign::map_list_of
+    (OrderRoutingSa, "Routing-SA")
+    (OrderSaRouting, "SA-Routing")
+    (GaOrder, "GA order");
+
+const boost::unordered_map<GAOption, std::string>
+Options::mapGaOption = boost::assign::map_list_of
+    (GAOptionDisabled, "GA Disabled")
+    (GaRsaOrder, "GA RSA Order")
+    (GaCoreOrder, "GA Core Order");
 
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
@@ -93,6 +100,10 @@ const Options* options) {
             << std::endl;
     ostream << "Physical Layer: " << options->GetPhyLayerName()
             << std::endl;
+    ostream << "Network Type: " << options->GetNetworkOptionName()
+            << std::endl;
+    ostream << "RSA Order: " << options->GetOrderRsaName()
+            << std::endl;
     ostream << "GA: " << options->GetGAOption()
             << std::endl;
     
@@ -103,8 +114,9 @@ Options::Options(SimulationType* simulType)
 :simulType(simulType), topologyOption(TopologyInvalid),
 routingOption(RoutingInvalid), specAllOption(SpecAllInvalid),
 linkCostType(Invalid), trafficOption(TrafficInvalid), 
-resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled), 
-transponderOption(TransOptionDisabled),coreOrder(GAOptionDisabled) {
+resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled),
+networkOption(NetworkInvalid), orderRSA(OrderRoutingSa),
+GaOption(GAOptionDisabled), transponderOption(TransOptionDisabled) {
     
 }
 
@@ -178,6 +190,32 @@ void Options::Load() {
     std::cin >> auxInt;
     this->SetPhyLayerOption((PhysicalLayerOption) auxInt);
     
+    std::cout << "Network options" << std::endl;
+    for(NetworkOption a = FirstNetworkOption; a <= LastNetworkOption;
+    a = NetworkOption(a+1)){
+        std::cout << a << "-" << this->mapNetworkOption.at(a) << std::endl;
+    }
+    std::cout << "Insert the network option: ";
+    std::cin >> auxInt;
+    this->SetNetworkOption((NetworkOption) auxInt);
+    
+    std::cout << "RSA Order" << std::endl;
+    for(RsaOrder a = FirstOrderRSA; a <= LastOrderRSA;
+    a = RsaOrder(a+1)){
+        std::cout << a << "-" << this->mapOrderRSA.at(a) << std::endl;
+    }
+    std::cout << "Insert the RSA order: ";
+    std::cin >> auxInt;
+    this->SetOrderRSA((RsaOrder) auxInt);
+    
+    std::cout << "GA Option" << std::endl;
+    for(GAOption a = FirstGaOption; a <= LastGaOption; a = GAOption(a+1)){
+        std::cout << a << "-" << this->mapGaOption.at(a) << std::endl;
+    }
+    std::cout << "Insert the GA Option: ";
+    std::cin >> auxInt;
+    this->SetGAOption((GAOption) auxInt);
+
     std::cout << std::endl;
 }
 
@@ -200,6 +238,12 @@ void Options::LoadFile() {
     this->SetResourAllocOption((ResourceAllocOption) auxInt);
     auxIfstream >> auxInt;
     this->SetPhyLayerOption((PhysicalLayerOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetNetworkOption((NetworkOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetOrderRSA((RsaOrder) auxInt);
+    auxIfstream >> auxInt;
+    this->SetGAOption((GAOption) auxInt);
 }
 
 void Options::Save() {
@@ -304,22 +348,51 @@ void Options::SetPhyLayerOption(PhysicalLayerOption phyLayerOption) {
     this->phyLayerOption = phyLayerOption;
 }
 
-TransponderOption Options::GetTransponderOption() const {
-    return transponderOption;
+NetworkOption Options::GetNetworkOption() const {
+    return networkOption;
 }
 
-std::string Options::GetTranspponderOptionName() const {
-    return this->mapTransponderOption.at(this->transponderOption);
+std::string Options::GetNetworkOptionName() const {
+    return this->mapNetworkOption.at(this->networkOption);
 }
 
-void Options::SetTransponderOption(TransponderOption transponderOption) {
-    this->transponderOption = transponderOption;
+void Options::SetNetworkOption(NetworkOption networkOption) {
+    assert(networkOption >= FirstNetworkOption &&
+           networkOption <= LastNetworkOption);
+    this->networkOption = networkOption;
+    
+    switch(this->networkOption){
+        case NetworkWDM:
+            this->simulType->GetParameters()->SetSlotBandwidth(50.0);
+            break;
+        case NetworkEON:
+            this->simulType->GetParameters()->SetSlotBandwidth(12.5);
+            break;
+        default:
+            std::cout << "Invalid type of network" << std::endl;
+    }
 }
 
-std::string Options::GetGAOption() const {
-    return this->mapGACoreOrder.at(this->coreOrder);
+RsaOrder Options::GetOrderRSA() const {
+    return orderRSA;
 }
 
-void Options::SetGAOption(GACoreOrder coreOrder) {
-    this->coreOrder = coreOrder;
+std::string Options::GetOrderRsaName() const {
+    return this->mapOrderRSA.at(this->orderRSA);
+}
+
+void Options::SetOrderRSA(RsaOrder orderRSA) {
+    this->orderRSA = orderRSA;
+}
+
+GAOption Options::GetGAOption() const {
+    return this->GaOption;
+}
+
+std::string Options::GetGAOptionName() const {
+    return this->mapGaOption.at(this->GaOption);
+}
+
+void Options::SetGAOption(GAOption coreOrder) {
+    this->GaOption = coreOrder;
 }

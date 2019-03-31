@@ -15,37 +15,48 @@
 
 std::ostream& operator<<(std::ostream& ostream,
 Core* core) {
-    ostream  << "Core Id: " << core->getCoreId() << std::endl;
+    ostream  << "Core Id: " << core->GetCoreId() << std::endl;
     
     return ostream;
 }
 
-Core::Core(CoreId cId,NumSlots nSlots)
-:coreId (cId){
-    this->vDisp = new bool[nSlots];
-    for(int i=0;i < nSlots;i++){
-        this->vDisp[i]= false;
-    }
+Core::Core(CoreId cId, NumSlots nSlots)
+:coreId(cId), slotsStatus(0) {
+    this->slotsStatus.assign(nSlots, SlotFree);
 }
 
-bool Core::getSlotOccupation(int sPosition){
-    return this->vDisp[sPosition];
-}
-
-//Ocupa o slot atribuindo o valor 1
-void Core::occupySlot(int sPosition){
-    //vDisp.at(sPosition)= true;
-    this->vDisp[sPosition] = true;
-}
-
-void Core::releaseSlot(int sPosition){
-    this->vDisp[sPosition]= false;
+Core::~Core() {
 
 }
 
-CoreId Core::getCoreId(){
+void Core::Initialize() {
+    this->slotsStatus.assign(this->slotsStatus.size(), SlotFree);
+}
+
+CoreId Core::GetCoreId(){
     return this->coreId;
 }
 
+bool Core::IsSlotOccupied(unsigned int sPosition){
+    if(this->slotsStatus.at(sPosition) == SlotUsed)
+        return true;
+    return false;
+}
 
+bool Core::IsSlotFree(unsigned int sPosition) {
+    return !this->IsSlotOccupied(sPosition);
+}
 
+void Core::OccupySlot(unsigned int sPosition){
+    assert(sPosition < this->slotsStatus.size());
+    assert(this->slotsStatus.at(sPosition) == SlotFree);
+    
+    this->slotsStatus.at(sPosition) = SlotUsed;
+}
+
+void Core::ReleaseSlot(unsigned int sPosition){
+    assert(sPosition < this->slotsStatus.size());
+    assert(this->slotsStatus.at(sPosition) == SlotUsed);
+    
+    this->slotsStatus.at(sPosition) = SlotFree;
+}

@@ -41,7 +41,7 @@ void Node::SetNodeId(NodeId nodeId) {
     this->nodeId = nodeId;
 }
 
-void Node::SetNodeWorking(bool NodeWorking) {
+void Node::SetNodeState(bool NodeWorking) {
     this->nodeWorking = NodeWorking;
 }
 

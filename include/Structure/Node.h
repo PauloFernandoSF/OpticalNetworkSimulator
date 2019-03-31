@@ -71,7 +71,7 @@ public:
      * @brief Set the node state (working or not).
      * @param NodeWorking Node state.
      */
-    void SetNodeWorking(bool NodeWorking);
+    void SetNodeState(bool NodeWorking);
 
 
 private:

@@ -47,23 +47,27 @@ public:
      * Three steps are done, each one for all simulation.
      */
     void Run();
-    
+    /**
+     * @brief Function to create all simulation of this kernel.
+     */
     void CreateSimulations();
+private:
     /**
-     * @brief First step called by the Kernel object.
-     * Consists in create the simulations and load
-     * the information needed.
+     * @brief Function to apply the pre-simulation for a specified simulation
+     * object.
+     * @param simul Simulation object.
      */
-    void Pre_Simulation();    
+    void Pre_Simulation(SimulationType* simul);
     /**
-     * @brief
+     * @brief Print and simulate a specified simulation object.
+     * @param simul Simulation object.
      */
-    void Simulation();    
+    void Simulation(SimulationType* simul);
     /**
-     * @brief
+     * @brief Save the data of the simulation.
+     * @param simul Simulation object.
      */
-    void Pos_Simulation();
-
+    void Pos_Simulation(SimulationType* simul);
 private:
     /**
      * @brief Total number of simulations in this kernel.

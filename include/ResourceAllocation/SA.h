@@ -20,25 +20,46 @@
 class ResourceAlloc;
 class Topology;
 class Call;
+class CoreOrderIndividual;
 
 #include "../Data/Options.h"
 
+/**
+ * @brief Class responsible for spectral allocation of the call requests.
+ */
 class SA {
 
 public:
-    
-    SA();
-    
+    /**
+     * @brief Standard constructor for a SA object.
+     * @param rsa RourceAlloc that own this object.
+     * @param option Spectral allocation option.
+     * @param topology Topology used in this spectral allocation.
+     */
     SA(ResourceAlloc* rsa, SpectrumAllocationOption option, Topology* topology);
-    
+    /**
+     * @brief Virtual destructor of a SA object.
+     */
     virtual ~SA();
     
-    
+    /**
+     * @brief Function that choose the spectral allocation based on the option 
+     * for a specified call request.
+     * @param call Call request.
+     */
     void SpecAllocation(Call* call);
-    
+    /**
+     * @brief Function to apply random spectral allocation to a call request.
+     * This SA randomly select between the available slots.
+     * @param call Call request.
+     */
     void Random(Call* call);
-    
-    void FirstFit(Call* call);
+    /**
+     * @brief Function to apply random spectral allocation to a call request.
+     * This SA select the first available slots.
+     * @param call Call request.
+     */
+    virtual void FirstFit(Call* call);
     
     void MostUsed(Call* call);
     
@@ -47,21 +68,52 @@ public:
     void MaxSum(Call* call);
     
     void RCL(Call* call);
+    /**
+     * @brief Function to apply the MSCL spectral allocation to a call request.
+     * This SA select the option with minimum loss of capacity, considering the
+     * interfering routes of the call route.
+     * @param call Call request.
+     */
+    virtual void MSCL(Call* call);
+    /**
+     * @brief Function that find all possible slots for SA, based on random 
+     * order.
+     * @param call Call request.
+     * @return Vector with all possible slots for allocation.
+     */
+    std::vector<unsigned int> RandomSlots(Call* call);
+    /**
+     * @brief Function that find all possible slots for SA, based on FF order.
+     * @param call Call request.
+     * @return Vector with all possible slots for allocation.
+     */
+    std::vector<unsigned int> FirstFitSlots(Call* call);
     
-    void MSCL(Call* call);
-    
+    virtual void SetInd(CoreOrderIndividual* ind);
+    /**
+     * @brief Gets the topology in which this SA is done.
+     * @return Topology pointer.
+     */
     Topology* GetTopology();
-    
-    int CalcNumFormAloc(int L, bool* Disp,int tam);
-    
+    /**
+     * @brief Gets the ResosurceAlloc object that owns this SA.
+     * @return ResourceAlloc pointer.
+     */
     ResourceAlloc* GetResourceAlloc();
     
+    int CalcNumFormAloc(int L, bool* Disp, int tam);
 private:
-    
+    /**
+     * @brief RourceAlloc that own this object.
+     */
     ResourceAlloc* resourceAlloc;
-    
+    /**
+     * @brief Spectral allocation option.
+     */
     SpectrumAllocationOption specAllOption;
-    
+    /**
+     * @brief Topology used in this SA
+     */
     Topology* topology;
 };
 

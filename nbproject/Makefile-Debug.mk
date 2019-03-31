@@ -37,11 +37,14 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o \
+	${OBJECTDIR}/src/Algorithms/GA/GA.o \
 	${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o \
+	${OBJECTDIR}/src/Algorithms/GA/GA_RsaOrder.o \
+	${OBJECTDIR}/src/Algorithms/GA/Individual.o \
+	${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o \
 	${OBJECTDIR}/src/Calls/Call.o \
 	${OBJECTDIR}/src/Calls/CallGenerator.o \
 	${OBJECTDIR}/src/Calls/Event.o \
-	${OBJECTDIR}/src/Calls/MultiCoreCall.o \
 	${OBJECTDIR}/src/Calls/Traffic.o \
 	${OBJECTDIR}/src/Data/Data.o \
 	${OBJECTDIR}/src/Data/InputOutput.o \
@@ -57,7 +60,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ResourceAllocation/Routing.o \
 	${OBJECTDIR}/src/ResourceAllocation/SA.o \
 	${OBJECTDIR}/src/ResourceAllocation/Signal.o \
-	${OBJECTDIR}/src/SimulationType/GA.o \
+	${OBJECTDIR}/src/SimulationType/GA_SingleObjective.o \
 	${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o \
 	${OBJECTDIR}/src/SimulationType/SimulationType.o \
 	${OBJECTDIR}/src/Structure/Core.o \
@@ -101,10 +104,30 @@ ${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o: src/Algorithms/GA/CoreOrde
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/CoreOrderIndividual.o src/Algorithms/GA/CoreOrderIndividual.cpp
 
+${OBJECTDIR}/src/Algorithms/GA/GA.o: src/Algorithms/GA/GA.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/GA.o src/Algorithms/GA/GA.cpp
+
 ${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o: src/Algorithms/GA/GACoreOrder.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/GACoreOrder.o src/Algorithms/GA/GACoreOrder.cpp
+
+${OBJECTDIR}/src/Algorithms/GA/GA_RsaOrder.o: src/Algorithms/GA/GA_RsaOrder.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/GA_RsaOrder.o src/Algorithms/GA/GA_RsaOrder.cpp
+
+${OBJECTDIR}/src/Algorithms/GA/Individual.o: src/Algorithms/GA/Individual.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/Individual.o src/Algorithms/GA/Individual.cpp
+
+${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o: src/Algorithms/GA/IndividualBool.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o src/Algorithms/GA/IndividualBool.cpp
 
 ${OBJECTDIR}/src/Calls/Call.o: src/Calls/Call.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls
@@ -120,11 +143,6 @@ ${OBJECTDIR}/src/Calls/Event.o: src/Calls/Event.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/Event.o src/Calls/Event.cpp
-
-${OBJECTDIR}/src/Calls/MultiCoreCall.o: src/Calls/MultiCoreCall.cpp
-	${MKDIR} -p ${OBJECTDIR}/src/Calls
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/MultiCoreCall.o src/Calls/MultiCoreCall.cpp
 
 ${OBJECTDIR}/src/Calls/Traffic.o: src/Calls/Traffic.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls
@@ -201,10 +219,10 @@ ${OBJECTDIR}/src/ResourceAllocation/Signal.o: src/ResourceAllocation/Signal.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/Signal.o src/ResourceAllocation/Signal.cpp
 
-${OBJECTDIR}/src/SimulationType/GA.o: src/SimulationType/GA.cpp
+${OBJECTDIR}/src/SimulationType/GA_SingleObjective.o: src/SimulationType/GA_SingleObjective.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/GA.o src/SimulationType/GA.cpp
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/GA_SingleObjective.o src/SimulationType/GA_SingleObjective.cpp
 
 ${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o: src/SimulationType/MultiLoadSimulation.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType

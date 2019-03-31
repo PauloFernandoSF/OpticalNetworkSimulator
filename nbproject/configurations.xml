@@ -11,21 +11,48 @@
           <itemPath>Files/Inputs/Topologies/Toroidal.txt</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="Traffics" projectFiles="true">
-          <itemPath>Files/Inputs/Traffics/Traffic_10-40-100-200_400.txt</itemPath>
+          <itemPath>Files/Inputs/Traffics/Traffic_10-40-100-200-400.txt</itemPath>
           <itemPath>Files/Inputs/Traffics/Traffic_100-200-400.txt</itemPath>
+          <itemPath>Files/Inputs/Traffics/Traffic_50-120-300.txt</itemPath>
         </logicalFolder>
         <itemPath>Files/Inputs/Options_1.txt</itemPath>
+        <itemPath>Files/Inputs/Options_2.txt</itemPath>
+        <itemPath>Files/Inputs/Options_3.txt</itemPath>
+        <itemPath>Files/Inputs/Options_4.txt</itemPath>
         <itemPath>Files/Inputs/Parameters_1.txt</itemPath>
+        <itemPath>Files/Inputs/Parameters_2.txt</itemPath>
+        <itemPath>Files/Inputs/Parameters_3.txt</itemPath>
+        <itemPath>Files/Inputs/Parameters_4.txt</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Outputs" projectFiles="true">
         <logicalFolder name="f1" displayName="1" projectFiles="true">
+          <logicalFolder name="f1" displayName="GA" projectFiles="true">
+            <itemPath>Files/Outputs/1/GA/BestIndividual.txt</itemPath>
+            <itemPath>Files/Outputs/1/GA/BestIndividuals.txt</itemPath>
+            <itemPath>Files/Outputs/1/GA/InitialPopulation.txt</itemPath>
+            <itemPath>Files/Outputs/1/GA/WorstIndividuals.txt</itemPath>
+          </logicalFolder>
           <itemPath>Files/Outputs/1/Log.txt</itemPath>
+          <itemPath>Files/Outputs/1/PBvLoad.txt</itemPath>
         </logicalFolder>
+        <itemPath>Files/Outputs/2</itemPath>
+        <itemPath>Files/Outputs/3</itemPath>
+        <itemPath>Files/Outputs/4</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="f6" displayName="Algorithms" projectFiles="true">
+        <logicalFolder name="f1" displayName="GA" projectFiles="true">
+          <itemPath>include/Algorithms/GA/CoreOrderIndividual.h</itemPath>
+          <itemPath>include/Algorithms/GA/GA.h</itemPath>
+          <itemPath>include/Algorithms/GA/GACoreOrder.h</itemPath>
+          <itemPath>include/Algorithms/GA/GA_RsaOrder.h</itemPath>
+          <itemPath>include/Algorithms/GA/Individual.h</itemPath>
+          <itemPath>include/Algorithms/GA/IndividualBool.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
       <logicalFolder name="f4" displayName="Calls" projectFiles="true">
         <itemPath>include/Calls/Call.h</itemPath>
         <itemPath>include/Calls/CallGenerator.h</itemPath>
@@ -43,6 +70,7 @@
         <itemPath>include/GeneralClasses/General.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="ResourceAllocation" projectFiles="true">
+        <itemPath>include/ResourceAllocation/CSA.h</itemPath>
         <itemPath>include/ResourceAllocation/Modulation.h</itemPath>
         <itemPath>include/ResourceAllocation/ResourceAlloc.h</itemPath>
         <itemPath>include/ResourceAllocation/Route.h</itemPath>
@@ -51,22 +79,18 @@
         <itemPath>include/ResourceAllocation/Signal.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="SimulationType" projectFiles="true">
+        <itemPath>include/SimulationType/GA_SingleObjective.h</itemPath>
         <itemPath>include/SimulationType/MultiLoadSimulation.h</itemPath>
         <itemPath>include/SimulationType/SimulationType.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Structure" projectFiles="true">
+        <itemPath>include/Structure/Core.h</itemPath>
         <itemPath>include/Structure/Link.h</itemPath>
+        <itemPath>include/Structure/MultiCoreLink.h</itemPath>
         <itemPath>include/Structure/Node.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
-      <itemPath>include/ResourceAllocation/CSA.h</itemPath>
-      <itemPath>include/Structure/Core.h</itemPath>
-      <itemPath>include/Algorithms/GA/CoreOrderIndividual.h</itemPath>
-      <itemPath>include/SimulationType/GA.h</itemPath>
-      <itemPath>include/Algorithms/GA/GACoreOrder.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
-      <itemPath>include/Calls/MultiCoreCall.h</itemPath>
-      <itemPath>include/Structure/MultiCoreLink.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -75,6 +99,16 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="f6" displayName="Algorithms" projectFiles="true">
+        <logicalFolder name="f1" displayName="GA" projectFiles="true">
+          <itemPath>src/Algorithms/GA/CoreOrderIndividual.cpp</itemPath>
+          <itemPath>src/Algorithms/GA/GA.cpp</itemPath>
+          <itemPath>src/Algorithms/GA/GACoreOrder.cpp</itemPath>
+          <itemPath>src/Algorithms/GA/GA_RsaOrder.cpp</itemPath>
+          <itemPath>src/Algorithms/GA/Individual.cpp</itemPath>
+          <itemPath>src/Algorithms/GA/IndividualBool.cpp</itemPath>
+        </logicalFolder>
+      </logicalFolder>
       <logicalFolder name="f4" displayName="Calls" projectFiles="true">
         <itemPath>src/Calls/Call.cpp</itemPath>
         <itemPath>src/Calls/CallGenerator.cpp</itemPath>
@@ -92,6 +126,7 @@
         <itemPath>src/GeneralClasses/General.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="ResourceAllocation" projectFiles="true">
+        <itemPath>src/ResourceAllocation/CSA.cpp</itemPath>
         <itemPath>src/ResourceAllocation/Modulation.cpp</itemPath>
         <itemPath>src/ResourceAllocation/ResourceAlloc.cpp</itemPath>
         <itemPath>src/ResourceAllocation/Route.cpp</itemPath>
@@ -100,22 +135,18 @@
         <itemPath>src/ResourceAllocation/Signal.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="SimulationType" projectFiles="true">
+        <itemPath>src/SimulationType/GA_SingleObjective.cpp</itemPath>
         <itemPath>src/SimulationType/MultiLoadSimulation.cpp</itemPath>
         <itemPath>src/SimulationType/SimulationType.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Structure" projectFiles="true">
+        <itemPath>src/Structure/Core.cpp</itemPath>
         <itemPath>src/Structure/Link.cpp</itemPath>
+        <itemPath>src/Structure/MultiCoreLink.cpp</itemPath>
         <itemPath>src/Structure/Node.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
-      <itemPath>src/ResourceAllocation/CSA.cpp</itemPath>
-      <itemPath>src/Structure/Core.cpp</itemPath>
-      <itemPath>src/Algorithms/GA/CoreOrderIndividual.cpp</itemPath>
-      <itemPath>src/SimulationType/GA.cpp</itemPath>
-      <itemPath>src/Algorithms/GA/GACoreOrder.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
-      <itemPath>src/Calls/MultiCoreCall.cpp</itemPath>
-      <itemPath>src/Structure/MultiCoreLink.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -150,7 +181,19 @@
       </compileType>
       <item path="Files/Inputs/Options_1.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Files/Inputs/Options_2.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Options_3.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Options_4.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Files/Inputs/Parameters_1.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_2.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_3.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_4.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Topologies/Germany.txt"
             ex="false"
@@ -168,7 +211,7 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="Files/Inputs/Traffics/Traffic_10-40-100-200_400.txt"
+      <item path="Files/Inputs/Traffics/Traffic_10-40-100-200-400.txt"
             ex="false"
             tool="3"
             flavor2="0">
@@ -178,14 +221,61 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="Files/Inputs/Traffics/Traffic_50-120-300.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/BestIndividual.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/BestIndividuals.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/InitialPopulation.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/WorstIndividuals.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="Files/Outputs/1/Log.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/PBvLoad.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/2" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/3" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/4" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Algorithms/GA/CoreOrderIndividual.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/GA.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Algorithms/GA/GACoreOrder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/GA_RsaOrder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/Individual.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/IndividualBool.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -195,8 +285,6 @@
       <item path="include/Calls/CallGenerator.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/Event.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/Calls/MultiCoreCall.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/Traffic.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -240,7 +328,10 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="include/SimulationType/GA.h" ex="false" tool="3" flavor2="0">
+      <item path="include/SimulationType/GA_SingleObjective.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="include/SimulationType/MultiLoadSimulation.h"
             ex="false"
@@ -269,15 +360,24 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/Algorithms/GA/GA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Algorithms/GA/GACoreOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/Individual.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/IndividualBool.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/Calls/Call.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/CallGenerator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Event.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Calls/MultiCoreCall.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -315,7 +415,10 @@
       </item>
       <item path="src/ResourceAllocation/Signal.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/SimulationType/GA.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/SimulationType/GA_SingleObjective.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/SimulationType/MultiLoadSimulation.cpp"
             ex="false"
@@ -351,6 +454,7 @@
         <ccTool>
           <developmentMode>5</developmentMode>
           <standard>8</standard>
+          <warningLevel>2</warningLevel>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -361,7 +465,19 @@
       </compileType>
       <item path="Files/Inputs/Options_1.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Files/Inputs/Options_2.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Options_3.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Options_4.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Files/Inputs/Parameters_1.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_2.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_3.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_4.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Topologies/Germany.txt"
             ex="false"
@@ -379,7 +495,7 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="Files/Inputs/Traffics/Traffic_10-40-100-200_400.txt"
+      <item path="Files/Inputs/Traffics/Traffic_10-40-100-200-400.txt"
             ex="false"
             tool="3"
             flavor2="0">
@@ -389,14 +505,61 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="Files/Inputs/Traffics/Traffic_50-120-300.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/BestIndividual.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/BestIndividuals.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/InitialPopulation.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/GA/WorstIndividuals.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="Files/Outputs/1/Log.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/PBvLoad.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/2" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/3" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/4" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Algorithms/GA/CoreOrderIndividual.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/GA.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Algorithms/GA/GACoreOrder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/GA_RsaOrder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/Individual.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/IndividualBool.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -406,8 +569,6 @@
       <item path="include/Calls/CallGenerator.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/Event.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/Calls/MultiCoreCall.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/Traffic.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -451,7 +612,10 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="include/SimulationType/GA.h" ex="false" tool="3" flavor2="0">
+      <item path="include/SimulationType/GA_SingleObjective.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="include/SimulationType/MultiLoadSimulation.h"
             ex="false"
@@ -480,15 +644,24 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/Algorithms/GA/GA.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Algorithms/GA/GACoreOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/Individual.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/IndividualBool.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/Calls/Call.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/CallGenerator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Event.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Calls/MultiCoreCall.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Traffic.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -526,7 +699,10 @@
       </item>
       <item path="src/ResourceAllocation/Signal.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/SimulationType/GA.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/SimulationType/GA_SingleObjective.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/SimulationType/MultiLoadSimulation.cpp"
             ex="false"

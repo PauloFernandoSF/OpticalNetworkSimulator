@@ -103,6 +103,8 @@ public:
      * @param maxLoadPoint Maximum load point value.
      */
     void SetMaxLoadPoint(double maxLoadPoint);
+    
+    double GetMidLoadPoint() const;
     /**
      * @brief Returns the number of load points.
      * @return number of load points.

@@ -2,11 +2,10 @@
 7
 1
 5400
-5900
-6
+5400
+1
 1000000
 500
-12.5
 
 
 #Number of slots per fiber
@@ -17,4 +16,3 @@
 #Number of points
 #Maximum number  of requisitions
 #Maximum  number of blocked requests
-#Size of the slot

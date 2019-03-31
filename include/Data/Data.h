@@ -16,6 +16,7 @@
 
 class SimulationType;
 class Call;
+class GA;
 
 #include <vector>
 #include <ostream>
@@ -63,11 +64,17 @@ public:
     /**
      * @brief Saves the data values in the Log.txt file.
      */
-    void SaveLog();
+    void SaveMultiloadLog();
     /**
      * @brief Saves the data values in the PBvLoad.txt file.
      */
     void SavePBvLoad();
+    /**
+     * @brief Saves the genetic algorithms files. Log, initial population, 
+     * best individuals, worst individuals and best individual of the last
+     * generation.
+     */
+    void SaveGaFiles();
     
     /**
      * @brief Set the number of request of the actual load point.
@@ -91,12 +98,17 @@ public:
      * @return Number of requests.
      */
     double GetNumberBlocReq(unsigned int index) const;
-    
+    /**
+     * @brief Function that return the number of blocked call requests.
+     * @return Number of blocked requests.
+     */
     double GetNumberBlocReq() const;
     
     double GetNumberAccReq(unsigned int index) const;
 
     double GetNumberAccReq() const;
+    
+    double GetPbReq() const;
     
     double GetNumberSlotsReq() const;
     
@@ -107,6 +119,8 @@ public:
     double GetNumberAccSlots(unsigned int index) const;
     
     double GetNumberAccSlots() const;
+    
+    double GetPbSlots() const;
 
     double GetNumHopsPerRoute(unsigned int index) const;
     
@@ -130,6 +144,13 @@ private:
      * @param ostream Stream that contain the PBvLoad file.
      */
     void SavePBvLoad(std::ostream& ostream);
+    
+    void SaveBestWorstIndividuals(GA* ga, std::ostream& logOfstream, 
+    std::ostream& bestInds, std::ostream& worstInds);
+    
+    void SaveBestIndividual(GA* ga, std::ostream& bestInd);
+    
+    void SaveInitPopulation(GA* ga, std::ostream& initPop);
     
 private:
     /**

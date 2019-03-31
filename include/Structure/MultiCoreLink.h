@@ -28,7 +28,7 @@ class Topology;
 */
 class MultiCoreLink : public Link {
     
-public:   
+public:
     /**
      * @brief Standard constructor for a Link object.
      * @param topPointer pointer to a Topology object that
@@ -43,22 +43,32 @@ public:
     unsigned int destinationNode, double length, 
     unsigned int numberSections, unsigned int numberSlots);
     /**
-    * @brief Initialize a MultiCoreLink inside a topology. 
-    */
-    void Initialize();
-    /**
     * @brief Destructor of MultiCoreLink. 
     */
     ~MultiCoreLink();
+    
+    /**
+    * @brief Initialize a MultiCoreLink inside a topology. 
+    */
+    void Initialize();
+    
     /**
     * @brief  Get a specific core.
     * @return A core.  
     */
-    Core* getCore(int corePosition);
-    //Implementar Ocupa e libera Slots
-    void OccupySlot(int coreIndex, int slot);
-    
-    void ReleaseSlot(int coreIndex, int slot);
+    Core* GetCore(unsigned int corePosition);
+    /**
+     * @brief Function to occupy a specified slot of a specified core.
+     * @param coreIndex Core index.
+     * @param slot Slot index.
+     */
+    void OccupySlot(unsigned int coreIndex, unsigned int slot);
+    /**
+     * @brief Function to release a specified slot of a specified core.
+     * @param coreIndex Core index.
+     * @param slot Slot index.
+     */
+    void ReleaseSlot(unsigned int coreIndex, unsigned int slot);
 
 private:
     /**

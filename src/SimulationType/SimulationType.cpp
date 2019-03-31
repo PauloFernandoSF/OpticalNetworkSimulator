@@ -82,15 +82,17 @@ void SimulationType::Print() {
 void SimulationType::Save() {
     this->options->Save();
     this->parameters->Save();
-    this->GetData()->SaveLog();
 }
 
 void SimulationType::AdditionalSettings() {
     this->topology->SetAditionalSettings();
     
-    if(this->resourceAlloc->IsOfflineRouting())
+    if(this->resourceAlloc->IsOfflineRouting()){
         this->resourceAlloc->RoutingOffline();
         
+        if(this->resourceAlloc->CheckInterRouting())
+            this->resourceAlloc->SetInterferingRoutes();
+    }
 }
 
 const unsigned int SimulationType::GetSimulationIndex() const {

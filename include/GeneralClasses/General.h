@@ -19,19 +19,45 @@
 class General {
 
 public:
-    
+    /**
+     * @brief Function to convert linear value to a dB value.
+     * @param linValue Linear value.
+     * @return Double with the value in dB.
+     */
     static double LinearTodB(const double linValue);
-    
+    /**
+     * @brief Function to convert linear power value to a dB power value.
+     * @param powerWatts Power value in Watts.
+     * @return Power value in dBm.
+     */
     static double LinearWTodBm(const double powerWatts);
-    
+    /**
+     * @brief Function to convert a dB value to a linear value.
+     * @param dBValue Value in dB.
+     * @return Linear value.
+     */
     static double dBToLinear(const double dBValue);
-    
+    /**
+     * @brief Template that return the absolute value.
+     * @param x Input value.
+     * @return Absolute value.
+     */
     template <class T>
     static const T& ABS(const T& x);
-    
+    /**
+     * @brief Template that return the maximum value of two input values.
+     * @param a First input value.
+     * @param b Second input vale.
+     * @return Maximum value.
+     */
     template <class T>
     static const T& MAX (const T& a, const T& b);
-    
+    /**
+     * @brief Template that return the minimum value of two input values.
+     * @param a First input value.
+     * @param b Second input vale.
+     * @return Minimum value.
+     */
     template <class T>
     static const T& MIN (const T& a, const T& b);
     
