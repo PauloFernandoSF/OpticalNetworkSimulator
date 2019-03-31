@@ -39,6 +39,8 @@ public:
      * @brief Define the maximum double value
      */
     static double Max_Double;
+    
+    static std::random_device randomDevice;
 
     static std::random_device randomDevice;
 private:

@@ -11,7 +11,7 @@
  * Created on 25 de fevereiro de 2019, 12:26
  */
 
-#include "../../../include/Algorithms/GA/GACoreOrder.h"
+#include "../../../include/Algorithms/GA/GACoreOrder.h
 #include "../../../include/Structure/Topology.h"
 #include "../../../include/Algorithms/GA/CoreOrderIndividual.h"
 #include "../../../include/SimulationType/SimulationType.h"
@@ -158,8 +158,7 @@ void GACoreOrder::UniformCrossover(const CoreOrderIndividual* const ind1,
             else{
                 newInd1->SetGene(a,b,ind1->GetGene(a,b));
                 newInd2->SetGene(a,b,ind2->GetGene(a,b));
-            }
-            
+            }     
         }
     }
     
@@ -183,6 +182,7 @@ void GACoreOrder::Mutation() {
     for(unsigned int a = popSize; a < (2*popSize); a++){
         this->MutateIndividual(dynamic_cast<CoreOrderIndividual*>
                                (this->totalPopulation.at(a).get()));
+
     }
     
     this->totalPopulation.insert(this->totalPopulation.end(), 
@@ -210,4 +210,5 @@ void GACoreOrder::MutateIndividual(CoreOrderIndividual* const ind) {
             }
         }
     }
+
 }
