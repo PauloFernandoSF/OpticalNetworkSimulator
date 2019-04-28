@@ -72,7 +72,7 @@ public:
      * blocking probability.
      * @return Blocking probability.
      */
-    double GetMainParameter() override;
+    double GetMainParameter() override;    
 private:
     /**
      * @brief GA_RsaOrder that owns this individual.

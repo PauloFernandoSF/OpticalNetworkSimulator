@@ -10,8 +10,6 @@
  * 
  * Created on 26 de fevereiro de 2019, 22:58
  */
-
-#include "../../../include/Algorithms/GA/CoreOrderIndividual.h"
 #include "../../../include/Algorithms/GA/GACoreOrder.h"
 #include <algorithm> // for std::find
 #include <iterator> // for std::begin, std::end
@@ -22,6 +20,7 @@ genes(0), blockProb(0.0) {
     unsigned int num;
     const unsigned int cores = this->ga->GetNumCores();
     const unsigned int req = this->ga->GetNumReq();
+    this->genes.resize(req,std::vector<unsigned int>(cores));
     
     for(unsigned int a = 0;a < req;a++)
         for(unsigned int b = 0;b < cores;b++ )

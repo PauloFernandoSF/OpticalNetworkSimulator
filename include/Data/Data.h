@@ -17,6 +17,8 @@
 class SimulationType;
 class Call;
 class GA;
+class IndividualBool;
+class CoreOrderIndividual;
 
 #include <vector>
 #include <ostream>
@@ -151,6 +153,10 @@ private:
     void SaveBestIndividual(GA* ga, std::ostream& bestInd);
     
     void SaveInitPopulation(GA* ga, std::ostream& initPop);
+    
+    void SaveIndividualType(CoreOrderIndividual* coreInd,std::ostream& bestInd);
+    
+    void SaveIndividualType(IndividualBool* boolInd,std::ostream& bestInd);
     
 private:
     /**

@@ -12,14 +12,12 @@
  */
 
 #include "../../include/ResourceAllocation/CSA.h"
-//#include "../../include/ResourceAllocation/SA.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/Structure/Topology.h"
-#include "../../include/Algorithms/GA/CoreOrderIndividual.h"
 
 CSA::CSA(ResourceAlloc* rsa, SpectrumAllocationOption option,Topology* topology,
         GAOption gaOption):gaOption(gaOption),SA(rsa, option, topology){;
@@ -70,12 +68,12 @@ void CSA::GAFirstFit(Call* call){
     Route* route = call->GetRoute();
     std::vector<double> vecTraffic = this->GetResourceAlloc()->GetSimulType()
     ->GetTraffic()->GetVecTraffic();
-    double traffic = call->GetBandwidth();
+    double traffic = call->GetBitRate();
     bool flag = false;
     int numSlotsReq = call->GetNumberSlots();
     int slot_range = this->GetTopology()->GetNumSlots() - numSlotsReq + 1;
     unsigned int reqIndex,core;
-    
+    //Bandwidth WON'T be equal to any vecTraffic positions!FIX IT!
     for(unsigned int i = 0;i < vecTraffic.size();i++){
         if(vecTraffic.at(i) == traffic){
             reqIndex = i;

@@ -88,6 +88,10 @@ private:
      * population, with less simulation than the minimum required.
      */
     void CheckMinSimul();
+    /**
+     * @brief Switch to choose the GA type that will be created.
+     */
+    void GACreation();
 };
 
 #endif /* GA_SINGLEOBJECTIVE_H */

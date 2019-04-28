@@ -20,6 +20,10 @@
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/SimulationType/GA_SingleObjective.h"
 #include "../../include/Algorithms/GA/GA.h"
+#include "../../include/Data/Options.h"
+#include "../../include/Structure/Topology.h"
+#include "../../include/Algorithms/GA/CoreOrderIndividual.h"
+#include "../../include/Calls/Traffic.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Data* data) {    
@@ -237,16 +241,23 @@ std::ostream& bestInds, std::ostream& worstInds) {
                  << std::endl;
     }
 }
-
+//CHANGE, function seted to boolean vector individual!
 void Data::SaveBestIndividual(GA* ga, std::ostream& bestInd) {
     //Make function to check the cast for the best individual
     //and a switch function for casting according to the individual. 
-    IndividualBool* ind = dynamic_cast<IndividualBool*>
+    switch(this->simulType->GetOptions()->GetGAOption()){
+        case GaRsaOrder:{
+            IndividualBool* indBool = dynamic_cast<IndividualBool*>
                           (ga->GetBestIndividual());
-    
-    std::vector<bool> gene = ind->GetGenes();
-    for(unsigned int a = 0; a < gene.size(); a++){
-        bestInd << gene.at(a) << std::endl;
+            this->SaveIndividualType(indBool, bestInd);
+            break; 
+        }
+        case GaCoreOrder:{
+            CoreOrderIndividual* indCore = dynamic_cast<CoreOrderIndividual*>
+                          (ga->GetBestIndividual());
+            this->SaveIndividualType(indCore, bestInd);
+            break;
+        }
     }
 }
 
@@ -257,4 +268,23 @@ void Data::SaveInitPopulation(GA* ga, std::ostream& initPop) {
         initPop << 0 << "\t" << ga->GetIniIndividual(a)->GetMainParameter()
                 << std::endl;
     }
+}
+
+void Data::SaveIndividualType(IndividualBool* ind,std::ostream& bestInd){
+    std::vector<bool> gene = ind->GetGenes();
+        for(unsigned int a = 0; a < gene.size(); a++){
+            bestInd << gene.at(a) << std::endl;
+        }
+}
+
+void Data::SaveIndividualType(CoreOrderIndividual* ind,std::ostream& bestInd){
+    unsigned int tam_genes = this->simulType->GetTopology()->GetNumCores(),
+    num_tam_req = this->simulType->GetTraffic()->GetRequisitionClasses();
+        for(int a = 0;a < num_tam_req;a++){
+            for(int b = 0;b < tam_genes;b++){
+                bestInd << ind->GetGene(a,b);
+                if(b == tam_genes - 1)
+                    bestInd << std::endl;
+           }
+        }
 }

@@ -21,4 +21,4 @@ unsigned int Def::Min_UnInt = std::numeric_limits<unsigned int>::lowest();
 unsigned int Def::Max_UnInt = std::numeric_limits<unsigned int>::max();
 double Def::Min_Double = std::numeric_limits<double>::lowest();
 double Def::Max_Double = std::numeric_limits<double>::max();
-std::random_device Def::randomDevice;
+std::default_random_engine Def::randomDevice;
