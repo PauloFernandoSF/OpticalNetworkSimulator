@@ -72,10 +72,13 @@ void ResourceAlloc::Load() {
                           GetOptions()->GetSpecAllOption(), this->topology);
     }
     else{
-        this->specAlloc = std::make_shared<CSA>(this, this->simulType->
-                          GetOptions()->GetSpecAllOption(), this->topology);
+        if(this->GetSimulType()->GetOptions()->GetGAOption()==GaCoreOrder)
+             this->specAlloc = std::make_shared<CSA>(this, this->simulType->
+             GetOptions()->GetSpecAllOption(), this->topology,GaCoreOrder);
+        else
+            this->specAlloc = std::make_shared<CSA>(this, this->simulType->
+             GetOptions()->GetSpecAllOption(), this->topology,GAOptionDisabled);
     }
-    
     this->modulation = std::make_shared<Modulation>(this, 
         this->simulType->GetParameters()->GetSlotBandwidth());
     
@@ -234,7 +237,6 @@ void ResourceAlloc::RoutingOffline() {
     switch(this->routing->GetRoutingOption()){
         case RoutingDJK:
             this->routing->Dijkstra();
-            //this->SetInterferingRoutes();
             break;
         case RoutingYEN:
             this->routing->YEN();
@@ -242,6 +244,16 @@ void ResourceAlloc::RoutingOffline() {
         case RoutingBSR:
         default:
             std::cerr << "Invalid offline routing option" << std::endl;
+    }
+}
+
+bool ResourceAlloc::CheckInterRouting() {
+    switch(this->resourAllocOption){
+        case SpecAllMSCL:
+            return true;
+            break;
+        default:
+            return false;
     }
 }
 
@@ -299,13 +311,13 @@ void ResourceAlloc::SetResourceAllocOrder() {
     this->SetResourceAllocOrder(vecBool);
 }
 
-std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes
-        (int ori,int des,int pos){
-    return this->interRoutes.at(ori*(this->topology->GetNumNodes())+ des)
-            .at(pos);
+std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes(int ori, 
+int des, int pos) {
+    return this->interRoutes.at(ori*(this->topology->GetNumNodes()) + des)
+           .at(pos);
 }
 
-void ResourceAlloc::SetInterferingRoutes(){
+void ResourceAlloc::SetInterferingRoutes() {
     std::shared_ptr<Route> routeAux, routeAux2;
     int nodeRoute[2], nodeRouteInt[2], countRoutes = 0;
     bool flag = true;
@@ -364,4 +376,75 @@ void ResourceAlloc::SetInterferingRoutes(){
         countRoutes++;
       }
     }
+}
+
+void ResourceAlloc::SetInterferingRoutes2() {
+    std::shared_ptr<Route> routeAux, interRoute;
+    Link *auxLink, *interLink;
+    unsigned int numNodes = this->topology->GetNumNodes();
+    unsigned int auxIndex;
+    bool addroute = true;
+    
+    this->interRoutes.resize(this->allRoutes.size());
+    
+    for(unsigned int orN = 0; orN < numNodes; orN++){
+        for(unsigned int deN = 0; deN < numNodes; deN++){
+            if(orN == deN)
+                continue;
+            auxIndex = (orN * numNodes) + deN;
+            this->interRoutes.at(auxIndex).resize(
+            this->allRoutes.at(auxIndex).size());
+        }
+    }
+    
+    for(unsigned int a = 0; a < this->allRoutes.size(); a++){
+        for(unsigned int b = 0; b < this->allRoutes.at(a).size(); b++){
+            routeAux = this->allRoutes.at(a).at(b);
+            
+            if(routeAux == nullptr)
+                continue;
+            
+            for(unsigned int c = 0; c < routeAux->GetNumHops(); c++){
+                auxLink = routeAux->GetLink(c);
+                
+                for(unsigned int d = 0; d < this->allRoutes.size(); d++){
+                    for(unsigned int e = 0; e < this->allRoutes.at(d).size(); 
+                    e++){
+                        interRoute = this->allRoutes.at(d).at(e);
+                        
+                        if(interRoute == nullptr || interRoute == routeAux)
+                            continue;
+                        
+                        for(unsigned int f = 0; f < interRoute->GetNumHops(); 
+                        f++){
+                            interLink = interRoute->GetLink(f);
+                            
+                            if(auxLink == interLink){
+                                
+                                for(unsigned int g = 0; g < 
+                                this->interRoutes.at(a).at(b).size(); g++){
+                                    
+                                    if(this->interRoutes.at(a).at(b).at(g) == 
+                                    interRoute){
+                                        addroute = false;
+                                        break;
+                                    }
+                                }
+                                if(addroute){
+                                    this->interRoutes.at(a).at(b).push_back(
+                                    interRoute);
+                                }
+                                addroute = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+std::shared_ptr<SA> ResourceAlloc::GetSpecAlloc(){
+    return this->specAlloc;
 }

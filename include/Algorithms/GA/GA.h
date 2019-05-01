@@ -172,7 +172,6 @@ public:
      * @return Specified individual.
      */
     Individual* GetIniIndividual(unsigned int index);
-    
     /**
      * @brief Apply the gene of a specified individual in the network.
      * @param ind Individual pointer.
@@ -188,6 +187,10 @@ public:
      * @return Chosen individual.
      */
     Individual* RouletteIndividual();
+    
+    virtual void SetSelectedPopFitness() = 0;
+    
+    virtual void SetTotalPopFitness() = 0;
     
 private:
     /**
@@ -227,7 +230,7 @@ private:
      * container.
      */
     double sumFitness;
-    
+        
     /**
      * @brief Container of individuals, representing the initial population.
      */

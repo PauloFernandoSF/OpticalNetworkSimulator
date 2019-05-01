@@ -58,6 +58,7 @@ public:
      */
     virtual ~Link();
     
+    bool operator==(const Link& right) const;
     /**
      * @brief Initialize the link, setting the start values
      * contained in it to free. 
@@ -124,8 +125,7 @@ public:
      * @param NodeWorking Link state.
      */
     void SetLinkState(bool linkWorking);
-    
-    
+        
     /**
      * @brief Update the signal power, ASE power and
      * nonlinear power crossing this link.

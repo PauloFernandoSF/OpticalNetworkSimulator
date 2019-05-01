@@ -105,7 +105,7 @@ enum PhysicalLayerOption {
 };
 
 /**
- * @brief 
+ * @brief Numerate the network options, WDM or EON.
  */
 enum NetworkOption {
     NetworkInvalid,
@@ -115,6 +115,10 @@ enum NetworkOption {
     LastNetworkOption = NetworkEON
 };
 
+/**
+ * @brief Choose the resource allocation choice order, R-SA, SA-R or GA found 
+ * order.
+ */
 enum RsaOrder {
     OrderRoutingSa,
     OrderSaRouting,
@@ -123,9 +127,12 @@ enum RsaOrder {
     LastOrderRSA = GaOrder
 };
 
-enum GACoreOrder{
+enum GAOption{
     GAOptionDisabled,
-    GAOptionEnabled
+    GaRsaOrder,
+    GaCoreOrder,
+    FirstGaOption = GaRsaOrder,
+    LastGaOption = GaCoreOrder
 };
 
 enum TransponderOption {
@@ -294,10 +301,18 @@ public:
     void SetOrderRSA(RsaOrder orderRSA);
     
     void SetTransponderOption(TransponderOption transponderOption);
-    
-    std::string GetGAOption() const;
+    /**
+     * @brief Gets GA selected option.
+     * @return GaOption.
+     */
+    GAOption GetGAOption() const;
+    /**
+     * @brief Gets the name of the selected GA option.
+     * @return String with the name of the GA option.
+     */
+    std::string GetGAOptionName() const;
 
-    void SetGAOption(GACoreOrder coreOrder);
+    void SetGAOption(GAOption coreOrder);
 private:
     /**
      * @brief A pointer to the simulation this object belong.
@@ -337,8 +352,10 @@ private:
     NetworkOption networkOption;
     
     RsaOrder orderRSA;
-    
-    GACoreOrder coreOrder;
+    /**
+     * @brief GA option selected.
+    */
+    GAOption GaOption;
     
     TransponderOption transponderOption;
     
@@ -398,8 +415,8 @@ private:
      * @brief Map that keeps the GA options 
      * and the name of each one (Enabled and Disabled).
      */
-    static const boost::unordered_map<GACoreOrder,
-    std::string> mapGACoreOrder;
+    static const boost::unordered_map<GAOption,
+    std::string> mapGaOption;
 };
 
 #endif /* OPTIONS_H */

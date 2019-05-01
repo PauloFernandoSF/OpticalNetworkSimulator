@@ -26,9 +26,6 @@ class Node;
 
 /**
  * @brief Class Route that storage the path as all nodes in this path.
- * @param rsaAlg Pointer that keeps the ResourceAlloc object that this route
- * is contained.
- * @param path Vector of integers representing the path nodes Ids.
  */
 class Route {
     
@@ -42,7 +39,9 @@ public:
      * @param path Vector of integers representing the path nodes Ids.
      */
     Route(ResourceAlloc* rsaAlg, const std::vector<int>& path);
-    
+    /**
+     * @brief Default destructor of a Route object.
+     */
     virtual ~Route();
     /**
      * @brief Comparison operator that checks if two routes have the same path.

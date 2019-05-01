@@ -43,6 +43,10 @@ public:
      */
     void Run() override;
     /**
+     * @brief @brief Runs the simulation for the total population of the GA.
+     */
+    void RunTotalPop();
+    /**
      * @brief Load simulation inputs from the terminal.
      */
     void Load() override;
@@ -80,14 +84,14 @@ private:
      */
     void RunSelectPop();
     /**
-     * @brief @brief Runs the simulation for the total population of the GA.
-     */
-    void RunTotalPop();
-    /**
      * @brief Check and run the simulation if there is any individual, of total
      * population, with less simulation than the minimum required.
      */
     void CheckMinSimul();
+    /**
+     * @brief Switch to choose the GA type that will be created.
+     */
+    void GACreation();
 };
 
 #endif /* GA_SINGLEOBJECTIVE_H */

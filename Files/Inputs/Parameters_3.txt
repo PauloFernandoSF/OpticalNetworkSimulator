@@ -1,13 +1,15 @@
 128
 1
-120
-220
+1
+80
+130
 6
 10000
 500
 
 
 #Number of slots per fiber
+#Number of cores per link
 #Deactivation time
 #Minimum load
 #Maximum load
