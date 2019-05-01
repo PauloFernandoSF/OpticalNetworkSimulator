@@ -39,10 +39,12 @@ public:
      * @brief Define the maximum double value
      */
     static double Max_Double;
-    
-    static std::random_device randomDevice;
+    /**
+     * @brief Random seed 
+     */
+    //static std::random_device randomDevice;
+    static std::default_random_engine randomDevice;
 
-    static std::random_device randomDevice;
 private:
 
 };

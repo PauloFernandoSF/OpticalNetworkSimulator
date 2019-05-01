@@ -20,7 +20,7 @@ bool GA::IndividualCompare::operator()(
 const std::shared_ptr<Individual>& indA, 
 const std::shared_ptr<Individual>& indB) const {
     
-    return (indA->GetFitness() > indB->GetFitness());
+    return (indA->GetFitness() < indB->GetFitness());
 }
 
 std::ostream& operator<<(std::ostream& ostream, 
@@ -35,8 +35,8 @@ const GA* ga) {
 }
 
 GA::GA(SimulationType* simul)
-:simul(simul), numberIndividuals(50), numberGenerations(100), 
-probCrossover(0.5), probMutation(0.1), numBestIndividuals(30), 
+:simul(simul), numberIndividuals(50), numberGenerations(50), 
+probCrossover(1), probMutation(0.2), numBestIndividuals(30), 
 actualGeneration(0), maxNumSimulation(3), sumFitness(0.0),
 initialPopulation(0), bestIndividuals(0), worstIndividuals(0),  
 selectedPopulation(0), totalPopulation(0) {
@@ -53,15 +53,16 @@ void GA::Initialize() {
 
 void GA::KeepInitialPopulation() {
     this->initialPopulation = this->selectedPopulation;
-    std::make_heap(this->initialPopulation.begin(), 
+    std::sort(this->initialPopulation.begin(), 
                    this->initialPopulation.end(), IndividualCompare());
 }
 
 void GA::SelectPopulation() {
+    
     assert(this->selectedPopulation.empty());
     
     //Order all individuals, with best(smallest) Pb at the end of the vector.
-    std::make_heap(this->totalPopulation.begin(), this->totalPopulation.end(),
+    std::sort(this->totalPopulation.begin(), this->totalPopulation.end(),
                    IndividualCompare());
     
     //Select numBestIndividuals best individuals (Block. Prob.)
@@ -78,7 +79,7 @@ void GA::SelectPopulation() {
     }
     
     //Sort the selected individuals, first worst last best.
-    std::make_heap(this->selectedPopulation.begin(), 
+    std::sort(this->selectedPopulation.begin(), 
                  this->selectedPopulation.end(), IndividualCompare());
 }
 

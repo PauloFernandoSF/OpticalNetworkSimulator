@@ -16,7 +16,6 @@
 
 #include "SA.h"
 #include "../Algorithms/GA/CoreOrderIndividual.h"
-#include"../Data/Options.h"
 
 class CSA: public SA {
 public:

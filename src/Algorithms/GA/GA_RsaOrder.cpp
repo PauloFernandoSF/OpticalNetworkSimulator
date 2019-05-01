@@ -99,7 +99,7 @@ void GA_RsaOrder::SetTotalPopFitness() {
     double bestPb = Def::Max_Double;
     IndividualBool* auxInd;
     
-    //Find the best blocking probability of the selectedPop container
+    //Find the best blocking probability of the totalPop container
     for(auto it: this->totalPopulation){
         auxInd = dynamic_cast<IndividualBool*>(it.get());
         

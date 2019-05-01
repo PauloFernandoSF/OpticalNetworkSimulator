@@ -74,7 +74,7 @@ public:
      * blocking probability.
      * @return Blocking probability.
      */
-    double GetMainParameter() override;
+    double GetMainParameter() override;    
 private:
 
     /**
