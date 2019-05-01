@@ -9,23 +9,17 @@
         <group>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Algorithms/GA/GA.cpp</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/main.cpp</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Algorithms/GA/GA_RsaOrder.cpp</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/Data/InputOutput.h</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/SimulationType/GA_SingleObjective.h</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/Algorithms/GA/GA.h</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Algorithms/GA/CoreOrderIndividual.cpp</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/GeneralClasses/Def.h</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Data/Data.cpp</file>
+            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Algorithms/GA/CoreOrderIndividual.cpp</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Kernel.cpp</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/Algorithms/GA/GA_RsaOrder.h</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/Data/Data.h</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/GeneralClasses/Def.cpp</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/Algorithms/GA/CoreOrderIndividual.h</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Algorithms/GA/GACoreOrder.cpp</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/SimulationType/GA_SingleObjective.cpp</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/SimulationType/SimulationType.cpp</file>
             <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/include/Algorithms/GA/GACoreOrder.h</file>
-            <file>file:/home/paulofilho/Documentos/Mestrado/Redes_Opticas/OpticalNetworkSimulator_Netbeans/OpticalNetworkSimulator/src/Data/InputOutput.cpp</file>
         </group>
     </open-files>
 </project-private>
