@@ -14,6 +14,7 @@
 #ifndef COREORDERINDIVIDUAL_H
 #define COREORDERINDIVIDUAL_H
 
+
 #include <vector>
 #include <memory>
 #include <iostream>
@@ -40,6 +41,7 @@ public:
     /**
      * @brief Default destructor of this individual.
      */
+
     virtual ~CoreOrderIndividual();
     /**
      * @brief Gets the gene of  this individual,for a specified line and column, 
@@ -74,6 +76,7 @@ public:
      */
     double GetMainParameter() override;    
 private:
+
     /**
      * @brief GA_RsaOrder that owns this individual.
      */

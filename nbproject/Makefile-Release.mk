@@ -224,6 +224,11 @@ ${OBJECTDIR}/src/SimulationType/GA_SingleObjective.o: src/SimulationType/GA_Sing
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/GA_SingleObjective.o src/SimulationType/GA_SingleObjective.cpp
 
+${OBJECTDIR}/src/SimulationType/GA.o: src/SimulationType/GA.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/SimulationType
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/GA.o src/SimulationType/GA.cpp
+
 ${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o: src/SimulationType/MultiLoadSimulation.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType
 	${RM} "$@.d"

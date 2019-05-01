@@ -144,6 +144,7 @@ void CSA::MSCL(Call* call){
                             route_aux = route;
                         else
                             route_aux = RouteInt.at(0).get();
+
                         for(int se = 0;se < totalSlots;se++){
 				if(!(topology->CheckSlotsDispCore(route_aux,
                                 se,se,e))){

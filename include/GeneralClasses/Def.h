@@ -44,6 +44,7 @@ public:
      */
     //static std::random_device randomDevice;
     static std::default_random_engine randomDevice;
+
 private:
 
 };
